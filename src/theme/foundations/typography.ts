@@ -31,7 +31,6 @@ const typography = {
     heading: 'Helvetica, sans-serif',
     body: 'Helvetica, sans-serif',
     mono: 'Fira Code, sans-serif'
-
   },
   fontSizes: {
     xs: '0.8rem',

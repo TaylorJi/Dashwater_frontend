@@ -25,7 +25,7 @@ const Test: React.FC = () => {
                     onChange={(e) => setMsg(e.target.value)}
                 />
                 <Button
-                    colorScheme='teal'
+                    colorScheme='main'
                     ml='0.5rem'
                     isDisabled={msg.trim() === ''}
                     onClick={async () => {
