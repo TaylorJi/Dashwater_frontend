@@ -1,7 +1,7 @@
 import Test from "../components/home/Test";
 import BaseLayout from "../components/layout/BaseLayout";
 
-const Home: React.FC = () => {
+const Dashboard: React.FC = () => {
     return (
         <BaseLayout>
             <Test />
@@ -9,4 +9,4 @@ const Home: React.FC = () => {
     );
 };
 
-export default Home;
+export default Dashboard;
