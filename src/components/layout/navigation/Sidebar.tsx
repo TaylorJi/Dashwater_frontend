@@ -1,4 +1,4 @@
-import { Box, Flex, Icon, Text } from '@chakra-ui/react';
+import { Box, Flex, Icon, Text, Tooltip } from '@chakra-ui/react';
 import { faBarsStaggered } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
@@ -41,19 +41,25 @@ const Sidebar: React.FC = () => {
                         borderRadius='0.25rem'
                         alignItems='center'
                     >
-                        <Icon as={FontAwesomeIcon}
-                            color='gray.400'
-                            icon={faBarsStaggered}
-                            size='xl'
-                            mr='2rem'
-                            transition={'all 0.2s ease-in-out'}
-                            onClick={() => setIsCollapsed(!isCollapsed)}
-                            _hover={{
-                                transform: 'scale(1.05)',
-                                cursor: 'pointer',
-                                color: '#02558B'
-                            }}
-                        />
+                        <Tooltip
+                            placement='right'
+                            label='Click to expand/collapse'
+                            bg='main.mossGreen'
+                        >
+                            <Icon as={FontAwesomeIcon}
+                                color='gray.400'
+                                icon={faBarsStaggered}
+                                size='xl'
+                                mr='2rem'
+                                transition={'all 0.2s ease-in-out'}
+                                onClick={() => setIsCollapsed(!isCollapsed)}
+                                _hover={{
+                                    transform: 'scale(1.05)',
+                                    cursor: 'pointer',
+                                    color: '#02558B'
+                                }}
+                            />
+                        </Tooltip>
                         <Box
                             w='20rem'
                             fontSize='xl'
