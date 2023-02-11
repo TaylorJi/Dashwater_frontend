@@ -1,10 +1,12 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Flex, Spacer } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { sidebarCategories } from './sidebarCategories';
 import { useRecoilValue } from 'recoil';
 import { sidebarOpenAtom } from '../atoms/sidebarAtoms';
 import SidebarItem from './SidebarItem';
 import SidebarTopMenuItem from './SidebarTopMenuItem';
+import { faCircleQuestion, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import SidebarUserProfile from './SidebarUserProfile';
 
 
 const Sidebar: React.FC = () => {
@@ -21,7 +23,7 @@ const Sidebar: React.FC = () => {
         <>
             <Box
                 h='100vh'
-                w={isCollapsed ? '4.5rem' : '18rem'}
+                w={isCollapsed ? '4.5rem' : '17rem'}
                 p='1rem'
                 bgColor='main.lavender'
                 pos='absolute'
@@ -29,7 +31,10 @@ const Sidebar: React.FC = () => {
                 overflow='hidden'
                 transition={'all 0.3s ease-in-out'}
             >
-                <Box>
+                <Flex
+                    flexDir='column'
+                    h='100%'
+                >
                     <SidebarTopMenuItem />
 
                     {
@@ -40,11 +45,21 @@ const Sidebar: React.FC = () => {
                                     icon={category['icon']}
                                     link={category['link']}
                                     description={category['description']}
+                                    isExternal={false}
                                 />
                             );
                         })
                     }
-                </Box>
+                    <Spacer />
+                    <SidebarItem
+                        currPath={currPath}
+                        icon={faCircleQuestion}
+                        link={'https://bcit-reseach-long-term-issp.github.io/docs/dashboard/'}
+                        description={'Go to Docs'}
+                        isExternal={true}
+                    />
+                    <SidebarUserProfile />
+                </Flex>
             </Box>
         </>
     );
