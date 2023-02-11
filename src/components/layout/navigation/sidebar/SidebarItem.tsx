@@ -4,7 +4,7 @@ import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import uuid from "react-uuid";
 import { useNavigate } from "react-router-dom";
 
-type sidebarItemProps = {
+type SidebarItemProps = {
     currPath: string;
     link: string;
     icon: IconDefinition;
@@ -12,7 +12,7 @@ type sidebarItemProps = {
     isExternal: boolean;
 };
 
-const SidebarItem: React.FC<sidebarItemProps> = ({ currPath, link, icon, description, isExternal }) => {
+const SidebarItem: React.FC<SidebarItemProps> = ({ currPath, link, icon, description, isExternal }) => {
 
     const navigate = useNavigate();
 

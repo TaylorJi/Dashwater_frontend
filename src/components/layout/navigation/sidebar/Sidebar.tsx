@@ -1,4 +1,4 @@
-import { Box, Flex, Spacer } from '@chakra-ui/react';
+import { Box, Flex, Spacer, useDisclosure } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { sidebarCategories } from './sidebarCategories';
 import { useRecoilValue } from 'recoil';
@@ -6,10 +6,11 @@ import { sidebarOpenAtom } from '../atoms/sidebarAtoms';
 import SidebarItem from './SidebarItem';
 import SidebarTopMenuItem from './SidebarTopMenuItem';
 import { faCircleQuestion, faUserCircle } from '@fortawesome/free-solid-svg-icons';
-import SidebarUserProfile from './SidebarUserProfile';
-
+import UserSettingsModal from './UserSettingsModal';
 
 const Sidebar: React.FC = () => {
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const isCollapsed = useRecoilValue(sidebarOpenAtom);
 
@@ -21,6 +22,7 @@ const Sidebar: React.FC = () => {
 
     return (
         <>
+            <UserSettingsModal isOpen={isOpen} onClose={onClose} />
             <Box
                 h='100vh'
                 w={isCollapsed ? '4.5rem' : '17rem'}
@@ -58,7 +60,17 @@ const Sidebar: React.FC = () => {
                         description={'Go to Docs'}
                         isExternal={true}
                     />
-                    <SidebarUserProfile />
+                    <Box
+                        onClick={() => onOpen()}
+                    >
+                        <SidebarItem
+                            currPath={currPath}
+                            icon={faUserCircle}
+                            link={''}
+                            description={'User Settings'}
+                            isExternal={false}
+                        />
+                    </Box>
                 </Flex>
             </Box>
         </>
