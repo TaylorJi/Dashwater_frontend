@@ -14,23 +14,24 @@ const Sidebar: React.FC = () => {
     const navigate = useNavigate();
 
     const [isCollapsed, setIsCollapsed] = useRecoilState(sidebarOpenAtom);
+
     const [currPath, setCurrPath] = useState<string>('');
 
     useEffect(() => {
         setCurrPath(window.location.pathname);
-    }, [])
+    }, []);
 
     return (
         <>
             <Box
+                h='100vh'
+                w={isCollapsed ? '4.5rem' : '18rem'}
+                p='1rem'
+                bgColor='main.lavender'
                 pos='absolute'
                 zIndex={1000}
-                h='100vh'
-                bgColor='main.lavender'
-                transition={'all 0.3s ease-in-out'}
-                w={isCollapsed ? '4.5rem' : '20rem'}
-                p='1rem'
                 overflowX={isCollapsed ? 'hidden' : 'scroll'}
+                transition={'all 0.3s ease-in-out'}
             >
                 <Box
                 >
@@ -87,15 +88,15 @@ const Sidebar: React.FC = () => {
                                         'main.activeSideBar' : ''}
                                     alignContent='center'
                                     borderRadius='0.25rem'
+                                    transition={'all 0.2s ease-in-out'}
                                     onClick={() => {
                                         navigate(category['link'])
                                     }}
-                                    key={uuid()}
-                                    transition={'all 0.2s ease-in-out'}
                                     _hover={{
                                         transform: 'scale(1.05)',
                                         cursor: 'pointer'
                                     }}
+                                    key={uuid()}
                                 >
                                     <Icon as={FontAwesomeIcon}
                                         color={currPath === category['link'] ? 'main.usafaBlue' : 'gray.400'}
