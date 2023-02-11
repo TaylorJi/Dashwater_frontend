@@ -1,12 +1,11 @@
 import { Flex, Icon, Text, Link } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import uuid from "react-uuid";
 import { useNavigate } from "react-router-dom";
 
 type SidebarItemProps = {
     currPath: string;
-    link: string;
+    link: string | null;
     icon: IconDefinition;
     description: string;
     isExternal: boolean;
@@ -28,17 +27,18 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ currPath, link, icon, descrip
             borderRadius='0.25rem'
             transition={'all 0.2s ease-in-out'}
             onClick={() => {
-                if (!isExternal) {
-                    navigate(link);
-                } else {
-                    window.open(link, '_blank');
+                if (link) {
+                    if (!isExternal) {
+                        navigate(link);
+                    } else {
+                        window.open(link, '_blank');
+                    }
                 }
             }}
             _hover={{
                 transform: 'scale(1.05)',
                 cursor: 'pointer'
             }}
-            key={uuid()}
         >
             <Icon as={FontAwesomeIcon}
                 color={currPath === link ? 'main.usafaBlue' : 'gray.400'}

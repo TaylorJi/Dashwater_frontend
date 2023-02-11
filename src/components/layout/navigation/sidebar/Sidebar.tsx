@@ -7,6 +7,7 @@ import SidebarItem from './SidebarItem';
 import SidebarTopMenuItem from './SidebarTopMenuItem';
 import { faCircleQuestion, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import UserSettingsModal from './UserSettingsModal';
+import uuid from 'react-uuid';
 
 const Sidebar: React.FC = () => {
 
@@ -48,6 +49,7 @@ const Sidebar: React.FC = () => {
                                     link={category['link']}
                                     description={category['description']}
                                     isExternal={false}
+                                    key={uuid()}
                                 />
                             );
                         })
@@ -66,7 +68,7 @@ const Sidebar: React.FC = () => {
                         <SidebarItem
                             currPath={currPath}
                             icon={faUserCircle}
-                            link={''}
+                            link={null}
                             description={'User Settings'}
                             isExternal={false}
                         />
