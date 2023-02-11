@@ -3,8 +3,7 @@ import BaseLayout from "../components/layout/BaseLayout";
 
 const Dashboard: React.FC = () => {
     return (
-        <BaseLayout>
-            <Test />
+        <BaseLayout isNavbarVisible={true}>
         </BaseLayout>
     );
 };

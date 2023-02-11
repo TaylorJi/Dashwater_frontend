@@ -4,7 +4,7 @@ import BaseLayout from '../components/layout/BaseLayout';
 const NotFound: React.FC = () => {
 
     return (
-        <BaseLayout>
+        <BaseLayout isNavbarVisible={false}>
             <></>
         </BaseLayout>
     );

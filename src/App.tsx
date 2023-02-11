@@ -15,7 +15,7 @@ function App() {
 
       <Route path='/alerts' element={<Alerts />} />
 
-      <Route path='/deviceManager' element={<DeviceManager />} />
+      <Route path='/manageDevices' element={<DeviceManager />} />
 
       <Route path='404' element={<NotFound />} />
 

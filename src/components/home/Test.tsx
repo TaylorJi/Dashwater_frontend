@@ -19,7 +19,7 @@ const Test: React.FC = () => {
                 alignItems='center'
             >
                 <Input
-                    w='25%'
+                    w='10rem'
                     placeholder='Enter a message'
                     value={msg}
                     onChange={(e) => setMsg(e.target.value)}

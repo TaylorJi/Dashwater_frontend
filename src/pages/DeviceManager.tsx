@@ -4,7 +4,7 @@ import BaseLayout from '../components/layout/BaseLayout';
 const DeviceManager: React.FC = () => {
 
     return (
-        <BaseLayout>
+        <BaseLayout isNavbarVisible={true}>
             <></>
         </BaseLayout>
     );
