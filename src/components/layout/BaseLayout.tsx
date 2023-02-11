@@ -1,8 +1,8 @@
 import React from 'react';
 import { Flex } from '@chakra-ui/react';
 import { Toaster } from 'react-hot-toast';
-import Sidebar from './navigation/Sidebar';
-import SidebarOffset from './navigation/SidebarOffset';
+import Sidebar from './navigation/sidebar/Sidebar';
+import SidebarOffset from './navigation/sidebar/SidebarOffset';
 
 type LayoutProps = {
     children?: React.ReactNode;

@@ -1,8 +1,4 @@
-import { faDiagramProject, faBell, faSdCard, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-
-type sidebarType = {
-    [key: string]: IconDefinition | string;
-}
+import { faDiagramProject, faBell, faSdCard } from '@fortawesome/free-solid-svg-icons';
 
 export const sidebarCategories = [
     {
