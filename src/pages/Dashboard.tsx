@@ -1,8 +1,10 @@
-import { Box, Flex, Text, useMediaQuery } from '@chakra-ui/react';
+import { Box, color, Flex, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useMediaQuery } from '@chakra-ui/react';
 import React from 'react';
+import DashboardTabs from '../components/dashboard/DashboardTabs';
 import DashboardTopNav from '../components/dashboard/DashboardTopNav';
 import DashboardTopSelect from '../components/dashboard/DashboardTopSelect';
 import BaseLayout from "../components/layout/BaseLayout";
+import colors from '../theme/foundations/colours';
 
 const Dashboard: React.FC = () => {
 
@@ -14,6 +16,7 @@ const Dashboard: React.FC = () => {
                 w='100%'
                 minH='100vh'
             >
+                {/* Monitor panel */}
                 <Box
                     w='25%'
                     borderRightColor='gray.200'
@@ -32,6 +35,8 @@ const Dashboard: React.FC = () => {
                     </Box>
 
                 </Box>
+
+                {/* Devices panel */}
                 <Box
                     py='2rem'
                     px='1rem'
@@ -51,6 +56,8 @@ const Dashboard: React.FC = () => {
                         <DashboardTopNav />
 
                     </Flex>
+
+                    <DashboardTabs />
 
                 </Box>
 
