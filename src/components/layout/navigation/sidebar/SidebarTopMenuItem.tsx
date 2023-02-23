@@ -20,7 +20,8 @@ const SidebarTopMenuItem: React.FC = () => {
             <Tooltip
                 placement='right'
                 label='Click to expand/collapse'
-                bg='main.mossGreen'
+                bg='white'
+                color='black'
             >
                 <Icon as={FontAwesomeIcon}
                     color='gray.400'
