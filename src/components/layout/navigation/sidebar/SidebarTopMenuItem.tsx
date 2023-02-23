@@ -3,6 +3,7 @@ import { faBarsStaggered } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { useRecoilState } from 'recoil';
+import colors from '../../../../theme/foundations/colours';
 import { sidebarOpenAtom } from '../atoms/sidebarAtoms';
 
 const SidebarTopMenuItem: React.FC = () => {
@@ -33,7 +34,7 @@ const SidebarTopMenuItem: React.FC = () => {
                     _hover={{
                         transform: 'scale(1.05)',
                         cursor: 'pointer',
-                        color: '#02558B'
+                        color: colors.main.usafaBlue
                     }}
                 />
             </Tooltip>

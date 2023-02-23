@@ -1,7 +1,8 @@
-import { Flex, Icon, Text, Link } from "@chakra-ui/react";
+import { Flex, Icon, Text } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from "react-router-dom";
+import colors from "../../../../theme/foundations/colours";
 
 type SidebarItemProps = {
     currPath: string;
@@ -47,7 +48,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ currPath, link, icon, descrip
                 mr='2rem'
                 transition={'all 0.2s ease-in-out'}
                 _hover={{
-                    color: '#02558B'
+                    color: colors.main.usafaBlue
                 }}
             />
             <Text

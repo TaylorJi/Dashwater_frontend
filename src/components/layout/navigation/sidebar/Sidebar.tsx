@@ -29,7 +29,7 @@ const Sidebar: React.FC = () => {
                 w={isCollapsed ? '4.5rem' : '17rem'}
                 p='1rem'
                 bgColor='main.lavender'
-                pos='absolute'
+                pos='fixed'
                 zIndex={1000}
                 overflow='hidden'
                 transition={'all 0.3s ease-in-out'}
