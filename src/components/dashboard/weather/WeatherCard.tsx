@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import Dashboard from '../../../api/Dashboard/Dashboard';
 import BaseCard from '../../layout/BaseCard';
+import ForecastItem from './ForecastItem';
+import uuid from 'react-uuid';
 
 const WeatherCard: React.FC = () => {
 
@@ -67,9 +69,7 @@ const WeatherCard: React.FC = () => {
                                     fontWeight='semibold'
                                     fontSize={isLargeScreen ? 'sm' : 'xs'}
                                 >
-                                    <Flex
-                                        alignItems='center'
-                                    >
+                                    <Flex>
                                         <Text>
                                             Wind
                                         </Text>
@@ -78,9 +78,7 @@ const WeatherCard: React.FC = () => {
                                         </Text>
                                     </Flex>
 
-                                    <Flex
-                                        alignItems='center'
-                                    >
+                                    <Flex>
                                         <Text>
                                             Pressure
                                         </Text>
@@ -98,35 +96,10 @@ const WeatherCard: React.FC = () => {
                                 {
                                     weatherData['forecast'].map((forecast) => {
                                         return (
-                                            <Flex
-                                                flexDir='column'
-                                                alignItems='center'
-                                            >
-                                                <Text
-                                                    fontWeight='semibold'
-                                                >
-                                                    {forecast['weekday'].substring(0, 3)}
-                                                </Text>
-                                                <Image
-                                                    src={forecast['iconURL']}
-                                                />
-                                                <Flex
-                                                    fontSize='sm'
-                                                >
-                                                    <Text
-                                                        mr='0.25rem'
-                                                        fontWeight='semibold'
-                                                    >
-                                                        {`${forecast['high']}°`}
-                                                    </Text>
-                                                    <Text
-                                                        color='gray.500'
-                                                    >
-                                                        {`${forecast['low']}°`}
-                                                    </Text>
-                                                </Flex>
-
-                                            </Flex>
+                                            <ForecastItem
+                                                forecast={forecast}
+                                                key={uuid()}
+                                            />
                                         )
                                     })
                                 }
