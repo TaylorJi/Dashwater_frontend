@@ -3,6 +3,8 @@ import React from 'react';
 import DashboardTabs from '../components/dashboard/DashboardTabs';
 import DashboardTopNav from '../components/dashboard/DashboardTopNav';
 import DashboardTopSelect from '../components/dashboard/DashboardTopSelect';
+import WeatherCard from '../components/dashboard/weather/WeatherCard';
+import BaseCard from '../components/layout/BaseCard';
 import BaseLayout from "../components/layout/BaseLayout";
 import colors from '../theme/foundations/colours';
 
@@ -24,6 +26,7 @@ const Dashboard: React.FC = () => {
                 >
                     <Box
                         py='2rem'
+                        pr='1rem'
                     >
                         <Text
                             fontSize={isLargeScreen ? '3xl' : '2xl'}
@@ -31,6 +34,8 @@ const Dashboard: React.FC = () => {
                         >
                             Monitor
                         </Text>
+
+                        <WeatherCard />
 
                     </Box>
 
