@@ -20,7 +20,7 @@ const Dashboard: React.FC = () => {
             >
                 {/* Monitor panel */}
                 <Box
-                    w='25%'
+                    w={isLargeScreen ? '25%' : '30%'}
                     borderRightColor='gray.200'
                     borderRightWidth='0.1rem'
                 >
@@ -45,7 +45,7 @@ const Dashboard: React.FC = () => {
                 <Box
                     py='2rem'
                     px='1rem'
-                    w='75%'
+                    w={isLargeScreen ? '75%' : '70%'}
 
                 >
                     <Flex

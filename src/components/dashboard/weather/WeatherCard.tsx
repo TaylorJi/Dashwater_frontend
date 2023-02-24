@@ -45,26 +45,27 @@ const WeatherCard: React.FC = () => {
                             >
                                 <Image
                                     src={weatherData['iconURL']}
-                                    w='6rem'
+                                    w={isLargeScreen ? '6rem' : '5rem'}
                                 />
                                 <Box>
                                     <Text
                                         fontWeight='semibold'
-                                        fontSize='lg'
-                                        mb='-0.25rem'
+                                        fontSize={isLargeScreen ? 'lg' : 'md'}
+                                        mb={isLargeScreen ? '-0.25rem' : '0'}
+                                        mr={isLargeScreen ? '0' : '1.5rem'}
                                     >
                                         {weatherData['currWeather']}
                                     </Text>
                                     <Text
                                         fontWeight='semibold'
-                                        fontSize='3xl'
+                                        fontSize={isLargeScreen ? '3xl' : 'lg'}
                                     >
                                         {`${weatherData['temp']} °C`}
                                     </Text>
                                 </Box>
                                 <Box
                                     fontWeight='semibold'
-                                    fontSize='sm'
+                                    fontSize={isLargeScreen ? 'sm' : 'xs'}
                                 >
                                     <Flex
                                         alignItems='center'
