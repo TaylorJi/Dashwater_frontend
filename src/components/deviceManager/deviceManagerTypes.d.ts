@@ -4,31 +4,23 @@ type deviceManagerDataType = {
 };
 
 type buoySettingsUnitsType = {
-    dissolved_o2: String;
-    electrical_conductivity: String;
-    pH: String;
-    turbidity: String;
-    dissolved_solids: String;
-    temperature: String;
-    water_lvl: String;
-    water_flow: String;
-    water_pressure: String;
+    dissolved_o2: string;
+    electrical_conductivity: string;
+    pH: string;
+    turbidity: string;
+    dissolved_solids: string;
+    temperature: string;
+    water_lvl: string;
+    water_flow: string;
+    water_pressure: string;
 };
 
 type buoySettingsType = {
-    name: String;
-    id: String;
+    name: string;
+    id: string;
     location: buoyLocationType;
     sensors: {
-        dissolved_solids: metricSettingsType;
-        pH: metricSettingsType;
-        turbidity: metricSettingsType;
-        dissolved_o2: metricSettingsType;
-        temp: metricSettingsType;
-        electrical_conductivity: metricSettingsType;
-        water_flow: metricSettingsType;
-        water_lvl: metricSettingsType;
-        water_pressure: metricSettingsType;
+        [key: string]: metricSettingsType;
     }
 };
 
@@ -43,3 +35,10 @@ type metricSettingsType = {
     max: number;
     alert: boolean
 };
+
+type buoySensorTagsType = {
+    [key: string]: {
+        color: string,
+        label: string
+    }
+}

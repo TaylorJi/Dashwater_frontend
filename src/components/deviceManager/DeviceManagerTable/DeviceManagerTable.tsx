@@ -3,6 +3,7 @@ import { Table, Thead, Tbody, Th } from '@chakra-ui/react';
 import buoyData from '../../../mockData/mockBuoyData.json'
 import BuoySettingsRow from './DeviceManagerRow';
 import colors from '../../../theme/foundations/colours';
+import uuid from 'react-uuid';
 
 
 const DeviceManagerTable: React.FC = () => {
@@ -22,7 +23,7 @@ const DeviceManagerTable: React.FC = () => {
                     {buoySettingsData ?
                         buoyData['buoys'].map(buoy => {
                             return (
-                                <BuoySettingsRow buoy={buoy} />
+                                <BuoySettingsRow buoy={buoy} key={uuid()}/>
                             )
                         }) : <></>
                     }

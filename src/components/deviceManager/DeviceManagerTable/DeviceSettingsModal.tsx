@@ -31,7 +31,6 @@ const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
             <IconButton
                 onClick={onOpen}
                 aria-label='Settings'
-                size='md'
                 bg='main.lavender'
                 ml='0.5rem'
                 icon={<Icon
