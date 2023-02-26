@@ -56,6 +56,6 @@ const DeviceSettingsTabs: React.FC = () => {
             </TabPanels>
         </Tabs>
     );
-}
+};
 
 export default DeviceSettingsTabs;

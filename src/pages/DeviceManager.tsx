@@ -5,10 +5,8 @@ import { Select } from '@chakra-ui/select';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DeviceManagerTable from '../components/deviceManager/DeviceManagerTable/DeviceManagerTable';
-import { Box, Button, Flex, Text, useMediaQuery, Center } from '@chakra-ui/react';
+import { Button, Flex, Text, useMediaQuery, Center } from '@chakra-ui/react';
 import colors from '../theme/foundations/colours';
-
-
 
 
 const DeviceManager: React.FC = () => {
@@ -45,7 +43,7 @@ const DeviceManager: React.FC = () => {
                         _hover={{
                             bg: colors.main.mossGreen
                         }}
-                    > 
+                    >
                         Select by Map
                     </Button>
 
@@ -53,7 +51,7 @@ const DeviceManager: React.FC = () => {
                         size='sm'
                         borderRadius='0.25rem'
                         placeholder='Select Sensors'
-                        ml = '2rem'
+                        ml='2rem'
                         w='15rem'
                         borderColor={colors.main.usafaBlue}
                     />

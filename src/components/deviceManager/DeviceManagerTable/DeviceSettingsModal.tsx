@@ -46,7 +46,7 @@ const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
 
             <Modal isOpen={isOpen} onClose={onClose} size="2xl" >
                 <ModalOverlay />
-                <ModalContent>
+                <ModalContent >
                     <ModalHeader>
                         Device Settings
                         <Text fontSize='sm'>{`id: ${buoy.id}`}</Text>
@@ -57,15 +57,22 @@ const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button colorScheme='blue' mr={3} onClick={onClose}>
+                        <Button colorScheme={colors.main.ceruBlue} mr={3} onClick={onClose}>
                             Close
                         </Button>
-                        <Button variant='ghost'>Secondary Action</Button>
+                        <Button
+                            bg={colors.main.usafaBlue}
+                            color="white"
+                            onClick={onClose}
+                            _hover={{
+                                bg: colors.main.ceruBlue
+                            }}
+                        >Save Changes</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
         </>
     );
-}
+};
 
 export default DeviceSettingsModal;

@@ -1,16 +1,12 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Text, Table, Thead, Tbody, Th, Tr, Td } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { Table, Thead, Tbody, Th } from '@chakra-ui/react';
 import buoyData from '../../../mockData/mockBuoyData.json'
 import BuoySettingsRow from './DeviceManagerRow';
 import colors from '../../../theme/foundations/colours';
-import radii from '../../../theme/foundations/radius';
-
 
 
 const DeviceManagerTable: React.FC = () => {
-    const [ buoySettingsData, setBuoySettingsData ] = useState<deviceManagerDataType | null>(buoyData);
-
+    const buoySettingsData = useState<deviceManagerDataType | null>(buoyData)[0]; // eventual unpack setState
 
     return (
         <>
@@ -23,17 +19,17 @@ const DeviceManagerTable: React.FC = () => {
                     <Th color={colors.main.usafaBlue}>Settings</Th>
                 </Thead>
                 <Tbody>
-                    { buoySettingsData ? 
-                        buoyData['buoys'].map( buoy => {
+                    {buoySettingsData ?
+                        buoyData['buoys'].map(buoy => {
                             return (
-                                <BuoySettingsRow buoy={buoy}/>
+                                <BuoySettingsRow buoy={buoy} />
                             )
-                        }) : <></>    
+                        }) : <></>
                     }
                 </Tbody>
             </Table>
         </>
-    )
-}
+    );
+};
 
 export default DeviceManagerTable;

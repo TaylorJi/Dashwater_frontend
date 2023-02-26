@@ -1,8 +1,5 @@
 import React from 'react';
-import { Tr, Td, Tag, IconButton } from '@chakra-ui/react';
-import Icon from '@chakra-ui/icon';
-import { faGear } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Tr, Td, Tag } from '@chakra-ui/react';
 import colors from '../../../theme/foundations/colours';
 import DeviceSettingsModal from './DeviceSettingsModal';
 
@@ -52,8 +49,7 @@ const BuoySettingsRow: React.FC<buoySettingsRowProps> = ({ buoy }) => {
                 <DeviceSettingsModal buoy={buoy}/>
             </Td>
         </Tr>
-    )
-
-}
+    );
+};
 
 export default BuoySettingsRow;
