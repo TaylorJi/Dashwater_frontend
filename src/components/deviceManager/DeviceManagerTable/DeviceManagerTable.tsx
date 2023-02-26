@@ -3,6 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { Text, Table, Thead, Tbody, Th, Tr, Td } from '@chakra-ui/react';
 import buoyData from '../../../mockData/mockBuoyData.json'
 import BuoySettingsRow from './DeviceManagerRow';
+import colors from '../../../theme/foundations/colours';
+import radii from '../../../theme/foundations/radius';
+
+
 
 const DeviceManagerTable: React.FC = () => {
     const [ buoySettingsData, setBuoySettingsData ] = useState<deviceManagerDataType | null>(buoyData);
@@ -11,12 +15,12 @@ const DeviceManagerTable: React.FC = () => {
     return (
         <>
             <Table >
-                <Thead>
-                    <Th>Device Name</Th>
-                    <Th>Device ID</Th>
-                    <Th>Location</Th>
-                    <Th>Sensors</Th>
-                    <Th>Settings</Th>
+                <Thead bg={colors.main.lavender} h="3rem">
+                    <Th color={colors.main.usafaBlue}>Device Name</Th>
+                    <Th color={colors.main.usafaBlue}>Device ID</Th>
+                    <Th color={colors.main.usafaBlue}>Location</Th>
+                    <Th color={colors.main.usafaBlue}>Sensors</Th>
+                    <Th color={colors.main.usafaBlue}>Settings</Th>
                 </Thead>
                 <Tbody>
                     { buoySettingsData ? 
@@ -27,9 +31,6 @@ const DeviceManagerTable: React.FC = () => {
                         }) : <></>    
                     }
                 </Tbody>
-
-
-
             </Table>
         </>
     )
