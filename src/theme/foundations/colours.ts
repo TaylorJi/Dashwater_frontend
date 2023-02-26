@@ -7,7 +7,8 @@ const colors = {
     lavender: '#E3E7F4',
     mossGreen: '#919A3E',
     acidGreen: '#C0C530',
-    activeSideBar: '#CBD4E9'
+    activeSideBar: '#CBD4E9',
+    activeTopNav: '#C0C53080'
   },
   foundation: {
     100: '#FFFFFF',

@@ -4,7 +4,7 @@ import React from 'react';
 const SidebarOffset: React.FC = () => {
 
     return (
-        <Box h='100vh' w='7rem' />
+        <Box h='100vh' w='5.75rem' />
     );
 };
 
