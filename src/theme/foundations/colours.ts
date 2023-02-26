@@ -1,14 +1,14 @@
 
 const colors = {
-  brand: {
-    500: '#9EC2B6',
-    600: '#87AB9F',
-    lightTeal: '#E2EDE9',
-    teal: '#258786',
-    olive: '#5C7A70',
-    rust: '#CA7558',
-    darkOlive: '#305955',
-    lightText: '#EDF2F7'
+  main: {
+    500: '#02558B', // this is to just set default button color to usafa
+    usafaBlue: '#02558B',
+    ceruBlue: '#709BBE',
+    lavender: '#E3E7F4',
+    mossGreen: '#919A3E',
+    acidGreen: '#C0C530',
+    activeSideBar: '#CBD4E9',
+    activeTopNav: '#C0C53080'
   },
   foundation: {
     100: '#FFFFFF',
