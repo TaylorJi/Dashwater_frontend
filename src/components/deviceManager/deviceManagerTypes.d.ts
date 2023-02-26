@@ -4,15 +4,7 @@ type deviceManagerDataType = {
 };
 
 type buoySettingsUnitsType = {
-    dissolved_o2: string;
-    electrical_conductivity: string;
-    pH: string;
-    turbidity: string;
-    dissolved_solids: string;
-    temperature: string;
-    water_lvl: string;
-    water_flow: string;
-    water_pressure: string;
+    [key: string]: string
 };
 
 type buoySettingsType = {
