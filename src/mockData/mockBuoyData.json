@@ -202,6 +202,70 @@
                     "alert": true
                 }
             }
+        },
+        {
+            "name": "I have everything!",
+            "id": "9999",
+            "location": {
+                "x": 150.20,
+                "y": -134.33
+            },
+            "sensors": {
+                "dissolved_solids": {
+                    "available": true,
+                    "min": 2,
+                    "max": 5,
+                    "alert": true
+                },
+                "pH": {
+                    "available": true,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false
+                },
+                "turbidity": {
+                    "available": true,
+                    "min": 45,
+                    "max": 200,
+                    "alert": false
+                },
+                "dissolved_o2": {
+                    "available": true,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false
+                },
+                "temp": {
+                    "available": true,
+                    "min": -1,
+                    "max": 30,
+                    "alert": true
+                },
+                "electrical_conductivity": {
+                    "available": true,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false
+                },
+                "water_flow": {
+                    "available": true,
+                    "min": 2,
+                    "max": 44,
+                    "alert": true
+                },
+                "water_lvl": {
+                    "available": true,
+                    "min": 2,
+                    "max": 5,
+                    "alert": true
+                },
+                "water_pressure": {
+                    "available": true,
+                    "min": 55,
+                    "max": 44,
+                    "alert": true
+                }
+            }
         }
     ]
 }

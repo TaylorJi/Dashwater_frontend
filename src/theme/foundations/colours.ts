@@ -26,6 +26,17 @@ const colors = {
     orange: '#FD7E14',
     lightTeal: '#E2EDE9'
   },
+  tag: {
+    disolvedSolids: '#FCB400',
+    pH: '#FF6F2C',
+    turbidity: '#93E088',
+    dissolvedO2: '#FF9EB7',
+    temp: '#CDB0FF',
+    electricalConductivity: '#FFD66E',
+    waterFlow: '#77D1F3',
+    waterLvl: '#20D9D2',
+    waterPressure: '#72DDC3'
+  }
 };
 
 export default colors;

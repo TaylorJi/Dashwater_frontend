@@ -16,8 +16,8 @@ const DeviceManagerTable: React.FC = () => {
         <>
             <Table >
                 <Thead bg={colors.main.lavender} h="3rem">
-                    <Th color={colors.main.usafaBlue}>Device Name</Th>
-                    <Th color={colors.main.usafaBlue}>Device ID</Th>
+                    <Th color={colors.main.usafaBlue}>Name</Th>
+                    <Th color={colors.main.usafaBlue}>ID</Th>
                     <Th color={colors.main.usafaBlue}>Location</Th>
                     <Th color={colors.main.usafaBlue}>Sensors</Th>
                     <Th color={colors.main.usafaBlue}>Settings</Th>
