@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Tr, Td, Tag } from '@chakra-ui/react';
+import React from 'react';
+import { Tr, Td, Tag, IconButton } from '@chakra-ui/react';
+import Icon from '@chakra-ui/icon';
+import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import colors from '../../../theme/foundations/colours';
-import { spacing } from '../../../theme/foundations/spacing';
+import DeviceSettingsModal from './DeviceSettingsModal';
 
 type buoySettingsRowProps = {
     buoy: buoySettingsType;
@@ -44,9 +47,10 @@ const BuoySettingsRow: React.FC<buoySettingsRowProps> = ({ buoy }) => {
                 {buoy.sensors.water_pressure.available ?
                     <Tag bg={colors.tag.waterPressure} m='.125rem'> Water Pressure </Tag> : null
                 }
-
             </Td>
-            <Td>button</Td>
+            <Td>
+                <DeviceSettingsModal buoy={buoy}/>
+            </Td>
         </Tr>
     )
 
