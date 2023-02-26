@@ -58,7 +58,7 @@ const DeviceManager: React.FC = () => {
                         borderColor={colors.main.usafaBlue}
                     />
                 </Flex>
-                
+
                 <Center px="4rem" pt="2rem">
                     <DeviceManagerTable />
                 </Center>
