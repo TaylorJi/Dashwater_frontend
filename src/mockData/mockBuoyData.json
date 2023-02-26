@@ -1,0 +1,207 @@
+{
+    "units": {
+        "dissolved_o2": "mg/L",
+        "electrical_conductivity": "mS/cm",
+        "pH": "pH",
+        "turbidity": "NTU",
+        "dissolved_solids": "ppm",
+        "temperature": "°C",
+        "water_lvl": "m",
+        "water_flow": "L/s",
+        "water_pressure": "kPa"
+    },
+    "buoys": [
+        {
+            "name": "Appa",
+            "id": "1234",
+            "location": {
+                "x": 143.23,
+                "y": -111.22
+            },
+            "sensors": {
+                "dissolved_solids": {
+                    "available": true,
+                    "min": 2,
+                    "max": 5,
+                    "alert": true
+                },
+                "pH": {
+                    "available": false,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false
+                },
+                "turbidity": {
+                    "available": true,
+                    "min": 45,
+                    "max": 200,
+                    "alert": false
+                },
+                "dissolved_o2": {
+                    "available": false,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false
+                },
+                "temp": {
+                    "available": true,
+                    "min": -1,
+                    "max": 30,
+                    "alert": true
+                },
+                "electrical_conductivity": {
+                    "available": false,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false
+                },
+                "water_flow": {
+                    "available": true,
+                    "min": 2,
+                    "max": 44,
+                    "alert": true
+                },
+                "water_lvl": {
+                    "available": true,
+                    "min": 2,
+                    "max": 5,
+                    "alert": true
+                },
+                "water_pressure": {
+                    "available": true,
+                    "min": 55,
+                    "max": 44,
+                    "alert": true
+                }
+            }
+        },
+        {
+            "name": "Snoopy",
+            "id": "0124",
+            "location": {
+                "x": 144.45,
+                "y": -111.12
+            },
+            "sensors": {
+                "dissolved_solids": {
+                    "available": false,
+                    "min": 2,
+                    "max": 5,
+                    "alert": true
+                },
+                "pH": {
+                    "available": true,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false
+                },
+                "turbidity": {
+                    "available": true,
+                    "min": 45,
+                    "max": 200,
+                    "alert": false
+                },
+                "dissolved_o2": {
+                    "available": true,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false
+                },
+                "temp": {
+                    "available": true,
+                    "min": -1,
+                    "max": 30,
+                    "alert": true
+                },
+                "electrical_conductivity": {
+                    "available": false,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false
+                },
+                "water_flow": {
+                    "available": false,
+                    "min": 2,
+                    "max": 44,
+                    "alert": true
+                },
+                "water_lvl": {
+                    "available": false,
+                    "min": 2,
+                    "max": 5,
+                    "alert": true
+                },
+                "water_pressure": {
+                    "available": false,
+                    "min": 55,
+                    "max": 44,
+                    "alert": true
+                }
+            }
+        },
+        {
+            "name": "Roobs",
+            "id": "520",
+            "location": {
+                "x": 143.20,
+                "y": -111.12
+            },
+            "sensors": {
+                "dissolved_solids": {
+                    "available": true,
+                    "min": 2,
+                    "max": 5,
+                    "alert": true
+                },
+                "pH": {
+                    "available": false,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false
+                },
+                "turbidity": {
+                    "available": true,
+                    "min": 45,
+                    "max": 200,
+                    "alert": false
+                },
+                "dissolved_o2": {
+                    "available": false,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false
+                },
+                "temp": {
+                    "available": true,
+                    "min": -1,
+                    "max": 30,
+                    "alert": true
+                },
+                "electrical_conductivity": {
+                    "available": false,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false
+                },
+                "water_flow": {
+                    "available": true,
+                    "min": 2,
+                    "max": 44,
+                    "alert": true
+                },
+                "water_lvl": {
+                    "available": true,
+                    "min": 2,
+                    "max": 5,
+                    "alert": true
+                },
+                "water_pressure": {
+                    "available": true,
+                    "min": 55,
+                    "max": 44,
+                    "alert": true
+                }
+            }
+        }
+    ]
+}
