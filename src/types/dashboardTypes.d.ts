@@ -16,13 +16,12 @@ type weatherForecastType = {
     low: number;
 };
 
-type tideDataType = {
-    name: string;
-    height: number;
-    time: string;
+type graphDataType = {
+    [key: string]: number | string;
 };
 
-type rawTideDataType = {
-    sg: number;
-    time: string;
-}
+type tideDataResType = {
+    high: graphDataType;
+    low: graphDataType;
+    allData: graphDataType[];
+};

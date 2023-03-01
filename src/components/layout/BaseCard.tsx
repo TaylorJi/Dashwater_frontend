@@ -11,7 +11,7 @@ const BaseCard: React.FC<baseCardProps> = ({ children }) => {
         <Box
             p='1rem'
             borderRadius='0.5rem'
-            w='auto'
+            w='100%'
             h='fit-content'
             borderWidth='0.1rem'
             borderColor='gray.300'

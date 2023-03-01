@@ -17,11 +17,30 @@ const getWeather = async () => {
         return null;
     }
 
+};
+
+const getTide = async () => {
+
+    try {
+
+        const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/weather/getTide`);
+
+        if (response.status === 200) {
+            return response.data.data;
+
+        }
+
+        return null;
+
+    } catch (_err) {
+        return null;
+    }
 
 };
 
 const Dashboard = {
-    getWeather
+    getWeather,
+    getTide
 };
 
 export default Dashboard;
