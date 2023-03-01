@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import Dashboard from '../../../api/Dashboard/Dashboard';
 import LineGraph from '../../graphs/LineGraph';
 import BaseCard from '../../layout/BaseCard';
+import BaseCardLoading from '../../layout/BaseCardLoading';
 
 const TideCard: React.FC = () => {
 
@@ -59,14 +60,7 @@ const TideCard: React.FC = () => {
                             </Box>
                         </>
                         :
-                        <Flex
-                            h='5rem'
-                            w='100%'
-                            justifyContent='space-evenly'
-                            alignItems='center'
-                        >
-                            <Spinner size='lg' />
-                        </Flex>
+                        <BaseCardLoading />
                 }
 
             </BaseCard>

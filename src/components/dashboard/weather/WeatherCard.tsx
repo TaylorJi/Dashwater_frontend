@@ -5,6 +5,7 @@ import Dashboard from '../../../api/Dashboard/Dashboard';
 import BaseCard from '../../layout/BaseCard';
 import ForecastItem from './ForecastItem';
 import uuid from 'react-uuid';
+import BaseCardLoading from '../../layout/BaseCardLoading';
 
 const WeatherCard: React.FC = () => {
 
@@ -106,14 +107,7 @@ const WeatherCard: React.FC = () => {
                             </Flex>
                         </>
                         :
-                        <Flex
-                            h='5rem'
-                            w='100%'
-                            justifyContent='space-evenly'
-                            alignItems='center'
-                        >
-                            <Spinner size='lg' />
-                        </Flex>
+                        <BaseCardLoading />
                 }
 
             </BaseCard>
