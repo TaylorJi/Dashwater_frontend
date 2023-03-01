@@ -15,7 +15,6 @@ const TideCard: React.FC = () => {
         try {
             const data = await Dashboard.getTide();
             if (data) {
-                console.log(data);
                 setTideData(data);
 
             } else {
