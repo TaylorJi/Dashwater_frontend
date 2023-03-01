@@ -17,9 +17,13 @@ const TideCard: React.FC = () => {
         try {
             const data = await Dashboard.getTide();
             if (data) {
+<<<<<<< HEAD
                 setTideData(data['allData']);
                 setHigh(data['high']);
                 setLow(data['low']);
+=======
+                setTideData(data);
+>>>>>>> b90547ea6080ae2e52e26df8ae0237cb82ced53c
 
             } else {
                 toast.error('Oh no! There was a problem fetching tide data. Please refresh the page.');
