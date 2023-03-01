@@ -19,3 +19,9 @@ type weatherForecastType = {
 type graphDataType = {
     [key: string]: number | string;
 };
+
+type tideDataResType = {
+    high: graphDataType;
+    low: graphDataType;
+    allData: graphDataType[];
+};

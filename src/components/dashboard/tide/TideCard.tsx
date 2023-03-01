@@ -9,14 +9,17 @@ import BaseCardLoading from '../../layout/BaseCardLoading';
 const TideCard: React.FC = () => {
 
     const [tideData, setTideData] = useState<graphDataType[] | null>(null);
+    const [high, setHigh] = useState<graphDataType | null>(null);
+    const [low, setLow] = useState<graphDataType | null>(null);
 
     const getTideData = async () => {
 
         try {
             const data = await Dashboard.getTide();
             if (data) {
-                console.log(data);
-                setTideData(data);
+                setTideData(data['allData']);
+                setHigh(data['high']);
+                setLow(data['low']);
 
             } else {
                 toast.error('Oh no! There was a problem fetching tide data. Please refresh the page.');
@@ -52,8 +55,8 @@ const TideCard: React.FC = () => {
                             >
                                 <LineGraph
                                     data={tideData}
-                                    xAxisLabel='Height (m)'
-                                    yAxisLabel='Time'
+                                    xAxisLabel='Time'
+                                    yAxisLabel='Height (m)'
                                     xKey='time'
                                     graphDataKey='height'
                                 />
