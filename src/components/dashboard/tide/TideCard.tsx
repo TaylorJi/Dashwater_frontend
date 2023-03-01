@@ -1,19 +1,13 @@
-import { Text, Box, Flex, Spinner, useMediaQuery } from '@chakra-ui/react';
+import { Text, Box, Flex, Spinner } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import {
-    ResponsiveContainer, CartesianGrid, XAxis, YAxis, Tooltip,
-    Label, Line, LineChart
-} from 'recharts';
 import Dashboard from '../../../api/Dashboard/Dashboard';
-import colors from '../../../theme/foundations/colours';
-import typography from '../../../theme/foundations/typography';
+import LineGraph from '../../graphs/LineGraph';
 import BaseCard from '../../layout/BaseCard';
 
 const TideCard: React.FC = () => {
 
-    const [tideData, setTideData] = useState<tideDataType[] | null>(null);
-    const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
+    const [tideData, setTideData] = useState<graphDataType[] | null>(null);
 
     const getTideData = async () => {
 
@@ -55,51 +49,13 @@ const TideCard: React.FC = () => {
                                 mt='1rem'
                                 ml='-0.75rem'
                             >
-                                <ResponsiveContainer width="99%" height={isLargeScreen ? 275 : 225}>
-                                    <LineChart
-                                        data={tideData}
-                                    >
-                                        <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis
-                                            dataKey="time"
-                                            style={{
-                                                fontSize: '0.6rem',
-                                                fontFamily: typography.fonts.body
-                                            }}
-                                        >
-                                            <Label
-                                                offset={-4}
-                                                value="Time"
-                                                position="insideBottom"
-                                                style={{
-                                                    fontSize: isLargeScreen ? '0.75rem' : '0.6rem',
-                                                    fontFamily: typography.fonts.body,
-                                                    paddingTop: '1rem'
-                                                }}
-                                            />
-                                        </XAxis>
-                                        <YAxis
-                                            style={{
-                                                fontSize: isLargeScreen ? '0.75rem' : '0.6rem',
-                                                fontFamily: typography.fonts.body,
-                                            }}
-                                        >
-                                            <Label
-                                                value="Height (m)"
-                                                angle={-90}
-                                                position="insideLeft"
-                                                dy={30}
-                                                offset={14}
-                                                style={{
-                                                    fontSize: isLargeScreen ? '0.75rem' : '0.6rem',
-                                                    fontFamily: typography.fonts.body,
-                                                }}
-                                            />
-                                        </YAxis>
-                                        <Tooltip />
-                                        <Line type="monotone" dataKey="height" stroke={colors.main.usafaBlue} activeDot={{ r: 8 }} />
-                                    </LineChart>
-                                </ResponsiveContainer>
+                                <LineGraph
+                                    data={tideData}
+                                    xAxisLabel='Height (m)'
+                                    yAxisLabel='Time'
+                                    xKey='time'
+                                    graphDataKey='height'
+                                />
                             </Box>
                         </>
                         :
