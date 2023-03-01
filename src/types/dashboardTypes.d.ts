@@ -31,6 +31,8 @@ type deviceDataType = {
 }
 
 type measureType = {
-    'measureName': string;
-    'data': graphDataType[]
+    measureName: string;
+    xAxisName: string;
+    yAxisName: string;
+    data: graphDataType[]
 }

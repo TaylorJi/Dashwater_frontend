@@ -2,6 +2,8 @@ export const mockDeviceData: deviceDataType = {
     '0': [
         {
             'measureName': 'Electrical Conductivity',
+            'xAxisName': 'Time',
+            'yAxisName': 'Electrical Conductivity(mS/cm)',
             'data': [
                 {
                     'time': '2023-02-22 02:00:16.721',
