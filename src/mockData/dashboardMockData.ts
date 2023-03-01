@@ -1,4 +1,4 @@
-export const mockDeviceData = {
+export const mockDeviceData: deviceDataType = {
     '0': [
         {
             'measureName': 'Electrical Conductivity',

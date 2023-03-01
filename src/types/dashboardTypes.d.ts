@@ -25,3 +25,12 @@ type tideDataResType = {
     low: graphDataType;
     allData: graphDataType[];
 };
+
+type deviceDataType = {
+    [key: string]: measureType[]
+}
+
+type measureType = {
+    'measureName': string;
+    'data': graphDataType[]
+}
