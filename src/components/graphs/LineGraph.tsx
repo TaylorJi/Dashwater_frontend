@@ -31,6 +31,7 @@ const LineGraph: React.FC<lineGraphProps> = ({ data, xAxisLabel, yAxisLabel, gra
                 >
                     <Label
                         offset={-4}
+                        dx={-17}
                         value={xAxisLabel}
                         position="insideBottom"
                         style={{

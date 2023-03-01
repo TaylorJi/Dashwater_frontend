@@ -40,7 +40,7 @@ const TideCard: React.FC = () => {
         >
             <BaseCard>
                 {
-                    tideData
+                    tideData && high && low
                         ?
                         <>
                             <Text
@@ -61,6 +61,39 @@ const TideCard: React.FC = () => {
                                     graphDataKey='height'
                                 />
                             </Box>
+                            <Flex
+                                justifyContent='space-evenly'
+                                mt='0.75rem'
+                            >
+                                <Flex
+                                    flexDir='column'
+                                    alignItems='center'
+                                >
+                                    <Text
+                                        fontWeight='bold'
+                                    >
+                                        High Tide
+                                    </Text>
+                                    <Text>
+                                        <Text as={'span'} fontWeight='semibold'>{`${high['height']}m `}</Text>
+                                        at {`${high['time']} `}
+                                    </Text>
+                                </Flex>
+                                <Flex
+                                    flexDir='column'
+                                    alignItems='center'
+                                >
+                                    <Text
+                                        fontWeight='bold'
+                                    >
+                                        Low Tide
+                                    </Text>
+                                    <Text>
+                                        <Text as={'span'} fontWeight='semibold'>{`${low['height']}m `}</Text>
+                                        at {`${low['time']} `}
+                                    </Text>
+                                </Flex>
+                            </Flex>
                         </>
                         :
                         <BaseCardLoading />
