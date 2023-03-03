@@ -25,7 +25,10 @@ const IntervalPanel: React.FC = () => {
                         Object.keys(mockDeviceData).map((key) => {
 
                             return (
-                                <Accordion allowToggle>
+                                <Accordion
+                                    allowToggle
+                                    key={uuid()}
+                                >
                                     <AccordionItem>
                                         <AccordionButton>
                                             <Box
