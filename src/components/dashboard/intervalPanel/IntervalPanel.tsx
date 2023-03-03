@@ -1,8 +1,8 @@
-import { Box, Grid, GridItem, useMediaQuery } from '@chakra-ui/react';
+import { Text, Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Grid, GridItem, useMediaQuery } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
+import uuid from 'react-uuid';
 import { mockDeviceData } from '../../../mockData/dashboardMockData';
-import AreaGraph from '../../graphs/AreaGraph';
-import BaseCard from '../../layout/BaseCard';
+import IntervalGridItem from './IntervalGridItem';
 
 const IntervalPanel: React.FC = () => {
 
@@ -20,36 +20,52 @@ const IntervalPanel: React.FC = () => {
         <>
             {
                 deviceData &&
-                <Grid templateColumns={`repeat(${isLargeScreen ? LG_COLS : SM_COLS}, 1fr)`} gap={3}>
+                <>
                     {
                         Object.keys(mockDeviceData).map((key) => {
-                            return mockDeviceData[key].map((item) => {
-                                return (
-                                    <GridItem
-                                        w='100%'
-                                        h='fit-content'
-                                    >
-                                        <BaseCard>
+
+                            return (
+                                <Accordion allowToggle>
+                                    <AccordionItem>
+                                        <AccordionButton>
                                             <Box
-                                                mt='1rem'
-                                                ml='-0.75rem'
+                                                as='span'
+                                                flex='1'
+                                                textAlign='left'
                                             >
-                                                <AreaGraph
-                                                    data={item['data']}
-                                                    xAxisLabel={item['xAxisName']}
-                                                    yAxisLabel={item['yAxisName']}
-                                                    xKey='time'
-                                                    graphDataKey='value'
-                                                    offsetY={60}
-                                                />
+                                                <Text
+                                                    fontSize='xl'
+                                                    fontWeight='bold'
+                                                >
+                                                    {`Device ${key} Data`}
+                                                </Text>
                                             </Box>
-                                        </BaseCard>
-                                    </GridItem>
-                                )
-                            })
+                                            <AccordionIcon />
+                                        </AccordionButton>
+                                        <AccordionPanel pb={4}>
+                                            <Grid templateColumns={`repeat(${isLargeScreen ? LG_COLS : SM_COLS}, 1fr)`} gap={3}>
+                                                {
+                                                    mockDeviceData[key].map((item) => {
+                                                        return (
+                                                            <IntervalGridItem
+                                                                key={uuid()}
+                                                                item={item}
+                                                            />
+                                                        )
+                                                    })
+                                                }
+                                            </Grid>
+                                        </AccordionPanel>
+                                    </AccordionItem>
+                                </Accordion>
+
+
+                            )
+
                         })
+
                     }
-                </Grid>
+                </>
             }
 
         </>
