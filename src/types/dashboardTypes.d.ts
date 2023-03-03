@@ -21,8 +21,8 @@ type graphDataType = {
 };
 
 type tideDataResType = {
-    high: graphDataType;
-    low: graphDataType;
+    high: rawTideExtremeDataType[];
+    low: rawTideExtremeDataType[];
     allData: graphDataType[];
 };
 
@@ -36,3 +36,15 @@ type measureType = {
     yAxisName: string;
     data: graphDataType[]
 }
+
+type rawTideExtremeDataType = {
+    height: number;
+    time: string;
+    type: string;
+}
+
+type tideDataResType = {
+    high: rawTideExtremeDataType[];
+    low: rawTideExtremeDataType[];
+    allData: tideDataType[];
+};
