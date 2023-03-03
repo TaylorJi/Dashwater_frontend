@@ -7,6 +7,7 @@ const DashboardTabs: React.FC = () => {
 
     return (
         <Tabs
+            isLazy
             mt='1rem'
         >
             <TabList>
