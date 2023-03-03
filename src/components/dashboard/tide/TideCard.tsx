@@ -1,6 +1,7 @@
-import { Text, Box, Flex, Spinner } from '@chakra-ui/react';
+import { Text, Box, Flex } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import uuid from 'react-uuid';
 import Dashboard from '../../../api/Dashboard/Dashboard';
 import LineGraph from '../../graphs/LineGraph';
 import BaseCard from '../../layout/BaseCard';
@@ -68,6 +69,7 @@ const TideCard: React.FC = () => {
                                     yAxisLabel='Height (m)'
                                     xKey='time'
                                     graphDataKey='height'
+                                    offsetY={30}
                                 />
                             </Box>
                             <Flex
@@ -86,7 +88,9 @@ const TideCard: React.FC = () => {
                                     {
                                         high.map((pred) => {
                                             return (
-                                                <Text>
+                                                <Text
+                                                    key={uuid()}
+                                                >
                                                     <Text as={'span'} fontWeight='semibold'>{`${roundTo2Dec(pred['height'])}m `}</Text>
                                                     at {`${pred['time']} `}
                                                 </Text>
@@ -106,7 +110,9 @@ const TideCard: React.FC = () => {
                                     {
                                         low.map((pred) => {
                                             return (
-                                                <Text>
+                                                <Text
+                                                    key={uuid()}
+                                                >
                                                     <Text as={'span'} fontWeight='semibold'>{`${roundTo2Dec(pred['height'])}m `}</Text>
                                                     at {`${pred['time']} `}
                                                 </Text>

@@ -1,6 +1,6 @@
 import { useMediaQuery } from '@chakra-ui/react';
 import React from 'react';
-import { LineChart, CartesianGrid, XAxis, Label, YAxis, Tooltip, Line, ResponsiveContainer } from 'recharts';
+import { LineChart, CartesianGrid, XAxis, Label, YAxis, Tooltip, Line, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import colors from '../../theme/foundations/colours';
 import typography from '../../theme/foundations/typography';
 
@@ -13,13 +13,13 @@ type graphProps = {
     offsetY: number;
 }
 
-const LineGraph: React.FC<graphProps> = ({ data, xAxisLabel, yAxisLabel, graphDataKey, xKey }) => {
+const AreaGraph: React.FC<graphProps> = ({ data, xAxisLabel, yAxisLabel, graphDataKey, xKey, offsetY }) => {
 
     const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
 
     return (
         <ResponsiveContainer width="99%" height={isLargeScreen ? 275 : 225}>
-            <LineChart
+            <AreaChart
                 data={data}
             >
                 <CartesianGrid strokeDasharray="3 3" />
@@ -52,7 +52,7 @@ const LineGraph: React.FC<graphProps> = ({ data, xAxisLabel, yAxisLabel, graphDa
                         value={yAxisLabel}
                         angle={-90}
                         position="insideLeft"
-                        dy={30}
+                        dy={offsetY}
                         offset={14}
                         style={{
                             fontSize: isLargeScreen ? '0.75rem' : '0.6rem',
@@ -61,15 +61,14 @@ const LineGraph: React.FC<graphProps> = ({ data, xAxisLabel, yAxisLabel, graphDa
                     />
                 </YAxis>
                 <Tooltip />
-                <Line
+                <Area
                     type="monotone"
                     dataKey={graphDataKey}
                     stroke={colors.main.usafaBlue}
-                    activeDot={{ r: 8 }}
-                />
-            </LineChart>
+                    fill={colors.main.ceruBlue} />
+            </AreaChart>
         </ResponsiveContainer>
     );
 };
 
-export default LineGraph;
+export default AreaGraph;
