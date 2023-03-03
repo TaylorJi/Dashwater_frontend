@@ -1,10 +1,10 @@
 import { useMediaQuery } from '@chakra-ui/react';
 import React from 'react';
-import { LineChart, CartesianGrid, XAxis, Label, YAxis, Tooltip, Line, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { CartesianGrid, XAxis, Label, YAxis, Tooltip, Line, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import colors from '../../theme/foundations/colours';
 import typography from '../../theme/foundations/typography';
 
-type graphProps = {
+export type graphProps = {
     data: graphDataType[];
     xAxisLabel: string;
     yAxisLabel: string;

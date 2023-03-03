@@ -3,15 +3,7 @@ import React from 'react';
 import { LineChart, CartesianGrid, XAxis, Label, YAxis, Tooltip, Line, ResponsiveContainer } from 'recharts';
 import colors from '../../theme/foundations/colours';
 import typography from '../../theme/foundations/typography';
-
-type graphProps = {
-    data: graphDataType[];
-    xAxisLabel: string;
-    yAxisLabel: string;
-    xKey: string;
-    graphDataKey: string;
-    offsetY: number;
-}
+import { graphProps } from './AreaGraph';
 
 const LineGraph: React.FC<graphProps> = ({ data, xAxisLabel, yAxisLabel, graphDataKey, xKey }) => {
 
