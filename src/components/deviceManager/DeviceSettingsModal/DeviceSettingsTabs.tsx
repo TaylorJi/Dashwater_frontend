@@ -1,7 +1,7 @@
 import React from "react";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/tabs';
 import colors from '../../../theme/foundations/colours';
-import GeneralSettingsPanel from "./GenrealSettingsPanel/GeneralSettingsPanel";
+import GeneralSettingsPanel from "./GeneralSettingsPanel/GeneralSettingsPanel";
 
 type deviceSettingsTabsProps = {
     buoy: buoySettingsType
