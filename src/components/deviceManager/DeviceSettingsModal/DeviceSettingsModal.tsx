@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+    Box,
     Modal,
     ModalOverlay,
     ModalContent,
@@ -7,7 +8,6 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
-    Button,
     useDisclosure,
     IconButton,
     Icon,
@@ -56,17 +56,7 @@ const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button colorScheme={colors.main.ceruBlue} mr={3} onClick={onClose}>
-                            Close
-                        </Button>
-                        <Button
-                            bg={colors.main.usafaBlue}
-                            color="white"
-                            onClick={onClose}
-                            _hover={{
-                                bg: colors.main.ceruBlue
-                            }}
-                        >Save Changes</Button>
+                        <Box h="5rem"/>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

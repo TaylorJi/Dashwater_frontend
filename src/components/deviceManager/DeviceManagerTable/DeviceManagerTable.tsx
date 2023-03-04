@@ -26,7 +26,7 @@ const DeviceManagerTable: React.FC = () => {
                     {buoySettingsData ?
                         buoyData['buoys'].map(buoy => {
                             return (
-                                <BuoySettingsRow buoy={ buoy } key={uuid()}/>
+                                <BuoySettingsRow buoy={buoy} key={uuid()}/>
                             )
                         }) : <></>
                     }

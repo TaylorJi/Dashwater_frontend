@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
     Box,
+    Flex,
     Text,
     FormControl,
     FormLabel,
@@ -61,6 +62,10 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
         setIsLongInvalid(false);
     };
 
+    const onSave = (): void => {
+        // do some stuff with the set values.
+    };
+
     return (
         <>
             <FormControl isInvalid={isNameInvalid}>
@@ -106,7 +111,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                             {isLatInvalid ?
                                 <FormErrorMessage>Input a number between -90 to 90.</FormErrorMessage>
                                 :
-                                <FormHelperText/>
+                                <FormHelperText />
                             }
                         </Box>
                     </FormControl>
@@ -125,7 +130,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                             {isLongInvalid ?
                                 <FormErrorMessage>Input a number between -180 to 180.</FormErrorMessage>
                                 :
-                                <FormHelperText/>
+                                <FormHelperText />
                             }
                         </Box>
                     </FormControl>
@@ -154,9 +159,21 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                         >Search
                         </Button>
                     </HStack>
-
                 </GridItem>
             </Grid>
+
+            <Flex mt={20} justifyContent="flex-end">
+                <Button
+                    bg={colors.main.usafaBlue}
+                    color="white"
+                    onClick={onSave}
+                    _hover={{
+                        bg: colors.main.ceruBlue
+                    }}
+                >
+                    Save General
+                </Button>
+            </Flex>
         </>
 
     );
