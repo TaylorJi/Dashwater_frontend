@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import colors from '../../../../theme/foundations/colours';
 import { Form } from 'react-router-dom';
+import { isRealNumber } from '../../../helpers/formHelpers';
 
 type generalSettingsPanelProps = {
     name: string;
@@ -22,19 +23,21 @@ type generalSettingsPanelProps = {
 }
 
 const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, long }) => {
-    const [isNameInvalid, setIsNameInvalid] = useState(false);
-    const [isLatInvalid, setIsLatInvalid] = useState(false);
-    const [isLongInvalid, setIsLongInvalid] = useState(false);
+    const [isNameInvalid, setIsNameInvalid] = useState<boolean>(false);
+    const [isLatInvalid, setIsLatInvalid] = useState<boolean>(false);
+    const [isLongInvalid, setIsLongInvalid] = useState<boolean>(false);
 
-    const [latitude, setLatitude] = useState(lat);
-    const [longitude, setLongitude] = useState(long);
+    const [latitude, setLatitude] = useState<string>(lat.toString());
+    const [longitude, setLongitude] = useState<string>(long.toString());
 
-    const validLatitude = (latitude: number): boolean => {
-        return -90 <= latitude && latitude <= 90;
+    const validLatitude = (latitude: string): boolean => {
+        return isRealNumber(latitude) && -90 <= +latitude && +latitude <= 90;
     };
 
-    const validLongitude = (longitude: number): boolean => {
-        return -180 <= longitude && longitude <= 180;
+    const validLongitude = (longitude: string): boolean => {
+        console.log(isRealNumber(longitude));
+        console.log(+longitude);
+        return isRealNumber(longitude) && -180 <= +longitude && +longitude <= 180;
     };
 
     const searchCoordinates = (): undefined => {
@@ -52,8 +55,8 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
     };
 
     const resetCoordinates = (): void => {
-        setLatitude(lat);
-        setLongitude(long);
+        setLatitude(lat.toString());
+        setLongitude(long.toString());
         setIsLatInvalid(false);
         setIsLongInvalid(false);
     };
@@ -96,12 +99,12 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                             value={latitude}
                             onChange={e => {
                                 setIsLatInvalid(false);
-                                setLatitude(+e.target.value);
+                                setLatitude(e.target.value);
                             }}
                         />
                         <Box h={3}>
                             {isLatInvalid ?
-                                <FormErrorMessage>Latitude must be between -90 to 90.</FormErrorMessage>
+                                <FormErrorMessage>Input a number between -90 to 90.</FormErrorMessage>
                                 :
                                 <FormHelperText/>
                             }
@@ -115,12 +118,12 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                             value={longitude}
                             onChange={(e) => {
                                 setIsLongInvalid(false);
-                                setLongitude(+e.target.value);
+                                setLongitude(e.target.value);
                             }}
                         />
                         <Box h={3}>
                             {isLongInvalid ?
-                                <FormErrorMessage>Longitude must be between -180 to 180.</FormErrorMessage>
+                                <FormErrorMessage>Input a number between -180 to 180.</FormErrorMessage>
                                 :
                                 <FormHelperText/>
                             }
