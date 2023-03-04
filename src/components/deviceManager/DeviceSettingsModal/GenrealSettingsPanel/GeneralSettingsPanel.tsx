@@ -37,7 +37,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
         return -180 <= longitude && longitude <= 180;
     };
 
-    const searchCoordinates = (latitude: number, longitude: number): undefined => {
+    const searchCoordinates = (): undefined => {
         // validate coordinates
         const validLat = validLatitude(latitude);
         const validLong = validLongitude(longitude);
@@ -51,10 +51,11 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
         // TODO: otherwise, search the map
     };
 
-    const resetCoordinates = (): undefined => {
+    const resetCoordinates = (): void => {
         setLatitude(lat);
         setLongitude(long);
-        return;
+        setIsLatInvalid(false);
+        setIsLongInvalid(false);
     };
 
     return (
@@ -82,7 +83,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                 gridTemplateColumns={'1fr 1fr'}
                 mt={4}
                 gap={3}
-                h='15rem'
+                h='16rem'
             >
                 <GridItem pl='2' bg='orange.300' area={'map'} borderRadius={3}>
                     Map goes here
@@ -92,25 +93,38 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                     <FormControl isInvalid={isLatInvalid}>
                         <FormLabel>Latitude</FormLabel>
                         <Input
-                            defaultValue={lat}
-                            type='number'
                             value={latitude}
                             onChange={e => {
+                                setIsLatInvalid(false);
                                 setLatitude(+e.target.value);
                             }}
                         />
+                        <Box h={3}>
+                            {isLatInvalid ?
+                                <FormErrorMessage>Latitude must be between -90 to 90.</FormErrorMessage>
+                                :
+                                <FormHelperText/>
+                            }
+                        </Box>
                     </FormControl>
 
                     <FormControl isInvalid={isLongInvalid}>
                         <FormLabel mt={3}>Longitude</FormLabel>
                         <Input
                             defaultValue={long}
-                            type='number'
                             value={longitude}
                             onChange={(e) => {
+                                setIsLongInvalid(false);
                                 setLongitude(+e.target.value);
                             }}
                         />
+                        <Box h={3}>
+                            {isLongInvalid ?
+                                <FormErrorMessage>Longitude must be between -180 to 180.</FormErrorMessage>
+                                :
+                                <FormHelperText/>
+                            }
+                        </Box>
                     </FormControl>
 
                     <HStack mt={3} w='100%'>
@@ -123,6 +137,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                                 color: 'white',
                                 bg: colors.main.acidGreen
                             }}
+                            onClick={resetCoordinates}
                         >
                             Reset
                         </Button>
@@ -132,6 +147,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                             _hover={{
                                 bg: colors.main.mossGreen
                             }}
+                            onClick={searchCoordinates}
                         >Search
                         </Button>
                     </HStack>
