@@ -43,7 +43,7 @@ const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
                 }}
             />
 
-            <Modal isOpen={isOpen} onClose={onClose} size="2xl" >
+            <Modal isOpen={isOpen} onClose={onClose} size="2xl">
                 <ModalOverlay />
                 <ModalContent >
                     <ModalHeader>
@@ -52,7 +52,7 @@ const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
                     </ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <DeviceSettingsTabs />
+                        <DeviceSettingsTabs buoy={buoy} />
                     </ModalBody>
 
                     <ModalFooter>

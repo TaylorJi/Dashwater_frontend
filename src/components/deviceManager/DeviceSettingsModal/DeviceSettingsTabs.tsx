@@ -1,9 +1,13 @@
 import React from "react";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/tabs';
 import colors from '../../../theme/foundations/colours';
+import GeneralSettingsPanel from "./GenrealSettingsPanel/GeneralSettingsPanel";
 
+type deviceSettingsTabsProps = {
+    buoy: buoySettingsType
+}
 
-const DeviceSettingsTabs: React.FC = () => {
+const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy }) => {
     return (
         <Tabs
             mt='1rem'
@@ -43,7 +47,10 @@ const DeviceSettingsTabs: React.FC = () => {
 
             <TabPanels h="30rem">
                 <TabPanel>
-                    <p>General</p>
+                    <GeneralSettingsPanel
+                        name={buoy.name}
+                        lat={buoy.location.y}
+                        long={buoy.location.x} />
                 </TabPanel>
 
                 <TabPanel>
