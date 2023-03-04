@@ -16,7 +16,7 @@
             "id": "1234",
             "location": {
                 "x": 143.23,
-                "y": -111.22
+                "y": -81.22
             },
             "sensors": {
                 "dissolved_solids": {
@@ -80,7 +80,7 @@
             "id": "0124",
             "location": {
                 "x": 144.45,
-                "y": -111.12
+                "y": -81.12
             },
             "sensors": {
                 "dissolved_solids": {
@@ -144,7 +144,7 @@
             "id": "520",
             "location": {
                 "x": 143.20,
-                "y": -111.12
+                "y": -81.12
             },
             "sensors": {
                 "dissolved_solids": {
@@ -208,7 +208,7 @@
             "id": "9999",
             "location": {
                 "x": 150.20,
-                "y": -134.33
+                "y": -81.33
             },
             "sensors": {
                 "dissolved_solids": {

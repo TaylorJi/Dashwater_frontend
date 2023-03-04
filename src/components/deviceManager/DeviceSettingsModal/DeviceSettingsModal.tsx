@@ -56,7 +56,7 @@ const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
                     </ModalBody>
 
                     <ModalFooter>
-                        <Box h="5rem"/>
+                        <Box h="3rem"/>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

@@ -13,8 +13,8 @@ import {
     Button,
     HStack
 } from '@chakra-ui/react';
+import { toast } from 'react-hot-toast';
 import colors from '../../../../theme/foundations/colours';
-import { Form } from 'react-router-dom';
 import { isRealNumber } from '../../../helpers/formHelpers';
 
 type generalSettingsPanelProps = {
@@ -27,7 +27,9 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
     const [isNameInvalid, setIsNameInvalid] = useState<boolean>(false);
     const [isLatInvalid, setIsLatInvalid] = useState<boolean>(false);
     const [isLongInvalid, setIsLongInvalid] = useState<boolean>(false);
+    const [isSaving, setIsSaving] = useState<boolean>(false);
 
+    const [buoyName, setBuoyName] = useState<string>(name);
     const [latitude, setLatitude] = useState<string>(lat.toString());
     const [longitude, setLongitude] = useState<string>(long.toString());
 
@@ -63,14 +65,38 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
     };
 
     const onSave = (): void => {
-        // do some stuff with the set values.
+        const validLat = validLatitude(latitude);
+        const validLong = validLongitude(longitude);
+
+        if (!validLat || !validLong) {
+            setIsLatInvalid(!validLat);
+            setIsLongInvalid(!validLong);
+            return;
+        }
+
+        // Logs below for testing.
+        // console.log(`Buoy Name: ${buoyName}`);
+        // console.log(`Latitude: ${latitude}`);
+        // console.log(`Longitude: ${longitude}`);
+
+        // Save values to db
+        setIsSaving(true);  // trigger loading button
+
+        setTimeout(() => {
+            setIsSaving(false); // turn off loading button
+            toast.success('General settings saved!');
+        }, 500)
+
     };
 
     return (
         <>
             <FormControl isInvalid={isNameInvalid}>
                 <FormLabel>Name</FormLabel>
-                <Input defaultValue={name} />
+                <Input value={buoyName} onChange={(e) => {
+                    setIsNameInvalid(false);
+                    setBuoyName(e.target.value);
+                }} />
                 <Box mb={4}>
                     {isNameInvalid ?
                         <FormErrorMessage>Alias name must not be more than 25 characters long.</FormErrorMessage>
@@ -119,7 +145,6 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                     <FormControl isInvalid={isLongInvalid}>
                         <FormLabel mt={3}>Longitude</FormLabel>
                         <Input
-                            defaultValue={long}
                             value={longitude}
                             onChange={(e) => {
                                 setIsLongInvalid(false);
@@ -162,7 +187,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                 </GridItem>
             </Grid>
 
-            <Flex mt={20} justifyContent="flex-end">
+            <Flex mt={10} justifyContent="flex-end">
                 <Button
                     bg={colors.main.usafaBlue}
                     color="white"
@@ -170,6 +195,9 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                     _hover={{
                         bg: colors.main.ceruBlue
                     }}
+                    isDisabled={isNameInvalid || isLatInvalid || isLongInvalid}
+                    isLoading={isSaving}
+                    loadingText='Saving'
                 >
                     Save General
                 </Button>
