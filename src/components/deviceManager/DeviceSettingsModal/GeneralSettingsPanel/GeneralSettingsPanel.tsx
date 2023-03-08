@@ -29,11 +29,11 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
     const [buoyName, setBuoyName] = useState<string>(name);
     const [latitude, setLatitude] = useState<number | string>(lat);
     const [longitude, setLongitude] = useState<number | string>(long);
-    const [isValid, setIsValid] = useState<boolean>(true);
+    const [isNameValid, setIsNameValid] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const searchCoordinates = async () => {
-
+        // do search stuff
     };
 
     const resetCoordinates = () => {
@@ -65,9 +65,9 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
     useEffect(() => {
         if (buoyName.length === 0 || buoyName.length > 25) {
             toast.error('Name must be between 1 and 25 characters.');
-            setIsValid(false);
+            setIsNameValid(false);
         } else {
-            setIsValid(true);
+            setIsNameValid(true);
         }
         if (latitude > 90 || latitude < -90) {
             toast.error('Latitude must be a valid number.');
@@ -226,7 +226,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                     bg={colors.main.usafaBlue}
                     color='white'
                     isLoading={isLoading}
-                    isDisabled={!isValid}
+                    isDisabled={!isNameValid} // lat & long will self correct
                     onClick={async () => await saveDeviceSettings()}
                     _hover={{
                         bg: colors.main.ceruBlue
