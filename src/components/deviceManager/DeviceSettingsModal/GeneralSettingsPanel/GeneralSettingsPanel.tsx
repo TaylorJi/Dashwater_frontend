@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Box,
     Flex,
     Text,
-    FormControl,
-    FormLabel,
-    FormHelperText,
-    FormErrorMessage,
     Grid,
     GridItem,
     Input,
     Button,
-    HStack
+    Divider,
+    NumberDecrementStepper,
+    NumberIncrementStepper,
+    NumberInput,
+    NumberInputField,
+    NumberInputStepper
 } from '@chakra-ui/react';
 import { toast } from 'react-hot-toast';
 import colors from '../../../../theme/foundations/colours';
-import { isRealNumber } from '../../../helpers/formHelpers';
 
 type generalSettingsPanelProps = {
     name: string;
@@ -24,144 +24,157 @@ type generalSettingsPanelProps = {
 }
 
 const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, long }) => {
-    const [isNameInvalid, setIsNameInvalid] = useState<boolean>(false);
-    const [isLatInvalid, setIsLatInvalid] = useState<boolean>(false);
-    const [isLongInvalid, setIsLongInvalid] = useState<boolean>(false);
-    const [isSaving, setIsSaving] = useState<boolean>(false);
 
     const [buoyName, setBuoyName] = useState<string>(name);
-    const [latitude, setLatitude] = useState<string>(lat.toString());
-    const [longitude, setLongitude] = useState<string>(long.toString());
+    const [latitude, setLatitude] = useState<number | string>(lat);
+    const [longitude, setLongitude] = useState<number | string>(long);
+    const [isValid, setIsValid] = useState<boolean>(true);
 
-    const validLatitude = (latitude: string): boolean => {
-        return isRealNumber(latitude) && -90 <= +latitude && +latitude <= 90;
+    const searchCoordinates = async () => {
+
     };
 
-    const validLongitude = (longitude: string): boolean => {
-        console.log(isRealNumber(longitude));
-        console.log(+longitude);
-        return isRealNumber(longitude) && -180 <= +longitude && +longitude <= 180;
+    const resetCoordinates = () => {
+        setLatitude(lat);
+        setLongitude(long);
     };
 
-    const searchCoordinates = (): undefined => {
-        // validate coordinates
-        const validLat = validLatitude(latitude);
-        const validLong = validLongitude(longitude);
+    const saveToDB = async () => {
 
-        if (!validLat || !validLong) {
-            setIsLatInvalid(!validLat);
-            setIsLongInvalid(!validLong);
-            return;
+    };
+
+    useEffect(() => {
+        if (buoyName.length === 0 || buoyName.length > 25) {
+            toast.error('Name must be between 1 and 25 characters.');
+            setIsValid(false);
+        } else {
+            setIsValid(true);
+        }
+        if (latitude > 90 || latitude < -90) {
+            toast.error('Latitude must be a valid number.');
+        }
+        if (longitude > 180 || longitude < -180) {
+            toast.error('Longitude must be a valid number.');
         }
 
-        // TODO: otherwise, search the map
-    };
-
-    const resetCoordinates = (): void => {
-        setLatitude(lat.toString());
-        setLongitude(long.toString());
-        setIsLatInvalid(false);
-        setIsLongInvalid(false);
-    };
-
-    const onSave = (): void => {
-        const validLat = validLatitude(latitude);
-        const validLong = validLongitude(longitude);
-
-        if (!validLat || !validLong) {
-            setIsLatInvalid(!validLat);
-            setIsLongInvalid(!validLong);
-            return;
-        }
-
-        // Logs below for testing.
-        // console.log(`Buoy Name: ${buoyName}`);
-        // console.log(`Latitude: ${latitude}`);
-        // console.log(`Longitude: ${longitude}`);
-
-        // Save values to db
-        setIsSaving(true);  // trigger loading button
-
-        setTimeout(() => {
-            setIsSaving(false); // turn off loading button
-            toast.success('General settings saved!');
-        }, 500)
-
-    };
+    }, [buoyName, latitude, longitude]);
 
     return (
-        <>
-            <FormControl isInvalid={isNameInvalid}>
-                <FormLabel>Name</FormLabel>
-                <Input value={buoyName} onChange={(e) => {
-                    setIsNameInvalid(false);
-                    setBuoyName(e.target.value);
-                }} />
-                <Box mb={4}>
-                    {isNameInvalid ?
-                        <FormErrorMessage>Alias name must not be more than 25 characters long.</FormErrorMessage>
-                        :
-                        <FormHelperText>
-                            Enter the alias name for the device.
-                        </FormHelperText>
-                    }
-                </Box>
-            </FormControl>
-
-            <hr />
-
-            <Text size={'xl'} mt={7} fontWeight='semibold'>Location</Text>
-            <Grid templateAreas={
-                `"map coordinates"`
-            }
-                gridTemplateColumns={'1fr 1fr'}
-                mt={4}
-                gap={3}
-                h='16rem'
+        <Box>
+            <Text
+                fontWeight='semibold'
+                mb='0.25rem'
             >
-                <GridItem pl='2' bg='orange.300' area={'map'} borderRadius={3}>
+                Name
+            </Text>
+            <Input
+                isInvalid={buoyName.length === 0 || buoyName.length > 25}
+                value={buoyName}
+                onChange={(e) => {
+                    const newName = e.target.value;
+                    setBuoyName(newName);
+                }}
+            />
+            <Text
+                fontSize='sm'
+                color='gray.500'
+                my='0.25rem'
+            >
+                Enter the alias name for the device.
+            </Text>
+
+            <Divider
+                my='1rem'
+            />
+
+            <Grid
+                templateColumns='repeat(2, 1fr)'
+                gap='3'
+            >
+                <GridItem
+                    w='100%'
+                    bg='orange.300'
+                >
                     Map goes here
                 </GridItem>
-
-                <GridItem>
-                    <FormControl isInvalid={isLatInvalid}>
-                        <FormLabel>Latitude</FormLabel>
-                        <Input
-                            value={latitude}
-                            onChange={e => {
-                                setIsLatInvalid(false);
-                                setLatitude(e.target.value);
-                            }}
-                        />
-                        <Box h={3}>
-                            {isLatInvalid ?
-                                <FormErrorMessage>Input a number between -90 to 90.</FormErrorMessage>
-                                :
-                                <FormHelperText />
+                <GridItem
+                    w='100%'
+                >
+                    <Text
+                        fontWeight='semibold'
+                        mb='0.25rem'
+                    >
+                        Latitude
+                    </Text>
+                    <NumberInput
+                        value={latitude}
+                        min={-90}
+                        max={90}
+                        onChange={(e) => {
+                            if (e === '-') {
+                                setLatitude('-');
+                            } else if (e === '') {
+                                setLatitude('');
+                            } else {
+                                if (!isNaN(parseFloat(e))) {
+                                    setLatitude(e);
+                                }
                             }
-                        </Box>
-                    </FormControl>
-
-                    <FormControl isInvalid={isLongInvalid}>
-                        <FormLabel mt={3}>Longitude</FormLabel>
-                        <Input
-                            value={longitude}
-                            onChange={(e) => {
-                                setIsLongInvalid(false);
-                                setLongitude(e.target.value);
-                            }}
-                        />
-                        <Box h={3}>
-                            {isLongInvalid ?
-                                <FormErrorMessage>Input a number between -180 to 180.</FormErrorMessage>
-                                :
-                                <FormHelperText />
+                        }}
+                        onBlur={(e) => {
+                            // quirk on chakra's part, but I can't make it reset to default if the value is "-",
+                            // it just goes to the minimum, e.g. -90
+                            if (e.target.value === '') {
+                                setLatitude(lat);
                             }
-                        </Box>
-                    </FormControl>
+                        }}
+                    >
+                        <NumberInputField />
+                        <NumberInputStepper>
+                            <NumberIncrementStepper />
+                            <NumberDecrementStepper />
+                        </NumberInputStepper>
+                    </NumberInput>
 
-                    <HStack mt={3} w='100%'>
+                    <Text
+                        mt='1rem'
+                        mb='0.25rem'
+                        fontWeight='semibold'
+                    >
+                        Longitude
+                    </Text>
+                    <NumberInput
+                        value={longitude}
+                        min={-180}
+                        max={180}
+                        onChange={(e) => {
+                            if (e === '-') {
+                                setLongitude('-');
+                            } else if (e === '') {
+                                setLongitude('');
+                            } else {
+                                if (!isNaN(parseFloat(e))) {
+                                    setLongitude(e);
+                                }
+                            }
+                        }}
+                        onBlur={(e) => {
+                            if (e.target.value === '') {
+                                setLongitude(long);
+                            }
+                        }}
+                    >
+                        <NumberInputField />
+                        <NumberInputStepper>
+                            <NumberIncrementStepper />
+                            <NumberDecrementStepper />
+                        </NumberInputStepper>
+                    </NumberInput>
+                    <Flex
+                        mt='1.25rem'
+                    >
                         <Button
+                            mr='0.25rem'
                             border='1px'
                             borderColor={colors.main.acidGreen}
                             color={colors.main.acidGreen}
@@ -170,7 +183,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                                 color: 'white',
                                 bg: colors.main.acidGreen
                             }}
-                            onClick={resetCoordinates}
+                            onClick={() => resetCoordinates()}
                         >
                             Reset
                         </Button>
@@ -183,26 +196,27 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                             onClick={searchCoordinates}
                         >Search
                         </Button>
-                    </HStack>
+                    </Flex>
                 </GridItem>
             </Grid>
-
-            <Flex mt={10} justifyContent="flex-end">
+            <Flex
+                mt='2rem'
+                justifyContent='flex-end'
+            >
                 <Button
                     bg={colors.main.usafaBlue}
-                    color="white"
-                    onClick={onSave}
+                    color='white'
+                    isDisabled={!isValid}
+                    onClick={() => { }}
                     _hover={{
                         bg: colors.main.ceruBlue
                     }}
-                    isDisabled={isNameInvalid || isLatInvalid || isLongInvalid}
-                    isLoading={isSaving}
                     loadingText='Saving'
                 >
                     Save General
                 </Button>
             </Flex>
-        </>
+        </Box>
 
     );
 };

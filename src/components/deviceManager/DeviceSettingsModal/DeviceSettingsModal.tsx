@@ -54,10 +54,6 @@ const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
                     <ModalBody>
                         <DeviceSettingsTabs buoy={buoy} />
                     </ModalBody>
-
-                    <ModalFooter>
-                        <Box h="3rem"/>
-                    </ModalFooter>
                 </ModalContent>
             </Modal>
         </>
