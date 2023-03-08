@@ -212,7 +212,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                             _hover={{
                                 bg: colors.main.mossGreen
                             }}
-                            onClick={searchCoordinates}
+                            onClick={() => searchCoordinates()}
                         >Search
                         </Button>
                     </Flex>
