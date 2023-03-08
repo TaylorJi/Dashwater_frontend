@@ -45,7 +45,9 @@ const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy }) => {
                 </Tab>
             </TabList>
 
-            <TabPanels h="30rem">
+            <TabPanels
+                h='fit-content'
+            >
                 <TabPanel>
                     <GeneralSettingsPanel
                         name={buoy.name}
