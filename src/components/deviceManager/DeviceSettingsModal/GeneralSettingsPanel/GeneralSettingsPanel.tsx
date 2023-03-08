@@ -45,7 +45,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
         // here to keep TS happy, they will always be numbers by the time this is called
         if (typeof latitude === 'number' && typeof latitude === 'number') {
             setIsLoading(true);
-            const response = await ManageDevices.saveDeviceSettings(name, latitude, latitude);
+            const response = await ManageDevices.saveDeviceSettings(buoyName, latitude, latitude);
             if (response) {
                 toast.success('Device settings saved!');
             } else {
@@ -63,20 +63,17 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
     };
 
     useEffect(() => {
-        if (buoyName.length === 0 || buoyName.length > 25) {
+        // Doing this instead of just guarding against 0 length value because
+        // that would prevent users from being able to backspace entrely.
+        // If this is actually triggered though, the blur will correct/reset
+        // to default value.
+        if ((buoyName.length === 0 || buoyName.length > 25) && isNameValid) {
             toast.error('Name must be between 1 and 25 characters.');
             setIsNameValid(false);
         } else {
             setIsNameValid(true);
         }
-        if (latitude > 90 || latitude < -90) {
-            toast.error('Latitude must be a valid number.');
-        }
-        if (longitude > 180 || longitude < -180) {
-            toast.error('Longitude must be a valid number.');
-        }
-
-    }, [buoyName, latitude, longitude]);
+    }, [buoyName]);
 
     return (
         <Box>
@@ -87,11 +84,15 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                 Name
             </Text>
             <Input
-                isInvalid={buoyName.length === 0 || buoyName.length > 25}
                 value={buoyName}
                 onChange={(e) => {
                     const newName = e.target.value;
                     setBuoyName(newName);
+                }}
+                onBlur={() => {
+                    if (buoyName.length === 0 || buoyName.length > 25) {
+                        setBuoyName(name);
+                    }
                 }}
             />
             <Text
