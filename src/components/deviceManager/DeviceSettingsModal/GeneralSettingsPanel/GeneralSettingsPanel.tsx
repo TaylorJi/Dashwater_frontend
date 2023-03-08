@@ -62,19 +62,6 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
 
     };
 
-    useEffect(() => {
-        // Doing this instead of just guarding against 0 length value because
-        // that would prevent users from being able to backspace entrely.
-        // If this is actually triggered though, the blur will correct/reset
-        // to default value.
-        if ((buoyName.length === 0 || buoyName.length > 25) && isNameValid) {
-            toast.error('Name must be between 1 and 25 characters.');
-            setIsNameValid(false);
-        } else {
-            setIsNameValid(true);
-        }
-    }, [buoyName]);
-
     return (
         <Box>
             <Text
@@ -91,6 +78,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                 }}
                 onBlur={() => {
                     if (buoyName.length === 0 || buoyName.length > 25) {
+                        toast.error('Name must be between 1 and 25 characters.');
                         setBuoyName(name);
                     }
                 }}
