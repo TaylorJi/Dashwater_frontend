@@ -16,6 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { toast } from 'react-hot-toast';
 import colors from '../../../../theme/foundations/colours';
+import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
 
 type generalSettingsPanelProps = {
     name: string;
@@ -29,6 +30,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
     const [latitude, setLatitude] = useState<number | string>(lat);
     const [longitude, setLongitude] = useState<number | string>(long);
     const [isValid, setIsValid] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const searchCoordinates = async () => {
 
@@ -39,7 +41,24 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
         setLongitude(long);
     };
 
-    const saveToDB = async () => {
+    const saveDeviceSettings = async () => {
+        // here to keep TS happy, they will always be numbers by the time this is called
+        if (typeof latitude === 'number' && typeof latitude === 'number') {
+            setIsLoading(true);
+            const response = await ManageDevices.saveDeviceSettings(name, latitude, latitude);
+            if (response) {
+                toast.success('Device settings saved!');
+            } else {
+                toast.error('There was a problem saving your device settings. Please try again.');
+            }
+            setIsLoading(false);
+
+        } else {
+            // this is actually an impossible state, but here just in case something breaks
+            toast.error('There was a problem with your coordinates. Please try inputting again.');
+            resetCoordinates();
+        }
+
 
     };
 
@@ -117,7 +136,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                                 setLatitude('');
                             } else {
                                 if (!isNaN(parseFloat(e))) {
-                                    setLatitude(e);
+                                    setLatitude(parseFloat(e));
                                 }
                             }
                         }}
@@ -154,7 +173,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                                 setLongitude('');
                             } else {
                                 if (!isNaN(parseFloat(e))) {
-                                    setLongitude(e);
+                                    setLongitude(parseFloat(e));
                                 }
                             }
                         }}
@@ -206,8 +225,9 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                 <Button
                     bg={colors.main.usafaBlue}
                     color='white'
+                    isLoading={isLoading}
                     isDisabled={!isValid}
-                    onClick={() => { }}
+                    onClick={async () => await saveDeviceSettings()}
                     _hover={{
                         bg: colors.main.ceruBlue
                     }}
