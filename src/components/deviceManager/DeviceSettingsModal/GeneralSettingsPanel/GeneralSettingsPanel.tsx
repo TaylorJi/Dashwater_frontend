@@ -29,7 +29,6 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
     const [buoyName, setBuoyName] = useState<string>(name);
     const [latitude, setLatitude] = useState<number | string>(lat);
     const [longitude, setLongitude] = useState<number | string>(long);
-    const [isNameValid, setIsNameValid] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const searchCoordinates = async () => {
@@ -215,7 +214,6 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                     bg={colors.main.usafaBlue}
                     color='white'
                     isLoading={isLoading}
-                    isDisabled={!isNameValid} // lat & long will self correct
                     onClick={async () => await saveDeviceSettings()}
                     _hover={{
                         bg: colors.main.ceruBlue
