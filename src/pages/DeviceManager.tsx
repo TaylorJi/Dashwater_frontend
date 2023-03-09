@@ -6,7 +6,7 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DeviceManagerTable from "../components/deviceManager/DeviceManagerTable/DeviceManagerTable";
 import colors from "../theme/foundations/colours";
-import MapModal from '../components/map/MapModal';
+import MapModal from '../components/map/mapModal/MapModal';
 import {
   Button,
   Flex,

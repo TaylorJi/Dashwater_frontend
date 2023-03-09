@@ -8,13 +8,13 @@ import {
   ScaleControl,
 } from "react-leaflet";
 import L, { LatLng, divIcon } from "leaflet";
-import mapMarkerBlue from "../../assets/images/mapMarkers/marker-icon-2x.png";
-import mapMarkerGrey from "../../assets/images/mapMarkers/marker-icon-2x-grey.png";
-import iconRetinaBlue from "../../assets/images/mapMarkers/marker-icon.png";
-import iconRetinaGrey from "../../assets/images/mapMarkers/marker-icon-grey.png";
-import iconShadow from "../../assets/images/mapMarkers/marker-shadow.png";
-import "./mapStyles.css";
-import { SelectContext } from "./SelectContext";
+import mapMarkerBlue from "../../../assets/images/mapMarkers/marker-icon-2x.png";
+import mapMarkerGrey from "../../../assets/images/mapMarkers/marker-icon-2x-grey.png";
+import iconRetinaBlue from "../../../assets/images/mapMarkers/marker-icon.png";
+import iconRetinaGrey from "../../../assets/images/mapMarkers/marker-icon-grey.png";
+import iconShadow from "../../../assets/images/mapMarkers/marker-shadow.png";
+import "../mapStyles.css";
+import { SelectContext } from "../SelectContext";
 
 type markerPropsType = {
   buoyId: number;
@@ -29,7 +29,7 @@ const MapMarker: React.FC<markerPropsType> = ({buoyId, key, coords}) => {
   const {selected, ids} = React.useContext(SelectContext);
   const [color, setColor] = React.useState<string>(mapMarkerGrey);
   const [retina, setRetina] = React.useState<string>(mapMarkerBlue);
-
+  
   
 
   React.useEffect(() => {
@@ -38,9 +38,9 @@ const MapMarker: React.FC<markerPropsType> = ({buoyId, key, coords}) => {
       setRetina(iconRetinaBlue)
     } else {
       setColor(mapMarkerGrey)
-      setRetina(mapMarkerGrey)
+      setRetina(iconRetinaGrey)
     };
-  }, [ids]);
+  }, [ids, buoyId]);
 
   const icon: L.Icon = L.icon({
     iconRetinaUrl: retina,

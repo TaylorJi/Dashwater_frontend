@@ -1,6 +1,6 @@
 import L, { Control, ControlPosition, LayerEvent, rectangle } from "leaflet";
 import React, { useEffect } from "react";
-import "./mapStyles.css";
+import "../mapStyles.css";
 
 import {
   MapContainer,
@@ -31,9 +31,6 @@ type mapProps = {
 const Map: React.FC<mapProps> = (props: mapProps) => {
   const [map, setMap] = React.useState<any>();
 
-  // let buoyList = props.buoys
-
-  //TODO: Add points for coordinates
   return (
     <MapContainer
       id="mapId"
@@ -43,6 +40,7 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
       center={props.center}
       ref={setMap}
       zoomControl={false}
+      bounceAtZoomLimits={true}
     >
       <FeatureGroup>
         <ZoomControl position="bottomright" />

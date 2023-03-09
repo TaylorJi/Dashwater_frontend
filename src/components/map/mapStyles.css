@@ -7,12 +7,16 @@
 
 #mapId {
     height: 400px;
-    width: 100%;
+    width: 80%;
     position: relative;
-    border-radius: 2.5%;
+    border-radius: 2.5% !important;
   }
 
   .leaflet-draw-actions {
     display: none !important;
+  }
+
+  #mapModal {
+    margin-top: 40000px;
   }
 

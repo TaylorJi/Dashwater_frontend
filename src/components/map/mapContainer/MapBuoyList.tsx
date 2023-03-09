@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import buoyData from "../../mockData/mockBuoyData.json";
+import buoyData from "../../../mockData/mockBuoyData.json";
 import MapListItem from './MapListItem';
 
 import {
@@ -13,9 +13,9 @@ import {
 const MapBuoyList: React.FC<buoyMapInfo> = (props) => {
 
     return (
-    <Card minWidth={'30%'}>   
+    <Card minW={'30%'} minH={'400px'} >   
       <CardBody >
-        <Stack minHeight={'15rem'}>
+        <Stack>
         {
         props.buoys ? props.buoys.map((buoy)=>(
           <MapListItem deviceName={buoy.name} id={buoy.id}/>

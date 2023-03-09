@@ -1,3 +1,9 @@
+/**
+ * This module contains the context to enable the checkboxes to set marker colors
+ *  TODO: and vice versa. 
+ * This allows for functions to be passed directly to/from MapListItem and MapMarker 
+ * of the map modal without having to pass props to/from MapBuoyList and Map.
+ */
 import React from "react";
 
 type selectedContextType = {

@@ -1,10 +1,14 @@
 import React from "react";
 import { EditControl } from "react-leaflet-draw";
 import "leaflet-draw/dist/leaflet.draw.css";
-import "./mapStyles.css";
+import "../mapStyles.css";
 import { ControlPosition, LayerEvent, Control } from "leaflet";
+import colors from "../../../theme/foundations/colours";
 
 //TODO: Add functionality for handlers
+//TODO: Fix drawbox; limit drawing to single rectangle each time
+//TODO: Change the layout and design of edit controls
+
 
 interface EditControlProps {
   position?: ControlPosition;
@@ -23,12 +27,12 @@ const BoxSelector: React.FC = () => {
       draw={{
         rectangle: {
           shapeOptions: {
-            color: "red",
+            color: colors.main.acidGreen,
           },
           repeatMode: false,
           allowIntersection: false,
           drawError: {
-            color: "red",
+            color: "blue",
             message: "Draw Error",
           },
           showArea: true,

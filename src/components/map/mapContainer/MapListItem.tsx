@@ -1,6 +1,6 @@
 import { Checkbox, HStack, Text } from "@chakra-ui/react";
 import React, { useContext } from "react";
-import { SelectContext } from "./SelectContext";
+import { SelectContext } from "../SelectContext";
 
 type listItemProps = {
   deviceName: string;
