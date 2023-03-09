@@ -1,0 +1,18 @@
+/* Important for react-leaflet map to load visually 
+      and connect css loaders to node modules.
+    Also replaces the need to have the CDN link in index.html 
+      TODO: which should be removed after testing&development.
+*/
+@import '~leaflet/dist/leaflet.css';
+
+#mapId {
+    height: 400px;
+    width: 100%;
+    position: relative;
+    border-radius: 2.5%;
+  }
+
+  .leaflet-draw-actions {
+    display: none !important;
+  }
+
