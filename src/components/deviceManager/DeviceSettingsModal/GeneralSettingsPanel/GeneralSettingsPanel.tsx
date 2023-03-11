@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import {
-    Box,
     Flex,
     Text,
     Grid,
     GridItem,
     Input,
+    Icon,
     Button,
     Divider,
+    Tooltip,
     NumberDecrementStepper,
     NumberIncrementStepper,
     NumberInput,
@@ -17,6 +18,8 @@ import {
 import { toast } from 'react-hot-toast';
 import colors from '../../../../theme/foundations/colours';
 import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 type generalSettingsPanelProps = {
     name: string;
@@ -62,7 +65,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
     };
 
     return (
-        <Box>
+        <>
             <Text
                 fontWeight='semibold'
                 mb='0.25rem'
@@ -82,7 +85,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                     }
                 }}
             />
-            <Text
+            <Text as='span'
                 fontSize='sm'
                 color='gray.500'
                 my='0.25rem'
@@ -112,11 +115,23 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                         mb='0.25rem'
                     >
                         Latitude
+                        <Tooltip label='Latitude must be between -90° and 90°'>
+                            <Icon
+                                ml={2}
+                                mb={0.5}
+                                as={FontAwesomeIcon}
+                                icon={faInfoCircle}
+                                color='main.activeSideBar'
+                                boxSize={3.5}
+                            />
+                        </Tooltip>
                     </Text>
+
                     <NumberInput
                         value={latitude}
-                        min={-90}
-                        max={90}
+                        min={-90.0}
+                        max={90.0}
+                        precision={2}
                         onChange={(e) => {
                             if (e === '-') {
                                 setLatitude('-');
@@ -149,11 +164,22 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                         fontWeight='semibold'
                     >
                         Longitude
+
+                        <Tooltip label='Longitude must be between -180° and 180°'>
+                            <Icon
+                                ml={2}
+                                mb={0.5}
+                                as={FontAwesomeIcon}
+                                icon={faInfoCircle}
+                                color='main.activeSideBar'
+                                boxSize={3.5}
+                            />
+                        </Tooltip>
                     </Text>
                     <NumberInput
                         value={longitude}
-                        min={-180}
-                        max={180}
+                        min={-180.0}
+                        max={180.0}
                         onChange={(e) => {
                             if (e === '-') {
                                 setLongitude('-');
@@ -223,7 +249,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
                     Save General
                 </Button>
             </Flex>
-        </Box>
+        </>
 
     );
 };
