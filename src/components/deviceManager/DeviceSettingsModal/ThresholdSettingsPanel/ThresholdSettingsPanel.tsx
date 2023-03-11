@@ -1,5 +1,13 @@
 import React from 'react';
-import { Table, Thead, Tbody, Tr, Th } from '@chakra-ui/react';
+import { 
+    Table, 
+    Thead, 
+    Tbody, 
+    Tr, 
+    Th,
+    Flex,
+    Button
+} from '@chakra-ui/react';
 import { buoySensorTags } from '../../../../theme/metrics/buoySensorTags';
 import ThresholdSettingsRow from './ThresholdSettingsRow';
 
@@ -12,32 +20,38 @@ type thresholdSettingsPanelProps = {
 
 
 const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ sensors }) => {
+    
+    const saveThresholdSettings = async () => {
+        
+    }
+
     return (
-        <Table>
+        <>
+            <Table>
 
-            <Thead>
-                <Tr>
-                    <Th>Metric</Th>
-                    <Th>Min</Th>
-                    <Th>Max</Th>
-                    <Th>Available</Th>
-                    <Th>Alert</Th>
-                </Tr>
-            </Thead>
-            <Tbody>
-                { 
-                    Object.keys(sensors).map((metricSensor => {
-                        return(
-                            <ThresholdSettingsRow 
-                                metric={buoySensorTags[metricSensor].label}
-                                metricSensor={sensors[metricSensor]}
+                <Thead>
+                    <Tr>
+                        <Th>Metric</Th>
+                        <Th>Min</Th>
+                        <Th>Max</Th>
+                        <Th>Available</Th>
+                        <Th>Alert</Th>
+                    </Tr>
+                </Thead>
+                <Tbody>
+                    {
+                        Object.keys(sensors).map((metricSensor => {
+                            return (
+                                <ThresholdSettingsRow
+                                    metric={buoySensorTags[metricSensor].label}
+                                    metricSensor={sensors[metricSensor]}
                                 />
-                        );
-                    }))
-                }
-            </Tbody>
-
-        </Table>
+                            );
+                        }))
+                    }
+                </Tbody>
+            </Table>
+        </>
     );
 }
 

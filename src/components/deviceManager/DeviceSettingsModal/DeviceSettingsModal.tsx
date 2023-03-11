@@ -41,7 +41,7 @@ const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
                 }}
             />
 
-            <Modal isOpen={isOpen} onClose={onClose} size="2xl">
+            <Modal isOpen={isOpen} onClose={onClose} size="3xl">
                 <ModalOverlay />
                 <ModalContent >
                     <ModalHeader>
