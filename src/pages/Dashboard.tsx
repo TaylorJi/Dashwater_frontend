@@ -3,6 +3,7 @@ import React from 'react';
 import DashboardTabs from '../components/dashboard/DashboardTabs';
 import DashboardTopNav from '../components/dashboard/DashboardTopNav';
 import DashboardTopSelect from '../components/dashboard/DashboardTopSelect';
+import MapCard from '../components/dashboard/map/MapCard';
 import TideCard from '../components/dashboard/tide/TideCard';
 import WeatherCard from '../components/dashboard/weather/WeatherCard';
 import BaseCard from '../components/layout/BaseCard';
@@ -38,6 +39,7 @@ const Dashboard: React.FC = () => {
 
                         <WeatherCard />
                         <TideCard />
+                        <MapCard/>
 
                     </Box>
 

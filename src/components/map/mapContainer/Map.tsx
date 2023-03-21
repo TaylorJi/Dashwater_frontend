@@ -33,8 +33,6 @@ type mapProps = {
 const Map: React.FC<mapProps> = (props: mapProps) => {
   const [map, setMap] = React.useState<any>();
 
-
-
   return (
     <MapContainer
       id="mapId"
@@ -62,7 +60,7 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
             <MapMarker buoyId={b.id} key={index} coords={[b.x, b.y]} />
           ))
         : <></>} 
-        
+
 
     </MapContainer>
 
