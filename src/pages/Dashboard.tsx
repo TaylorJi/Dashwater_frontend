@@ -16,7 +16,7 @@ const Dashboard: React.FC = () => {
     return (
         <BaseLayout isNavbarVisible={true}>
             <Flex
-                w={isLargeScreen ? '95%' : '93%'}
+                w={isLargeScreen ? '95%' : '93.25%'}
                 minH='100vh'
             >
                 {/* Monitor panel */}
