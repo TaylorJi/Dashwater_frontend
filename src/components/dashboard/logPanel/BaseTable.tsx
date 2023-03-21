@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Thead, Tbody, Tr, Th, Td, chakra, Box } from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Td, chakra, Box, useMediaQuery } from "@chakra-ui/react";
 import { TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
 import {
     useReactTable,
@@ -31,19 +31,22 @@ export function BaseTable<Data extends object>({
         }
     });
 
+    const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
+
     return (
 
-        <Box display={'flex'} justifyContent={'space-between'} p={3}>
+        <Box display={'flex'} justifyContent={'space-between'}>
             <Table>
                 <Thead>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <Tr key={headerGroup.id}>
                             {headerGroup.headers.map((header) => {
-                                // see https://tanstack.com/table/v8/docs/api/core/column-def#meta to type this correctly
                                 const meta: any = header.column.columnDef.meta;
                                 return (
                                     <Th
                                         textAlign='center'
+                                        whiteSpace='nowrap'
+                                        fontSize={isLargeScreen ? 'xs' : '2xs'}
                                         key={header.id}
                                         onClick={header.column.getToggleSortingHandler()}
                                         isNumeric={meta?.isNumeric}
@@ -72,7 +75,6 @@ export function BaseTable<Data extends object>({
                     {table.getRowModel().rows.map((row) => (
                         <Tr key={row.id}>
                             {row.getVisibleCells().map((cell) => {
-                                // see https://tanstack.com/table/v8/docs/api/core/column-def#meta to type this correctly
                                 const meta: any = cell.column.columnDef.meta;
                                 return (
                                     <Td

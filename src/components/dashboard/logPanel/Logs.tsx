@@ -1,17 +1,18 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { BaseTable } from './BaseTable';
 import { mockLogData } from '../../../mockData/dashboardMockData';
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Text, useMediaQuery } from '@chakra-ui/react';
 
 const Logs: React.FC = () => {
 
+    const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
     const columnHelper = createColumnHelper<logDataType>();
 
     const columns = [
         columnHelper.accessor('id', {
             cell: ({ getValue }) => {
                 const val = getValue<string>();
-                return (<Text textAlign='center'>{val}</Text>);
+                return (<Text textAlign='center' fontSize={isLargeScreen ? 'md' : 'sm'}>{val}</Text>);
             },
             header: 'ID',
             meta: {
@@ -21,14 +22,14 @@ const Logs: React.FC = () => {
         columnHelper.accessor('time', {
             cell: ({ getValue }) => {
                 const val = getValue<string>();
-                return (<Text textAlign='center' fontSize='sm'>{val}</Text>);
+                return (<Text textAlign='center' fontSize={isLargeScreen ? 'sm' : 'xs'}>{val}</Text>);
             },
             header: 'Time'
         }),
         columnHelper.accessor('dissolvedOxygen', {
             cell: ({ getValue }) => {
                 const val = getValue<string>();
-                return (<Text textAlign='center'>{val}</Text>);
+                return (<Text textAlign='center' fontSize={isLargeScreen ? 'md' : 'sm'}>{val}</Text>);
             },
             header: 'Dissolved Oxygen',
             meta: {
@@ -38,7 +39,7 @@ const Logs: React.FC = () => {
         columnHelper.accessor('electricalConductivity', {
             cell: ({ getValue }) => {
                 const val = getValue<string>();
-                return (<Text textAlign='center'>{val}</Text>);
+                return (<Text textAlign='center' fontSize={isLargeScreen ? 'md' : 'sm'}>{val}</Text>);
             },
             header: 'Electrical Conductivity',
             meta: {
@@ -48,7 +49,7 @@ const Logs: React.FC = () => {
         columnHelper.accessor('pH', {
             cell: ({ getValue }) => {
                 const val = getValue<string>();
-                return (<Text textAlign='center'>{val}</Text>);
+                return (<Text textAlign='center' fontSize={isLargeScreen ? 'md' : 'sm'}>{val}</Text>);
             },
             header: 'pH',
             meta: {
@@ -58,7 +59,7 @@ const Logs: React.FC = () => {
         columnHelper.accessor('turbidity', {
             cell: ({ getValue }) => {
                 const val = getValue<string>();
-                return (<Text textAlign='center'>{val}</Text>);
+                return (<Text textAlign='center' fontSize={isLargeScreen ? 'md' : 'sm'}>{val}</Text>);
             },
             header: 'Turbidity',
             meta: {
@@ -68,7 +69,7 @@ const Logs: React.FC = () => {
         columnHelper.accessor('totalDissolvedSolids', {
             cell: ({ getValue }) => {
                 const val = getValue<string>();
-                return (<Text textAlign='center'>{val}</Text>);
+                return (<Text textAlign='center' fontSize={isLargeScreen ? 'md' : 'sm'}>{val}</Text>);
             },
             header: 'Total Dissolved Solids',
             meta: {
@@ -78,7 +79,7 @@ const Logs: React.FC = () => {
         columnHelper.accessor('temperature', {
             cell: ({ getValue }) => {
                 const val = getValue<string>();
-                return (<Text textAlign='center'>{val}</Text>);
+                return (<Text textAlign='center' fontSize={isLargeScreen ? 'md' : 'sm'}>{val}</Text>);
             },
             header: 'Temperature',
             meta: {
