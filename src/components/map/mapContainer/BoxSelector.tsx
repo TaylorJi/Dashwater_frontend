@@ -28,7 +28,7 @@ const BoxSelector: React.FC = () => {
         rectangle: {
           shapeOptions: {
             // Pl
-            color: colors.main.acidGreen,
+            color: "yellow",
           },
           repeatMode: false,
           allowIntersection: false,
