@@ -18,7 +18,7 @@ const MapListItem: React.FC<listItemProps> = ({ deviceName, id }) => {
     const isChecked = event.target.checked;
     updateSelected(isChecked, id);
     if (isChecked) updateIds([...ids, id]);
-    else updateIds(ids.filter((currentId) => currentId !== id));
+    else updateIds(ids.filter(currentId => currentId !== id));
   };
 
   React.useEffect(() => {

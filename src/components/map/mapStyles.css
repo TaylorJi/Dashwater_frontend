@@ -20,8 +20,10 @@
   }
 
   #mapCardId {
-    height: 400px;
-    width: auto;
+    height: 225px;
+    width: 100%;
     position: relative;
-    border-radius: 2.5% !important;
+    border-radius: 0.5rem !important;
+    border-width: 0.1rem;
+    border-color: rgb(224, 224, 224);
   }

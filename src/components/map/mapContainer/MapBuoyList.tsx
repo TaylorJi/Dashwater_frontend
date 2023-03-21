@@ -17,7 +17,7 @@ const MapBuoyList: React.FC<buoyMapInfo> = (props) => {
       <CardBody >
         <Stack>
         {
-        props.buoys ? props.buoys.map((buoy)=>(
+        props.buoys ? props.buoys.map(buoy=>(
           <MapListItem deviceName={buoy.name} id={buoy.id}/>
         )) : <Text>No devices currently available</Text>
       }

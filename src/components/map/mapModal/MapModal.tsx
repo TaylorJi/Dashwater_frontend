@@ -20,6 +20,7 @@ import colors from "../../../theme/foundations/colours";
 import typography from "../../../theme/foundations/typography";
 import mockBuoyData from "../../../mockData/mockBuoyIdData.json";
 import { tileServer, mapModalSpecs } from "../mapConstants";
+import { getBuoyMapData } from "../mapHelpers";
 
 type MapModalProps = {
   isOpen: boolean;
@@ -29,22 +30,9 @@ type MapModalProps = {
 const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
   const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
 
-  // To convert id string to number for use in select context id array
-  const buoyMapData = (buoyData: buoyInfo) => {
-    let mapData: { name: string; id: number; x: number; y: number }[] = [];
-    buoyData.buoys?.map((buoy) => {
-      mapData.push({
-        name: buoy.name,
-        id: Number(buoy.id),
-        x: buoy.location.x,
-        y: buoy.location.y,
-      });
-    });
-    if (!mapData) return [];
-    return mapData;
-  };
+  const { long, lat, zVal, zSet, cLong, cLat } = mapModalSpecs;
 
-  const propData = buoyMapData(mockBuoyData);
+  const propData = getBuoyMapData(mockBuoyData);
 
   const urlArc = tileServer.ARC_MAP;
   const urlCarto = tileServer.CARTO_MAP;
@@ -63,7 +51,6 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
     setIds(newIds);
   };
 
-  
   const selectContext = React.useMemo(() => {
     return {
       selected,
@@ -73,17 +60,15 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
     };
   }, [selected, ids]);
 
-  // This function is needed to pass state to onClick
-  //  for modal close button to reset the state of ids.
   const clearIdList = () => {
     setIds([]);
   };
 
   React.useEffect(() => {
     if (!isOpen) {
-      // TODO: Find a way to transfer this list of ids 
+      // TODO: Find a way to transfer this list of ids
       //       to the parent component before clearing id list.
-      // Alternative: clearIdList onOpen instead 
+      // Alternative: clearIdList onOpen instead
       //                to allow for array to be used in manage devices
       clearIdList();
     }
@@ -113,14 +98,16 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
             <SelectContext.Provider value={selectContext}>
               <MapBuoyList buoys={propData} />
               <Map
-                long={mapModalSpecs.long}
-                lat={mapModalSpecs.lat}
-                zoomVal={mapModalSpecs.zVal}
-                zoomSet={mapModalSpecs.zSet}
-                center={[mapModalSpecs.cLat, mapModalSpecs.cLong]}
+                long={long}
+                lat={lat}
+                zoomVal={zVal}
+                zoomSet={zSet}
+                center={[cLat, cLong]}
                 buoys={propData}
                 tilePath={tilePath}
                 drawable={true}
+                mapId={"mapId"}
+                isModal={true}
               />
             </SelectContext.Provider>
           </HStack>
