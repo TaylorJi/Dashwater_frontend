@@ -80,6 +80,7 @@ export function BaseTable<Data extends object>({
                                     <Td
                                         key={cell.id}
                                         isNumeric={meta?.isNumeric}
+                                        p={isLargeScreen ? '0.75rem' : '0.5rem'}
                                     >
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                     </Td>
