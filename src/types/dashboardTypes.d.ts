@@ -16,16 +16,6 @@ type weatherForecastType = {
     low: number;
 };
 
-type graphDataType = {
-    [key: string]: number | string;
-};
-
-type tideDataResType = {
-    high: rawTideExtremeDataType[];
-    low: rawTideExtremeDataType[];
-    allData: graphDataType[];
-};
-
 type deviceDataType = {
     [key: string]: measureType[]
 }
@@ -43,8 +33,14 @@ type rawTideExtremeDataType = {
     type: string;
 }
 
-type tideDataResType = {
-    high: rawTideExtremeDataType[];
-    low: rawTideExtremeDataType[];
-    allData: tideDataType[];
+type graphDataType = {
+    [key: string]: number | string;
+};
+
+type logDataType = {
+    id: number;
+    time: string;
+    dissolvedOxygen: number;
+    electricalConductivity: number;
+    pH: number;
 };

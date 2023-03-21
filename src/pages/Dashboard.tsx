@@ -1,22 +1,22 @@
-import { Box, color, Flex, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useMediaQuery } from '@chakra-ui/react';
+import { Box, Flex, Text, useMediaQuery } from '@chakra-ui/react';
 import React from 'react';
 import DashboardTabs from '../components/dashboard/DashboardTabs';
 import DashboardTopNav from '../components/dashboard/DashboardTopNav';
 import DashboardTopSelect from '../components/dashboard/DashboardTopSelect';
 import TideCard from '../components/dashboard/tide/TideCard';
 import WeatherCard from '../components/dashboard/weather/WeatherCard';
-import BaseCard from '../components/layout/BaseCard';
 import BaseLayout from "../components/layout/BaseLayout";
-import colors from '../theme/foundations/colours';
 
 const Dashboard: React.FC = () => {
 
     const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
+    // For some reason, the log table will cause the entire page to overflow unless I 
+    // adjust the width it takes up in the first Flex component
 
     return (
         <BaseLayout isNavbarVisible={true}>
             <Flex
-                w='100%'
+                w={isLargeScreen ? '95%' : '93%'}
                 minH='100vh'
             >
                 {/* Monitor panel */}
