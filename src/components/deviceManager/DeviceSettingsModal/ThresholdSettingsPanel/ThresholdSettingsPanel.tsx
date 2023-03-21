@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import colors from '../../../../theme/foundations/colours';
 import { 
     Table, 
     Thead, 
@@ -8,8 +9,10 @@ import {
     Flex,
     Button
 } from '@chakra-ui/react';
+import { toast } from 'react-hot-toast';
 import { buoySensorTags } from '../../../../theme/metrics/buoySensorTags';
 import ThresholdSettingsRow from './ThresholdSettingsRow';
+import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
 
 
 type thresholdSettingsPanelProps = {
@@ -20,10 +23,18 @@ type thresholdSettingsPanelProps = {
 
 
 const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ sensors }) => {
-    
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
     const saveThresholdSettings = async () => {
-        
-    }
+        setIsLoading(true);
+        const res = await ManageDevices.saveThresholdSettings();
+        if (res) {
+            toast.success('Threshold settings saved!');
+        } else {
+            toast.error('There was a problem saving your device threshold settings. Please try again.')
+        }
+        setIsLoading(false);
+    };
 
     return (
         <>
@@ -51,6 +62,23 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ sensors
                     }
                 </Tbody>
             </Table>
+            <Flex
+                mt='2rem'
+                justifyContent='flex-end'
+            >
+                <Button
+                    bg={colors.main.usafaBlue}
+                    color='white'
+                    isLoading={isLoading}
+                    onClick={async () => await saveThresholdSettings()}
+                    _hover={{
+                        bg: colors.main.ceruBlue
+                    }}
+                    loadingText='Saving'
+                >
+                    Save Thresholds
+                </Button>
+            </Flex>
         </>
     );
 }

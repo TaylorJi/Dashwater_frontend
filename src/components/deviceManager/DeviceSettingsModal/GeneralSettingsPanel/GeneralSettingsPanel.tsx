@@ -60,8 +60,6 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
             toast.error('There was a problem with your coordinates. Please try inputting again.');
             resetCoordinates();
         }
-
-
     };
 
     return (

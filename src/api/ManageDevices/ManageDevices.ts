@@ -4,8 +4,14 @@ const saveDeviceSettings = async (name: string, lat: number, long: number) => {
 
 };
 
+const saveThresholdSettings = async () => {
+    // do DB stuff in try-catch block
+    return true;
+}
+
 const ManageDevices = {
-    saveDeviceSettings
+    saveDeviceSettings,
+    saveThresholdSettings
 };
 
 export default ManageDevices;
