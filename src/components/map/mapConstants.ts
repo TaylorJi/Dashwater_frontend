@@ -11,3 +11,12 @@ export const mapModalSpecs = {
     cLong: -123.17557,
     cLat: 49.195007,
 }
+
+export const iconSpecs =  {
+    xSize: 25,
+    ySize: 30,
+    xAnchor: 12,
+    yAnchor: 41,
+    xPopAnchor: 1,
+    yPopAnchor: -34 
+}

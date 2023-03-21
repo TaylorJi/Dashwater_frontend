@@ -63,6 +63,7 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
     setIds(newIds);
   };
 
+  
   const selectContext = React.useMemo(() => {
     return {
       selected,
@@ -74,7 +75,6 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
 
   // This function is needed to pass state to onClick
   //  for modal close button to reset the state of ids.
-  
   const clearIdList = () => {
     setIds([]);
   };
@@ -83,6 +83,8 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
     if (!isOpen) {
       // TODO: Find a way to transfer this list of ids 
       //       to the parent component before clearing id list.
+      // Alternative: clearIdList onOpen instead 
+      //                to allow for array to be used in manage devices
       clearIdList();
     }
   }, [isOpen]);

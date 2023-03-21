@@ -15,6 +15,7 @@ import iconRetinaGrey from "../../../assets/images/mapMarkers/marker-icon-grey.p
 import iconShadow from "../../../assets/images/mapMarkers/marker-shadow.png";
 import "../mapStyles.css";
 import { SelectContext } from "../SelectContext";
+import { iconSpecs } from "../mapConstants";
 
 type markerPropsType = {
   buoyId: number;
@@ -22,42 +23,47 @@ type markerPropsType = {
   key: number;
 };
 
-const MapMarker: React.FC<markerPropsType> = ({buoyId, key, coords}) => {
-
-
-
-  const {selected, ids} = React.useContext(SelectContext);
+const MapMarker: React.FC<markerPropsType> = ({ buoyId, key, coords }) => {
+  // const {selected, ids} = React.useContext(SelectContext);
+  const { ids, updateSelected, updateIds } = React.useContext(SelectContext);
   const [color, setColor] = React.useState<string>(mapMarkerGrey);
   const [retina, setRetina] = React.useState<string>(mapMarkerBlue);
-  
-  
-
-  React.useEffect(() => {
-    if (ids.includes(buoyId)) { 
-      setColor(mapMarkerBlue);
-      setRetina(iconRetinaBlue)
-    } else {
-      setColor(mapMarkerGrey)
-      setRetina(iconRetinaGrey)
-    };
-  }, [ids, buoyId]);
 
   const icon: L.Icon = L.icon({
     iconRetinaUrl: retina,
     iconUrl: color,
     shadowUrl: iconShadow,
-
-    //TODO: move these values to specification file
-    iconSize: [25, 30],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
+    iconSize: [iconSpecs.xSize, iconSpecs.ySize],
+    iconAnchor: [iconSpecs.xAnchor, iconSpecs.yAnchor],
+    popupAnchor: [iconSpecs.xPopAnchor, iconSpecs.yPopAnchor],
   });
+
+  React.useEffect(() => {
+    if (ids.includes(buoyId)) {
+      setColor(mapMarkerBlue);
+      setRetina(iconRetinaBlue);
+    } else {
+      setColor(mapMarkerGrey);
+      setRetina(iconRetinaGrey);
+    }
+  }, [ids, buoyId]);
+
+  const handleSelect = () => {
+    const isSelected = !ids.includes(buoyId);
+    updateSelected(isSelected, buoyId);
+    if (isSelected) {
+      updateIds([...ids, buoyId]);
+      setColor(mapMarkerBlue);
+    } else {
+      updateIds(ids.filter((id) => id !== buoyId));
+      setColor(mapMarkerGrey);
+    }
+  };
+
   //TODO: Implement event handlers
   return (
     <>
-      <Marker position={coords} icon={icon} eventHandlers={{}}>
-      
-      </Marker>
+      <Marker position={coords} icon={icon} eventHandlers={{click: handleSelect}}></Marker>
     </>
   );
 };

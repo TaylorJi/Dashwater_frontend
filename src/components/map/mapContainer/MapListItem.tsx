@@ -8,7 +8,11 @@ type listItemProps = {
 };
 
 const MapListItem: React.FC<listItemProps> = ({ deviceName, id }) => {
-  const { updateSelected, ids, updateIds } = React.useContext(SelectContext);
+  const {ids, updateSelected, updateIds} = React.useContext(SelectContext);
+  const [checked, setChecked] = React.useState<boolean>(false);
+
+
+
 
   const handleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = event.target.checked;
@@ -17,9 +21,14 @@ const MapListItem: React.FC<listItemProps> = ({ deviceName, id }) => {
     else updateIds(ids.filter((currentId) => currentId !== id));
   };
 
+  React.useEffect(() => {
+    if (ids.includes(id)) setChecked(true);
+    else setChecked(false);
+  }, [ids, id])
+
   return (
     <HStack spacing={"10%"}>
-      <Checkbox value={deviceName} size={"lg"} onChange={handleSelect} />
+      <Checkbox value={deviceName} size={"lg"} onChange={handleSelect} isChecked={checked}/>
       <Text size={"lg"}>{deviceName}</Text>
     </HStack>
   );
