@@ -6,3 +6,32 @@ export const timeHelper = (timeString: string) => {
 export const roundTo2Dec = (num: number) => {
     return Math.round(num * 100) / 100;
 }
+
+export const remapDataForExport = (logData: logDataType[]) => {
+
+    try {
+
+        const reformattedSheets: Record<string, FormattedExportType[]> = {};
+
+        const sheetName = 'Device Data';
+
+        reformattedSheets[`${sheetName} (${logData.length})`] = logData.map((data) => {
+            return {
+                Device_ID: data.id,
+                Date_Time: data.time,
+                Dissolved_Oxygen: data.dissolvedOxygen,
+                Electrical_Conductivity: data.electricalConductivity,
+                pH: data.pH,
+                Turbidity: data.turbidity,
+                Total_Dissolved_Solids: data.totalDissolvedSolids,
+                Temperature: data.temperature
+            };
+        });
+
+        return reformattedSheets;
+
+    } catch (_err) {
+        return false;
+    }
+
+};

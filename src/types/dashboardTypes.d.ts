@@ -47,3 +47,18 @@ type logDataType = {
     totalDissolvedSolids: number;
     temperature: number;
 };
+
+type FormattedExportType = {
+    Device_ID: number;
+    Date_Time: string;
+    Dissolved_Oxygen: number;
+    Electrical_Conductivity: number;
+    pH: number;
+    Turbidity: number;
+    Total_Dissolved_Solids: number;
+    Temperature: number;
+};
+
+type ExportReportDataType = {
+    [key: string]: FormattedExportType[];
+};
