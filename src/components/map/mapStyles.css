@@ -25,5 +25,5 @@
     position: relative;
     border-radius: 0.5rem !important;
     border-width: 0.1rem;
-    border-color: rgb(224, 224, 224);
+    border-color: var(--chakra-colors-gray-300);
   }
