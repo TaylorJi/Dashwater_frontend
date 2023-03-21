@@ -188,20 +188,99 @@ export const mockLogData: logDataType[] = [
         'time': '2023-02-22 02:00:16.721',
         'dissolvedOxygen': 27.289379,
         'electricalConductivity': 366.5,
-        'pH': 7.776
+        'pH': 7.776,
+        'turbidity': 3004.74,
+        'totalDissolvedSolids': 99.54,
+        'temperature': 7.06
     },
     {
         'id': 0,
         'time': '2023-02-22 03:00:17.037',
         'dissolvedOxygen': 27.838829,
         'electricalConductivity': 365.0,
-        'pH': 7.784
+        'pH': 7.784,
+        'turbidity': 3004.74,
+        'totalDissolvedSolids': 99.54,
+        'temperature': 7.06
     },
     {
         'id': 0,
         'time': '2023-02-22 04:00:17.188',
         'dissolvedOxygen': 32.600731,
         'electricalConductivity': 250.600,
-        'pH': 7.788
+        'pH': 7.788,
+        'turbidity': 3004.74,
+        'totalDissolvedSolids': 99.54,
+        'temperature': 7.06
+    },
+    {
+        'id': 0,
+        'time': '2023-02-22 02:00:16.721',
+        'dissolvedOxygen': 27.289379,
+        'electricalConductivity': 366.5,
+        'pH': 7.776,
+        'turbidity': 3004.74,
+        'totalDissolvedSolids': 99.54,
+        'temperature': 7.06
+    },
+    {
+        'id': 0,
+        'time': '2023-02-22 03:00:17.037',
+        'dissolvedOxygen': 27.838829,
+        'electricalConductivity': 365.0,
+        'pH': 7.784,
+        'turbidity': 3004.74,
+        'totalDissolvedSolids': 99.54,
+        'temperature': 7.06
+    },
+    {
+        'id': 0,
+        'time': '2023-02-22 04:00:17.188',
+        'dissolvedOxygen': 32.600731,
+        'electricalConductivity': 250.600,
+        'pH': 7.788,
+        'turbidity': 3004.74,
+        'totalDissolvedSolids': 99.54,
+        'temperature': 7.06
+    },
+    {
+        'id': 0,
+        'time': '2023-02-22 02:00:16.721',
+        'dissolvedOxygen': 27.289379,
+        'electricalConductivity': 366.5,
+        'pH': 7.776,
+        'turbidity': 3004.74,
+        'totalDissolvedSolids': 99.54,
+        'temperature': 7.06
+    },
+    {
+        'id': 0,
+        'time': '2023-02-22 03:00:17.037',
+        'dissolvedOxygen': 27.838829,
+        'electricalConductivity': 365.0,
+        'pH': 7.784,
+        'turbidity': 3004.74,
+        'totalDissolvedSolids': 99.54,
+        'temperature': 7.06
+    },
+    {
+        'id': 0,
+        'time': '2023-02-22 04:00:17.188',
+        'dissolvedOxygen': 32.600731,
+        'electricalConductivity': 250.600,
+        'pH': 7.788,
+        'turbidity': 3004.74,
+        'totalDissolvedSolids': 99.54,
+        'temperature': 7.06
+    },
+    {
+        'id': 0,
+        'time': '2023-02-22 02:00:16.721',
+        'dissolvedOxygen': 27.289379,
+        'electricalConductivity': 366.5,
+        'pH': 7.776,
+        'turbidity': 3004.74,
+        'totalDissolvedSolids': 99.54,
+        'temperature': 7.06
     }
 ];

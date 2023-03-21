@@ -43,6 +43,7 @@ export function BaseTable<Data extends object>({
                                 const meta: any = header.column.columnDef.meta;
                                 return (
                                     <Th
+                                        textAlign='center'
                                         key={header.id}
                                         onClick={header.column.getToggleSortingHandler()}
                                         isNumeric={meta?.isNumeric}

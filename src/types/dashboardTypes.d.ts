@@ -43,4 +43,7 @@ type logDataType = {
     dissolvedOxygen: number;
     electricalConductivity: number;
     pH: number;
+    turbidity: number;
+    totalDissolvedSolids: number;
+    temperature: number;
 };
