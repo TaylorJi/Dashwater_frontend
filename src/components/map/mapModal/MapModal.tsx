@@ -17,8 +17,9 @@ import Map from "../mapContainer/Map";
 import MapBuoyList from "../mapContainer/MapBuoyList";
 import { SelectContext } from "../SelectContext";
 import colors from "../../../theme/foundations/colours";
-import typography from '../../../theme/foundations/typography';
-import mockBuoyData from '../../../mockData/mockBuoyIdData.json';
+import typography from "../../../theme/foundations/typography";
+import mockBuoyData from "../../../mockData/mockBuoyIdData.json";
+import { tileServer, mapModalSpecs } from "../mapConstants";
 
 type MapModalProps = {
   isOpen: boolean;
@@ -30,24 +31,23 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
 
   // To convert id string to number for use in select context id array
   const buoyMapData = (buoyData: buoyInfo) => {
-    let mapData: { name: string; id: number; x: number; y: number; }[] = [];
+    let mapData: { name: string; id: number; x: number; y: number }[] = [];
     buoyData.buoys?.map((buoy) => {
       mapData.push({
         name: buoy.name,
         id: Number(buoy.id),
         x: buoy.location.x,
-        y: buoy.location.y})
-    })
-    if (!mapData) return []
+        y: buoy.location.y,
+      });
+    });
+    if (!mapData) return [];
     return mapData;
-  }
+  };
 
-  const propData = buoyMapData(mockBuoyData)
-  //TODO: Move these to constants file for maps
-  const urlArc =
-    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}";
-  const urlCarto =
-    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
+  const propData = buoyMapData(mockBuoyData);
+
+  const urlArc = tileServer.ARC_MAP;
+  const urlCarto = tileServer.CARTO_MAP;
 
   const [tilePath, setPath] = React.useState<string>(urlArc);
   const [selected, setSelect] = React.useState<boolean>(false);
@@ -74,12 +74,15 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
 
   // This function is needed to pass state to onClick
   //  for modal close button to reset the state of ids.
+  
   const clearIdList = () => {
     setIds([]);
   };
 
   React.useEffect(() => {
     if (!isOpen) {
+      // TODO: Find a way to transfer this list of ids 
+      //       to the parent component before clearing id list.
       clearIdList();
     }
   }, [isOpen]);
@@ -88,32 +91,34 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      motionPreset={'slideInBottom'}
-      size={'xl'}
+      motionPreset={"slideInBottom"}
+      size={"xl"}
     >
       <ModalOverlay />
-      <ModalContent maxW={isLargeScreen? '60%' : '75%'}>
-        <ModalHeader ml={'0.5%'}>
-          <Text 
+      <ModalContent maxW={isLargeScreen ? "60%" : "75%"}>
+        <ModalHeader ml={"0.5%"}>
+          <Text
             fontFamily={typography.fonts.heading}
             fontSize={typography.fontSizes.xl}
-          >Select Devices by Map</Text>
+          >
+            Select Devices by Map
+          </Text>
         </ModalHeader>
-        <Divider ml={'1rem'} maxW={'95%'} marginBottom={'1.5rem'}/>
+        <Divider ml={"1rem"} maxW={"95%"} marginBottom={"1.5rem"} />
         <ModalCloseButton onClick={clearIdList} />
         <ModalBody>
           <HStack>
             <SelectContext.Provider value={selectContext}>
               <MapBuoyList buoys={propData} />
               <Map
-                //TODO: Move these to constants
-                long={-123.17557}
-                lat={49.195007}
-                zoomVal={12.75} // ideal value for map tile layer switches
-                zoomSet={0.25}
-                center={[49.195007, -123.17557]}
+                long={mapModalSpecs.long}
+                lat={mapModalSpecs.lat}
+                zoomVal={mapModalSpecs.zVal}
+                zoomSet={mapModalSpecs.zSet}
+                center={[mapModalSpecs.cLat, mapModalSpecs.cLong]}
                 buoys={propData}
                 tilePath={tilePath}
+                drawable={true}
               />
             </SelectContext.Provider>
           </HStack>
@@ -137,14 +142,14 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
               Switch Map
             </Button>
 
-            <Button 
+            <Button
               minW={isLargeScreen ? "7rem" : "3rem"}
               color={colors.main.usafaBlue}
-              bg={'white'}
+              bg={"white"}
               border={`2px solid ${colors.main.usafaBlue}`}
               onClick={onClose}
-              >
-                Cancel
+            >
+              Cancel
             </Button>
             <Button
               minW={isLargeScreen ? "7rem" : "3rem"}

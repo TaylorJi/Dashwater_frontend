@@ -14,7 +14,8 @@ type buoyInfo =  {
   buoys?: {
       name: string;
       id: string; 
-  location: {
+  location: { 
+    
     x: number;
     y: number;
   }

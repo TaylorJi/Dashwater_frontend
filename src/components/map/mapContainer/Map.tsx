@@ -12,6 +12,7 @@ import {
 import MapMarker from "./MapMarker";
 import BoxSelector from "./BoxSelector";
 import "leaflet-draw/dist/leaflet.draw.css";
+import { Styles } from '@chakra-ui/theme-tools';
 
 type mapProps = {
   long: number;
@@ -26,10 +27,13 @@ type mapProps = {
     x: number;
     y: number;
   }[];
+  drawable?: boolean;
 };
 
 const Map: React.FC<mapProps> = (props: mapProps) => {
   const [map, setMap] = React.useState<any>();
+
+
 
   return (
     <MapContainer
@@ -42,18 +46,26 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
       zoomControl={false}
       bounceAtZoomLimits={true}
     >
-      <FeatureGroup>
+
+      { props.drawable ? 
+      <FeatureGroup >
         <ZoomControl position="bottomright" />
         <BoxSelector />
       </FeatureGroup>
+      : <></>
+      }
+
       <TileLayer url={props.tilePath} />
 
       {props.buoys
         ? props.buoys.map((b, index) => (
             <MapMarker buoyId={b.id} key={index} coords={[b.x, b.y]} />
           ))
-        : null} 
+        : <></>} 
+        
+
     </MapContainer>
+
   );
 };
 
