@@ -2,8 +2,14 @@ import React from "react";
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/tabs';
 import colors from '../../../theme/foundations/colours';
 
+import GeneralSettingsPanel from "./GeneralSettingsPanel/GeneralSettingsPanel";
+import ThresholdSettingsPanel from "./ThresholdSettingsPanel/ThresholdSettingsPanel";
 
-const DeviceSettingsTabs: React.FC = () => {
+type deviceSettingsTabsProps = {
+    buoy: buoySettingsType
+}
+
+const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy }) => {
     return (
         <Tabs
             mt='1rem'
@@ -41,13 +47,20 @@ const DeviceSettingsTabs: React.FC = () => {
                 </Tab>
             </TabList>
 
-            <TabPanels h="30rem">
+            <TabPanels
+                h='fit-content'
+            >
                 <TabPanel>
-                    <p>General</p>
+                    <GeneralSettingsPanel
+                        name={buoy.name}
+                        lat={buoy.location.y}
+                        long={buoy.location.x} />
                 </TabPanel>
 
                 <TabPanel>
-                    <p>Thresholds</p>
+                    <ThresholdSettingsPanel
+                        sensors={buoy.sensors}
+                    />
                 </TabPanel>
 
                 <TabPanel>
