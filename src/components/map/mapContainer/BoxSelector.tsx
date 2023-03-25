@@ -10,8 +10,6 @@ import "leaflet-draw";
 import { SelectContext } from '../SelectContext';
 import { getBuoyMapData } from '../mapHelpers';
 
-//TODO: Bug for when box is drawn over markers which makes the whole modal stop
-
 interface EditControlProps {
   position?: ControlPosition;
   onCreated?: (e: LayerEvent) => void;
@@ -28,7 +26,6 @@ interface EditControlProps {
     y: number;
   }[];
 }
-
 
 const BoxSelector: React.FC<EditControlProps> = (props) => {
   const { onCreated,  featureGroup, bounds, buoys} = props;
@@ -59,36 +56,6 @@ const BoxSelector: React.FC<EditControlProps> = (props) => {
     setMarkerBounds(markersWithinBounds);
     if (onCreated) onCreated(e);
   };
-
-  // React.useEffect(() => {
-  //   if (bounds && buoys) {
-  //     const markersWithinBounds = buoys.filter(
-  //       buoy => bounds && bounds.contains([buoy.x, buoy.y])
-  //     );
-  //     setMarkerBounds(markersWithinBounds);
-
-  //   }
-
-  //   // const selectedIds = getBuoyMapData(markerBounds)
-  //   // console.log(`selected ids: ${selectedIds}`)
-  //   // const newIds = selectedIds.map(buoy => buoy.id);
-  //   // updateIds(newIds);
-  //   // // console.log(newIds);
-
-  //   const tempBounds = markerBounds
-
-  //   const selectedIds = tempBounds.map((buoy: { id: number; })=>buoy.id)
-  //   console.log(selectedIds)
-  // }, [bounds])
-
-  // // React.useEffect(() => {
-  // //   const selectedIds = getBuoyMapData(markerBounds)
-  // //   const newIds = selectedIds.map(buoy => buoy.id);
-  // //   updateIds(newIds);
-  // // }, [markerBounds]);
-
-  L.drawLocal.draw.toolbar.buttons.rectangle = "POOOOOOP"
- 
   
   return (
     <EditControl
@@ -109,12 +76,7 @@ const BoxSelector: React.FC<EditControlProps> = (props) => {
       }}
       edit={{  featureGroup: featureGroup, remove: true, edit: false}}
       onCreated={onCreated}
-      
-     
-      
-      
     />
   );
 };
-
 export default BoxSelector;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Text,
   Modal,
@@ -46,7 +46,7 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
   const updateSelected = (select: boolean, id: number) => {
     setSelect(select);
     if (select) setIds([...ids, id]);
-    else setIds(ids.filter(currentId => currentId !== id));
+    else setIds(ids.filter((currentId) => currentId !== id));
   };
 
   const updateIds = (newIds: number[]) => {
@@ -66,19 +66,6 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
     setIds([]);
     setReset(true);
   };
-
-  React.useEffect(() => {
-    if (!isOpen) {
-      // TODO: Find a way to transfer this list of ids
-      //       to the parent component before clearing id list.
-      // Alternative: clearIdList onOpen instead
-      //                to allow for array to be used in manage devices
-      console.log(ids)
-      // clearIdList();
-    }
-  }, [isOpen]);
-
-  
 
   return (
     <Modal
@@ -114,7 +101,6 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
                 drawable={true}
                 mapId={"mapId"}
                 isModal={true}
-                resetBounds={reset}
               />
             </SelectContext.Provider>
           </HStack>
