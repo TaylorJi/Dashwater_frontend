@@ -10,6 +10,7 @@ const colors = {
     activeSideBar: '#CBD4E9',
     activeTopNav: '#C0C53080',
     warning: '#EE580D',
+    mediumWarning: '#FFD000',
     lightGrey: '#EBEBEB'
   },
   foundation: {

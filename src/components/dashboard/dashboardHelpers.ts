@@ -1,3 +1,5 @@
+import colors from "../../theme/foundations/colours";
+
 export const timeHelper = (timeString: string) => {
     let splitTimeDay = timeString.split('T')[1];
     return splitTimeDay.split('+')[0].substring(0, 5);
@@ -34,4 +36,15 @@ export const remapDataForExport = (logData: logDataType[]) => {
         return false;
     }
 
+};
+
+export const circleGraphColors = (percent: number) => {
+
+    if (percent < 10 || percent > 90) {
+        return colors.main.warning;
+    } else if (percent < 30 || percent > 70) {
+        return colors.main.mediumWarning;
+    } else {
+        return colors.main.acidGreen
+    }
 };

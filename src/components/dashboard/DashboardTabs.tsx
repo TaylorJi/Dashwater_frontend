@@ -3,9 +3,7 @@ import React from 'react';
 import colors from '../../theme/foundations/colours';
 import IntervalPanel from './intervalPanel/IntervalPanel';
 import LogPanel from './logPanel/LogPanel';
-import GaugeChart from 'react-gauge-chart';
-import uuid from 'react-uuid';
-import { Box } from '@chakra-ui/react';
+import OverviewPanel from './overviewPanel/OverviewPanel';
 
 const DashboardTabs: React.FC = () => {
 
@@ -53,6 +51,7 @@ const DashboardTabs: React.FC = () => {
                 </TabPanel>
 
                 <TabPanel>
+                    <OverviewPanel />
                 </TabPanel>
 
                 <TabPanel>

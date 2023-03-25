@@ -65,7 +65,12 @@ type ExportReportDataType = {
 
 type GaugeDataType = {
     metric: string;
+    unit: string;
     stable: number;
     warning: number;
     current: number;
 };
+
+type RawGaugeDataType = {
+    [key: string]: GaugeDataType[]
+}
