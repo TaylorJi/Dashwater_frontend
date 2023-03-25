@@ -1,4 +1,4 @@
-import colors from '../../theme/foundations/colours';
+import colors from '../foundations/colours';
 
 export const buoySensorTags: buoySensorTagsType = {
     "dissolved_o2": {

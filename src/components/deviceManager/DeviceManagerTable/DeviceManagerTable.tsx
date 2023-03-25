@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Table, Thead, Tbody, Th } from '@chakra-ui/react';
+import { Table, Thead, Tbody, Tr, Th } from '@chakra-ui/react';
 import buoyData from '../../../mockData/mockBuoyData.json'
-import BuoySettingsRow from './DeviceManagerRow';
+import BuoySettingsRow from './BuoySettingsRow';
 import colors from '../../../theme/foundations/colours';
 import uuid from 'react-uuid';
 
@@ -12,12 +12,15 @@ const DeviceManagerTable: React.FC = () => {
     return (
         <>
             <Table >
+
                 <Thead bg={colors.main.lavender} h="3rem">
-                    <Th color={colors.main.usafaBlue}>Name</Th>
-                    <Th color={colors.main.usafaBlue}>ID</Th>
-                    <Th color={colors.main.usafaBlue}>Location</Th>
-                    <Th color={colors.main.usafaBlue}>Sensors</Th>
-                    <Th color={colors.main.usafaBlue}>Settings</Th>
+                    <Tr>
+                        <Th color={colors.main.usafaBlue}>Name</Th>
+                        <Th color={colors.main.usafaBlue}>ID</Th>
+                        <Th color={colors.main.usafaBlue}>Location</Th>
+                        <Th color={colors.main.usafaBlue}>Sensors</Th>
+                        <Th color={colors.main.usafaBlue}>Settings</Th>
+                    </Tr>
                 </Thead>
                 <Tbody>
                     {buoySettingsData ?
