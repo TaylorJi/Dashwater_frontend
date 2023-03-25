@@ -1,6 +1,6 @@
 import React from 'react';
 import { Tag } from '@chakra-ui/react';
-import { buoySensorTags } from '../buoySensorTags';
+import { buoySensorTags } from '../../../theme/metrics/buoySensorTags';
 
 type sensorTagProps = {
     metricKey: string;

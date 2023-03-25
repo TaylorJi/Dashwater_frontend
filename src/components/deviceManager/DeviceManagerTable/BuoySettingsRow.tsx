@@ -1,7 +1,7 @@
 import React from 'react';
 import uuid from 'react-uuid';
 import { Tr, Td } from '@chakra-ui/react';
-import DeviceSettingsModal from './DeviceSettingsModal';
+import DeviceSettingsModal from '../DeviceSettingsModal/DeviceSettingsModal';
 import SensorTag from '../SensorTag/SensorTag';
 
 type buoySettingsRowProps = {
