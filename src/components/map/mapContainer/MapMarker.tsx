@@ -63,7 +63,6 @@ const MapMarker: React.FC<markerPropsType> = ({ buoyId, coords}) => {
     }
   };
   
-
   return (
     <>
       <Marker
