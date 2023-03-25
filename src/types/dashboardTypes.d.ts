@@ -62,3 +62,10 @@ type FormattedExportType = {
 type ExportReportDataType = {
     [key: string]: FormattedExportType[];
 };
+
+type GaugeDataType = {
+    metric: string;
+    stable: number;
+    warning: number;
+    current: number;
+};

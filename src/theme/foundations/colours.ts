@@ -8,7 +8,9 @@ const colors = {
     mossGreen: '#919A3E',
     acidGreen: '#C0C530',
     activeSideBar: '#CBD4E9',
-    activeTopNav: '#C0C53080'
+    activeTopNav: '#C0C53080',
+    warning: '#EE580D',
+    lightGrey: '#EBEBEB'
   },
   foundation: {
     100: '#FFFFFF',
