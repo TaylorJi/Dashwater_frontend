@@ -32,6 +32,8 @@ type mapProps = {
   drawable?: boolean;
   isModal?: boolean;
   mapId: string;
+  isSettings?: boolean;
+  settingsCoords?: [number, number]
 };
 
 const Map: React.FC<mapProps> = (props: mapProps) => {
@@ -44,6 +46,8 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
     drawable,
     mapId,
     isModal,
+    isSettings,
+    settingsCoords,
   } = props;
   const [map, setMap] = React.useState<any>();
   const editableFG = React.useRef<L.FeatureGroup | null>(null);
@@ -73,6 +77,7 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
   };
 
   function HandleMapMouseMove() {
+    // Leaving map here in case map needs re-rendering
     const map = useMapEvents({
       mousemove: () => {
         setBounds(null);
@@ -116,6 +121,11 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
         buoys.map((buoy) => (
           <Marker icon={cardIcon} position={[buoy.x, buoy.y]} />
         ))
+      ) : isSettings?(
+        <Marker 
+            icon={cardIcon} 
+            position={settingsCoords ? settingsCoords : [0,0]}
+        />
       ) : (
         <></>
       )}

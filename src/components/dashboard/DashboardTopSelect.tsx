@@ -10,7 +10,7 @@ import MapModal from '../map/mapModal/MapModal';
 
 const DashboardTopSelect: React.FC = () => {
     const {isOpen, onOpen, onClose} = useDisclosure();
-
+    
     return (
         <>
             <Select

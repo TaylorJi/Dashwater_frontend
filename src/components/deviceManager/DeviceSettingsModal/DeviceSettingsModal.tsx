@@ -4,10 +4,8 @@ import {
     ModalOverlay,
     ModalContent,
     ModalHeader,
-    ModalFooter,
     ModalBody,
     ModalCloseButton,
-    Button,
     useDisclosure,
     IconButton,
     Icon,
@@ -43,7 +41,7 @@ const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
                 }}
             />
 
-            <Modal isOpen={isOpen} onClose={onClose} size="2xl" >
+            <Modal isOpen={isOpen} onClose={onClose} size="3xl">
                 <ModalOverlay />
                 <ModalContent >
                     <ModalHeader>
@@ -52,22 +50,8 @@ const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
                     </ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <DeviceSettingsTabs />
+                        <DeviceSettingsTabs buoy={buoy} />
                     </ModalBody>
-
-                    <ModalFooter>
-                        <Button colorScheme={colors.main.ceruBlue} mr={3} onClick={onClose}>
-                            Close
-                        </Button>
-                        <Button
-                            bg={colors.main.usafaBlue}
-                            color="white"
-                            onClick={onClose}
-                            _hover={{
-                                bg: colors.main.ceruBlue
-                            }}
-                        >Save Changes</Button>
-                    </ModalFooter>
                 </ModalContent>
             </Modal>
         </>
