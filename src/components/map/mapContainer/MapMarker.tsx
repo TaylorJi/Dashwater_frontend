@@ -17,16 +17,18 @@ import "../mapStyles.css";
 import { SelectContext } from "../SelectContext";
 import { iconSpecs } from "../mapConstants";
 
+
 type markerPropsType = {
   buoyId: number;
   coords: [number, number];
 };
 
-const MapMarker: React.FC<markerPropsType> = ({ buoyId, coords }) => {
-  // const {selected, ids} = React.useContext(SelectContext);
+const MapMarker: React.FC<markerPropsType> = ({ buoyId, coords}) => {
+  
   const { ids, updateSelected, updateIds } = React.useContext(SelectContext);
   const [color, setColor] = React.useState<string>(mapMarkerGrey);
   const [retina, setRetina] = React.useState<string>(mapMarkerBlue);
+
 
   const { xSize, ySize, xAnchor, yAnchor, xPopAnchor, yPopAnchor } = iconSpecs;
 
@@ -60,6 +62,7 @@ const MapMarker: React.FC<markerPropsType> = ({ buoyId, coords }) => {
       setColor(mapMarkerGrey);
     }
   };
+  
 
   return (
     <>

@@ -10,6 +10,7 @@ import {
   } from '@chakra-ui/react'
 
 
+
 const MapBuoyList: React.FC<buoyMapInfo> = (props) => {
 
     return (

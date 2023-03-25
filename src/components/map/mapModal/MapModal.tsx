@@ -39,12 +39,14 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
 
   const [tilePath, setPath] = React.useState<string>(urlArc);
   const [selected, setSelect] = React.useState<boolean>(false);
+  const [reset, setReset] = React.useState<boolean>(false);
+
   const [ids, setIds] = React.useState<number[]>([]);
 
   const updateSelected = (select: boolean, id: number) => {
     setSelect(select);
     if (select) setIds([...ids, id]);
-    else setIds(ids.filter((currentId) => currentId !== id));
+    else setIds(ids.filter(currentId => currentId !== id));
   };
 
   const updateIds = (newIds: number[]) => {
@@ -62,6 +64,7 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
 
   const clearIdList = () => {
     setIds([]);
+    setReset(true);
   };
 
   React.useEffect(() => {
@@ -70,9 +73,12 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
       //       to the parent component before clearing id list.
       // Alternative: clearIdList onOpen instead
       //                to allow for array to be used in manage devices
-      clearIdList();
+      console.log(ids)
+      // clearIdList();
     }
   }, [isOpen]);
+
+  
 
   return (
     <Modal
@@ -92,7 +98,7 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
           </Text>
         </ModalHeader>
         <Divider ml={"1rem"} maxW={"95%"} marginBottom={"1.5rem"} />
-        <ModalCloseButton onClick={clearIdList} />
+        <ModalCloseButton onClick={onClose} />
         <ModalBody>
           <HStack>
             <SelectContext.Provider value={selectContext}>
@@ -108,6 +114,7 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
                 drawable={true}
                 mapId={"mapId"}
                 isModal={true}
+                resetBounds={reset}
               />
             </SelectContext.Provider>
           </HStack>
@@ -136,9 +143,9 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
               color={colors.main.usafaBlue}
               bg={"white"}
               border={`2px solid ${colors.main.usafaBlue}`}
-              onClick={onClose}
+              onClick={clearIdList}
             >
-              Cancel
+              Clear
             </Button>
             <Button
               minW={isLargeScreen ? "7rem" : "3rem"}

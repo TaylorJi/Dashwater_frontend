@@ -11,9 +11,6 @@
     border-radius: 2.5% !important;
   }
 
-  .leaflet-draw-actions {
-    display: none !important;
-  }
 
   #mapModal {
     margin-top: 10%;

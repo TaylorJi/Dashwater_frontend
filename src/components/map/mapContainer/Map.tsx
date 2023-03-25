@@ -1,22 +1,21 @@
-import L, { Control, ControlPosition, LayerEvent, rectangle } from "leaflet";
 import React, { useEffect } from "react";
+import { EditControl } from "react-leaflet-draw";
+import L, { FeatureGroup as LFeatureGroup } from "leaflet";
 import "../mapStyles.css";
-
 import {
   MapContainer,
   Marker,
   TileLayer,
   ZoomControl,
   FeatureGroup,
+  useMapEvents,
 } from "react-leaflet";
 import MapMarker from "./MapMarker";
 import BoxSelector from "./BoxSelector";
 import "leaflet-draw/dist/leaflet.draw.css";
-import { Styles } from "@chakra-ui/theme-tools";
-import mapMarkerBlue from "../../../assets/images/mapMarkers/marker-icon-2x.png";
-import iconRetinaBlue from "../../../assets/images/mapMarkers/marker-icon.png";
-import iconShadow from "../../../assets/images/mapMarkers/marker-shadow.png";
 import { cardIcon } from "../mapConstants";
+import { LayerEvent, featureGroup } from "leaflet";
+
 
 type mapProps = {
   long: number;
@@ -34,10 +33,10 @@ type mapProps = {
   drawable?: boolean;
   isModal?: boolean;
   mapId: string;
+  resetBounds?: boolean;
 };
 
 const Map: React.FC<mapProps> = (props: mapProps) => {
-  const [map, setMap] = React.useState<any>();
   const {
     buoys,
     zoomVal,
@@ -47,7 +46,59 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
     drawable,
     mapId,
     isModal,
+    resetBounds
   } = props;
+  const [map, setMap] = React.useState<any>();
+  const editableFG = React.useRef<L.FeatureGroup | null>(null);
+  const [bounds, setBounds] = React.useState<any>(null);
+
+  React.useEffect(() => {
+    if(resetBounds) setBounds(null)
+  }, [])
+
+
+  const handleDrawCreated = (e: any) => {
+ 
+    const { layerType, layer } = e;
+
+    if (layerType === "rectangle") {
+      let bounds = layer.getBounds();
+
+      console.log(bounds);
+
+      setBounds(layer.getBounds());
+    }
+  };
+
+  const onCreated = (e: LayerEvent) => {
+    
+    handleDrawCreated(e);
+
+    const drawnItems = editableFG.current?.getLayers();
+
+    if (drawnItems && Object.keys(drawnItems).length > 0) {
+      Object.keys(drawnItems).forEach(layerid => {
+        
+        const layer = drawnItems[Number(layerid)];
+
+        editableFG.current?.removeLayer(layer);
+        
+      });
+    }
+   
+  };
+
+
+
+  function HandleMapMouseMove() {
+    const map = useMapEvents({
+      mousemove: () => {
+        setBounds(null);
+      },
+    });
+    return null;
+  }
+
   return (
     <MapContainer
       id={mapId}
@@ -60,9 +111,9 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
       bounceAtZoomLimits={true}
     >
       {drawable ? (
-        <FeatureGroup>
+        <FeatureGroup ref={editableFG}>
           <ZoomControl position="bottomright" />
-          <BoxSelector />
+          <BoxSelector onCreated={onCreated} featureGroup={editableFG} bounds = {bounds} buoys={buoys}/>
         </FeatureGroup>
       ) : (
         <></>
@@ -81,6 +132,7 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
       ) : (
         <></>
       )}
+     <HandleMapMouseMove/>
     </MapContainer>
   );
 };
