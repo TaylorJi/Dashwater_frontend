@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.17",
     "@chakra-ui/react": "^2.4.9",
     "@chakra-ui/system": "^2.4.0",
     "@emotion/react": "^11.10.5",
@@ -10,6 +11,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@tanstack/react-table": "^8.7.9",
     "@react-leaflet/core": "^2.1.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -24,6 +26,7 @@
     "leaflet-draw": "^1.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-gauge-chart": "^0.4.1",
     "react-hot-toast": "^2.4.0",
     "react-leaflet": "^4.2.1",
     "react-leaflet-draw": "^0.20.4",
@@ -34,7 +37,8 @@
     "recharts": "^2.4.3",
     "recoil": "^0.7.6",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -61,6 +65,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-gauge-chart": "^0.4.0",
     "@types/leaflet": "^1.9.3",
     "@types/leaflet-draw": "^1.0.6",
     "@types/uuid": "^9.0.0"

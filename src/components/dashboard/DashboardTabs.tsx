@@ -2,6 +2,8 @@ import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/tabs';
 import React from 'react';
 import colors from '../../theme/foundations/colours';
 import IntervalPanel from './intervalPanel/IntervalPanel';
+import LogPanel from './logPanel/LogPanel';
+import OverviewPanel from './overviewPanel/OverviewPanel';
 
 const DashboardTabs: React.FC = () => {
 
@@ -49,11 +51,11 @@ const DashboardTabs: React.FC = () => {
                 </TabPanel>
 
                 <TabPanel>
-                    <p>Overview Panel</p>
+                    <OverviewPanel />
                 </TabPanel>
 
                 <TabPanel>
-                    <p>Logs Panel</p>
+                    <LogPanel />
                 </TabPanel>
             </TabPanels>
         </Tabs>

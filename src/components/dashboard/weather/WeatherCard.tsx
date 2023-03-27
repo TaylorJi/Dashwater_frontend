@@ -44,7 +44,6 @@ const WeatherCard: React.FC = () => {
                             <Flex
                                 alignItems='center'
                                 justifyContent='space-around'
-                                mt='-1rem'
                             >
                                 <Image
                                     src={weatherData['iconURL']}
