@@ -21,7 +21,30 @@ type graphDataType = {
 };
 
 type tideDataResType = {
-    high: graphDataType;
-    low: graphDataType;
+    high: rawTideExtremeDataType[];
+    low: rawTideExtremeDataType[];
     allData: graphDataType[];
+};
+
+type deviceDataType = {
+    [key: string]: measureType[]
+}
+
+type measureType = {
+    measureName: string;
+    xAxisName: string;
+    yAxisName: string;
+    data: graphDataType[]
+}
+
+type rawTideExtremeDataType = {
+    height: number;
+    time: string;
+    type: string;
+}
+
+type tideDataResType = {
+    high: rawTideExtremeDataType[];
+    low: rawTideExtremeDataType[];
+    allData: tideDataType[];
 };
