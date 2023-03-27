@@ -16,12 +16,61 @@ type weatherForecastType = {
     low: number;
 };
 
+type deviceDataType = {
+    [key: string]: measureType[]
+}
+
+type measureType = {
+    measureName: string;
+    xAxisName: string;
+    yAxisName: string;
+    data: graphDataType[]
+}
+
+type rawTideExtremeDataType = {
+    height: number;
+    time: string;
+    type: string;
+}
+
 type graphDataType = {
     [key: string]: number | string;
 };
 
-type tideDataResType = {
-    high: graphDataType;
-    low: graphDataType;
-    allData: graphDataType[];
+type logDataType = {
+    id: number;
+    time: string;
+    dissolvedOxygen: number;
+    electricalConductivity: number;
+    pH: number;
+    turbidity: number;
+    totalDissolvedSolids: number;
+    temperature: number;
 };
+
+type FormattedExportType = {
+    Device_ID: number;
+    Date_Time: string;
+    Dissolved_Oxygen: number;
+    Electrical_Conductivity: number;
+    pH: number;
+    Turbidity: number;
+    Total_Dissolved_Solids: number;
+    Temperature: number;
+};
+
+type ExportReportDataType = {
+    [key: string]: FormattedExportType[];
+};
+
+type GaugeDataType = {
+    metric: string;
+    unit: string;
+    stable: number;
+    warning: number;
+    current: number;
+};
+
+type RawGaugeDataType = {
+    [key: string]: GaugeDataType[]
+}

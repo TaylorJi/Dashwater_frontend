@@ -1,22 +1,32 @@
-import { Text, Box, Flex, Spinner } from '@chakra-ui/react';
+import { Text, Box, Flex } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import uuid from 'react-uuid';
 import Dashboard from '../../../api/Dashboard/Dashboard';
 import LineGraph from '../../graphs/LineGraph';
 import BaseCard from '../../layout/BaseCard';
 import BaseCardLoading from '../../layout/BaseCardLoading';
+import { roundTo2Dec, timeHelper } from '../dashboardHelpers';
 
 const TideCard: React.FC = () => {
 
     const [tideData, setTideData] = useState<graphDataType[] | null>(null);
-    const [high, setHigh] = useState<graphDataType | null>(null);
-    const [low, setLow] = useState<graphDataType | null>(null);
+    const [high, setHigh] = useState<rawTideExtremeDataType[] | null>(null);
+    const [low, setLow] = useState<rawTideExtremeDataType[] | null>(null);
 
     const getTideData = async () => {
 
         try {
             const data = await Dashboard.getTide();
             if (data) {
+
+                Object.keys(data).map((key) => {
+                    return data[key].map((pred: any) => {
+                        pred['time'] = timeHelper(pred['time']);
+                        return pred;
+                    });
+                });
+
                 setTideData(data['allData']);
                 setHigh(data['high']);
                 setLow(data['low']);
@@ -59,6 +69,7 @@ const TideCard: React.FC = () => {
                                     yAxisLabel='Height (m)'
                                     xKey='time'
                                     graphDataKey='height'
+                                    offsetY={30}
                                 />
                             </Box>
                             <Flex
@@ -74,10 +85,18 @@ const TideCard: React.FC = () => {
                                     >
                                         High Tide
                                     </Text>
-                                    <Text>
-                                        <Text as={'span'} fontWeight='semibold'>{`${high['height']}m `}</Text>
-                                        at {`${high['time']} `}
-                                    </Text>
+                                    {
+                                        high.map((pred) => {
+                                            return (
+                                                <Text
+                                                    key={uuid()}
+                                                >
+                                                    <Text as={'span'} fontWeight='semibold'>{`${roundTo2Dec(pred['height'])}m `}</Text>
+                                                    at {`${pred['time']} `}
+                                                </Text>
+                                            )
+                                        })
+                                    }
                                 </Flex>
                                 <Flex
                                     flexDir='column'
@@ -88,10 +107,18 @@ const TideCard: React.FC = () => {
                                     >
                                         Low Tide
                                     </Text>
-                                    <Text>
-                                        <Text as={'span'} fontWeight='semibold'>{`${low['height']}m `}</Text>
-                                        at {`${low['time']} `}
-                                    </Text>
+                                    {
+                                        low.map((pred) => {
+                                            return (
+                                                <Text
+                                                    key={uuid()}
+                                                >
+                                                    <Text as={'span'} fontWeight='semibold'>{`${roundTo2Dec(pred['height'])}m `}</Text>
+                                                    at {`${pred['time']} `}
+                                                </Text>
+                                            )
+                                        })
+                                    }
                                 </Flex>
                             </Flex>
                         </>

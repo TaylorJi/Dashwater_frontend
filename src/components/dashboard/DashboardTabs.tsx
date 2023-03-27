@@ -1,11 +1,15 @@
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@chakra-ui/tabs';
 import React from 'react';
 import colors from '../../theme/foundations/colours';
+import IntervalPanel from './intervalPanel/IntervalPanel';
+import LogPanel from './logPanel/LogPanel';
+import OverviewPanel from './overviewPanel/OverviewPanel';
 
 const DashboardTabs: React.FC = () => {
 
     return (
         <Tabs
+            isLazy
             mt='1rem'
         >
             <TabList>
@@ -43,15 +47,15 @@ const DashboardTabs: React.FC = () => {
 
             <TabPanels>
                 <TabPanel>
-                    <p>Interval Panel</p>
+                    <IntervalPanel />
                 </TabPanel>
 
                 <TabPanel>
-                    <p>Overview Panel</p>
+                    <OverviewPanel />
                 </TabPanel>
 
                 <TabPanel>
-                    <p>Logs Panel</p>
+                    <LogPanel />
                 </TabPanel>
             </TabPanels>
         </Tabs>
