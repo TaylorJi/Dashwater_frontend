@@ -8,7 +8,7 @@
     height: 400px;
     width: 80%;
     position: relative;
-    border-radius: 2.5% !important;
+    border-radius: 0.5rem !important;
   }
 
   #mapModal {
