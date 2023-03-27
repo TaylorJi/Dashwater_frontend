@@ -3,14 +3,17 @@ import Icon from '@chakra-ui/icon';
 import { Select } from '@chakra-ui/select';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, Flex, Text, useMediaQuery, Center } from '@chakra-ui/react';
+import { Button, Flex, Text, useMediaQuery, Center, useDisclosure } from '@chakra-ui/react';
 import BaseLayout from '../components/layout/BaseLayout';
 import colors from '../theme/foundations/colours';
 import AlertsTable from '../components/alerts/AlertsTable/AlertsTable';
+import MapModal from '../components/map/mapModal/MapModal';
 
 
 const Alerts: React.FC = () => {
     const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
+    const {isOpen, onOpen, onClose} = useDisclosure();
+
 
     return (
         <BaseLayout isNavbarVisible={true}>
@@ -42,6 +45,7 @@ const Alerts: React.FC = () => {
         _hover={{
             bg: colors.main.mossGreen
         }}
+        onClick={onOpen}
     >
         Select by Map
     </Button>
@@ -55,6 +59,8 @@ const Alerts: React.FC = () => {
         borderColor={colors.main.usafaBlue}
     />
 </Flex>
+
+<MapModal isOpen={isOpen} onClose={onClose}/>
 
 <Center px="4rem" pt="2rem">
     <AlertsTable />

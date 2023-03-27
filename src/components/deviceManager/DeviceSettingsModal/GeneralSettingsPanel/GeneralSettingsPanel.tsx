@@ -20,6 +20,8 @@ import colors from '../../../../theme/foundations/colours';
 import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Map from '../../../map/mapContainer/Map';
+import { tileServer, mapCardSpecs } from '../../../map/mapConstants';
 
 type generalSettingsPanelProps = {
     name: string;
@@ -101,9 +103,23 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ name, lat, 
             >
                 <GridItem
                     w='100%'
-                    bg='orange.300'
                 >
-                    Map goes here
+                    <Map
+                        long={mapCardSpecs.long}
+                        lat={mapCardSpecs.long}
+                        zoomVal={mapCardSpecs.zVal}
+                        zoomSet={mapCardSpecs.zSet}
+                        center={[mapCardSpecs.cLat, mapCardSpecs.cLong]}
+                        tilePath={tileServer.CARTO_MAP}
+                        drawable={false}
+                        mapId={"mapCardId"}
+                        isModal={false}
+                        isSettings={true}
+                        settingsCoords={[
+                            isNaN(Number(latitude)) ? 0 : Number(latitude), 
+                            isNaN(Number(longitude)) ? 0 : Number(longitude)
+                        ]}
+                    />
                 </GridItem>
                 <GridItem
                     w='100%'
