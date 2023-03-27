@@ -28,9 +28,7 @@ const OverviewPanel: React.FC = () => {
 
                             return (
                                 <Accordion
-                                    allowToggle
                                     key={uuid()}
-                                    defaultIndex={[0]}
                                     allowMultiple
                                 >
                                     <AccordionItem>
