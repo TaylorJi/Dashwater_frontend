@@ -20,7 +20,6 @@ type deviceSettingsModalProps = {
     buoy: buoySettingsType;
 };
 
-
 const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 

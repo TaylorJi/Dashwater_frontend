@@ -1,13 +1,6 @@
 import React from "react";
-import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
-import {
-  Marker,
-  Popup,
-  TileLayer,
-  ZoomControl,
-  ScaleControl,
-} from "react-leaflet";
-import L, { LatLng, divIcon } from "leaflet";
+import { Marker } from "react-leaflet";
+import L from "leaflet";
 import mapMarkerBlue from "../../../assets/images/mapMarkers/marker-icon-2x.png";
 import mapMarkerGrey from "../../../assets/images/mapMarkers/marker-icon-2x-grey.png";
 import iconRetinaBlue from "../../../assets/images/mapMarkers/marker-icon.png";
@@ -17,18 +10,15 @@ import "../mapStyles.css";
 import { SelectContext } from "../SelectContext";
 import { iconSpecs } from "../mapConstants";
 
-
 type markerPropsType = {
   buoyId: number;
   coords: [number, number];
 };
 
-const MapMarker: React.FC<markerPropsType> = ({ buoyId, coords}) => {
-  
+const MapMarker: React.FC<markerPropsType> = ({ buoyId, coords }) => {
   const { ids, updateSelected, updateIds } = React.useContext(SelectContext);
   const [color, setColor] = React.useState<string>(mapMarkerGrey);
   const [retina, setRetina] = React.useState<string>(mapMarkerBlue);
-
 
   const { xSize, ySize, xAnchor, yAnchor, xPopAnchor, yPopAnchor } = iconSpecs;
 
@@ -58,11 +48,11 @@ const MapMarker: React.FC<markerPropsType> = ({ buoyId, coords}) => {
       updateIds([...ids, buoyId]);
       setColor(mapMarkerBlue);
     } else {
-      updateIds(ids.filter(id => id !== buoyId));
+      updateIds(ids.filter((id) => id !== buoyId));
       setColor(mapMarkerGrey);
     }
   };
-  
+
   return (
     <>
       <Marker

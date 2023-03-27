@@ -39,21 +39,20 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
 
   const [tilePath, setPath] = React.useState<string>(urlArc);
   const [selected, setSelect] = React.useState<boolean>(false);
-  const [reset, setReset] = React.useState<boolean>(false);
 
   const [ids, setIds] = React.useState<number[]>([]);
 
-  const updateSelected = (select: boolean, id: number) => {
-    setSelect(select);
-    if (select) setIds([...ids, id]);
-    else setIds(ids.filter((currentId) => currentId !== id));
-  };
-
-  const updateIds = (newIds: number[]) => {
-    setIds(newIds);
-  };
-
   const selectContext = React.useMemo(() => {
+    const updateSelected = (select: boolean, id: number) => {
+      setSelect(select);
+      if (select) setIds([...ids, id]);
+      else setIds(ids.filter((currentId) => currentId !== id));
+    };
+
+    const updateIds = (newIds: number[]) => {
+      setIds(newIds);
+    };
+
     return {
       selected,
       ids,
@@ -64,7 +63,6 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
 
   const clearIdList = () => {
     setIds([]);
-    setReset(true);
   };
 
   return (

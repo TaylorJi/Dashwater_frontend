@@ -1,14 +1,12 @@
-import React from "react";
+import React, {useEffect, useContext, useState} from "react";
 import {MutableRefObject} from "react";
 import { EditControl } from "react-leaflet-draw";
 import "leaflet-draw/dist/leaflet.draw.css";
 import "../mapStyles.css";
-import { ControlPosition, LayerEvent, Control, featureGroup, FeatureGroup } from 'leaflet';
-import colors from "../../../theme/foundations/colours";
+import { ControlPosition, LayerEvent } from 'leaflet';
 import L from "leaflet";
 import "leaflet-draw";
 import { SelectContext } from '../SelectContext';
-import { getBuoyMapData } from '../mapHelpers';
 
 interface EditControlProps {
   position?: ControlPosition;
@@ -29,10 +27,10 @@ interface EditControlProps {
 
 const BoxSelector: React.FC<EditControlProps> = (props) => {
   const { onCreated,  featureGroup, bounds, buoys} = props;
-  const { ids, updateSelected, updateIds } = React.useContext(SelectContext);
-  const [markerBounds, setMarkerBounds] = React.useState<any>([])
+  const { updateIds } = useContext(SelectContext);
+  const [markerBounds, setMarkerBounds] = useState<any>([])
   
-  React.useEffect(() => {
+  useEffect(() => {
     if (bounds && buoys) {
       const markersWithinBounds = buoys.filter(
         buoy => bounds.contains([buoy.x, buoy.y])
@@ -41,25 +39,19 @@ const BoxSelector: React.FC<EditControlProps> = (props) => {
     }
   }, [bounds, buoys]);
   
+  // Line 49 used to ignore warning as updateIds() does not ever change
+  // in the context of map modal. 
   React.useEffect(() => {
     if (markerBounds) {
       const selectedIds = markerBounds.map((buoy: { id: any; }) => buoy.id);
       if (selectedIds.length > 0) updateIds(selectedIds)
     }
+    // eslint-disable-next-line
   }, [markerBounds]);
 
-  const handleCreated = (e: LayerEvent) => {
-    const rectangleBounds = bounds;
-    const markersWithinBounds = buoys?.filter(
-      buoy => rectangleBounds.contains([buoy.x, buoy.y])
-    );
-    setMarkerBounds(markersWithinBounds);
-    if (onCreated) onCreated(e);
-  };
-  
   return (
     <EditControl
-      position="bottomleft"
+      position="bottomright"
       draw={{
         rectangle: {
           shapeOptions: {
@@ -74,7 +66,7 @@ const BoxSelector: React.FC<EditControlProps> = (props) => {
         polyline: false,
         polygon: false,
       }}
-      edit={{  featureGroup: featureGroup, remove: true, edit: false}}
+      edit={{  featureGroup: featureGroup, remove: false, edit: false}}
       onCreated={onCreated}
     />
   );
