@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Select } from '@chakra-ui/react';
 import colors from '../../../../theme/foundations/colours';
 import {
@@ -9,7 +9,14 @@ import {
     Flex,
     Heading,
     NumberInput,
-    NumberInputField
+    NumberInputField,
+    AlertDialog,
+    AlertDialogOverlay,
+    AlertDialogHeader,
+    AlertDialogContent,
+    AlertDialogBody,
+    AlertDialogFooter,
+    useDisclosure
 } from '@chakra-ui/react';
 import { toast } from 'react-hot-toast';
 import { buoySensorTags } from '../../../../theme/metrics/buoySensorTags';
@@ -24,6 +31,8 @@ type calibrationSettingsPanelProps = {
 
 const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sensors }) => {
     const availableSensors = Object.keys(sensors).filter(sensor => sensors[sensor].available);
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const cancelRef = useRef(null);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [currentMetric, setCurrentMetric] = useState<string>("");
@@ -32,19 +41,16 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
     const [sensorHigh, setSensorHigh] = useState<number>(0);
     const [physicalHigh, setPhysicalHigh] = useState<number>(0);
 
+    // TO DO: will need to alter code for variable calliratoin points. Also thre is warning
+    // generated rn for accessing sensors prop
     useEffect(() => {
         if (currentMetric !== "") {
-            setMetricPoints();
+            setSensorLow(sensors[currentMetric].low.sensor);
+            setPhysicalLow(sensors[currentMetric].low.physical);
+            setSensorHigh(sensors[currentMetric].high.sensor);
+            setPhysicalHigh(sensors[currentMetric].high.physical);
         }
     }, [currentMetric]);
-
-
-    const setMetricPoints = () => {
-        setSensorLow(sensors[currentMetric].low.sensor);
-        setPhysicalLow(sensors[currentMetric].low.physical);
-        setSensorHigh(sensors[currentMetric].high.sensor);
-        setPhysicalHigh(sensors[currentMetric].high.physical);
-    };
 
     const saveCalibrationPoint = async () => {
         setIsLoading(true);
@@ -58,6 +64,7 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
     };
 
     const removePreviousCalibrationPoint = async () => {
+        onClose();
         setIsLoading(true);
         const res = await ManageDevices.removePreviousCalibration();
         if (res) {
@@ -173,7 +180,7 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                     color={colors.main.usafaBlue}
                     bg='transparent'
                     isLoading={isLoading}
-                    onClick={async () => await removePreviousCalibrationPoint()}
+                    onClick={onOpen}
                     _hover={{
                         bg: colors.main.ceruBlue
                     }}
@@ -197,6 +204,34 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                 </Button>
 
             </Flex>
+
+            <AlertDialog
+                isOpen={isOpen}
+                leastDestructiveRef={cancelRef}
+                onClose={onClose}
+            >
+
+                <AlertDialogOverlay>
+                    <AlertDialogContent>
+                        <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                            Delete Customer
+                        </AlertDialogHeader>
+
+                        <AlertDialogBody>
+                            Are you sure? You can't undo this action afterwards.
+                        </AlertDialogBody>
+
+                        <AlertDialogFooter>
+                            <Button ref={cancelRef} onClick={onClose}>
+                                Cancel
+                            </Button>
+                            <Button colorScheme='red' onClick={removePreviousCalibrationPoint} ml={3}>
+                                Delete
+                            </Button>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialogOverlay>
+            </AlertDialog>
         </>
     );
 };
