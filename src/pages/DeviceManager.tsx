@@ -18,8 +18,8 @@ import {
 
 const DeviceManager: React.FC = () => {
   const [isLargeScreen] = useMediaQuery("(min-width: 1600px)");
-  
-  const {isOpen, onOpen, onClose} = useDisclosure()
+
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
     <BaseLayout isNavbarVisible={true}>
@@ -52,17 +52,20 @@ const DeviceManager: React.FC = () => {
           >
             Select by Map
           </Button>
-
-          <Select
-            size="sm"
-            borderRadius="0.25rem"
-            placeholder="Select Sensors"
-            ml="2rem"
-            w="15rem"
-            borderColor={colors.main.usafaBlue}
-          />
+          {
+            false ?
+              <Select
+                size="sm"
+                borderRadius="0.25rem"
+                placeholder="Select Sensors"
+                ml="2rem"
+                w="15rem"
+                borderColor={colors.main.usafaBlue}
+              />
+              : <></>
+          }
         </Flex>
-        <MapModal isOpen={isOpen} onClose={onClose}/>
+        <MapModal isOpen={isOpen} onClose={onClose} />
         <Center px="4rem" pt="2rem">
           <DeviceManagerTable />
         </Center>
