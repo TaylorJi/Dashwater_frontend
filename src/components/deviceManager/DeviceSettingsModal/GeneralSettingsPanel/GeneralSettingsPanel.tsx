@@ -113,6 +113,8 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
             Latitude
           </Text>
           <NumberInput
+            precision={4}
+            step={0.0001}
             value={latitude}
             min={-90}
             max={90}
@@ -138,6 +140,8 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
             Longitude
           </Text>
           <NumberInput
+            precision={4}
+            step={0.0001}
             value={longitude}
             allowMouseWheel={false}
             min={-180}
