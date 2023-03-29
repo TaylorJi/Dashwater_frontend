@@ -25,7 +25,15 @@ type metricSettingsType = {
     available: boolean;
     min: number;
     max: number;
-    alert: boolean
+    alert: boolean,
+    low: {
+        sensor: number,
+        physical: number
+    },
+    high: {
+        sensor: number,
+        physical: number
+    }
 };
 
 type buoySensorTagsType = {
