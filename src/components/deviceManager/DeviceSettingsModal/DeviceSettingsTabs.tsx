@@ -4,6 +4,7 @@ import colors from '../../../theme/foundations/colours';
 
 import GeneralSettingsPanel from "./GeneralSettingsPanel/GeneralSettingsPanel";
 import ThresholdSettingsPanel from "./ThresholdSettingsPanel/ThresholdSettingsPanel";
+import CalibrationSettingsPanel from "./CalibrationSettingsPanel/CalibrationSettingsPanel";
 
 type deviceSettingsTabsProps = {
     buoy: buoySettingsType
@@ -64,7 +65,9 @@ const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy }) => {
                 </TabPanel>
 
                 <TabPanel>
-                    <p>Calibration</p>
+                    <CalibrationSettingsPanel
+                        sensors={buoy.sensors}
+                    />
                 </TabPanel>
             </TabPanels>
         </Tabs>

@@ -9,9 +9,21 @@ const saveThresholdSettings = async () => {
     return true;
 }
 
+const saveCalibrationPoint = async (metric: string, lowSensor: number, lowPhys: number, highSensor: number, highPhys: number) => {
+    // do DB stuff for the metric type
+    return true;
+}
+
+const removePreviousCalibration = async () => {
+    // do DB stuff. should likely return the previous previous calibration points.
+    return true;
+}
+
 const ManageDevices = {
     saveDeviceSettings,
-    saveThresholdSettings
+    saveThresholdSettings,
+    saveCalibrationPoint,
+    removePreviousCalibration
 };
 
 export default ManageDevices;
