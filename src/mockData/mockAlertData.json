@@ -1,0 +1,51 @@
+{
+    "units": {
+        "dissolved_o2": "mg/L",
+        "electrical_conductivity": "mS/cm",
+        "pH": "pH",
+        "turbidity": "NTU",
+        "dissolved_solids": "ppm",
+        "temperature": "°C",
+        "water_lvl": "m",
+        "water_flow": "L/s",
+        "water_pressure": "kPa"
+    },
+    "alerts": [
+        {
+            "buoy": {
+                "name": "Appa",
+                "id": "1234"
+            },
+            "time": "Feb 20, 2023 08:00",
+            "metric": "pH",
+            "metric_name": "pH",
+            "data": true,
+            "above_max": true,
+            "difference": 4
+        }, 
+        {
+            "buoy": {
+                "name": "Snoopy",
+                "id": "0124"
+            },
+            "time": "Feb 19, 2023 23:32",
+            "metric": "",
+            "metric_name": "",
+            "data": false,
+            "above_max": false,
+            "difference": 0
+        },
+        {
+            "buoy": {
+                "name": "Katara",
+                "id": "345"
+            },
+            "time": "Feb 12, 2023 13:17",
+            "metric": "dissolved_o2",
+            "metric_name": "Dissolved Oxygen",
+            "data": true,
+            "above_max": false,
+            "difference": 223
+        }
+    ]
+}

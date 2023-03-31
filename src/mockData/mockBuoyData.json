@@ -1,0 +1,559 @@
+{
+    "units": {
+        "dissolved_o2": "mg/L",
+        "electrical_conductivity": "mS/cm",
+        "pH": "pH",
+        "turbidity": "NTU",
+        "dissolved_solids": "ppm",
+        "temperature": "°C",
+        "water_lvl": "m",
+        "water_flow": "L/s",
+        "water_pressure": "kPa"
+    },
+    "buoys": [
+        {
+            "name": "Appa",
+            "id": "1234",
+            "location": {
+                "x": 143.23,
+                "y": -81.22
+            },
+            "sensors": {
+                "dissolved_solids": {
+                    "available": true,
+                    "min": 2,
+                    "max": 5,
+                    "alert": true,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "pH": {
+                    "available": false,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false,
+                    "low": {
+                        "sensor": 19,
+                        "physical": 32
+                    },
+                    "high": {
+                        "sensor": 3.3,
+                        "physical": 2005
+                    }
+                },
+                "turbidity": {
+                    "available": true,
+                    "min": 45,
+                    "max": 200,
+                    "alert": false,
+                    "low": {
+                        "sensor": 7,
+                        "physical": 8
+                    },
+                    "high": {
+                        "sensor": 9,
+                        "physical": 10
+                    }
+                },
+                "dissolved_o2": {
+                    "available": false,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "temp": {
+                    "available": true,
+                    "min": -1,
+                    "max": 30,
+                    "alert": true,
+                    "low": {
+                        "sensor": 5,
+                        "physical": 6
+                    },
+                    "high": {
+                        "sensor": 10,
+                        "physical": 12.3
+                    }
+                },
+                "electrical_conductivity": {
+                    "available": false,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "water_flow": {
+                    "available": true,
+                    "min": 2,
+                    "max": 44,
+                    "alert": true,
+                    "low": {
+                        "sensor": 90,
+                        "physical": 99
+                    },
+                    "high": {
+                        "sensor": 200,
+                        "physical": 203
+                    }
+                },
+                "water_lvl": {
+                    "available": true,
+                    "min": 2,
+                    "max": 5,
+                    "alert": true,
+                    "low": {
+                        "sensor": 33,
+                        "physical": 30
+                    },
+                    "high": {
+                        "sensor": 50,
+                        "physical": 43
+                    }
+                },
+                "water_pressure": {
+                    "available": true,
+                    "min": 55,
+                    "max": 44,
+                    "alert": true,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                }
+            }
+        },
+        {
+            "name": "Snoopy",
+            "id": "0124",
+            "location": {
+                "x": 144.45,
+                "y": -81.12
+            },
+            "sensors": {
+                "dissolved_solids": {
+                    "available": false,
+                    "min": 2,
+                    "max": 5,
+                    "alert": true,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "pH": {
+                    "available": true,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "turbidity": {
+                    "available": true,
+                    "min": 45,
+                    "max": 200,
+                    "alert": false,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "dissolved_o2": {
+                    "available": true,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "temp": {
+                    "available": true,
+                    "min": -1,
+                    "max": 30,
+                    "alert": true,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "electrical_conductivity": {
+                    "available": false,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "water_flow": {
+                    "available": false,
+                    "min": 2,
+                    "max": 44,
+                    "alert": true,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "water_lvl": {
+                    "available": false,
+                    "min": 2,
+                    "max": 5,
+                    "alert": true,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "water_pressure": {
+                    "available": false,
+                    "min": 55,
+                    "max": 44,
+                    "alert": true,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                }
+            }
+        },
+        {
+            "name": "Roobs",
+            "id": "520",
+            "location": {
+                "x": 143.20,
+                "y": -81.12
+            },
+            "sensors": {
+                "dissolved_solids": {
+                    "available": true,
+                    "min": 2,
+                    "max": 5,
+                    "alert": true,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "pH": {
+                    "available": false,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "turbidity": {
+                    "available": true,
+                    "min": 45,
+                    "max": 200,
+                    "alert": false,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "dissolved_o2": {
+                    "available": false,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "temp": {
+                    "available": true,
+                    "min": -1,
+                    "max": 30,
+                    "alert": true,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "electrical_conductivity": {
+                    "available": false,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "water_flow": {
+                    "available": true,
+                    "min": 2,
+                    "max": 44,
+                    "alert": true,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "water_lvl": {
+                    "available": true,
+                    "min": 2,
+                    "max": 5,
+                    "alert": true,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "water_pressure": {
+                    "available": true,
+                    "min": 55,
+                    "max": 44,
+                    "alert": true,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                }
+            }
+        },
+        {
+            "name": "I have everything!",
+            "id": "9999",
+            "location": {
+                "x": 150.20,
+                "y": -81.33
+            },
+            "sensors": {
+                "dissolved_solids": {
+                    "available": true,
+                    "min": 2,
+                    "max": 5,
+                    "alert": true,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "pH": {
+                    "available": true,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false,
+                    "low": {
+                        "sensor": 2,
+                        "physical": 1.3
+                    },
+                    "high": {
+                        "sensor": 8,
+                        "physical": 7
+                    }
+                },
+                "turbidity": {
+                    "available": true,
+                    "min": 45,
+                    "max": 200,
+                    "alert": false,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "dissolved_o2": {
+                    "available": true,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "temp": {
+                    "available": true,
+                    "min": -1,
+                    "max": 30,
+                    "alert": true,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "electrical_conductivity": {
+                    "available": true,
+                    "min": 0,
+                    "max": 0,
+                    "alert": false,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "water_flow": {
+                    "available": true,
+                    "min": 2,
+                    "max": 44,
+                    "alert": true,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "water_lvl": {
+                    "available": true,
+                    "min": 2,
+                    "max": 5,
+                    "alert": true,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                },
+                "water_pressure": {
+                    "available": true,
+                    "min": 55,
+                    "max": 44,
+                    "alert": true,
+                    "low": {
+                        "sensor": 1,
+                        "physical": 21.3
+                    },
+                    "high": {
+                        "sensor": 4,
+                        "physical": 115.3
+                    }
+                }
+            }
+        }
+    ]
+}
