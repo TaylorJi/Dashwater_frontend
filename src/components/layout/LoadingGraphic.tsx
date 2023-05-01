@@ -9,11 +9,11 @@ const LoadingGraphic: React.FC = () => {
     return (
         <Center
             flexDir='column'
-            mt={isLargeScreen ? '5rem' : '1rem'}
+            mt={isLargeScreen ? '7rem' : '3rem'}
         >
             <Image
                 src={waterDroplet}
-                w={isLargeScreen ? '15rem' : '10rem'}
+                w={isLargeScreen ? '10rem' : '8rem'}
                 mb={isLargeScreen ? '1rem' : '0'}
             />
             <Flex

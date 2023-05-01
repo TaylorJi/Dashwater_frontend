@@ -103,7 +103,7 @@ const Logs: React.FC = () => {
     return (
         <>
             {
-                !logData ?
+                logData ?
                     <>
                         <Box
                             overflow='auto'
