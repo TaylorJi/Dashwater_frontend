@@ -1,15 +1,25 @@
 import { Box, Button, Flex, Icon, Spacer } from '@chakra-ui/react';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useEffect } from 'react';
 import colors from '../../../theme/foundations/colours';
 import Logs from './Logs';
 import { mockLogData } from '../../../mockData/dashboardMockData';
 import { utils as XLSX, writeFile as XLSXWriteFile } from 'xlsx';
 import { remapDataForExport } from '../dashboardHelpers';
 import toast from 'react-hot-toast';
+import { useSetRecoilState } from 'recoil';
+import { logDataAtom } from './atoms/logPanelAtoms';
+
+// function to fetch and set log data here
 
 const LogPanel: React.FC = () => {
+
+    const setLogData = useSetRecoilState(logDataAtom);
+
+    useEffect(() => {
+        setLogData(mockLogData);
+    }, []);
 
     const exportXLSX = (data: logDataType[]) => {
 

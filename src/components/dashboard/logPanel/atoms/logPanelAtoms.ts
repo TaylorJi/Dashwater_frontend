@@ -23,6 +23,8 @@ export const displayedLogDataSelector = selector({
         let logData = get(logDataAtom);
         const itemsPerPage = get(itemsPerPageAtom);
 
+        // sorting functionality here
+
         if (logData) {
             const pagination = get(paginationMultipleAtom);
             const rangeStart = pagination * itemsPerPage;
