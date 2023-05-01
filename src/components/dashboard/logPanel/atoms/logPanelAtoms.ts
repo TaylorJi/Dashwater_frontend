@@ -1,6 +1,10 @@
 import { atom, selector } from 'recoil';
 
-export const ITEMS_PER_PAGE = 15;
+export const itemsPerPageAtom = atom<number>({
+    key: 'itemsPerPageAtom',
+    default: 15
+});
+
 
 export const logDataAtom = atom<logDataType[] | null>({
     key: 'logDataAtom',
@@ -17,12 +21,12 @@ export const displayedLogDataSelector = selector({
     get: ({ get }) => {
 
         let logData = get(logDataAtom);
+        const itemsPerPage = get(itemsPerPageAtom);
 
         if (logData) {
-            logData = [...logData];
             const pagination = get(paginationMultipleAtom);
-            const rangeStart = pagination * ITEMS_PER_PAGE;
-            const rangeEnd = (pagination + 1) * ITEMS_PER_PAGE;
+            const rangeStart = pagination * itemsPerPage;
+            const rangeEnd = (pagination + 1) * itemsPerPage;
             return logData.slice(rangeStart, rangeEnd);
         }
 
