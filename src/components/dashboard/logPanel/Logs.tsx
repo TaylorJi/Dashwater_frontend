@@ -6,8 +6,10 @@ import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { displayedLogDataSelector, logDataAtom } from './atoms/logPanelAtoms';
 import { useEffect } from 'react';
 import LogPagination from './LogPagination';
+import LoadingGraphic from '../../layout/LoadingGraphic';
 
 const Logs: React.FC = () => {
+
     const [logData, setLogData] = useRecoilState(logDataAtom);
     const displayedLogData = useRecoilValue(displayedLogDataSelector);
 
@@ -15,9 +17,7 @@ const Logs: React.FC = () => {
     const columnHelper = createColumnHelper<logDataType>();
 
     useEffect(() => {
-
         setLogData(mockLogData);
-
     }, []);
 
     const columns = [
@@ -103,7 +103,7 @@ const Logs: React.FC = () => {
     return (
         <>
             {
-                logData ?
+                !logData ?
                     <>
                         <Box
                             overflow='auto'
@@ -113,7 +113,8 @@ const Logs: React.FC = () => {
                         <LogPagination />
 
                     </>
-                    : 'Loading'
+                    :
+                    <LoadingGraphic />
             }
 
         </>
