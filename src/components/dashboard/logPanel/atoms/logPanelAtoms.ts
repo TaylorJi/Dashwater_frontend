@@ -33,9 +33,32 @@ export const displayedLogDataSelector = selector({
         let logData = get(logDataAtom);
         const itemsPerPage = get(itemsPerPageAtom);
         const sortOrder = get(logSortOrderAtom);
-        const sortMetric = get(metricSelectedAtom);
+        const sortMetric = get(metricSelectedAtom) as keyof logDataType | '';
 
         if (logData) {
+
+            logData = [...logData];
+
+            if (sortMetric !== '') {
+
+                if (sortMetric === 'time') {
+                    if (sortOrder === 'asc') {
+                        logData.sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
+                    } else {
+                        logData.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime())
+                    }
+
+                } else {
+                    if (sortOrder === 'asc') {
+                        logData.sort((a, b) => a[sortMetric] - b[sortMetric]);
+                    } else {
+                        logData.sort((a, b) => b[sortMetric] - a[sortMetric]);
+                    }
+
+                }
+
+            }
+
             const pagination = get(paginationMultipleAtom);
             const rangeStart = pagination * itemsPerPage;
             const rangeEnd = (pagination + 1) * itemsPerPage;
