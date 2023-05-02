@@ -1,5 +1,5 @@
 import { Button, Flex, Icon, Select, useMediaQuery } from '@chakra-ui/react';
-import { faSort } from '@fortawesome/free-solid-svg-icons';
+import { faEraser, faSort } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -45,6 +45,9 @@ const LogSorting: React.FC = () => {
                 value={sortingMetric}
                 onChange={(e) => {
                     setSortingMetric(e.target.value);
+                    if (e.target.value === '') {
+                        setSortOrder('asc');
+                    }
                 }}
             >
                 {
@@ -71,6 +74,7 @@ const LogSorting: React.FC = () => {
                 onChange={(e) => {
                     setSortOrder(e.target.value);
                 }}
+                disabled={sortingMetric === ''}
             >
                 <option
                     value={'asc'}
@@ -99,14 +103,41 @@ const LogSorting: React.FC = () => {
                     bg: colors.main.activeMainButton
                 }}
                 onClick={() => {
-                    resetPagination();
-                    resetItemsPerPage();
-                    setGlobalLogSortOrder(sortOrder);
-                    setGlobalMetricSelected(sortingMetric);
-                    toast.success('Your sort settings were applied!');
+                    if (sortingMetric === '') {
+                        toast.error('Select a valid metric to sort by.');
+                    } else {
+                        resetPagination();
+                        resetItemsPerPage();
+                        setGlobalLogSortOrder(sortOrder);
+                        setGlobalMetricSelected(sortingMetric);
+                        toast.success('Your sort settings were applied!');
+                    }
                 }}
             >
                 Global Sort
+            </Button>
+
+            <Button
+                size='sm'
+                border='1px solid'
+                bgColor='white'
+                borderColor={colors.main.usafaBlue}
+                color={colors.main.usafaBlue}
+                ml='0.25rem'
+                leftIcon={<Icon
+                    as={FontAwesomeIcon}
+                    icon={faEraser}
+                    color={colors.main.usafaBlue}
+                />}
+                onClick={() => {
+                    setSortOrder('asc');
+                    setSortingMetric('');
+                    resetGlobalMetricSelected();
+                    resetGlobalLogSortOrder();
+                    toast.success('Your sort settings were reset!');
+                }}
+            >
+                Reset
             </Button>
 
         </Flex >
