@@ -103,11 +103,10 @@ const LogSorting: React.FC = () => {
                     bg: colors.main.activeMainButton
                 }}
                 onClick={() => {
+                    resetPagination();
                     if (sortingMetric === '') {
                         toast.error('Select a valid metric to sort by.');
                     } else {
-                        resetPagination();
-                        resetItemsPerPage();
                         setGlobalLogSortOrder(sortOrder);
                         setGlobalMetricSelected(sortingMetric);
                         toast.success('Your sort settings were applied!');
