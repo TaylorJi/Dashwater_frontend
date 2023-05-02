@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import L from "leaflet";
 import "../mapStyles.css";
 import {
@@ -48,9 +48,10 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
     isSettings,
     settingsCoords,
   } = props;
-  const [map, setMap] = React.useState<any>(); 
   const editableFG = React.useRef<L.FeatureGroup | null>(null);
-  const [bounds, setBounds] = React.useState<any>(null);
+  
+  const [map, setMap] = useState<any>(); 
+  const [bounds, setBounds] = useState<any>(null);
 
   const handleDrawCreated = (event: any) => {
     const { layerType, layer } = event;
@@ -74,7 +75,7 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     setBounds(null);
   }, [bounds])
 
