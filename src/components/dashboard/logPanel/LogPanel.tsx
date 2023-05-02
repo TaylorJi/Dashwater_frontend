@@ -10,6 +10,7 @@ import { remapDataForExport } from '../dashboardHelpers';
 import toast from 'react-hot-toast';
 import { useSetRecoilState } from 'recoil';
 import { logDataAtom } from './atoms/logPanelAtoms';
+import LogSorting from './LogSorting';
 
 // function to fetch and set log data here
 
@@ -47,10 +48,13 @@ const LogPanel: React.FC = () => {
     return (
         <Box>
             <Flex
-                mb='0.75rem'
+                mt='0.75rem'
+                mb='1rem'
             >
+                <LogSorting />
                 <Spacer />
                 <Button
+                    size='sm'
                     bg='main.acidGreen'
                     ml='0.5rem'
                     color='white'

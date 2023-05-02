@@ -1,5 +1,15 @@
 import { atom, selector } from 'recoil';
 
+export const metricSelectedAtom = atom<string>({
+    key: 'metricSelectedAtom',
+    default: ''
+});
+
+export const logSortOrderAtom = atom<string>({
+    key: 'logSortOrderAtom',
+    default: 'asc'
+});
+
 export const itemsPerPageAtom = atom<number>({
     key: 'itemsPerPageAtom',
     default: 15
@@ -22,8 +32,8 @@ export const displayedLogDataSelector = selector({
 
         let logData = get(logDataAtom);
         const itemsPerPage = get(itemsPerPageAtom);
-
-        // sorting functionality here
+        const sortOrder = get(logSortOrderAtom);
+        const sortMetric = get(metricSelectedAtom);
 
         if (logData) {
             const pagination = get(paginationMultipleAtom);
