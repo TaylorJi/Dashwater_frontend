@@ -21,7 +21,8 @@ import typography from "../../../theme/foundations/typography";
 import mockBuoyData from "../../../mockData/mockBuoyIdData.json";
 import { tileServer, mapModalSpecs } from "../mapConstants";
 import { getBuoyMapData } from "../mapHelpers";
-import axios from "axios";
+import { selectedIdsAtom } from "./atoms/selectedIdsAtom";
+import { useRecoilState } from 'recoil';
 
 type MapModalProps = {
   isOpen: boolean;
@@ -29,7 +30,9 @@ type MapModalProps = {
 };
 
 const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }, props) => {
- 
+  
+  const [selectedIds, setSelectedIds] = useRecoilState(selectedIdsAtom)
+
   const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
   const [mapKey, setMapKey] = useState<number>(0);
   const { long, lat, zVal, zSet, cLong, cLat } = mapModalSpecs;
@@ -150,6 +153,8 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }, props) => {
               _hover={{
                 bg: colors.main.ceruBlue,
               }}
+
+              onClick={()=> setSelectedIds(ids)}
             >
               Confirm
             </Button>
