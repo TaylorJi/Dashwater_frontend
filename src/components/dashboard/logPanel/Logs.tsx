@@ -2,11 +2,23 @@ import { createColumnHelper } from '@tanstack/react-table';
 import { BaseTable } from './BaseTable';
 import { mockLogData } from '../../../mockData/dashboardMockData';
 import { Box, Text, useMediaQuery } from '@chakra-ui/react';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { displayedLogDataSelector, logDataAtom } from './atoms/logPanelAtoms';
+import { useEffect } from 'react';
+import LogPagination from './LogPagination';
+import LoadingGraphic from '../../layout/LoadingGraphic';
 
 const Logs: React.FC = () => {
 
+    const [logData, setLogData] = useRecoilState(logDataAtom);
+    const displayedLogData = useRecoilValue(displayedLogDataSelector);
+
     const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
     const columnHelper = createColumnHelper<logDataType>();
+
+    useEffect(() => {
+        setLogData(mockLogData);
+    }, []);
 
     const columns = [
         columnHelper.accessor('id', {
@@ -89,11 +101,23 @@ const Logs: React.FC = () => {
     ];
 
     return (
-        <Box
-            overflow='auto'
-        >
-            <BaseTable columns={columns} data={mockLogData} />
-        </Box>
+        <>
+            {
+                logData ?
+                    <>
+                        <Box
+                            overflow='auto'
+                        >
+                            <BaseTable columns={columns} data={displayedLogData} />
+                        </Box>
+                        <LogPagination />
+
+                    </>
+                    :
+                    <LoadingGraphic />
+            }
+
+        </>
     );
 };
 

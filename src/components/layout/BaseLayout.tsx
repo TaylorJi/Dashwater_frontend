@@ -21,7 +21,10 @@ const BaseLayout: React.FC<layoutProps> = ({ children, isNavbarVisible }) => {
                         <SidebarOffset />
                         {children}
                     </Flex>
-                    : { children }
+                    : 
+                    <>
+                        { children }
+                    </>
             }
 
         </>

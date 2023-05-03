@@ -1,7 +1,7 @@
 import { Box, Button, Flex, Icon, Spacer } from '@chakra-ui/react';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useCallback } from 'react';
+import React from 'react';
 import colors from '../../../theme/foundations/colours';
 import Logs from './Logs';
 import { mockLogData } from '../../../mockData/dashboardMockData';
@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 
 const LogPanel: React.FC = () => {
 
-    const exportXLSX = useCallback((data: logDataType[]) => {
+    const exportXLSX = (data: logDataType[]) => {
 
         const workbook = XLSX.book_new();
 
@@ -32,7 +32,7 @@ const LogPanel: React.FC = () => {
             toast.success('The report for this time period was successfully generated.');
         }
 
-    }, []);
+    };
 
     return (
         <Box>

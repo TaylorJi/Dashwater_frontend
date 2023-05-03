@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Marker } from "react-leaflet";
 import L from "leaflet";
 import mapMarkerBlue from "../../../assets/images/mapMarkers/marker-icon-2x.png";
@@ -17,8 +17,8 @@ type markerPropsType = {
 
 const MapMarker: React.FC<markerPropsType> = ({ buoyId, coords }) => {
   const { ids, updateSelected, updateIds } = React.useContext(SelectContext);
-  const [color, setColor] = React.useState<string>(mapMarkerYellow);
-  const [retina, setRetina] = React.useState<string>(mapMarkerBlue);
+  const [color, setColor] = useState<string>(mapMarkerYellow);
+  const [retina, setRetina] = useState<string>(mapMarkerBlue);
 
   const { xSize, ySize, xAnchor, yAnchor, xPopAnchor, yPopAnchor } = iconSpecs;
 
