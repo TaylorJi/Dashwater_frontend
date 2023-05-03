@@ -154,7 +154,10 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }, props) => {
                 bg: colors.main.ceruBlue,
               }}
 
-              onClick={()=> setSelectedIds(ids)}
+              onClick={()=> {
+                setSelectedIds(ids);
+                onClose();
+              }}
             >
               Confirm
             </Button>
