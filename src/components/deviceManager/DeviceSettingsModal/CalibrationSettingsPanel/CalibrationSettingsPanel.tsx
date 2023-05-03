@@ -24,9 +24,7 @@ import uuid from 'react-uuid';
 import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
 
 type calibrationSettingsPanelProps = {
-    sensors: {
-        [key: string]: metricSettingsType;
-    }
+    sensors: sensorType[];
 }
 
 const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sensors }) => {

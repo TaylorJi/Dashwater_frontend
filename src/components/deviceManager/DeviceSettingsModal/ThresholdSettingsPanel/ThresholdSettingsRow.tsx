@@ -4,7 +4,7 @@ import { Tr, Td, NumberInput, NumberInputField, Switch } from '@chakra-ui/react'
 
 type thresholdSettingRowProps = {
     metric: string;
-    metricSensor: metricSettingsType;
+    metricSensor: sensorType;
 }
 
 const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = ({ metric, metricSensor }) => {

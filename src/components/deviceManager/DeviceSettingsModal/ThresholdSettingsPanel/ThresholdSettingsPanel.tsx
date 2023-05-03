@@ -16,9 +16,7 @@ import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
 
 
 type thresholdSettingsPanelProps = {
-    sensors: {
-        [key: string]: metricSettingsType;
-    }
+    sensors: sensorType[];
 }
 
 

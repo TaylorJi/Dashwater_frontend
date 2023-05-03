@@ -19,15 +19,6 @@ type buoyLocationType = {
     y: number
 };
 
-type metricSettingsType = {
-    metric: string;
-    min: number;
-    max: number;
-    alert: boolean;
-    min_calibration_point: number;
-    calibration_points: calibrationType[];
-};
-
 type buoySensorTagsType = {
     [key: string]: {
         color: string;
