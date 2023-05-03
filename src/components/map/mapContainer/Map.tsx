@@ -74,14 +74,12 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
     }
   };
 
-  function HandleMapMouseMove() {
-    useMapEvents({
-      mousemove: () => {
-        setBounds(null);
-      },
-    });
-    return null;
-  }
+
+
+
+  React.useEffect(() => {
+    setBounds(null);
+  }, [bounds])
 
   return (
     <MapContainer
@@ -126,7 +124,7 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
       ) : (
         <></>
       )}
-      <HandleMapMouseMove />
+
     </MapContainer>
   );
 };
