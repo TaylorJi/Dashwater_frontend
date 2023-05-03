@@ -7,10 +7,11 @@ import ThresholdSettingsPanel from "./ThresholdSettingsPanel/ThresholdSettingsPa
 import CalibrationSettingsPanel from "./CalibrationSettingsPanel/CalibrationSettingsPanel";
 
 type deviceSettingsTabsProps = {
-    buoy: buoySettingsType
+    buoy: buoySettingsType;
+    units: buoySettingsUnitsType;
 }
 
-const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy }) => {
+const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy, units }) => {
     return (
         <Tabs
             mt='1rem'
@@ -61,6 +62,7 @@ const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy }) => {
                 <TabPanel>
                     <ThresholdSettingsPanel
                         sensors={buoy.sensors}
+                        units={units}
                     />
                 </TabPanel>
 

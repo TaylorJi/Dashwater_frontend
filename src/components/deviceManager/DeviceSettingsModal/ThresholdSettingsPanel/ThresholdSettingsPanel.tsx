@@ -17,10 +17,11 @@ import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
 
 type thresholdSettingsPanelProps = {
     sensors: sensorType[];
+    units: buoySettingsUnitsType;
 }
 
 
-const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ sensors }) => {
+const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ sensors, units }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const saveThresholdSettings = async () => {
@@ -43,17 +44,18 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ sensors
                         <Th>Metric</Th>
                         <Th>Min</Th>
                         <Th>Max</Th>
-                        <Th>Available</Th>
+                        <Th>Unit</Th>
                         <Th>Alert</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
                     {
-                        Object.keys(sensors).map((metricSensor => {
+                        sensors.map((sensor => {
                             return (
                                 <ThresholdSettingsRow
-                                    metric={buoySensorTags[metricSensor].label}
-                                    metricSensor={sensors[metricSensor]}
+                                    metric={buoySensorTags[sensor.metric_type].label}
+                                    metricSensor={sensor}
+                                    units={units}
                                 />
                             );
                         }))

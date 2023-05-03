@@ -28,7 +28,6 @@ type calibrationSettingsPanelProps = {
 }
 
 const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sensors }) => {
-    const availableSensors = Object.keys(sensors).filter(sensor => sensors[sensor].available);
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef(null);
 
@@ -41,14 +40,14 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
 
     // TO DO: will need to alter code for variable calliratoin points. Also thre is warning
     // generated rn for accessing sensors prop
-    useEffect(() => {
-        if (currentMetric !== "") {
-            setSensorLow(sensors[currentMetric].low.sensor);
-            setPhysicalLow(sensors[currentMetric].low.physical);
-            setSensorHigh(sensors[currentMetric].high.sensor);
-            setPhysicalHigh(sensors[currentMetric].high.physical);
-        }
-    }, [currentMetric]);
+    // useEffect(() => {
+    //     if (currentMetric !== "") {
+    //         setSensorLow(sensors[currentMetric].low.sensor);
+    //         setPhysicalLow(sensors[currentMetric].low.physical);
+    //         setSensorHigh(sensors[currentMetric].high.sensor);
+    //         setPhysicalHigh(sensors[currentMetric].high.physical);
+    //     }
+    // }, [currentMetric]);
 
     const saveCalibrationPoint = async () => {
         setIsLoading(true);
@@ -75,7 +74,7 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
 
     return (
         <>
-            <Text fontWeight='semibold' mb={1}>
+            {/* <Text fontWeight='semibold' mb={1}>
                 Metric
             </Text>
             <Select
@@ -168,7 +167,7 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                         </Box>
                     </Flex>
                 </Box>
-            </Flex>
+            </Flex> */}
 
             <Flex mt={8} justifyContent="flex-end">
                 <Button

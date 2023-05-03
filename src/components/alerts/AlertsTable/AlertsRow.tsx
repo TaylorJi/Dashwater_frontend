@@ -20,7 +20,7 @@ const AlertsRow: React.FC<alertRowProps> = ({ alert }) => {
         <Tr>
             <Td fontWeight='semibold'>{alertMessage}</Td>
             <Td>
-                {alert.data ? <SensorTag metricKey={alert.metric} visible={true} /> : <>--</>}
+                {alert.data ? <SensorTag metricKey={alert.metric} /> : <>--</>}
             </Td>
             <Td>
                 {alert.data ? alert.above_max ?

@@ -27,7 +27,7 @@ type buoySensorTagsType = {
 }
 
 type sensorType = {
-    metric: string;
+    metric_type: string;
     min: number;
     max: number;
     alert: boolean;

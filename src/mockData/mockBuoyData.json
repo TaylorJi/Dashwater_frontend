@@ -5,7 +5,7 @@
         "pH": "pH",
         "turbidity": "NTU",
         "dissolved_solids": "ppm",
-        "temperature": "°C",
+        "temp": "°C",
         "water_lvl": "m",
         "water_flow": "L/s",
         "water_pressure": "kPa"
@@ -20,7 +20,7 @@
             },
             "sensors": [
                 {
-                    "metric": "dissolved_solids",
+                    "metric_type": "dissolved_solids",
                     "min": 2,
                     "max": 5,
                     "alert": true,
@@ -41,7 +41,7 @@
                     ]
                 },
                 {
-                    "metric": "turbidity",
+                    "metric_type": "turbidity",
                     "min": 45,
                     "max": 200,
                     "alert": false,
@@ -58,7 +58,7 @@
                     ]
                 },
                 {
-                    "metric": "temp",
+                    "metric_type": "temp",
                     "min": -1,
                     "max": 30,
                     "alert": true,
@@ -71,7 +71,7 @@
                     ]
                 },
                 {
-                    "metric": "water_flow",
+                    "metric_type": "water_flow",
                     "min": 2,
                     "max": 44,
                     "alert": true,
@@ -92,7 +92,7 @@
                     ]
                 },
                 {
-                    "metric": "water_lvl",
+                    "metric_type": "water_lvl",
                     "min": 2,
                     "max": 5,
                     "alert": true,
@@ -113,7 +113,7 @@
                     ]
                 },
                 {
-                    "metric": "water_pressure",
+                    "metric_type": "water_pressure",
                     "min": 55,
                     "max": 44,
                     "alert": true,
@@ -144,7 +144,7 @@
             },
             "sensors": [
                 {
-                    "metric": "pH",
+                    "metric_type": "pH",
                     "min": 0,
                     "max": 0,
                     "alert": false,
@@ -160,7 +160,7 @@
                         }
                     ]
                 }, {
-                    "metric": "turbidity",
+                    "metric_type": "turbidity",
                     "min": 45,
                     "max": 200,
                     "alert": false,
@@ -176,7 +176,7 @@
                         }
                     ]
                 }, {
-                    "metric": "dissolved_o2",
+                    "metric_type": "dissolved_o2",
                     "min": 0,
                     "max": 0,
                     "alert": false,
@@ -192,7 +192,7 @@
                         }
                     ]
                 }, {
-                    "metric": "temp",
+                    "metric_type": "temp",
                     "min": -1,
                     "max": 30,
                     "alert": true,
@@ -208,7 +208,7 @@
                         }
                     ]
                 }, {
-                    "metric": "water_flow",
+                    "metric_type": "water_flow",
                     "min": 2,
                     "max": 44,
                     "alert": true,
@@ -235,7 +235,7 @@
             },
             "sensors": [
                 {
-                    "metric": "dissolved_solids",
+                    "metric_type": "dissolved_solids",
                     "min": 2,
                     "max": 5,
                     "alert": true,
@@ -251,7 +251,7 @@
                         }
                     ]
                 }, {
-                    "metric": "pH",
+                    "metric_type": "pH",
                     "min": 0,
                     "max": 0,
                     "alert": false,
@@ -267,7 +267,7 @@
                         }
                     ]
                 }, {
-                    "metric": "turbidity",
+                    "metric_type": "turbidity",
                     "min": 45,
                     "max": 200,
                     "alert": false,
@@ -283,7 +283,7 @@
                         }
                     ]
                 }, {
-                    "metric": "temp",
+                    "metric_type": "temp",
                     "min": -1,
                     "max": 30,
                     "alert": true,
@@ -299,7 +299,7 @@
                         }
                     ]
                 }, {
-                    "metric": "water_flow",
+                    "metric_type": "water_flow",
                     "min": 2,
                     "max": 44,
                     "alert": true,
@@ -315,7 +315,7 @@
                         }
                     ]
                 }, {
-                    "metric": "water_lvl",
+                    "metric_type": "water_lvl",
                     "min": 2,
                     "max": 5,
                     "alert": true,
@@ -331,7 +331,7 @@
                         }
                     ]
                 }, {
-                    "metric": "water_pressure",
+                    "metric_type": "water_pressure",
                     "min": 55,
                     "max": 44,
                     "alert": true,
@@ -358,7 +358,7 @@
             },
             "sensors": [
                 {
-                    "metric": "dissolved_solids",
+                    "metric_type": "dissolved_solids",
                     "min": 2,
                     "max": 5,
                     "alert": true,
@@ -375,7 +375,7 @@
                     ]
                 },
                 {
-                    "metric": "pH",
+                    "metric_type": "pH",
                     "min": 0,
                     "max": 0,
                     "alert": false,
@@ -391,7 +391,7 @@
                         }
                     ]
                 }, {
-                    "metric": "turbidity",
+                    "metric_type": "turbidity",
                     "min": 45,
                     "max": 200,
                     "alert": false,
@@ -407,7 +407,7 @@
                         }
                     ]
                 }, {
-                    "metric": "dissolved_o2",
+                    "metric_type": "dissolved_o2",
                     "min": 0,
                     "max": 0,
                     "alert": false,
@@ -423,7 +423,7 @@
                         }
                     ]
                 }, {
-                    "metric": "temp",
+                    "metric_type": "temp",
                     "min": -1,
                     "max": 30,
                     "alert": true,
@@ -439,7 +439,7 @@
                         }
                     ]
                 }, {
-                    "metric": "electrical_conductivity",
+                    "metric_type": "electrical_conductivity",
                     "min": 0,
                     "max": 0,
                     "alert": false,
@@ -455,7 +455,7 @@
                         }
                     ]
                 }, {
-                    "metric": "water_flow",
+                    "metric_type": "water_flow",
                     "min": 2,
                     "max": 44,
                     "alert": true,
@@ -471,7 +471,7 @@
                         }
                     ]
                 }, {
-                    "metric": "water_lvl",
+                    "metric_type": "water_lvl",
                     "min": 2,
                     "max": 5,
                     "alert": true,
@@ -487,7 +487,7 @@
                         }
                     ]
                 }, {
-                    "metric": "water_pressure",
+                    "metric_type": "water_pressure",
                     "min": 55,
                     "max": 44,
                     "alert": true,
