@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BaseLayout from '../components/layout/BaseLayout';
 import welcomeBgImage from '../assets/images/cristian-palmer-3leBubkp5hk-unsplash.png';
 import loginFormBgImage from '../assets/images/login-form-background.png';
 import yvrLogo from '../assets/images/yvr-logo.png';
 import { Box, Button, Flex, FormControl, FormLabel, Heading, Image, Input, VStack } from '@chakra-ui/react';
+import Authentication from '../api/Authentication/Authentication';
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate()
+
+
+    const handleLogin = async (e: { preventDefault: () => void; }) => {
+        const user = await Authentication.authenticateUser(email, password);
+        if (user) {
+            console.log(user)
+        }
+    }
 
     return (
         <BaseLayout isNavbarVisible={false}>
@@ -40,14 +51,17 @@ const Login: React.FC = () => {
                             <FormLabel>Email</FormLabel>
                             <Input
                                 type='text'
-                                placeholder='Email'
+                                onChange={(e) => setEmail(e.target.value)}
                             />
                         </FormControl>
                         <FormControl w='30%'>
                             <FormLabel>Password</FormLabel>
-                            <Input/>
+                            <Input
+                                type='text'
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
                         </FormControl>
-                        <Button>Login</Button>
+                        <Button onClick={handleLogin}>Login</Button>
                     </VStack>
                 </Box>
             </Flex>
