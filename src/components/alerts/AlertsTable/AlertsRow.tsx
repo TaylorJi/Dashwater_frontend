@@ -14,7 +14,6 @@ type alertRowProps = {
 const AlertsRow: React.FC<alertRowProps> = ({ alert }) => {
     let alertMessage = alert.above_max ? ' above Threshold!' : ' below Threshold!'
     alertMessage = alert.data ? alert.metric_name + alertMessage : 'No data for over 72 hours'
-    console.log(alert);
 
     return (
         <Tr>

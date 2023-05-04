@@ -41,11 +41,11 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ sensors
 
                 <Thead>
                     <Tr>
-                        <Th>Metric</Th>
-                        <Th>Min</Th>
-                        <Th>Max</Th>
-                        <Th>Unit</Th>
-                        <Th>Alert</Th>
+                        <Th color={colors.main.usafaBlue}>Metric</Th>
+                        <Th color={colors.main.usafaBlue}>Min</Th>
+                        <Th color={colors.main.usafaBlue}>Max</Th>
+                        <Th color={colors.main.usafaBlue}>Unit</Th>
+                        <Th color={colors.main.usafaBlue}>Alert</Th>
                     </Tr>
                 </Thead>
                 <Tbody>

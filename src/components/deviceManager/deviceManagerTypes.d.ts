@@ -28,14 +28,16 @@ type buoySensorTagsType = {
 
 type sensorType = {
     metric_type: string;
+    default_metric_unit: string;
     min: number;
     max: number;
     alert: boolean;
     min_calibration_points: number;
-    calibration_points: calibrationType[];
+    calibration_points: calibrationPointType[];
 }
 
-type calibrationType = {
-    digital: number;
-    physical: number;
+type calibrationPointType = {
+    id: number;
+    digital_value: number;
+    physical_value: number;
 }

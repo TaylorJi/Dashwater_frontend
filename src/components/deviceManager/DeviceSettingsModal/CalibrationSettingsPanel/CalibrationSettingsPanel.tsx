@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Select } from '@chakra-ui/react';
+import React, { useState, useRef } from 'react';
 import colors from '../../../../theme/foundations/colours';
 import {
     Box,
@@ -16,12 +15,23 @@ import {
     AlertDialogContent,
     AlertDialogBody,
     AlertDialogFooter,
-    useDisclosure
+    useDisclosure,
+    Select,
+    Popover,
+    PopoverTrigger,
+    Portal,
+    PopoverContent,
+    PopoverArrow,
+    PopoverCloseButton,
+    PopoverHeader,
+    PopoverBody,
+    PopoverFooter,
 } from '@chakra-ui/react';
 import { toast } from 'react-hot-toast';
 import { buoySensorTags } from '../../../../theme/metrics/buoySensorTags';
 import uuid from 'react-uuid';
 import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
+import CalibrationTable from './CalibrationTable';
 
 type calibrationSettingsPanelProps = {
     sensors: sensorType[];
@@ -33,48 +43,33 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [currentMetric, setCurrentMetric] = useState<string>("");
-    const [sensorLow, setSensorLow] = useState<number>(0);
-    const [physicalLow, setPhysicalLow] = useState<number>(0);
-    const [sensorHigh, setSensorHigh] = useState<number>(0);
-    const [physicalHigh, setPhysicalHigh] = useState<number>(0);
+    const [calibrationInfo, setCalibrationInfo] = useState<sensorType>({} as sensorType);
+    const [unsavedChanges, setUnsavedChanges] = useState<boolean>(false);
 
-    // TO DO: will need to alter code for variable calliratoin points. Also thre is warning
-    // generated rn for accessing sensors prop
-    // useEffect(() => {
-    //     if (currentMetric !== "") {
-    //         setSensorLow(sensors[currentMetric].low.sensor);
-    //         setPhysicalLow(sensors[currentMetric].low.physical);
-    //         setSensorHigh(sensors[currentMetric].high.sensor);
-    //         setPhysicalHigh(sensors[currentMetric].high.physical);
-    //     }
-    // }, [currentMetric]);
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (calibrationInfo) {
+            setUnsavedChanges(true);
+            setCalibrationInfo({ ...calibrationInfo, [e.target.name]: e.target.value });
+        }
+    };
 
     const saveCalibrationPoint = async () => {
         setIsLoading(true);
-        const res = await ManageDevices.saveCalibrationPoint(currentMetric, sensorLow, physicalLow, sensorHigh, physicalHigh);
-        if (res) {
-            toast.success('Calibration point saved!');
-        } else {
-            toast.error('There was a problem saving the calibration points. Please try again.')
+        if (calibrationInfo) {
+            const res = await ManageDevices.saveCalibrationPoint(calibrationInfo);
+            if (res) {
+                toast.success('Calibration point saved!');
+            } else {
+                toast.error('There was a problem saving the calibration points. Please try again.')
+            }
+            setIsLoading(false);
+            setUnsavedChanges(false);
         }
-        setIsLoading(false);
-    };
-
-    const removePreviousCalibrationPoint = async () => {
-        onClose();
-        setIsLoading(true);
-        const res = await ManageDevices.removePreviousCalibration();
-        if (res) {
-            toast.success('Previous calibration point removed');
-        } else {
-            toast.error('There was a problem removing the previous calibration points. Please try again.')
-        }
-        setIsLoading(false);
     };
 
     return (
         <>
-            {/* <Text fontWeight='semibold' mb={1}>
+            <Text fontWeight='semibold' mb={1}>
                 Metric
             </Text>
             <Select
@@ -85,22 +80,27 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                 value={currentMetric}
                 borderColor={colors.main.usafaBlue}
                 onChange={e => {
-                    setCurrentMetric(e.target.value);
+                    let sensor = sensors.find(sensor => sensor.metric_type === e.target.value)
+                    if (sensor) {
+                        setCurrentMetric(e.target.value);
+                        setCalibrationInfo(sensor);
+                    }
                 }}
             >
                 {
-                    availableSensors.map(sensor => {
+                    sensors.map(sensor => {
                         return (
                             <option
-                                value={sensor}
+                                value={sensor.metric_type}
                                 key={uuid()}
                             >
-                                {buoySensorTags[sensor].label}
+                                {buoySensorTags[sensor.metric_type].label}
                             </option>
                         )
                     })
                 }
             </Select>
+
             <Text
                 mb={4}
                 as='span'
@@ -114,60 +114,16 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                 my={4}
             />
 
-            <Flex direction='column' align='center'>
+            {
+                currentMetric !== "" &&
+                <CalibrationTable
+                    calibrationPoints={
+                        calibrationInfo.calibration_points
+                    }
+                    unit={calibrationInfo.default_metric_unit}
+                />
+            }
 
-                <Box>
-                    <Heading size='sm' mb={3}>Low Value</Heading>
-                    <Flex mb={8}>
-                        <Box mr={8}>
-                            <Text fontWeight='semibold' mb={1}>
-                                Sensor
-                            </Text>
-                            <NumberInput
-                                value={sensors[currentMetric]?.low.sensor}
-                            >
-                                <NumberInputField />
-                            </NumberInput>
-                        </Box>
-                        <Box>
-                            <Text fontWeight='semibold' mb={1}>
-                                Physical
-                            </Text>
-                            <NumberInput
-                                value={sensors[currentMetric]?.low.physical}
-                            >
-                                <NumberInputField />
-                            </NumberInput>
-                        </Box>
-                    </Flex>
-                </Box>
-
-                <Box>
-                    <Heading size='sm' mb={3}>High Value</Heading>
-                    <Flex mb={8}>
-                        <Box mr={8}>
-                            <Text fontWeight='semibold' mb={1}>
-                                Sensor
-                            </Text>
-                            <NumberInput
-                                value={sensors[currentMetric]?.high.sensor}
-                            >
-                                <NumberInputField />
-                            </NumberInput>
-                        </Box>
-                        <Box>
-                            <Text fontWeight='semibold' mb={1}>
-                                Physical
-                            </Text>
-                            <NumberInput
-                                value={sensors[currentMetric]?.high.physical}
-                            >
-                                <NumberInputField />
-                            </NumberInput>
-                        </Box>
-                    </Flex>
-                </Box>
-            </Flex> */}
 
             <Flex mt={8} justifyContent="flex-end">
                 <Button
@@ -183,7 +139,7 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                     }}
                     loadingText='Saving'
                 >
-                    Remove Previous Calibration
+                    Cancel
                 </Button>
 
 
@@ -197,9 +153,8 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                     }}
                     loadingText='Saving'
                 >
-                    Add Calibration
+                    Calibrate
                 </Button>
-
             </Flex>
 
             <AlertDialog
@@ -222,7 +177,7 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                             <Button ref={cancelRef} onClick={onClose}>
                                 Cancel
                             </Button>
-                            <Button colorScheme='red' onClick={removePreviousCalibrationPoint} ml={3}>
+                            <Button colorScheme='red' onClick={saveCalibrationPoint} ml={3}>
                                 Delete
                             </Button>
                         </AlertDialogFooter>
