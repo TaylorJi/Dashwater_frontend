@@ -26,6 +26,7 @@ import {
     PopoverHeader,
     PopoverBody,
     PopoverFooter,
+    AlertDialogCloseButton,
 } from '@chakra-ui/react';
 import { toast } from 'react-hot-toast';
 import { buoySensorTags } from '../../../../theme/metrics/buoySensorTags';
@@ -80,6 +81,7 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                 value={currentMetric}
                 borderColor={colors.main.usafaBlue}
                 onChange={e => {
+
                     let sensor = sensors.find(sensor => sensor.metric_type === e.target.value)
                     if (sensor) {
                         setCurrentMetric(e.target.value);
@@ -121,6 +123,7 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                         calibrationInfo.calibration_points
                     }
                     unit={calibrationInfo.default_metric_unit}
+                    setUnsavedChanges={setUnsavedChanges}
                 />
             }
 
@@ -138,8 +141,9 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                         bg: colors.main.ceruBlue
                     }}
                     loadingText='Saving'
+                    isDisabled={!unsavedChanges}
                 >
-                    Cancel
+                    Revert Changes
                 </Button>
 
 
@@ -147,11 +151,12 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                     bg={colors.main.usafaBlue}
                     color='white'
                     isLoading={isLoading}
-                    onClick={async () => await saveCalibrationPoint()}
+                    onClick={onOpen}
                     _hover={{
                         bg: colors.main.ceruBlue
                     }}
                     loadingText='Saving'
+                    isDisabled={currentMetric == ""}
                 >
                     Calibrate
                 </Button>
@@ -161,24 +166,34 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                 isOpen={isOpen}
                 leastDestructiveRef={cancelRef}
                 onClose={onClose}
+                variant="flushed"
+                isCentered
             >
 
                 <AlertDialogOverlay>
                     <AlertDialogContent>
                         <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                            Delete Customer
+                            Save Calibration Points?
                         </AlertDialogHeader>
+                        <AlertDialogCloseButton />
 
                         <AlertDialogBody>
-                            Are you sure? You can't undo this action afterwards.
+                            Are you sure you want to save these calibration points? This will overwrite previous calibration point values.
                         </AlertDialogBody>
 
                         <AlertDialogFooter>
                             <Button ref={cancelRef} onClick={onClose}>
                                 Cancel
                             </Button>
-                            <Button colorScheme='red' onClick={saveCalibrationPoint} ml={3}>
-                                Delete
+                            <Button
+                                bg={colors.main.usafaBlue}
+                                color='white'
+                                _hover={{
+                                    bg: colors.main.ceruBlue
+                                }}
+                                onClick={async () => await saveCalibrationPoint()} 
+                                ml={3}>
+                                Confirm Calibration
                             </Button>
                         </AlertDialogFooter>
                     </AlertDialogContent>
