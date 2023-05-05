@@ -27,7 +27,6 @@ const DeviceManagerTable: React.FC = () => {
                         return (
                             <BuoySettingsRow
                                 buoy={buoy}
-                                units={buoyData['units']}
                                 key={uuid()} />
                         )
                     }) : <></>

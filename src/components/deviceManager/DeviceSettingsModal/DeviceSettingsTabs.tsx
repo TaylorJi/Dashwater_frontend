@@ -8,10 +8,9 @@ import CalibrationSettingsPanel from "./CalibrationSettingsPanel/CalibrationSett
 
 type deviceSettingsTabsProps = {
     buoy: buoySettingsType;
-    units: buoySettingsUnitsType;
 }
 
-const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy, units }) => {
+const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy }) => {
     return (
         <Tabs
             mt='1rem'
@@ -62,7 +61,6 @@ const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy, units }) 
                 <TabPanel>
                     <ThresholdSettingsPanel
                         sensors={buoy.sensors}
-                        units={units}
                     />
                 </TabPanel>
 

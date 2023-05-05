@@ -18,10 +18,9 @@ import colors from '../../../theme/foundations/colours';
 
 type deviceSettingsModalProps = {
     buoy: buoySettingsType;
-    units: buoySettingsUnitsType;
 };
 
-const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy, units }) => {
+const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
@@ -52,7 +51,6 @@ const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy, units }
                     <ModalBody>
                         <DeviceSettingsTabs
                             buoy={buoy}
-                            units={units}
                         />
                     </ModalBody>
                 </ModalContent>

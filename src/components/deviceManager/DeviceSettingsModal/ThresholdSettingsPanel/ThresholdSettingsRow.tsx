@@ -5,10 +5,9 @@ import { Tr, Td, NumberInput, NumberInputField, Switch } from '@chakra-ui/react'
 type thresholdSettingRowProps = {
     metric: string;
     metricSensor: sensorType;
-    units: buoySettingsUnitsType;
 }
 
-const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = ({ metric, metricSensor, units }) => {
+const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = ({ metric, metricSensor }) => {
     const [isAlert, setIsAlert] = useState<boolean>(metricSensor.alert);
     const [metricMin, setMetricMin] = useState<number | string>(metricSensor.min);
     const [metricMax, setMetricMax] = useState<number | string>(metricSensor.max);
@@ -53,7 +52,7 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = ({ metric, metr
                 </NumberInput>
             </Td>
             <Td>
-                {units[metricSensor.metric_type]}
+                {metricSensor.default_metric_unit}
             </Td>
             <Td>
                 <Switch

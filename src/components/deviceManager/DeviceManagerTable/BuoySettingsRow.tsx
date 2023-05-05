@@ -6,11 +6,10 @@ import SensorTag from '../SensorTag/SensorTag';
 
 type buoySettingsRowProps = {
     buoy: buoySettingsType;
-    units: buoySettingsUnitsType;
 };
 
 
-const BuoySettingsRow: React.FC<buoySettingsRowProps> = ({ buoy, units }) => {
+const BuoySettingsRow: React.FC<buoySettingsRowProps> = ({ buoy }) => {
 
     return (
         <Tr>
@@ -29,7 +28,6 @@ const BuoySettingsRow: React.FC<buoySettingsRowProps> = ({ buoy, units }) => {
             <Td>
                 <DeviceSettingsModal 
                 buoy={buoy}
-                units={units}
                 />
             </Td>
         </Tr>
