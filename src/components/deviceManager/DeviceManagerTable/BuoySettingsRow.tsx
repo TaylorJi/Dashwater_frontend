@@ -18,15 +18,17 @@ const BuoySettingsRow: React.FC<buoySettingsRowProps> = ({ buoy }) => {
             <Td>{buoy.location.x + ';' + buoy.location.y}</Td>
             <Td>
                 {
-                    Object.keys(buoy['sensors']).map( (sensor: string) => {
+                    buoy['sensors'].map( sensor => {
                             return (
-                                <SensorTag metricKey={sensor} key={uuid()} visible={buoy.sensors[sensor].available}/>
+                                <SensorTag metricKey={sensor.metric_type} key={uuid()}/>
                             );
                     })
                 }
             </Td>
             <Td>
-                <DeviceSettingsModal buoy={buoy}/>
+                <DeviceSettingsModal 
+                buoy={buoy}
+                />
             </Td>
         </Tr>
     );

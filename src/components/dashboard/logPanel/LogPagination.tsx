@@ -67,7 +67,6 @@ const LogPagination: React.FC = () => {
                         {
                             logData.map((item, index) => {
                                 if (index * itemsPerPage < logData.length) {
-
                                     // the last page
                                     if ((index + 1) * itemsPerPage > logData.length) {
                                         return (

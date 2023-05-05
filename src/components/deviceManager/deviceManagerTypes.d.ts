@@ -4,16 +4,14 @@ type deviceManagerDataType = {
 };
 
 type buoySettingsUnitsType = {
-    [key: string]: string
+    [key: string]: string;
 };
 
 type buoySettingsType = {
     name: string;
     id: string;
     location: buoyLocationType;
-    sensors: {
-        [key: string]: metricSettingsType;
-    }
+    sensors: sensorType[];
 };
 
 type buoyLocationType = {
@@ -21,24 +19,25 @@ type buoyLocationType = {
     y: number
 };
 
-type metricSettingsType = {
-    available: boolean;
-    min: number;
-    max: number;
-    alert: boolean,
-    low: {
-        sensor: number,
-        physical: number
-    },
-    high: {
-        sensor: number,
-        physical: number
-    }
-};
-
 type buoySensorTagsType = {
     [key: string]: {
-        color: string,
-        label: string
+        color: string;
+        label: string;
     }
+}
+
+type sensorType = {
+    metric_type: string;
+    default_metric_unit: string;
+    min: number;
+    max: number;
+    alert: boolean;
+    min_calibration_points: number;
+    calibration_points: calibrationPointType[];
+}
+
+type calibrationPointType = {
+    id: number;
+    digital_value: number;
+    physical_value: number;
 }

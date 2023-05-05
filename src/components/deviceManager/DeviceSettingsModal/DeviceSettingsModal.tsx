@@ -49,7 +49,9 @@ const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
                     </ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <DeviceSettingsTabs buoy={buoy} />
+                        <DeviceSettingsTabs
+                            buoy={buoy}
+                        />
                     </ModalBody>
                 </ModalContent>
             </Modal>

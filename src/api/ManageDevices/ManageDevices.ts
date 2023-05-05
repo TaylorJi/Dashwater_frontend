@@ -9,7 +9,7 @@ const saveThresholdSettings = async () => {
     return true;
 }
 
-const saveCalibrationPoint = async (metric: string, lowSensor: number, lowPhys: number, highSensor: number, highPhys: number) => {
+const saveCalibrationPoint = async (calibrationInfo: sensorType) => {
     // do DB stuff for the metric type
     return true;
 }
