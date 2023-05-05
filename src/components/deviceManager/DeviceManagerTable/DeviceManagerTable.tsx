@@ -10,29 +10,29 @@ const DeviceManagerTable: React.FC = () => {
     const buoySettingsData = useState<deviceManagerDataType | null>(buoyData)[0]; // eventual unpack setState
 
     return (
-        <>
-            <Table >
+        <Table >
 
-                <Thead bg={colors.main.lavender} h="3rem">
-                    <Tr>
-                        <Th color={colors.main.usafaBlue}>Name</Th>
-                        <Th color={colors.main.usafaBlue}>ID</Th>
-                        <Th color={colors.main.usafaBlue}>Location</Th>
-                        <Th color={colors.main.usafaBlue}>Sensors</Th>
-                        <Th color={colors.main.usafaBlue}>Settings</Th>
-                    </Tr>
-                </Thead>
-                <Tbody>
-                    {buoySettingsData ?
-                        buoyData['buoys'].map(buoy => {
-                            return (
-                                <BuoySettingsRow buoy={buoy} key={uuid()}/>
-                            )
-                        }) : <></>
-                    }
-                </Tbody>
-            </Table>
-        </>
+            <Thead bg={colors.main.lavender} h="3rem">
+                <Tr>
+                    <Th color={colors.main.usafaBlue}>Name</Th>
+                    <Th color={colors.main.usafaBlue}>ID</Th>
+                    <Th color={colors.main.usafaBlue}>Location</Th>
+                    <Th color={colors.main.usafaBlue}>Sensors</Th>
+                    <Th color={colors.main.usafaBlue}>Settings</Th>
+                </Tr>
+            </Thead>
+            <Tbody>
+                {buoySettingsData ?
+                    buoyData['buoys'].map(buoy => {
+                        return (
+                            <BuoySettingsRow
+                                buoy={buoy}
+                                key={uuid()} />
+                        )
+                    }) : <></>
+                }
+            </Tbody>
+        </Table>
     );
 };
 
