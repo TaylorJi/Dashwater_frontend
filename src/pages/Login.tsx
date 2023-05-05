@@ -17,6 +17,7 @@ const Login: React.FC = () => {
         const user = await Authentication.authenticateUser(email, password);
         if (user) {
             console.log(user)
+            navigate('/dashboard')
         }
     }
 
