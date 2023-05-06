@@ -16,3 +16,12 @@ Basil Kim
 Make sure the back-end is running first!
 
 To start the React app locally, run the command `npm start` in the terminal.
+
+## DashWaters Team Members
+Nash Baek
+
+Taylor Ji
+
+Siwoon Lim
+
+Ellen Jung

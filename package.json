@@ -4,15 +4,15 @@
   "private": true,
   "dependencies": {
     "@chakra-ui/icons": "^2.0.17",
-    "@chakra-ui/react": "^2.4.9",
+    "@chakra-ui/react": "^2.6.0",
     "@chakra-ui/system": "^2.4.0",
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
+    "@emotion/react": "^11.10.8",
+    "@emotion/styled": "^11.10.8",
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@tanstack/react-table": "^8.7.9",
     "@react-leaflet/core": "^2.1.0",
+    "@tanstack/react-table": "^8.7.9",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -21,6 +21,7 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "axios": "^1.2.6",
+    "express": "^4.18.2",
     "framer-motion": "^8.5.5",
     "leaflet": "^1.9.3",
     "leaflet-draw": "^1.0.4",
@@ -65,9 +66,9 @@
     ]
   },
   "devDependencies": {
-    "@types/react-gauge-chart": "^0.4.0",
     "@types/leaflet": "^1.9.3",
     "@types/leaflet-draw": "^1.0.6",
+    "@types/react-gauge-chart": "^0.4.0",
     "@types/uuid": "^9.0.0"
   }
 }
