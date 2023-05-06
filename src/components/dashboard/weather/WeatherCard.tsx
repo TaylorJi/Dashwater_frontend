@@ -16,6 +16,7 @@ const WeatherCard: React.FC = () => {
 
         try {
             const data = await Dashboard.getWeather();
+            console.log('weather: ' + data);
             if (data) {
                 setWeatherData(data);
 

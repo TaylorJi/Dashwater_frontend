@@ -19,6 +19,6 @@ export const sidebarCategories = [
     {
         'icon': faLock,
         'description': 'Admin Portal',
-        'link': '/admin'
+        'link': '/adminPortal'
     }
 ];

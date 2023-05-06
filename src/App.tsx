@@ -5,7 +5,7 @@ import Dashboard from './pages/Dashboard';
 import DeviceManager from './pages/DeviceManager';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
-import Admin from './pages/Admin';
+import Admin from './pages/AdminPortal';
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
 
       <Route path='/manageDevices' element={<DeviceManager />} />
 
-      <Route path='/admin' element={<Admin/>} />
+      <Route path='/adminPortal' element={<Admin/>} />
 
       <Route path='404' element={<NotFound />} />
 
