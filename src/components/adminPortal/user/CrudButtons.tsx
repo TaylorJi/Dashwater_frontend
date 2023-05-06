@@ -11,7 +11,7 @@ const CrudButtons: React.FC = () => {
 
     global.idArray = [];
 
-    const checkIdArray = (idArray: string[]) => {
+    const checkIdArrayForDelete = (idArray: string[]) => {
         if (idArray.length <= 0) {
             toast.error('You should select user first');
         } else {
@@ -19,9 +19,17 @@ const CrudButtons: React.FC = () => {
         }
     };
 
+    const checkIdArrayForEdit = (idArray: string[]) => {
+        if (idArray.length !== 1) {
+            toast.error('You should select only one user');
+        } else {
+            AdminPortal.editUser(idArray);
+        }
+    };
+
     return (
             <Stack direction='row' spacing={4} align='center'>
-            <Text ml="83%"></Text>
+            <Text ml="79%"></Text>
                 <Button 
                     size='sm'
                     bg='main.acidGreen'
@@ -32,7 +40,21 @@ const CrudButtons: React.FC = () => {
                     _hover={{
                         bg: colors.main.mossGreen
                     }}
-                    onClick={() => checkIdArray(global.idArray)}
+                    onClick={() => checkIdArrayForEdit(global.idArray)}
+                >
+                    Edit
+                </Button>
+                <Button 
+                    size='sm'
+                    bg='main.acidGreen'
+                    ml='0.5rem'
+                    color='white'
+                    fontSize='sm'
+                    w="5%"
+                    _hover={{
+                        bg: colors.main.mossGreen
+                    }}
+                    onClick={() => checkIdArrayForDelete(global.idArray)}
                 >
                     Delete
                 </Button>

@@ -27,10 +27,15 @@ const deleteUser = async (idArray: string[]) => {
     console.log(idArray);
 };
 
+const editUser = async (idArray: string[]) => {
+    console.log(idArray);
+};
+
 const AdminPortal = {
     getUser,
     createUser,
-    deleteUser
+    deleteUser,
+    editUser
 };
 
 export default AdminPortal;
