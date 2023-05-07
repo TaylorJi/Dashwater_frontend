@@ -28,14 +28,27 @@ const deleteUser = async (idArray: string[]) => {
 };
 
 const editUser = async (idArray: string[]) => {
-    console.log(idArray);
+    try {
+
+        const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/user/getSingleUser`);
+
+        if (response.status === 200) {
+            console.log('Get single user data: ' + response.data.data);
+            return response.data.data;
+        }
+
+        return null;
+
+    } catch (_err) {
+        return null;
+    }
 };
 
 const AdminPortal = {
     getUser,
     createUser,
     deleteUser,
-    editUser
+    editUser,
 };
 
 export default AdminPortal;
