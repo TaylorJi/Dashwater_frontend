@@ -52,16 +52,16 @@ const createUser = async () => {
       
 
 const deleteUser = async (idArray: string[]) => {
-    console.log(idArray[0]);
-    const request: any = await axios.delete<deleteUserResponse>(`${API_URL}/user/deleteUser/${idArray[0]}`)
-    if (request != null) {
-        console.log(request)
-    } else {
-        console.log("wrong")
+    for (let i = 0; i < idArray.length; i++) {
+        console.log(idArray[i]);
+        const request: any = await axios.delete<deleteUserResponse>(`${API_URL}/user/deleteUser/${idArray[i]}`)
+        if (request != null) {
+            console.log(request)
+        } else {
+            console.log("wrong")
+        }
     }
   
-    
-
 };
 
 const editUser = async (idArray: string[]) => {
