@@ -30,15 +30,8 @@ const deleteUser = async (idArray: string[]) => {
 const editUser = async (idArray: string[]) => {
     console.log("AdminPortal editUser called")
     console.log(idArray[0])
-    let idValue = idArray[0]
     try {
-        const response: any = await axios.get<any, AxiosResponse<string[]>>(
-            `${API_URL}/user/getSingleUser`,
-            {
-                params: { idValue: [idValue] }
-            }
-        );
-
+            const response: any = await axios.get<any, AxiosResponse<string>>(`${API_URL}/user/getSingleUser/${idArray[0]}`)
         if (response.status === 200) {
             console.log('Get single user data: ' + response.data);
             return response.data;
