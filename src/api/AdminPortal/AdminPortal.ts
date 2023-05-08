@@ -52,7 +52,7 @@ const createUser = async () => {
       
 
 const deleteUser = async (idArray: string[]) => {
-    console.log(idArray[0]);
+    console.log(idArray);
     const request: any = await axios.delete<deleteUserResponse>(`${API_URL}/user/deleteUser/${idArray[0]}`)
     if (request != null) {
         console.log(request)
