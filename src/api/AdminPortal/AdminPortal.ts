@@ -1,5 +1,19 @@
 import axios, { AxiosResponse } from "axios";
+import { type } from "os";
+import { useNavigate } from "react-router-dom";
 import { API_URL } from "../Environments";
+
+
+type createUserResponse = {
+    email: string,
+    password: string,
+    role: string;
+}
+
+
+type deleteUserResponse = {
+    userId: string
+}
 
 //20230505 EJ - created AdminPortal.ts
 const getUser = async () => {
@@ -19,12 +33,35 @@ const getUser = async () => {
     }
 };
 
-const createUser = async () => {
 
-};
+const createUser = async () => {
+    // show up the new component allowing admin to create a new user 
+    // currently hardcoded test user account create when create button is clicked 
+    // update email, password part 
+    console.log("create is clicked")
+    const request: any = await axios.post<createUserResponse>(`${API_URL}/user/createUser`,
+    {email: "test23@test.ca", password: "testPass1#", role: "User"}, 
+    {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      },);
+    console.log(request)
+    }
+      
 
 const deleteUser = async (idArray: string[]) => {
-    console.log(idArray);
+    console.log(idArray[0]);
+    const request: any = await axios.delete<deleteUserResponse>(`${API_URL}/user/deleteUser/${idArray[0]}`)
+    if (request != null) {
+        console.log(request)
+    } else {
+        console.log("wrong")
+    }
+  
+    
+
 };
 
 const editUser = async (idArray: string[]) => {
