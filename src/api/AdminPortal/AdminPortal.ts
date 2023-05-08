@@ -28,18 +28,27 @@ const deleteUser = async (idArray: string[]) => {
 };
 
 const editUser = async (idArray: string[]) => {
+    console.log("AdminPortal editUser called")
+    console.log(idArray[0])
+    let idValue = idArray[0]
     try {
-
-        const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/user/getSingleUser`);
+        const response: any = await axios.get<any, AxiosResponse<string[]>>(
+            `${API_URL}/user/getSingleUser`,
+            {
+                params: { idValue: [idValue] }
+            }
+        );
 
         if (response.status === 200) {
-            console.log('Get single user data: ' + response.data.data);
-            return response.data.data;
+            console.log('Get single user data: ' + response.data);
+            return response.data;
         }
 
+        console.log("try")
         return null;
 
     } catch (_err) {
+        console.log("error")
         return null;
     }
 };
