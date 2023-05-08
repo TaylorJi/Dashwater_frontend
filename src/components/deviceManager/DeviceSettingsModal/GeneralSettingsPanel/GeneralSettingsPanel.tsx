@@ -36,10 +36,6 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
   const [longitude, setLongitude] = useState<string>(long.toString());
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const searchCoordinates = async () => {
-    // do search stuff
-  };
-
   const resetCoordinates = () => {
     setLatitude(lat.toString());
     setLongitude(long.toString());
@@ -88,6 +84,10 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
       </Text>
 
       <Divider my="1rem" />
+
+      <Text fontWeight="semibold" mb="0.25rem">
+        Location
+      </Text>
 
       <Grid templateColumns="repeat(2, 1fr)" gap="3">
         <GridItem w="100%">
@@ -176,16 +176,6 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
             >
               Reset
             </Button>
-            <Button
-              color="white"
-              bg={colors.main.acidGreen}
-              _hover={{
-                bg: colors.main.mossGreen,
-              }}
-              onClick={() => searchCoordinates()}
-            >
-              Search
-            </Button>
           </Flex>
         </GridItem>
       </Grid>
@@ -200,7 +190,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
           }}
           loadingText="Saving"
         >
-          Save General
+          Save
         </Button>
       </Flex>
     </Box>
