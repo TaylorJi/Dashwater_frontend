@@ -40,7 +40,7 @@ const createUser = async () => {
     // update email, password part 
     console.log("create is clicked")
     const request: any = await axios.post<createUserResponse>(`${API_URL}/user/createUser`,
-    {email: "test23@test.ca", password: "testPass1#", role: "User"}, 
+    {email: "test13@test.ca", password: "testPass1#", role: "User"}, 
     {
         headers: {
           'Content-Type': 'application/json',
@@ -48,6 +48,7 @@ const createUser = async () => {
         },
       },);
     console.log(request)
+    window.location.reload();
     }
       
 
