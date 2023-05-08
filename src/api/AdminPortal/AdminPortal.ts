@@ -61,7 +61,7 @@ const deleteUser = async (idArray: string[]) => {
             console.log("wrong")
         }
     }
-  
+    window.location.reload();
 };
 
 const editUser = async (idArray: string[]) => {
