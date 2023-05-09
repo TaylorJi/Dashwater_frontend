@@ -23,7 +23,7 @@ import {
 } from "@chakra-ui/react";
 import colors from "../../../theme/foundations/colours";
 import typography from "../../../theme/foundations/typography";
-import CrudButtons from "../user/CrudButtons";
+import AdminPortal from "../../../api/AdminPortal/AdminPortal";
 
 type EditModalProps = {
     isOpen: boolean;
@@ -53,10 +53,15 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
 
     //method="post" action="editUser"
 
-    const onSubmit = (data: any) => {
+    const onSubmit = async (data: any) => {
+        data._id = global._id;
         data.role = global.role;
         console.log(data);
-        
+        AdminPortal.updateUser(data);
+        // let response: Promise<boolean> = AdminPortal.updateUser(data);
+        // if (await response) {
+        //     toast.success("Successfully updated user!");
+        // }
     }
 
 

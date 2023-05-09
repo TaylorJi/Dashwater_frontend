@@ -1,18 +1,26 @@
 import axios, { AxiosResponse } from "axios";
 import { type } from "os";
 import { API_URL } from "../Environments";
+import { toast } from 'react-hot-toast';
+
 
 
 type createUserResponse = {
     email: string,
     password: string,
     role: string;
-}
+};
+
+type updateUserResponse = {
+    email: string,
+    password: string,
+    role: string;
+};
 
 
 type deleteUserResponse = {
     userId: string
-}
+};
 
 //20230505 EJ - created AdminPortal.ts
 const getUser = async () => {
@@ -47,7 +55,7 @@ const createUser = async () => {
         },
       },);
     console.log(request)
-    }
+};
       
 
 const deleteUser = async (idArray: string[]) => {
@@ -86,11 +94,29 @@ const getSingleUser = async (idArray: string[]) => {
     }
 };
 
+const updateUser = async (user: any) => {
+    const response: any = await axios.put<updateUserResponse>(`${API_URL}/user/updateUser/${user._id}`,
+    {email: user.email, password: user.password, role: user.role}, 
+    {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+      },);
+    if (response.status === 200) {
+        window.location.reload();
+        // return true;
+    } else {
+        // return false;
+    }
+};
+
 const AdminPortal = {
     getUser,
     createUser,
     deleteUser,
     getSingleUser,
+    updateUser,
 };
 
 export default AdminPortal;
