@@ -7,6 +7,9 @@ type buoyMapInfo = {
   }[];
 };
 
+
+
+//TODO:This will need to be replaced
 type buoyInfo = {
   buoys?: {
     name: string;
@@ -17,3 +20,5 @@ type buoyInfo = {
     };
   }[];
 };
+
+
