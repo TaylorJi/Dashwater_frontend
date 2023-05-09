@@ -1,6 +1,6 @@
 import colors from '../foundations/colours';
 
-export const buoySensorTags: buoySensorTagsType = {
+export const buoySensorTags: deviceSensorTagsType = {
     "dissolved_o2": {
         "color": colors.tag.dissolvedO2,
         "label": "Oxygen"
