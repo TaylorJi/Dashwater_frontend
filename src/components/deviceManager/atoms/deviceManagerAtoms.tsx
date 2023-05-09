@@ -7,7 +7,8 @@ export const allDevicesDetails = atom<deviceSettingsType[]>({
         get: async () => {
             const res = await fetch('./mockData/mockBuoyData.json');
             let data = await res.json();
-            return data;
+            console.log(data);
+            return data['buoys'];
         }
     })
 });

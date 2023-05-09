@@ -1,15 +1,4 @@
 {
-    "units": {
-        "dissolved_o2": "mg/L",
-        "electrical_conductivity": "mS/cm",
-        "pH": "pH",
-        "turbidity": "NTU",
-        "dissolved_solids": "ppm",
-        "temp": "°C",
-        "water_lvl": "m",
-        "water_flow": "L/s",
-        "water_pressure": "kPa"
-    },
     "buoys": [
         {
             "name": "Appa",
@@ -117,11 +106,12 @@
                             "digital_value": 1,
                             "physical_value": 21.3
                         },
-                        {   "id": 65,
+                        {
+                            "id": 65,
                             "digital_value": 110.23,
                             "physical_value": 115.3
                         },
-                        {   
+                        {
                             "id": 67,
                             "digital_value": 5,
                             "physical_value": 213.3
@@ -182,7 +172,8 @@
                             "physical_value": 5.5
                         }
                     ]
-                }, {
+                },
+                {
                     "metric_type": "turbidity",
                     "default_metric_unit": "NTU",
                     "min": 45,
@@ -201,7 +192,8 @@
                             "physical_value": 5.5
                         }
                     ]
-                }, {
+                },
+                {
                     "metric_type": "dissolved_o2",
                     "default_metric_unit": "mg/L",
                     "min": 0,
@@ -220,7 +212,8 @@
                             "physical_value": 5.5
                         }
                     ]
-                }, {
+                },
+                {
                     "metric_type": "temp",
                     "default_metric_unit": "°C",
                     "min": -1,
@@ -239,7 +232,8 @@
                             "physical_value": 5.5
                         }
                     ]
-                }, {
+                },
+                {
                     "metric_type": "water_flow",
                     "default_metric_unit": "L/s",
                     "min": 2,
@@ -288,7 +282,8 @@
                             "physical_value": 5.5
                         }
                     ]
-                }, {
+                },
+                {
                     "metric_type": "pH",
                     "default_metric_unit": "pH",
                     "min": 0,
@@ -307,7 +302,8 @@
                             "physical_value": 5.5
                         }
                     ]
-                }, {
+                },
+                {
                     "metric_type": "turbidity",
                     "default_metric_unit": "NTU",
                     "min": 45,
@@ -326,7 +322,8 @@
                             "physical_value": 5.5
                         }
                     ]
-                }, {
+                },
+                {
                     "metric_type": "temp",
                     "default_metric_unit": "°C",
                     "min": -1,
@@ -345,7 +342,8 @@
                             "physical_value": 5.5
                         }
                     ]
-                }, {
+                },
+                {
                     "metric_type": "water_flow",
                     "default_metric_unit": "L/s",
                     "min": 2,
@@ -364,7 +362,8 @@
                             "physical_value": 5.5
                         }
                     ]
-                }, {
+                },
+                {
                     "metric_type": "water_lvl",
                     "default_metric_unit": "m",
                     "min": 2,
@@ -383,7 +382,8 @@
                             "physical_value": 5.5
                         }
                     ]
-                }, {
+                },
+                {
                     "metric_type": "water_pressure",
                     "default_metric_unit": "kPa",
                     "min": 55,
@@ -452,7 +452,8 @@
                             "physical_value": 5.5
                         }
                     ]
-                }, {
+                },
+                {
                     "metric_type": "turbidity",
                     "default_metric_unit": "NTU",
                     "min": 45,
@@ -471,7 +472,8 @@
                             "physical_value": 5.5
                         }
                     ]
-                }, {
+                },
+                {
                     "metric_type": "dissolved_o2",
                     "default_metric_unit": "mg/L",
                     "min": 0,
@@ -490,7 +492,8 @@
                             "physical_value": 5.5
                         }
                     ]
-                }, {
+                },
+                {
                     "metric_type": "temp",
                     "default_metric_unit": "°C",
                     "min": -1,
@@ -509,7 +512,8 @@
                             "physical_value": 5.5
                         }
                     ]
-                }, {
+                },
+                {
                     "metric_type": "electrical_conductivity",
                     "default_metric_unit": "mS/cm",
                     "min": 0,
@@ -528,7 +532,8 @@
                             "physical_value": 5.5
                         }
                     ]
-                }, {
+                },
+                {
                     "metric_type": "water_flow",
                     "default_metric_unit": "L/s",
                     "min": 2,
@@ -547,7 +552,8 @@
                             "physical_value": 5.5
                         }
                     ]
-                }, {
+                },
+                {
                     "metric_type": "water_lvl",
                     "default_metric_unit": "m",
                     "min": 2,
@@ -566,7 +572,8 @@
                             "physical_value": 5.5
                         }
                     ]
-                }, {
+                },
+                {
                     "metric_type": "water_pressure",
                     "default_metric_unit": "kPa",
                     "min": 55,
