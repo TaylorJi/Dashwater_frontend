@@ -10,7 +10,6 @@ import EditModal from '../editModal/EditModal';
 
 const CrudButtons: React.FC = () => {
 
-    global.idArray = [];
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const checkIdArrayForDelete = (idArray: string[]) => {
@@ -22,6 +21,7 @@ const CrudButtons: React.FC = () => {
     };
 
     const checkIdArrayForEdit = async (idArray: string[]) => {
+        console.log('idArray: ' + idArray);
         if (idArray.length !== 1) {
             toast.error('You should select only one user');
         } else {

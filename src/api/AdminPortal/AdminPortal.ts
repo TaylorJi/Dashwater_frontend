@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from "axios";
 import { type } from "os";
-import { useNavigate } from "react-router-dom";
 import { API_URL } from "../Environments";
 
 
@@ -65,8 +64,6 @@ const deleteUser = async (idArray: string[]) => {
 };
 
 const getSingleUser = async (idArray: string[]) => {
-    console.log("AdminPortal editUser called")
-    console.log(idArray[0])
     try {
         const response: any = await axios.get<any, AxiosResponse<string>>(`${API_URL}/user/getSingleUser/${idArray[0]}`)
         if (response.status === 200) {
@@ -75,6 +72,7 @@ const getSingleUser = async (idArray: string[]) => {
             global.email = response.data["email"];
             global.password = response.data["password"];
             global.role = response.data["role"];
+            console.log('global._email: ' + global.email);
             console.log("global._id: " + global._id);
             return response.data;
         }

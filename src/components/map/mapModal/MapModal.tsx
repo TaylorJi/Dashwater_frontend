@@ -11,6 +11,7 @@ import {
   Button,
   Divider,
   HStack,
+  Spacer,
   useMediaQuery,
 } from "@chakra-ui/react";
 import Map from "../mapContainer/Map";

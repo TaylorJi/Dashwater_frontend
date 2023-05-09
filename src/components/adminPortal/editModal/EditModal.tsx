@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 // import { Form } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import {
@@ -35,6 +35,30 @@ type EditModalProps = {
 const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
     const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
 
+    const {
+        handleSubmit,
+        register,
+        control,
+        formState: { errors, isSubmitting },
+    } = useForm();
+
+    // function onSubmit(values) {
+    //     return new Promise((resolve) => {
+    //       setTimeout(() => {
+    //         alert(JSON.stringify(values, null, 2))
+    //         resolve()
+    //       }, 3000)
+    //     })
+    // }
+
+    //method="post" action="editUser"
+
+    const onSubmit = (data: any) => {
+        data.role = global.role;
+        console.log(data);
+        
+    }
+
 
     return (
         <Modal
@@ -56,22 +80,27 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                 <Divider ml={"1rem"} maxW={"95%"} marginBottom={"1.5rem"} />
                 <ModalCloseButton onClick={onClose} />
                 <ModalBody>
-                    <form method="post" action="editUser">
+                    <form onSubmit={handleSubmit(onSubmit)}>
                         <FormControl isRequired mb={'12px'}>
                             <FormLabel>User ID</FormLabel>
-                            <Input placeholder='User ID' value={global._id} disabled={true} />
+                            <Input id="_id" placeholder='User ID' defaultValue={global._id} disabled={true} />
                         </FormControl>
                         <FormControl isRequired mb={'12px'}>
                             <FormLabel>Email</FormLabel>
-                            <Input placeholder='Email' value={global.email} />
+                            <Input id="email" placeholder='Email' defaultValue={global.email} {...register('email', { shouldUnregister: true })} />
                         </FormControl>
                         <FormControl isRequired mb={'12px'}>
                             <FormLabel>Password</FormLabel>
-                            <Input placeholder='Password' value={global.password} />
+                            <Input id="password" placeholder='Password' defaultValue={global.password} {...register('password', { shouldUnregister: true })} />
                         </FormControl>
-                        <FormControl isRequired mb={'12px'}>
+                        <FormControl isRequired mb={'1px'}>
                             <FormLabel>Role</FormLabel>
-                            <RadioGroup defaultValue={global.role} >
+                            <RadioGroup id="role" defaultValue={global.role} name="role"
+                                onChange={
+                                    function(value) {
+                                        global.role = value;
+                                    }
+                                } >
                                 <HStack spacing='20px'>
                                     <Radio value='User'>User</Radio>
                                     <Radio value='Admin'>Admin</Radio>
@@ -79,9 +108,32 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                             </RadioGroup>
                         </FormControl>
 
-                        <Button mt={4} size="lg" type="submit" >
-                            Update
-                        </Button>
+                        <HStack
+                        spacing={isLargeScreen ? "1.5rem" : "0.5rem"}
+                        mr={isLargeScreen ? "1rem" : "0.5rem"}
+                        mt={"1rem"}
+                        justify="end"
+                        mb={"1rem"}
+                        >
+                            <Button 
+                            minW={isLargeScreen ? "7rem" : "3rem"}
+                            color={colors.main.usafaBlue}
+                            bg={"white"}
+                            border={`2px solid ${colors.main.usafaBlue}`}
+                            onClick={onClose}>
+                                Cancel
+                            </Button>
+                            <Button 
+                            minW={isLargeScreen ? "7rem" : "3rem"}
+                            color={"white"}
+                            bg={colors.main.usafaBlue}
+                            _hover={{
+                            bg: colors.main.ceruBlue,}}
+                            type="submit"
+                            isLoading={isSubmitting} >
+                                Update
+                            </Button>
+                        </HStack>
                     </form>
                 </ModalBody>
             </ModalContent>
