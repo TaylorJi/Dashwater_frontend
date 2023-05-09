@@ -6,7 +6,11 @@ type userDataType = {
 };
 
 declare global {
-    var idArray: string[];
+    var idArray: string[],
+    var _id: string,
+    var email: string,
+    var password: string,
+    var role: string
 }
 
 export {};

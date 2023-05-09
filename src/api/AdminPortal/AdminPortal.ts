@@ -64,13 +64,18 @@ const deleteUser = async (idArray: string[]) => {
     window.location.reload();
 };
 
-const editUser = async (idArray: string[]) => {
+const getSingleUser = async (idArray: string[]) => {
     console.log("AdminPortal editUser called")
     console.log(idArray[0])
     try {
-            const response: any = await axios.get<any, AxiosResponse<string>>(`${API_URL}/user/getSingleUser/${idArray[0]}`)
+        const response: any = await axios.get<any, AxiosResponse<string>>(`${API_URL}/user/getSingleUser/${idArray[0]}`)
         if (response.status === 200) {
             console.log('Get single user data: ' + response.data);
+            global._id = response.data["_id"];
+            global.email = response.data["email"];
+            global.password = response.data["password"];
+            global.role = response.data["role"];
+            console.log("global._id: " + global._id);
             return response.data;
         }
 
@@ -87,7 +92,7 @@ const AdminPortal = {
     getUser,
     createUser,
     deleteUser,
-    editUser,
+    getSingleUser,
 };
 
 export default AdminPortal;

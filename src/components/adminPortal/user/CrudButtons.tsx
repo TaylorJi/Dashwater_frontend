@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import Icon from '@chakra-ui/icon';
 import { toast } from 'react-hot-toast';
-import { Button, Stack, Text } from '@chakra-ui/react';
+import { Button, Stack, Text, useDisclosure } from '@chakra-ui/react';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import colors from '../../../theme/foundations/colours';
 import AdminPortal from '../../../api/AdminPortal/AdminPortal';
+import EditModal from '../editModal/EditModal';
 
 const CrudButtons: React.FC = () => {
 
     global.idArray = [];
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const checkIdArrayForDelete = (idArray: string[]) => {
         if (idArray.length <= 0) {
@@ -19,11 +21,12 @@ const CrudButtons: React.FC = () => {
         }
     };
 
-    const checkIdArrayForEdit = (idArray: string[]) => {
+    const checkIdArrayForEdit = async (idArray: string[]) => {
         if (idArray.length !== 1) {
             toast.error('You should select only one user');
         } else {
-            AdminPortal.editUser(idArray);
+            await AdminPortal.getSingleUser(idArray);
+            onOpen()
         }
     };
 
@@ -72,6 +75,7 @@ const CrudButtons: React.FC = () => {
                 >
                     Create
                 </Button>
+                <EditModal isOpen={isOpen} onClose={onClose} />
             </Stack>
     );
 };
