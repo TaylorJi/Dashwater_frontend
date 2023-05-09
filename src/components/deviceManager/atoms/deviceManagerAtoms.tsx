@@ -1,6 +1,13 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 
-export const deviceDetailsAtom = atom<Array<deviceSettingsType>>({
-    key: 'deviceDetailsAtom',
-    default: []
-})
+export const allDevicesDetails = atom<deviceSettingsType[]>({
+    key: 'allDevicesDetailsAtom',
+    default: selector({
+        key: 'allDevicesDetailsSelector',
+        get: async () => {
+            const res = await fetch('./mockData/mockBuoyData.json');
+            let data = await res.json();
+            return data;
+        }
+    })
+});
