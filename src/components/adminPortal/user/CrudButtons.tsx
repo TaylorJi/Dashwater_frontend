@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import Icon from '@chakra-ui/icon';
 import { toast } from 'react-hot-toast';
 import { Button, Stack, Text, useDisclosure } from '@chakra-ui/react';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import colors from '../../../theme/foundations/colours';
 import AdminPortal from '../../../api/AdminPortal/AdminPortal';
 import EditModal from '../editModal/EditModal';
+import CreateModal from '../createModal/CreateModal';
 
 const CrudButtons: React.FC = () => {
 
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const editModal = useDisclosure();
+    const createModal = useDisclosure();
 
     const checkIdArrayForDelete = (idArray: string[]) => {
+        if (idArray === undefined) {
+            idArray = [];
+        }
         if (idArray.length <= 0) {
             toast.error('You should select user first');
         } else {
@@ -21,12 +23,14 @@ const CrudButtons: React.FC = () => {
     };
 
     const checkIdArrayForEdit = async (idArray: string[]) => {
-        console.log('idArray: ' + idArray);
+        if (idArray === undefined) {
+            idArray = [];
+        }
         if (idArray.length !== 1) {
             toast.error('You should select only one user');
         } else {
             await AdminPortal.getSingleUser(idArray);
-            onOpen()
+            editModal.onOpen()
         }
     };
 
@@ -71,11 +75,12 @@ const CrudButtons: React.FC = () => {
                     _hover={{
                         bg: colors.main.mossGreen
                     }}
-                    onClick={AdminPortal.createUser}
+                    onClick={createModal.onOpen}
                 >
                     Create
                 </Button>
-                <EditModal isOpen={isOpen} onClose={onClose} />
+                <EditModal isOpen={editModal.isOpen} onClose={editModal.onClose} />
+                <CreateModal isOpen={createModal.isOpen} onClose={createModal.onClose} />
             </Stack>
     );
 };

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useForm, Controller } from 'react-hook-form';
-// import { Form } from 'react-router-dom';
 import {
   Text,
   Modal,
@@ -23,15 +22,17 @@ import colors from "../../../theme/foundations/colours";
 import typography from "../../../theme/foundations/typography";
 import AdminPortal from "../../../api/AdminPortal/AdminPortal";
 
-type EditModalProps = {
+type CreateModalProps = {
     isOpen: boolean;
     onClose: () => void;
   };
 
 
 
-const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
+const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
     const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
+
+    var role = "";
 
     const {
         handleSubmit,
@@ -40,13 +41,12 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
     } = useForm();
 
     const onSubmit = async (data: any) => {
-        data._id = global._id;
-        data.role = global.role;
+        data.role = role;
         console.log(data);
-        AdminPortal.updateUser(data);
-        // let response: Promise<boolean> = AdminPortal.updateUser(data);
+        AdminPortal.createUser(data);
+        // let response: Promise<boolean> = AdminPortal.createUser(data);
         // if (await response) {
-        //     toast.success("Successfully updated user!");
+        //     toast.success("Successfully created user!");
         // }
     }
 
@@ -65,7 +65,7 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                         fontFamily={typography.fonts.heading}
                         fontSize={typography.fontSizes.xl}
                     >
-                        Edit User Info
+                        Create User 
                     </Text>
                 </ModalHeader>
                 <Divider ml={"1rem"} maxW={"95%"} marginBottom={"1.5rem"} />
@@ -73,23 +73,19 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                 <ModalBody>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <FormControl isRequired mb={'12px'}>
-                            <FormLabel>User ID</FormLabel>
-                            <Input id="_id" placeholder='User ID' defaultValue={global._id} disabled={true} />
-                        </FormControl>
-                        <FormControl isRequired mb={'12px'}>
                             <FormLabel>Email</FormLabel>
-                            <Input id="email" placeholder='Email' defaultValue={global.email} {...register('email', { shouldUnregister: true })} />
+                            <Input id="email" placeholder='Email' {...register('email', { shouldUnregister: true })} />
                         </FormControl>
                         <FormControl isRequired mb={'12px'}>
                             <FormLabel>Password</FormLabel>
-                            <Input id="password" placeholder='Password' defaultValue={global.password} {...register('password', { shouldUnregister: true })} />
+                            <Input id="password" placeholder='Password' {...register('password', { shouldUnregister: true })} />
                         </FormControl>
                         <FormControl isRequired mb={'1px'}>
                             <FormLabel>Role</FormLabel>
-                            <RadioGroup id="role" defaultValue={global.role} name="role"
+                            <RadioGroup id="role" 
                                 onChange={
                                     function(value) {
-                                        global.role = value;
+                                        role = value;
                                     }
                                 } >
                                 <HStack spacing='20px'>
@@ -122,7 +118,7 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                             bg: colors.main.ceruBlue,}}
                             type="submit"
                             isLoading={isSubmitting} >
-                                Update
+                                Create
                             </Button>
                         </HStack>
                     </form>
@@ -133,4 +129,4 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
     );
 };
 
-export default EditModal;
+export default CreateModal;

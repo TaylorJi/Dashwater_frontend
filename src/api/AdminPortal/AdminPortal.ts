@@ -41,20 +41,25 @@ const getUser = async () => {
 };
 
 
-const createUser = async () => {
+const createUser = async (user: any) => {
     // show up the new component allowing admin to create a new user 
     // currently hardcoded test user account create when create button is clicked 
     // update email, password part 
-    console.log("create is clicked")
-    const request: any = await axios.post<createUserResponse>(`${API_URL}/user/createUser`,
-    {email: "test23@test.ca", password: "testPass1#", role: "User"}, 
+    const response: any = await axios.post<createUserResponse>(`${API_URL}/user/createUser`,
+    {email: user.email, password: user.password, role: user.role}, 
     {
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
       },);
-    console.log(request)
+    console.log(response);
+    if (response.status === 200) {
+        window.location.reload();
+        // return true;
+    } else {
+        // return false;
+    }
 };
       
 
