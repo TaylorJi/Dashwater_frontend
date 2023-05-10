@@ -92,7 +92,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
                         </FormControl>
                         <FormControl isRequired mb={'1px'}>
                             <FormLabel>Role</FormLabel>
-                            <RadioGroup id="role" 
+                            <RadioGroup id="role" defaultValue="User"
                                 onChange={
                                     function(value) {
                                         role = value;
