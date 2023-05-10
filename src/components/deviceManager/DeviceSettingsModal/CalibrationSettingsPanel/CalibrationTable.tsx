@@ -58,7 +58,6 @@ const CalibrationTable: React.FC<calibrationTableProp> = ({ sensor }) => {
     return (
         <>
             <Table>
-
                 <Thead>
                     <Tr>
                         <Th color={colors.main.usafaBlue}>Calibration Point</Th>
@@ -70,9 +69,9 @@ const CalibrationTable: React.FC<calibrationTableProp> = ({ sensor }) => {
                 <Tbody>
                     {
                         sensor['calibration_points'].length > 0 ?
-                            sensor['calibration_points'].sort((a, b) => {
-                                return a.id - b.id;
-                            }).map((point, index) => {
+                        // NOTE: When device data is pulled, ensure that calibration
+                        // points are sorted by id in ascending order. Here, we assume it is sorted.
+                            sensor['calibration_points'].map((point, index) => {
                                 return (
                                     <CalibrationPointRow
                                         number={index + 1}

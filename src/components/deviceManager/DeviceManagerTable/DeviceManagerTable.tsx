@@ -8,32 +8,34 @@ import { useRecoilValue } from 'recoil';
 
 
 const DeviceManagerTable: React.FC = () => {
-    const buoySettingsData = useRecoilValue(allDevicesDetails);
+    const devicesSettingsData = useRecoilValue(allDevicesDetails);
 
     return (
-        <Table >
+        <React.Suspense>
+            <Table >
 
-            <Thead bg={colors.main.lavender} h="3rem">
-                <Tr>
-                    <Th color={colors.main.usafaBlue}>Name</Th>
-                    <Th color={colors.main.usafaBlue}>ID</Th>
-                    <Th color={colors.main.usafaBlue}>Location</Th>
-                    <Th color={colors.main.usafaBlue}>Sensors</Th>
-                    <Th color={colors.main.usafaBlue}>Settings</Th>
-                </Tr>
-            </Thead>
-            <Tbody>
-                {buoySettingsData ?
-                    buoySettingsData.map(buoy => {
-                        return (
-                            <BuoySettingsRow
-                                buoy={buoy}
-                                key={uuid()} />
-                        )
-                    }) : <></>
-                }
-            </Tbody>
-        </Table>
+                <Thead bg={colors.main.lavender} h="3rem">
+                    <Tr>
+                        <Th color={colors.main.usafaBlue}>Name</Th>
+                        <Th color={colors.main.usafaBlue}>ID</Th>
+                        <Th color={colors.main.usafaBlue}>Location</Th>
+                        <Th color={colors.main.usafaBlue}>Sensors</Th>
+                        <Th color={colors.main.usafaBlue}>Settings</Th>
+                    </Tr>
+                </Thead>
+                <Tbody>
+                    {devicesSettingsData ?
+                        devicesSettingsData.map(buoy => {
+                            return (
+                                <BuoySettingsRow
+                                    buoy={buoy}
+                                    key={uuid()} />
+                            )
+                        }) : <></>
+                    }
+                </Tbody>
+            </Table>
+        </React.Suspense>
     );
 };
 
