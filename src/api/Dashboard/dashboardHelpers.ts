@@ -1,8 +1,9 @@
-const POINTS_ALLOWED = 50;
+const POINTS_ALLOWED = 75;
 
 export const remapData = (rawDeviceData: deviceDataType): deviceDataType => {
 
-    const remappedData = { ...rawDeviceData };
+    // had to deep clone object due to state issues
+    const remappedData: deviceDataType = JSON.parse(JSON.stringify(rawDeviceData));
 
     Object.keys(remappedData).map((device) => {
 

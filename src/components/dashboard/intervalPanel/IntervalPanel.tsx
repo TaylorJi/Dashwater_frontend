@@ -1,27 +1,31 @@
 import { Text, Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Grid, useMediaQuery } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import uuid from 'react-uuid';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import Dashboard from '../../../api/Dashboard/Dashboard';
-import { remapData } from '../../../api/Dashboard/dashboardHelpers';
 import LoadingGraphic from '../../layout/LoadingGraphic';
+import { deviceDataAtom, displayedDashboardDataSelector } from '../atoms/intervalPanelAtoms';
 import IntervalGridItem from './IntervalGridItem';
 
 const IntervalPanel: React.FC = () => {
 
-    const [deviceData, setDeviceData] = useState<deviceDataType | null>(null);
+    const setGlobalDeviceData = useSetRecoilState(deviceDataAtom);
+    const deviceData = useRecoilValue(displayedDashboardDataSelector);
+    const resetGlobalDeviceData = useResetRecoilState(deviceDataAtom);
+
     const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
 
     const LG_COLS = 3;
     const SM_COLS = 2;
 
-    const getDeviceData = async () => {
+    const getDeviceData = async (end: string) => {
 
         try {
-            const data = await Dashboard.getCachedData('2023-02-10T18:44:59.274Z');
+            const data = await Dashboard.getCachedData(end);
 
             if (data) {
-                setDeviceData(remapData(data));
+                setGlobalDeviceData(data);
 
             } else {
                 toast.error('There was an error fetching device data - please refresh and try again.');
@@ -34,7 +38,12 @@ const IntervalPanel: React.FC = () => {
     };
 
     useEffect(() => {
-        getDeviceData();
+        const end = new Date(new Date().setHours(new Date().getHours() - 12)).toISOString();
+        getDeviceData(end);
+
+        return () => {
+            resetGlobalDeviceData();
+        }
     }, []);
 
     return (
@@ -42,15 +51,18 @@ const IntervalPanel: React.FC = () => {
             {
                 deviceData ?
                     <>
-                        {
-                            Object.keys(deviceData).map((key) => {
+                        <Accordion
+                            defaultIndex={[0]}
+                            allowMultiple
+                        >
+                            {
+                                Object.keys(deviceData).map((key) => {
 
-                                return (
-                                    <Accordion
-                                        key={uuid()}
-                                        allowMultiple
-                                    >
-                                        <AccordionItem>
+                                    return (
+
+                                        <AccordionItem
+                                            key={uuid()}
+                                        >
                                             <AccordionButton>
                                                 <Box
                                                     as='span'
@@ -81,14 +93,13 @@ const IntervalPanel: React.FC = () => {
                                                 </Grid>
                                             </AccordionPanel>
                                         </AccordionItem>
-                                    </Accordion>
 
+                                    )
 
-                                )
+                                })
 
-                            })
-
-                        }
+                            }
+                        </Accordion>
                     </>
                     :
                     <LoadingGraphic />
