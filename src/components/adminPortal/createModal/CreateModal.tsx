@@ -21,6 +21,8 @@ import {
 import colors from "../../../theme/foundations/colours";
 import typography from "../../../theme/foundations/typography";
 import AdminPortal from "../../../api/AdminPortal/AdminPortal";
+import { toast } from 'react-hot-toast';
+
 
 type CreateModalProps = {
     isOpen: boolean;
@@ -49,11 +51,32 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
     const onSubmit = async (data: any) => {
         data.role = role;
         console.log(data);
-        AdminPortal.createUser(data);
+        let validation: boolean = true;
+        if (!checkEmail(data.email)) {
+            toast.error('Wrong email format');
+            validation = false;
+        } 
+        if (!checkPassword(data.password)) {
+            toast.error('Password length should be between 8 to 20 which contains one uppercase, one numeric digit and one special character');
+            validation = false;
+        }
+        if (validation) {
+            AdminPortal.createUser(data);
+        }
         // let response: Promise<boolean> = AdminPortal.createUser(data);
         // if (await response) {
         //     toast.success("Successfully created user!");
         // }
+    }
+
+    const checkEmail = (email: string): boolean => {
+        let regexp: any = new RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+        return regexp.test(email);
+    }
+
+    const checkPassword = (pw: string): boolean => {
+        let regexp: any = new RegExp(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/);
+        return regexp.test(pw);
     }
 
 
