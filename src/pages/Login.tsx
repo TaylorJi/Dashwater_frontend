@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import BaseLayout from '../components/layout/BaseLayout';
 import welcomeBgImage from '../assets/images/cristian-palmer-3leBubkp5hk-unsplash.png';
 import loginFormBgImage from '../assets/images/login-form-background.png';
 import yvrLogo from '../assets/images/yvr-logo.png';
 import bcitlogo from '../assets/images/bcitlogo.png';
-import { Box, Button, Flex, FormControl, FormLabel, Heading, Image, Input, Link, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Image, Input, Link, Text, VStack } from '@chakra-ui/react';
 import Authentication from '../api/Authentication/Authentication';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
@@ -14,17 +14,23 @@ import colors from '../theme/foundations/colours';
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isDisabled, setIsDisabled] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
 
     const handleLogin = async (email: string, password: string) => {
+        setIsLoading(true);
+        setIsDisabled(true);
+
         const user = await Authentication.authenticateUser(email, password);
         if (user) {
-            // console.log(user)
             navigate('/dashboard')
         } else {
             toast.error('User with this email and password does not exist.')
         }
+        setIsLoading(false);
+        setIsDisabled(false);
     }
 
     return (
@@ -33,20 +39,20 @@ const Login: React.FC = () => {
                 w='100%'
                 minH='100vh'
             >
-                <Box
+                <Flex
                     w='50%'
-                    // bgImage={`url(${welcomeBgImage})`}
                     bgImage={welcomeBgImage}
                     bgSize='cover'
                     bgRepeat='no-repeat'
                     opacity='0.9'
+                    alignItems='center'
+                    justifyContent='center'
+                    direction='column'
                 >
                     <Box
                         h='40%'
                         w='80%'
-                        mt='35%'
                         ml='10%'
-                        // bgColor={colors.main.loginInfoLayer}
                         bgColor='rgba(0, 36, 59, 0.5)'
                         borderRadius='md'
                     >
@@ -58,10 +64,10 @@ const Login: React.FC = () => {
                             YVR x BCIT IoT
                         </Heading>
                         <Text
-                            mt='3rem'
+                            mt='1rem'
                             ml='2rem'
-                            mr='4rem'
-                            mb='5rem'
+                            mr='2rem'
+                            mb='3rem'
                             color='white'
                         >
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quos fugiat sed similique neque reprehenderit nisi facilis, hic quas inventore porro dolores iusto at dolore beatae esse est non cupiditate.
@@ -79,21 +85,21 @@ const Login: React.FC = () => {
                     </Box>
                     <Image
                         mt='1rem'
-                        ml='10%'
+                        mr='auto'
+                        ml='9rem'
                         src={bcitlogo}
                     />
-                </Box>
-                <Box
+                </Flex>
+                <Flex
                     w='50%'
-                    // bgImage={`url(${loginFormBgImage})`}
                     bgImage={loginFormBgImage}
                     bgSize='100% 100%'
                     bgRepeat='no-repeat'
+                    alignItems='center'
                 >
-                    <VStack mt='20%' spacing='6'>
+                    <VStack spacing='6'>
                         <Image
                             boxSize='30%'
-                            // src={`${yvrLogo}`}
                             src={yvrLogo}
                             alt='YVR LOGO'
                             borderRadius='lg'
@@ -125,7 +131,7 @@ const Login: React.FC = () => {
                             </Text>
                             <Input
                                 type='text'
-                                placeholder='Password ...'
+                                placeholder='Password'
                                 border='2px'
                                 borderColor={colors.main.ceruBlue}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -135,12 +141,14 @@ const Login: React.FC = () => {
                             w='20%'
                             bg={colors.main.usafaBlue}
                             color='white'
+                            isLoading={isLoading}
+                            isDisabled={isDisabled}
                             onClick={async () => await handleLogin(email, password)}
                         >
                             Login
                         </Button>
                     </VStack>
-                </Box>
+                </Flex>
             </Flex>
         </BaseLayout>
     );
