@@ -26,6 +26,7 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                 size='sm'
                 borderRadius='0.25rem'
                 w='15rem'
+                placeholder='Select metric'
                 value={currentMetric}
                 borderColor={colors.main.usafaBlue}
                 onChange={e => {
@@ -33,7 +34,6 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                     if (sensor) {
                         setCurrentMetric(e.target.value);
                         setCurrentSensor(sensor);
-                        console.log(currentSensor)
                     }
                 }}
             >
