@@ -14,9 +14,6 @@ import LogSorting from './LogSorting';
 
 // function to fetch and set log data here
 
-
-
-
 const LogPanel: React.FC = () => {
 
     const setLogData = useSetRecoilState(logDataAtom);
