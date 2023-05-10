@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import L from "leaflet";
 import "../mapStyles.css";
 import {
@@ -7,7 +7,6 @@ import {
   TileLayer,
   ZoomControl,
   FeatureGroup,
-  useMapEvents,
 } from "react-leaflet";
 import MapMarker from "./MapMarker";
 import BoxSelector from "./BoxSelector";
@@ -33,6 +32,7 @@ type mapProps = {
   mapId: string;
   isSettings?: boolean;
   settingsCoords?: [number, number];
+  handleMapZoom?: () => void;
 };
 
 const Map: React.FC<mapProps> = (props: mapProps) => {
@@ -48,36 +48,34 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
     isSettings,
     settingsCoords,
   } = props;
-  // const [map, setMap] = React.useState<any>(); // TODO: use map state to set tile layer 
   const editableFG = React.useRef<L.FeatureGroup | null>(null);
-  const [bounds, setBounds] = React.useState<any>(null);
+  
+  const [map, setMap] = useState<any>(); 
+  const [bounds, setBounds] = useState<any>(null);
 
-  const handleDrawCreated = (e: any) => {
-    const { layerType, layer } = e;
+  const handleDrawCreated = (event: any) => {
+    const { layerType, layer } = event;
 
     if (layerType === "rectangle") {
       setBounds(layer.getBounds());
     }
+
   };
 
-  const onCreated = (e: LayerEvent) => {
-    handleDrawCreated(e);
+  const onCreated = (event: LayerEvent) => {
+    handleDrawCreated(event);
 
     const drawnItems = editableFG.current?.getLayers();
 
     if (drawnItems && Object.keys(drawnItems).length > 0) {
       Object.keys(drawnItems).forEach((layerid) => {
         const layer = drawnItems[Number(layerid)];
-
         editableFG.current?.removeLayer(layer);
       });
     }
   };
 
-
-
-
-  React.useEffect(() => {
+  useEffect(() => {
     setBounds(null);
   }, [bounds])
 
@@ -88,7 +86,7 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
       zoom={zoomVal}
       zoomSnap={zoomSet}
       center={center}
-      // ref={setMap}
+      ref={setMap}
       zoomControl={false}
       bounceAtZoomLimits={true}
     >
@@ -117,10 +115,12 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
           <Marker icon={cardIcon} position={[buoy.x, buoy.y]} />
         ))
       ) : isSettings ? (
+        
         <Marker
           icon={cardIcon}
           position={settingsCoords ? settingsCoords : [0, 0]}
         />
+
       ) : (
         <></>
       )}
