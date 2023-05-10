@@ -11,7 +11,8 @@ const colors = {
     activeTopNav: '#C0C53080',
     warning: '#EE580D',
     mediumWarning: '#FFD000',
-    lightGrey: '#EBEBEB'
+    lightGrey: '#EBEBEB',
+    loginInfoLayer: '#00243B'
   },
   foundation: {
     100: '#FFFFFF',
