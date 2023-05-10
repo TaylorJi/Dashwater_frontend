@@ -5,7 +5,7 @@ import DeviceSettingsModal from '../DeviceSettingsModal/DeviceSettingsModal';
 import SensorTag from '../SensorTag/SensorTag';
 
 type buoySettingsRowProps = {
-    buoy: buoySettingsType;
+    buoy: deviceSettingsType;
 };
 
 

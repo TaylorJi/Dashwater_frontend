@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import colors from '../../../../theme/foundations/colours';
 import {
     Divider,
@@ -25,8 +25,8 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
             <Select
                 size='sm'
                 borderRadius='0.25rem'
-                placeholder='Select Metric'
                 w='15rem'
+                placeholder='Select metric'
                 value={currentMetric}
                 borderColor={colors.main.usafaBlue}
                 onChange={e => {

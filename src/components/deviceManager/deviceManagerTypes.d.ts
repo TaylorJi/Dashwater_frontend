@@ -1,25 +1,25 @@
 type deviceManagerDataType = {
-    units: buoySettingsUnitsType;
-    buoys: buoySettingsType[];
+    units: deviceSettingsUnitsType;
+    buoys: deviceSettingsType[];
 };
 
-type buoySettingsUnitsType = {
+type deviceSettingsUnitsType = {
     [key: string]: string;
 };
 
-type buoySettingsType = {
+type deviceSettingsType = {
     name: string;
     id: string;
-    location: buoyLocationType;
+    location: deviceLocationType;
     sensors: sensorType[];
 };
 
-type buoyLocationType = {
+type deviceLocationType = {
     x: number;
     y: number
 };
 
-type buoySensorTagsType = {
+type deviceSensorTagsType = {
     [key: string]: {
         color: string;
         label: string;

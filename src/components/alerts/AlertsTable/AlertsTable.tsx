@@ -24,7 +24,9 @@ const AlertsTable: React.FC = () => {
                     {alertsData ?
                         alertsData['alerts'].map(alert => {
                             return (
-                                <AlertsRow alert={alert} key={uuid()}/>
+                                <AlertsRow
+                                    alert={alert}
+                                    key={uuid()} />
                             )
                         }) : <></>
                     }

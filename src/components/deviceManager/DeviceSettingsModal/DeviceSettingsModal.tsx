@@ -17,7 +17,7 @@ import DeviceSettingsTabs from './DeviceSettingsTabs';
 import colors from '../../../theme/foundations/colours';
 
 type deviceSettingsModalProps = {
-    buoy: buoySettingsType;
+    buoy: deviceSettingsType;
 };
 
 const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
