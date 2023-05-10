@@ -33,6 +33,12 @@ type EditModalProps = {
 const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
     const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
 
+    const [showPassword, setShowPassword] = useState(false);
+
+        const togglePasswordVisibility = () => {
+            setShowPassword((prevShowPassword) => !prevShowPassword);
+    };    
+
     const {
         handleSubmit,
         register,
@@ -48,6 +54,8 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
         // if (await response) {
         //     toast.success("Successfully updated user!");
         // }
+        
+
     }
 
 
@@ -82,7 +90,11 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                         </FormControl>
                         <FormControl isRequired mb={'12px'}>
                             <FormLabel>Password</FormLabel>
-                            <Input id="password" placeholder='Password' defaultValue={global.password} {...register('password', { shouldUnregister: true })} />
+                            <Input id="password" type={showPassword ? "text" : "password"} placeholder="Password" defaultValue={global.password}
+                            {...register('password', { shouldUnregister: true })} />
+                        <Button onClick={togglePasswordVisibility} mt="2" size="sm">
+                        {showPassword ? 'Hide' : 'Show'} Password
+                        </Button>
                         </FormControl>
                         <FormControl isRequired mb={'1px'}>
                             <FormLabel>Role</FormLabel>
