@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm, Controller } from 'react-hook-form';
-// import { Form } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import {
   Text,
   Modal,
@@ -43,11 +43,28 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
         data._id = global._id;
         data.role = global.role;
         console.log(data);
-        AdminPortal.updateUser(data);
-        // let response: Promise<boolean> = AdminPortal.updateUser(data);
-        // if (await response) {
-        //     toast.success("Successfully updated user!");
-        // }
+        let validation: boolean = true;
+        if (!checkEmail(data.email)) {
+            toast.error('Wrong email format');
+            validation = false;
+        } 
+        if (!checkPassword(data.password)) {
+            toast.error('Password length should be between 8 to 20 which contains one uppercase, one numeric digit and one special character');
+            validation = false;
+        }
+        if (validation) {
+            AdminPortal.updateUser(data);
+        }
+    }
+
+    const checkEmail = (email: string): boolean => {
+        let regexp: any = new RegExp(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+        return regexp.test(email);
+    }
+
+    const checkPassword = (pw: string): boolean => {
+        let regexp: any = new RegExp(/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/);
+        return regexp.test(pw);
     }
 
 
@@ -79,10 +96,12 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                         <FormControl isRequired mb={'12px'}>
                             <FormLabel>Email</FormLabel>
                             <Input id="email" placeholder='Email' defaultValue={global.email} {...register('email', { shouldUnregister: true })} />
+                            {/* <Text id="emailFormat" visibility={"hidden"}>Wrong email format</Text> */}
                         </FormControl>
                         <FormControl isRequired mb={'12px'}>
                             <FormLabel>Password</FormLabel>
                             <Input id="password" placeholder='Password' defaultValue={global.password} {...register('password', { shouldUnregister: true })} />
+                            {/* <Text id="passwordFormat" visibility={"hidden"}>Password length should be between 8 to 20 which contains one uppercase and one special character</Text> */}
                         </FormControl>
                         <FormControl isRequired mb={'1px'}>
                             <FormLabel>Role</FormLabel>
