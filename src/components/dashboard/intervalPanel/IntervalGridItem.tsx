@@ -1,4 +1,4 @@
-import { GridItem, Box, Text } from '@chakra-ui/react';
+import { GridItem, Box, Text, Center } from '@chakra-ui/react';
 import React from 'react';
 import AreaGraph from '../../graphs/AreaGraph';
 import BaseCard from '../../layout/BaseCard';
@@ -25,14 +25,26 @@ const IntervalGridItem: React.FC<intervalGridItemProps> = ({ item }) => {
                     mt='1rem'
                     ml='-0.75rem'
                 >
-                    <AreaGraph
-                        data={item['data']}
-                        xAxisLabel={item['xAxisName']}
-                        yAxisLabel={item['yAxisName']}
-                        xKey='time'
-                        graphDataKey='value'
-                        offsetY={0}
-                    />
+                    {
+                        item['data'].length === 0 ?
+                            <Center>
+                                <Text
+                                    color='gray.300'
+                                    fontStyle='italic'
+                                >
+                                    No data available for this time.
+                                </Text>
+                            </Center>
+                            :
+                            <AreaGraph
+                                data={item['data']}
+                                xAxisLabel={item['xAxisName']}
+                                yAxisLabel={item['yAxisName']}
+                                xKey='time'
+                                graphDataKey='value'
+                                offsetY={0}
+                            />
+                    }
                 </Box>
             </BaseCard>
         </GridItem>
