@@ -107,7 +107,7 @@ const Login: React.FC = () => {
                         <Heading
                             size='lg'
                         >
-                            Sign in to Dashboard
+                            Sign In to Dashboard
                         </Heading>
                         <Box w='35%'>
                             <Text
