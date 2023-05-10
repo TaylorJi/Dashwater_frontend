@@ -86,7 +86,7 @@ const Login: React.FC = () => {
                     <Image
                         mt='1rem'
                         mr='auto'
-                        ml='9rem'
+                        ml='15%'
                         src={bcitlogo}
                     />
                 </Flex>
