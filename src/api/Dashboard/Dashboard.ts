@@ -38,9 +38,29 @@ const getTide = async () => {
 
 };
 
+const getCachedData = async (end: string) => {
+
+    try {
+
+        const response: any = await axios.post<any, AxiosResponse<string[]>>(`${API_URL}/ts/getCachedData`, {
+            end: end
+        });
+
+        if (response.status === 200) {
+            return response.data.data;
+        }
+        return null;
+
+    } catch (_err) {
+        return null;
+    }
+
+};
+
 const Dashboard = {
     getWeather,
-    getTide
+    getTide,
+    getCachedData
 };
 
 export default Dashboard;
