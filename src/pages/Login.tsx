@@ -50,7 +50,6 @@ const Login: React.FC = () => {
                     <Box
                         h='40%'
                         w='80%'
-                        ml='10%'
                         bgColor='rgba(0, 36, 59, 0.5)'
                         borderRadius='md'
                     >
@@ -84,7 +83,7 @@ const Login: React.FC = () => {
                     <Image
                         mt='1rem'
                         mr='auto'
-                        ml='15%'
+                        ml='10%'
                         src={bcitlogo}
                     />
                 </Flex>
