@@ -10,7 +10,7 @@ const MapBuoyList: React.FC<buoyMapInfo> = (props) => {
         <Stack>
           {props.buoys ? (
             props.buoys.map((buoy) => (
-              <MapListItem deviceName={buoy.name} id={buoy.id} />
+              <MapListItem deviceName={buoy.name} id={buoy.id} key={buoy.id}/>
             ))
           ) : (
             <Text>No devices currently available</Text>

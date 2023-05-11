@@ -23,6 +23,7 @@ import { tileServer, mapModalSpecs } from "../mapConstants";
 import  {getAllDeviceInfo}  from "../mapHelpers";
 import { selectedIdsAtom } from "./atoms/selectedIdsAtom";
 import { useRecoilState } from 'recoil';
+import { deviceDataAtom } from "../../dashboard/atoms/intervalPanelAtoms";
 
 type MapModalProps = {
   isOpen: boolean;
@@ -40,6 +41,7 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }, props) => {
   //TODO: This needs to be replaced with fetch from cache
   // const propData = getBuoyMapData(mockBuoyData);
 
+  
   const [propData, setData] = useState<any>(null);
 
   const getDeviceData = async () => {
@@ -59,11 +61,8 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }, props) => {
 
 React.useEffect(() => {
   getDeviceData();
+
 }, [])
-
-
-
-
 
 
   const urlArc = tileServer.ARC_MAP;
@@ -71,8 +70,6 @@ React.useEffect(() => {
 
   const [tilePath, setPath] = useState<string>(urlArc);
   const [selected, setSelect] = useState<boolean>(false);
-
-  const [zoom, setZoom] = useState(zVal);
 
   const [ids, setIds] = useState<number[]>([]);
 
@@ -100,9 +97,6 @@ React.useEffect(() => {
     setIds([]);
   };
 
-  const handleMapZoom = (zoomLevel: number) => {
-    setZoom(zoomLevel);
-  };
 
   return (
     <Modal
@@ -131,7 +125,7 @@ React.useEffect(() => {
                 key={mapKey}
                 long={long}
                 lat={lat}
-                zoomVal={zoom}
+                zoomVal={zVal}
                 zoomSet={zSet}
                 center={[cLat, cLong]}
                 buoys={propData}

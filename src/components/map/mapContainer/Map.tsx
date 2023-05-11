@@ -108,11 +108,11 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
 
       {buoys && isModal ? (
         buoys.map((buoy) => (
-          <MapMarker buoyId={buoy.id} coords={[buoy.x, buoy.y]} />
+          <MapMarker buoyId={buoy.id} coords={[buoy.x, buoy.y]} key={buoy.id}/>
         ))
       ) : buoys && !isModal ? (
         buoys.map((buoy) => (
-          <Marker icon={cardIcon} position={[buoy.x, buoy.y]} />
+          <Marker icon={cardIcon} position={[buoy.x, buoy.y]} key={buoy.id}/>
         ))
       ) : isSettings ? (
         
