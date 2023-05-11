@@ -42,16 +42,31 @@ const Sidebar: React.FC = () => {
 
                     {
                         sidebarCategories.map((category) => {
-                            return (
-                                <SidebarItem
-                                    currPath={currPath}
-                                    icon={category['icon']}
-                                    link={category['link']}
-                                    description={category['description']}
-                                    isExternal={false}
-                                    key={uuid()}
-                                />
-                            );
+                            if (global.userRole === "User") {
+                                if (category["description"] !== 'Admin Portal') {
+                                    return (
+                                        <SidebarItem
+                                            currPath={currPath}
+                                            icon={category['icon']}
+                                            link={category['link']}
+                                            description={category['description']}
+                                            isExternal={false}
+                                            key={uuid()}
+                                        />
+                                    );
+                                }
+                            } else {
+                                return (
+                                    <SidebarItem
+                                        currPath={currPath}
+                                        icon={category['icon']}
+                                        link={category['link']}
+                                        description={category['description']}
+                                        isExternal={false}
+                                        key={uuid()}
+                                    />
+                                );
+                            }
                         })
                     }
                     <Spacer />

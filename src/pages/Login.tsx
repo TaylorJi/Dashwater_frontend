@@ -24,7 +24,9 @@ const Login: React.FC = () => {
         const user = await Authentication.authenticateUser(email, password);
         if (user) {
             setIsLoading(false);
-            navigate('/dashboard')
+            global.userRole = user["role"];
+            console.log(global.userRole);
+            navigate('/dashboard');
         } else {
             setIsLoading(false);
             toast.error('User with this email and password does not exist.')
