@@ -14,13 +14,12 @@ type alertRowProps = {
 const AlertsRow: React.FC<alertRowProps> = ({ alert }) => {
     let alertMessage = alert.above_max ? ' above Threshold!' : ' below Threshold!'
     alertMessage = alert.data ? alert.metric_name + alertMessage : 'No data for over 72 hours'
-    console.log(alert);
 
     return (
         <Tr>
             <Td fontWeight='semibold'>{alertMessage}</Td>
             <Td>
-                {alert.data ? <SensorTag metricKey={alert.metric} visible={true} /> : <>--</>}
+                {alert.data ? <SensorTag metricKey={alert.metric} /> : <>--</>}
             </Td>
             <Td>
                 {alert.data ? alert.above_max ?

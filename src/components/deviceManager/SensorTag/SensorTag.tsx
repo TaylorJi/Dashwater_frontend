@@ -4,24 +4,18 @@ import { buoySensorTags } from '../../../theme/metrics/buoySensorTags';
 
 type sensorTagProps = {
     metricKey: string;
-    visible: boolean;
 };
 
 
-const SensorTag: React.FC<sensorTagProps> = ({ metricKey, visible }) => {
+const SensorTag: React.FC<sensorTagProps> = ({ metricKey }) => {
     return (
-        <> {
-            visible ?
-                <Tag
-                    bg={buoySensorTags[metricKey].color}
-                    m='.125rem'
-                >
-                    {buoySensorTags[metricKey].label}
-                </Tag>
-                :
-                <></>
-        }
-        </>
+
+        <Tag
+            bg={buoySensorTags[metricKey].color}
+            m='.125rem'
+        >
+            {buoySensorTags[metricKey].label}
+        </Tag>
 
     );
 };

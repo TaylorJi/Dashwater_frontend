@@ -9,10 +9,10 @@ const colors = {
     acidGreen: '#C0C530',
     activeSideBar: '#CBD4E9',
     activeTopNav: '#C0C53080',
+    activeMainButton: '#002141',
     warning: '#EE580D',
     mediumWarning: '#FFD000',
     lightGrey: '#EBEBEB',
-    loginInfoLayer: '#00243B'
   },
   foundation: {
     100: '#FFFFFF',
