@@ -2,7 +2,7 @@ import { Text, Accordion, AccordionButton, AccordionIcon, AccordionItem, Accordi
 import React, { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import uuid from 'react-uuid';
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import Dashboard from '../../../api/Dashboard/Dashboard';
 import LoadingGraphic from '../../layout/LoadingGraphic';
 import { deviceDataAtom, displayedDashboardDataSelector } from '../atoms/intervalPanelAtoms';
@@ -10,9 +10,8 @@ import IntervalGridItem from './IntervalGridItem';
 
 const IntervalPanel: React.FC = () => {
 
-    const setGlobalDeviceData = useSetRecoilState(deviceDataAtom);
+    const [globalDeviceData, setGlobalDeviceData] = useRecoilState(deviceDataAtom);
     const deviceData = useRecoilValue(displayedDashboardDataSelector);
-    const resetGlobalDeviceData = useResetRecoilState(deviceDataAtom);
 
     const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
 
@@ -38,11 +37,9 @@ const IntervalPanel: React.FC = () => {
     };
 
     useEffect(() => {
-        const end = new Date(new Date().setHours(new Date().getHours() - 12)).toISOString();
-        getDeviceData(end);
-
-        return () => {
-            resetGlobalDeviceData();
+        if (!globalDeviceData) {
+            const end = new Date(new Date().setHours(new Date().getHours() - 12)).toISOString();
+            getDeviceData(end);
         }
     }, []);
 
