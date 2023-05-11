@@ -1,26 +1,19 @@
 import { Box, Button, Flex, Icon, Spacer } from '@chakra-ui/react';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect } from 'react';
+import React from 'react';
 import colors from '../../../theme/foundations/colours';
 import Logs from './Logs';
-import { mockLogData } from '../../../mockData/dashboardMockData';
 import { utils as XLSX, writeFile as XLSXWriteFile } from 'xlsx';
 import { remapDataForExport } from '../dashboardHelpers';
 import toast from 'react-hot-toast';
-import { useSetRecoilState } from 'recoil';
-import { logDataAtom } from './atoms/logPanelAtoms';
 import LogSorting from './LogSorting';
-
-// function to fetch and set log data here
+import { useRecoilValue } from 'recoil';
+import { logDataAtom } from './atoms/logPanelAtoms';
 
 const LogPanel: React.FC = () => {
 
-    const setLogData = useSetRecoilState(logDataAtom);
-
-    useEffect(() => {
-        setLogData(mockLogData);
-    }, []);
+    const logData = useRecoilValue(logDataAtom);
 
     const exportXLSX = (data: logDataType[]) => {
 
@@ -63,11 +56,14 @@ const LogPanel: React.FC = () => {
                         icon={faDownload}
                         color='white'
                     />}
+                    isDisabled={!logData}
                     _hover={{
                         bg: colors.main.mossGreen
                     }}
                     onClick={() => {
-                        exportXLSX(mockLogData);
+                        if (logData) {
+                            exportXLSX(logData);
+                        }
                     }}
                 >
                     Download

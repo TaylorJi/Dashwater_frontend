@@ -21,12 +21,14 @@ export const remapDataForExport = (logData: logDataType[]) => {
             return {
                 Device_ID: data.id,
                 Date_Time: data.time,
-                Dissolved_Oxygen: data.dissolvedOxygen,
-                Electrical_Conductivity: data.electricalConductivity,
-                pH: data.pH,
-                Turbidity: data.turbidity,
-                Total_Dissolved_Solids: data.totalDissolvedSolids,
-                Temperature: data.temperature
+                Dissolved_Oxygen: data.dissolvedOxygen === MISSING_VALUE ? '' : data.dissolvedOxygen,
+                Electrical_Conductivity: data.electricalConductivity === MISSING_VALUE ? '' : data.electricalConductivity,
+                pH: data.pH === MISSING_VALUE ? '' : data.pH,
+                Turbidity: data.turbidity === MISSING_VALUE ? '' : data.turbidity,
+                Total_Dissolved_Solids: data.totalDissolvedSolids === MISSING_VALUE ? '' : data.totalDissolvedSolids,
+                Temperature: data.temperature === MISSING_VALUE ? '' : data.temperature,
+                Water_Flow: data.waterFlow === MISSING_VALUE ? '' : data.waterFlow,
+                Water_Pressure: data.waterPressure === MISSING_VALUE ? '' : data.waterPressure
             };
         });
 
@@ -48,3 +50,5 @@ export const circleGraphColors = (percent: number) => {
         return colors.main.acidGreen
     }
 };
+
+export const MISSING_VALUE = -9999;

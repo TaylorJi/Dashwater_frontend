@@ -46,17 +46,21 @@ type logDataType = {
     turbidity: number;
     totalDissolvedSolids: number;
     temperature: number;
+    waterFlow: number;
+    waterPressure: number;
 };
 
 type FormattedExportType = {
     Device_ID: number;
     Date_Time: string;
-    Dissolved_Oxygen: number;
-    Electrical_Conductivity: number;
-    pH: number;
-    Turbidity: number;
-    Total_Dissolved_Solids: number;
-    Temperature: number;
+    Dissolved_Oxygen: number | string;
+    Electrical_Conductivity: number | string;
+    pH: number | string;
+    Turbidity: number | string;
+    Total_Dissolved_Solids: number | string;
+    Temperature: number | string;
+    Water_Flow: number | string;
+    Water_Pressure: number | string;
 };
 
 type ExportReportDataType = {
