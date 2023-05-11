@@ -2,6 +2,7 @@
     "buoys": [
         {
             "name": "Appa",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt tellus sed nulla laoreet dignissim. Donec sollicitudin vehicula tellus. Etiam.",
             "id": "1234",
             "location": {
                 "x": -123.149528,
@@ -147,6 +148,7 @@
         },
         {
             "name": "Snoopy",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt tellus sed nulla laoreet dignissim. Donec sollicitudin vehicula tellus. Etiam.",
             "id": "0124",
             "location": {
                 "x": -123.159354,
@@ -257,6 +259,7 @@
         },
         {
             "name": "Roobs",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt tellus sed nulla laoreet dignissim. Donec sollicitudin vehicula tellus. Etiam.",
             "id": "520",
             "location": {
                 "x": -123.196476,
@@ -407,6 +410,7 @@
         },
         {
             "name": "I have everything!",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt tellus sed nulla laoreet dignissim. Donec sollicitudin vehicula tellus. Etiam.",
             "id": "9999",
             "location": {
                 "x": -123.206149,

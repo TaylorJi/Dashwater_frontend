@@ -9,6 +9,7 @@ type deviceSettingsUnitsType = {
 
 type deviceSettingsType = {
     name: string;
+    description: string;
     id: string;
     location: deviceLocationType;
     sensors: sensorType[];

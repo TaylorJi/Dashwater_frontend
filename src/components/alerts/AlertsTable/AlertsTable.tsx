@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Table, Thead, Tbody, Th } from '@chakra-ui/react';
+import { Table, Thead, Tbody, Th, Tr } from '@chakra-ui/react';
 import colors from '../../../theme/foundations/colours';
 import uuid from 'react-uuid';
 import mockAlertsData from '../../../mockData/mockAlertData.json';
@@ -13,12 +13,14 @@ const AlertsTable: React.FC = () => {
         <>
             <Table >
                 <Thead bg={colors.main.lavender} h="3rem">
-                    <Th color={colors.main.usafaBlue}>Alert</Th>
-                    <Th color={colors.main.usafaBlue}>Metric</Th>
-                    <Th color={colors.main.usafaBlue}>Status</Th>
-                    <Th color={colors.main.usafaBlue}>Device Name</Th>
-                    <Th color={colors.main.usafaBlue}>Device ID</Th>
-                    <Th color={colors.main.usafaBlue}>Date</Th>
+                    <Tr>
+                        <Th color={colors.main.usafaBlue}>Alert</Th>
+                        <Th color={colors.main.usafaBlue}>Metric</Th>
+                        <Th color={colors.main.usafaBlue}>Status</Th>
+                        <Th color={colors.main.usafaBlue}>Device Name</Th>
+                        <Th color={colors.main.usafaBlue}>Device ID</Th>
+                        <Th color={colors.main.usafaBlue}>Date</Th>
+                    </Tr>
                 </Thead>
                 <Tbody>
                     {alertsData ?
