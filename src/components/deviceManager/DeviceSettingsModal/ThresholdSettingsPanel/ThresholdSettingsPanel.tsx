@@ -13,6 +13,7 @@ import { toast } from 'react-hot-toast';
 import { buoySensorTags } from '../../../../theme/metrics/buoySensorTags';
 import ThresholdSettingsRow from './ThresholdSettingsRow';
 import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
+import uuid from 'react-uuid';
 
 
 type thresholdSettingsPanelProps = {
@@ -52,6 +53,7 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ sensors
                         sensors.map((sensor => {
                             return (
                                 <ThresholdSettingsRow
+                                    key={uuid()}
                                     metric={buoySensorTags[sensor.metric_type].label}
                                     metricSensor={sensor}
                                 />
