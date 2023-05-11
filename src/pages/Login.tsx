@@ -14,23 +14,21 @@ import colors from '../theme/foundations/colours';
 const Login: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isDisabled, setIsDisabled] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
 
     const handleLogin = async (email: string, password: string) => {
         setIsLoading(true);
-        setIsDisabled(true);
 
         const user = await Authentication.authenticateUser(email, password);
         if (user) {
+            setIsLoading(false);
             navigate('/dashboard')
         } else {
+            setIsLoading(false);
             toast.error('User with this email and password does not exist.')
         }
-        setIsLoading(false);
-        setIsDisabled(false);
     }
 
     return (
@@ -142,7 +140,7 @@ const Login: React.FC = () => {
                             bg={colors.main.usafaBlue}
                             color='white'
                             isLoading={isLoading}
-                            isDisabled={isDisabled}
+                            isDisabled={isLoading}
                             onClick={async () => await handleLogin(email, password)}
                         >
                             Login
