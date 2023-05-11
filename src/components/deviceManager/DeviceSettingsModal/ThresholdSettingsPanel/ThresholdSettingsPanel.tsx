@@ -16,9 +16,7 @@ import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
 
 
 type thresholdSettingsPanelProps = {
-    sensors: {
-        [key: string]: metricSettingsType;
-    }
+    sensors: sensorType[];
 }
 
 
@@ -42,20 +40,20 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ sensors
 
                 <Thead>
                     <Tr>
-                        <Th>Metric</Th>
-                        <Th>Min</Th>
-                        <Th>Max</Th>
-                        <Th>Available</Th>
-                        <Th>Alert</Th>
+                        <Th color={colors.main.usafaBlue}>Metric</Th>
+                        <Th color={colors.main.usafaBlue}>Min</Th>
+                        <Th color={colors.main.usafaBlue}>Max</Th>
+                        <Th color={colors.main.usafaBlue}>Unit</Th>
+                        <Th color={colors.main.usafaBlue}>Alert</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
                     {
-                        Object.keys(sensors).map((metricSensor => {
+                        sensors.map((sensor => {
                             return (
                                 <ThresholdSettingsRow
-                                    metric={buoySensorTags[metricSensor].label}
-                                    metricSensor={sensors[metricSensor]}
+                                    metric={buoySensorTags[sensor.metric_type].label}
+                                    metricSensor={sensor}
                                 />
                             );
                         }))

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   Text,
   Modal,
@@ -22,28 +22,34 @@ import typography from "../../../theme/foundations/typography";
 import mockBuoyData from "../../../mockData/mockBuoyIdData.json";
 import { tileServer, mapModalSpecs } from "../mapConstants";
 import { getBuoyMapData } from "../mapHelpers";
+import axios from "axios";
 
 type MapModalProps = {
   isOpen: boolean;
   onClose: () => void;
 };
 
-const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
+const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }, props) => {
+ 
   const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
-
+  const [mapKey, setMapKey] = useState<number>(0);
   const { long, lat, zVal, zSet, cLong, cLat } = mapModalSpecs;
 
+  //TODO: This needs to be replaced with fetch from cache
   const propData = getBuoyMapData(mockBuoyData);
 
   const urlArc = tileServer.ARC_MAP;
   const urlCarto = tileServer.CARTO_MAP;
 
-  const [tilePath, setPath] = React.useState<string>(urlArc);
-  const [selected, setSelect] = React.useState<boolean>(false);
+  const [tilePath, setPath] = useState<string>(urlArc);
+  const [selected, setSelect] = useState<boolean>(false);
 
-  const [ids, setIds] = React.useState<number[]>([]);
+  const [zoom, setZoom] = useState(zVal);
+
+  const [ids, setIds] = useState<number[]>([]);
 
   const selectContext = React.useMemo(() => {
+
     const updateSelected = (select: boolean, id: number) => {
       setSelect(select);
       if (select) setIds([...ids, id]);
@@ -64,6 +70,10 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
 
   const clearIdList = () => {
     setIds([]);
+  };
+
+  const handleMapZoom = (zoomLevel: number) => {
+    setZoom(zoomLevel);
   };
 
   return (
@@ -90,9 +100,10 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
             <SelectContext.Provider value={selectContext}>
               <MapBuoyList buoys={propData} />
               <Map
+                key={mapKey}
                 long={long}
                 lat={lat}
-                zoomVal={zVal}
+                zoomVal={zoom}
                 zoomSet={zSet}
                 center={[cLat, cLong]}
                 buoys={propData}
@@ -116,9 +127,10 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
               _hover={{
                 bg: colors.main.mossGreen,
               }}
-              onClick={() =>
-                tilePath === urlArc ? setPath(urlCarto) : setPath(urlArc)
-              }
+              onClick={() => {
+                tilePath === urlArc ? setPath(urlCarto) : setPath(urlArc);
+                setMapKey(mapKey+1); 
+              }}
             >
               Switch Map
             </Button>

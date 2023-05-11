@@ -1,10 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import { Marker } from "react-leaflet";
 import L from "leaflet";
 import mapMarkerBlue from "../../../assets/images/mapMarkers/marker-icon-2x.png";
-import mapMarkerGrey from "../../../assets/images/mapMarkers/marker-icon-2x-grey.png";
+import mapMarkerYellow from "../../../assets/images/mapMarkers/marker-icon-2x-yellow.png";
 import iconRetinaBlue from "../../../assets/images/mapMarkers/marker-icon.png";
-import iconRetinaGrey from "../../../assets/images/mapMarkers/marker-icon-grey.png";
+import iconRetinaYellow from "../../../assets/images/mapMarkers/marker-icon-yellow.png";
 import iconShadow from "../../../assets/images/mapMarkers/marker-shadow.png";
 import "../mapStyles.css";
 import { SelectContext } from "../SelectContext";
@@ -17,8 +17,8 @@ type markerPropsType = {
 
 const MapMarker: React.FC<markerPropsType> = ({ buoyId, coords }) => {
   const { ids, updateSelected, updateIds } = React.useContext(SelectContext);
-  const [color, setColor] = React.useState<string>(mapMarkerGrey);
-  const [retina, setRetina] = React.useState<string>(mapMarkerBlue);
+  const [color, setColor] = useState<string>(mapMarkerYellow);
+  const [retina, setRetina] = useState<string>(mapMarkerBlue);
 
   const { xSize, ySize, xAnchor, yAnchor, xPopAnchor, yPopAnchor } = iconSpecs;
 
@@ -36,8 +36,8 @@ const MapMarker: React.FC<markerPropsType> = ({ buoyId, coords }) => {
       setColor(mapMarkerBlue);
       setRetina(iconRetinaBlue);
     } else {
-      setColor(mapMarkerGrey);
-      setRetina(iconRetinaGrey);
+      setColor(mapMarkerYellow);
+      setRetina(iconRetinaYellow);
     }
   }, [ids, buoyId]);
 
@@ -49,7 +49,7 @@ const MapMarker: React.FC<markerPropsType> = ({ buoyId, coords }) => {
       setColor(mapMarkerBlue);
     } else {
       updateIds(ids.filter((id) => id !== buoyId));
-      setColor(mapMarkerGrey);
+      setColor(mapMarkerYellow);
     }
   };
 
