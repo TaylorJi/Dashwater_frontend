@@ -1,5 +1,5 @@
 import { Box, Flex, Text, useMediaQuery } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { topNavItems } from './dashboardTopNavItems';
 import uuid from 'react-uuid';
 import colors from '../../theme/foundations/colours';
@@ -7,6 +7,7 @@ import { useSetRecoilState } from 'recoil';
 import { deviceDataAtom } from './atoms/intervalPanelAtoms';
 import toast from 'react-hot-toast';
 import Dashboard from '../../api/Dashboard/Dashboard';
+import { logDataAtom } from './logPanel/atoms/logPanelAtoms';
 
 const DashboardTopNav: React.FC = () => {
 
@@ -14,6 +15,7 @@ const DashboardTopNav: React.FC = () => {
     const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
 
     const setGlobalDeviceData = useSetRecoilState(deviceDataAtom);
+    const setLogData = useSetRecoilState(logDataAtom);
 
     const getDeviceData = async (end: string) => {
 
@@ -31,6 +33,29 @@ const DashboardTopNav: React.FC = () => {
         }
 
     };
+
+    const getLogData = async (end: string) => {
+
+        try {
+            const data = await Dashboard.getCachedLogData(end);
+
+            if (data) {
+                setLogData(data);
+            } else {
+                toast.error('There was an error fetching log data - please refresh and try again.');
+            }
+
+        } catch {
+            toast.error('There was an error fetching log data - please refresh and try again.');
+        }
+
+    };
+
+    useEffect(() => {
+        const end = new Date(new Date().setHours(new Date().getHours() - 12)).toISOString();
+        getLogData(end);
+
+    }, []);
 
     return (
         <Flex
@@ -52,6 +77,7 @@ const DashboardTopNav: React.FC = () => {
                                 setActive(index);
                                 if (item !== 'Custom') {
                                     await getDeviceData(topNavItems[item]);
+                                    await getLogData(topNavItems[item]);
                                 }
                             }}
                             _hover={{
