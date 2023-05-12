@@ -15,6 +15,13 @@ type deviceSettingsType = {
     sensors: sensorType[];
 };
 
+type generalSettingsType = {
+    name: string;
+    description: string;
+    long: number;
+    lat: number;
+  };
+
 type deviceLocationType = {
     x: number;
     y: number
