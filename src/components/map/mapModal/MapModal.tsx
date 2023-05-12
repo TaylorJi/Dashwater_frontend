@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   Text,
   Modal,
@@ -18,52 +18,39 @@ import MapBuoyList from "../mapContainer/MapBuoyList";
 import { SelectContext } from "../SelectContext";
 import colors from "../../../theme/foundations/colours";
 import typography from "../../../theme/foundations/typography";
-import mockBuoyData from "../../../mockData/mockBuoyIdData.json";
 import { tileServer, mapModalSpecs } from "../mapConstants";
-import  {getAllDeviceInfo}  from "../mapHelpers";
+import { getAllDeviceInfo } from "../mapHelpers";
 import { selectedIdsAtom } from "./atoms/selectedIdsAtom";
-import { useRecoilState } from 'recoil';
-import { deviceDataAtom } from "../../dashboard/atoms/intervalPanelAtoms";
-
+import { useRecoilState } from "recoil";
 type MapModalProps = {
   isOpen: boolean;
   onClose: () => void;
 };
 
 const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }, props) => {
-  
-  const [selectedIds, setSelectedIds] = useRecoilState(selectedIdsAtom)
+  const [selectedIds, setSelectedIds] = useRecoilState(selectedIdsAtom);
 
   const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
   const [mapKey, setMapKey] = useState<number>(0);
   const { long, lat, zVal, zSet, cLong, cLat } = mapModalSpecs;
 
-  //TODO: This needs to be replaced with fetch from cache
-  // const propData = getBuoyMapData(mockBuoyData);
-
-  
   const [propData, setData] = useState<any>(null);
 
+  //TODO: This is a temp fix; will need to replace with data from AWS gateway
   const getDeviceData = async () => {
-
     try {
-        const data = await getAllDeviceInfo();
-        if (data) {
-          setData(data)
-        }
-        console.log(data);
-
+      const data = await getAllDeviceInfo();
+      if (data) {
+        setData(data);
+      }
     } catch (_err) {
-        console.log(_err)
+      console.log(_err);
     }
-};
+  };
 
-
-React.useEffect(() => {
-  getDeviceData();
-
-}, [])
-
+  React.useEffect(() => {
+    getDeviceData();
+  }, []);
 
   const urlArc = tileServer.ARC_MAP;
   const urlCarto = tileServer.CARTO_MAP;
@@ -74,7 +61,6 @@ React.useEffect(() => {
   const [ids, setIds] = useState<number[]>([]);
 
   const selectContext = React.useMemo(() => {
-
     const updateSelected = (select: boolean, id: number) => {
       setSelect(select);
       if (select) setIds([...ids, id]);
@@ -96,7 +82,6 @@ React.useEffect(() => {
   const clearIdList = () => {
     setIds([]);
   };
-
 
   return (
     <Modal
@@ -151,7 +136,7 @@ React.useEffect(() => {
               }}
               onClick={() => {
                 tilePath === urlArc ? setPath(urlCarto) : setPath(urlArc);
-                setMapKey(mapKey+1); 
+                setMapKey(mapKey + 1);
               }}
             >
               Switch Map
@@ -173,8 +158,7 @@ React.useEffect(() => {
               _hover={{
                 bg: colors.main.ceruBlue,
               }}
-
-              onClick={()=> {
+              onClick={() => {
                 setSelectedIds(ids);
                 onClose();
               }}
