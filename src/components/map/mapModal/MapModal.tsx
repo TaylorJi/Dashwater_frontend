@@ -160,7 +160,9 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
                 bg: colors.main.ceruBlue,
               }}
               onClick={() => {
-                setSelectedIds(ids);
+                setSelectedIds(ids.map((id: number)=> {
+                  return String(id)
+                }));
                 onClose();
               }}
             >
