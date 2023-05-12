@@ -8,6 +8,7 @@ import {
   Input,
   Button,
   Divider,
+  Textarea,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
@@ -83,6 +84,19 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
       <Text fontSize="sm" color="gray.500" my="0.25rem">
         Enter the alias name for the device.
       </Text>
+
+      <Text fontWeight="semibold" mb="0.25rem">
+        Description
+      </Text>
+      <Textarea
+        resize='vertical'
+        value={deviceSettings.description}
+        onChange={(e) => {
+          const newDescription = e.target.value;
+          setDevicesSettings({...deviceSettings, 'description': newDescription});
+        }}
+        placeholder="Enter a description for the device."
+      />
 
       <Divider my="1rem" />
 
