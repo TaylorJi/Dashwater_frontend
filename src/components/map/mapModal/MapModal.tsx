@@ -27,7 +27,7 @@ type MapModalProps = {
   onClose: () => void;
 };
 
-const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }, props) => {
+const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
   const [selectedIds, setSelectedIds] = useRecoilState(selectedIdsAtom);
 
   const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
@@ -36,7 +36,7 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }, props) => {
 
   const [propData, setData] = useState<any>(null);
 
-  //TODO: This is a temp fix; will need to replace with data from AWS gateway
+  //TODO: This is a temp solution; will need to replace with data from device manager atom
   const getDeviceData = async () => {
     try {
       const data = await getAllDeviceInfo();
@@ -50,7 +50,8 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }, props) => {
 
   React.useEffect(() => {
     getDeviceData();
-  }, []);
+    console.log(selectedIds)
+  }, [selectedIds]);
 
   const urlArc = tileServer.ARC_MAP;
   const urlCarto = tileServer.CARTO_MAP;

@@ -4,10 +4,15 @@
             "name": "Appa",
             "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt tellus sed nulla laoreet dignissim. Donec sollicitudin vehicula tellus. Etiam.",
             "id": "1234",
+
             "location": {
+
                 "x": -123.149528,
+                
                 "y": 49.203132
+
             },
+
             "sensors": [
                 {
                     "metric_type": "dissolved_solids",
@@ -17,21 +22,25 @@
                     "alert": true,
                     "min_calibration_points": 2,
                     "calibration_points": [
+
                         {
                             "id": 1,
                             "digital_value": 1,
                             "physical_value": 21.3
                         },
+
                         {
                             "id": 2,
                             "digital_value": 110.23,
                             "physical_value": 115.3
                         },
+
                         {
                             "id": 3,
                             "digital_value": 5,
                             "physical_value": 213.3
                         }
+
                     ]
                 },
                 {
