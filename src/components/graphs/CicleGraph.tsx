@@ -16,7 +16,7 @@ const CicleGraph: React.FC<circleGraphProps> = ({ percent, value, unit }) => {
         <CircularProgress
             size='8rem'
             value={percent}
-            color={circleGraphColors(percent)}
+            color={colors.main.usafaBlue}
         >
             <CircularProgressLabel>
                 <Text
