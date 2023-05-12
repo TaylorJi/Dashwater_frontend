@@ -9,6 +9,7 @@ import Authentication from '../api/Authentication/Authentication';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import colors from '../theme/foundations/colours';
+import Sessions from '../api/Sessions/Sessions';
 
 
 const Login: React.FC = () => {
@@ -19,16 +20,28 @@ const Login: React.FC = () => {
 
 
     const handleLogin = async (email: string, password: string) => {
-        setIsLoading(true);
+        try {
+            setIsLoading(true);
 
-        const user = await Authentication.authenticateUser(email, password);
-        if (user) {
+            const user = await Authentication.authenticateUser(email, password);
+            if (user) {
+                console.log(user);
+                const isSessionCreated = await Sessions.createSession(user._id);
+                if (isSessionCreated) {
+                    navigate('/dashboard');
+                } else {
+                    toast.error('There was a problem creating a session. Try again.');
+                }
+            } else {
+                toast.error('User with this email and password does not exist.');
+            }
+        } catch (err) {
+            console.log(err)
+            toast.error('There was a problem logging in. Try again.');
+        } finally {
             setIsLoading(false);
-            navigate('/dashboard')
-        } else {
-            setIsLoading(false);
-            toast.error('User with this email and password does not exist.')
         }
+        
     }
 
     return (
@@ -127,7 +140,7 @@ const Login: React.FC = () => {
                                 Password
                             </Text>
                             <Input
-                                type='text'
+                                type='password'
                                 placeholder='Password'
                                 border='2px'
                                 borderColor={colors.main.ceruBlue}

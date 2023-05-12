@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router';
+import Authentication from './components/dashboard/auth/Authentication';
 import Alerts from './pages/Alerts';
 import Dashboard from './pages/Dashboard';
 import DeviceManager from './pages/DeviceManager';
@@ -11,7 +12,7 @@ function App() {
     <Routes>
       <Route path='/' element={<Login />} />
 
-      <Route path='/dashboard' element={<Dashboard />} />
+      <Route path='/dashboard' element={<Authentication> <Dashboard /> </Authentication>} />
 
       <Route path='/alerts' element={<Alerts />} />
 
