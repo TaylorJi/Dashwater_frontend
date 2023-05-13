@@ -9,6 +9,8 @@ import {
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 type UserSettingsModalProps = {
     isOpen: boolean;
@@ -16,6 +18,15 @@ type UserSettingsModalProps = {
 }
 
 const UserSettingsModal: React.FC<UserSettingsModalProps> = ({ isOpen, onClose }) => {
+
+    const navigate = useNavigate();
+    
+
+    const handleLogout = () => {
+        global.userEmail = '';
+        global.userRole = '';
+        navigate('/');
+    };
 
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -25,17 +36,19 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({ isOpen, onClose }
                 <ModalCloseButton />
                 <ModalBody>
                     <Text>
-                        <Text as={'span'} fontWeight='semibold'>Email:</Text> testytesttest@my.bcit.ca
+                        <Text as={'span'} fontWeight='semibold'>Email:</Text> {global.userEmail}
                     </Text>
                     <Text>
-                        <Text as={'span'} fontWeight='semibold'>Access Level:</Text> Admin
+                        <Text as={'span'} fontWeight='semibold'>Access Level:</Text> {global.userRole}
                     </Text>
                     <Divider mt='1rem' />
                 </ModalBody>
                 <ModalFooter>
                     <Button
                         colorScheme='red'
-                        rightIcon={<Icon as={FontAwesomeIcon} color='white' icon={faRightFromBracket} />}
+                        rightIcon={<Icon as={FontAwesomeIcon} 
+                        color='white' icon={faRightFromBracket} />}
+                        onClick={() => handleLogout()}
                     >
                         Sign Out
                     </Button>

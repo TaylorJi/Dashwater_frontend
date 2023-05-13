@@ -11,7 +11,8 @@ declare global {
     var email: string,
     var password: string,
     var role: string,
-    var userRole: string
+    var userRole: string,
+    var userEmail: string,
 }
 
 export {};

@@ -25,7 +25,7 @@ const Login: React.FC = () => {
         if (user) {
             setIsLoading(false);
             global.userRole = user["role"];
-            console.log(global.userRole);
+            global.userEmail = user["email"];
             navigate('/dashboard');
         } else {
             setIsLoading(false);
@@ -111,6 +111,7 @@ const Login: React.FC = () => {
                         <Box w='35%'>
                             <Text
                                 fontWeight='bold'
+                                mb={'0.5rem'}
                             >
                                 Email
                             </Text>
@@ -125,6 +126,7 @@ const Login: React.FC = () => {
                         <Box w='35%'>
                             <Text
                                 fontWeight='bold'
+                                mb={'0.5rem'}
                             >
                                 Password
                             </Text>
