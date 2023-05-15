@@ -1,4 +1,4 @@
-import { Box, Flex, Text, useMediaQuery } from '@chakra-ui/react';
+import { Box, Flex, Text, useDisclosure, useMediaQuery } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { topNavItems } from './dashboardTopNavItems';
 import uuid from 'react-uuid';
@@ -8,8 +8,11 @@ import { deviceDataAtom } from './atoms/intervalPanelAtoms';
 import toast from 'react-hot-toast';
 import Dashboard from '../../api/Dashboard/Dashboard';
 import { logDataAtom, paginationMultipleAtom } from './logPanel/atoms/logPanelAtoms';
+import CustomRangeModal from './customRange/CustomRangeModal';
 
 const DashboardTopNav: React.FC = () => {
+
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const [active, setActive] = useState<number>(0);
     const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
@@ -63,6 +66,7 @@ const DashboardTopNav: React.FC = () => {
         <Flex
             mt={isLargeScreen ? '0' : '1rem'}
         >
+            <CustomRangeModal isOpen={isOpen} onClose={onClose} />
             {
                 Object.keys(topNavItems).map((item, index) => {
                     return (
@@ -76,12 +80,14 @@ const DashboardTopNav: React.FC = () => {
                             bgColor={index === active ? colors.main.activeTopNav : ''}
                             color={index === active ? colors.main.usafaBlue : colors.main.ceruBlue}
                             onClick={async () => {
-                                toast.success('Now displaying data for new date range.');
+                                resetPagination();
                                 setActive(index);
                                 if (item !== 'Custom') {
-                                    resetPagination();
+                                    toast.success('Now displaying data for new date range.');
                                     await getDeviceData(topNavItems[item]);
                                     await getLogData(topNavItems[item]);
+                                } else {
+                                    onOpen();
                                 }
                             }}
                             _hover={{
