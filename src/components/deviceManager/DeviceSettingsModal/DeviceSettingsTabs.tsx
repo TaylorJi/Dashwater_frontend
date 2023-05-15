@@ -54,6 +54,7 @@ const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy }) => {
                 <TabPanel>
                     <GeneralSettingsPanel
                         name={buoy.name}
+                        description={buoy.description}
                         lat={buoy.location.y}
                         long={buoy.location.x} />
                 </TabPanel>
