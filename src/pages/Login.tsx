@@ -29,7 +29,7 @@ const Login: React.FC = () => {
             global.userAuthenticated = true;
             setIsLoading(false);
             navigate('/dashboard');
-            // history.pushState('/dashboard');
+            // history.push('/dashboard');
         } else {
             setIsLoading(false);
             toast.error('User with this email and password does not exist.')

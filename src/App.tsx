@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router';
+import { redirect } from "react-router-dom";
 import Alerts from './pages/Alerts';
 import Dashboard from './pages/Dashboard';
 import DeviceManager from './pages/DeviceManager';
@@ -12,7 +13,7 @@ function App() {
     <Routes>
       <Route path='/' element={<Login />} />
 
-      <Route path='/dashboard' element={global.userAuthenticated ? <Dashboard /> : <Login />} /> {/**element={<Dashboard />}  element={global.userAuthenticated ? <Dashboard /> : <Login />}*/}
+      <Route path='/dashboard' element={<Dashboard />} /> {/**element={<Dashboard />}  element={global.userAuthenticated ? <Dashboard /> : <Login />}*/}
 
       <Route path='/alerts' element={<Alerts />} /> {/**   element={global.userAuthenticated ? <Alerts /> : <Login />} */}
 
