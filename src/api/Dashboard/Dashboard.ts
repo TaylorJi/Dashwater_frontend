@@ -76,12 +76,26 @@ const getCachedLogData = async (end: string) => {
 
 };
 
+const getCachedHighLowHistorical = async () => {
+    try {
+        const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/ts/getCachedHistorical`);
+
+        if (response.status === 200) {
+            return response.data.data;
+        }
+        return null;
+    } catch (_err) {
+        return null;
+    }
+}
+
 
 const Dashboard = {
     getWeather,
     getTide,
     getCachedData,
-    getCachedLogData
+    getCachedLogData,
+    getCachedHighLowHistorical
 };
 
 export default Dashboard;

@@ -30,8 +30,8 @@ const OverviewGridItem: React.FC<intervalGridItemProps> = ({ item }) => {
                         ml={isLargeScreen ? '-7rem' : '-4.25rem'}
                         label={
                             <>
-                                <Text fontSize='xs'>{`Stable: ${item['stable']} ${item['unit']}`}</Text>
-                                <Text fontSize='xs'>{`Warning: ${item['warning']} ${item['unit']}`}</Text>
+                                <Text fontSize='xs'>{`Low: ${item['low']} ${item['unit']}`}</Text>
+                                <Text fontSize='xs'>{`High: ${item['high']} ${item['unit']}`}</Text>
                             </>}
                         bg='white'
                         color='black'
@@ -44,9 +44,9 @@ const OverviewGridItem: React.FC<intervalGridItemProps> = ({ item }) => {
 
                             <CircleGraph
                                 percent={
-                                    (item['current'] / item['warning']) * 100
+                                    ((item['current'] - item['low']) / (item['high'] - item['low'])) * 100
                                 }
-                                value={item['current']}
+                                value={Number(item['current'].toFixed(3))}
                                 unit={item['unit']}
                             />
 
