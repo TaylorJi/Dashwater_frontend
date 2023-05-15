@@ -9,6 +9,9 @@ import Authentication from '../api/Authentication/Authentication';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import colors from '../theme/foundations/colours';
+import App from '../App';
+import ReactDOM from 'react-dom/client';
+import index from 
 
 
 const Login: React.FC = () => {
@@ -29,6 +32,7 @@ const Login: React.FC = () => {
             global.userAuthenticated = true;
             setIsLoading(false);
             navigate('/dashboard');
+            root.render(<App />);
             // history.push('/dashboard');
         } else {
             setIsLoading(false);
