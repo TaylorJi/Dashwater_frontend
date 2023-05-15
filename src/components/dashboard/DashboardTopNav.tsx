@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { topNavItems } from './dashboardTopNavItems';
 import uuid from 'react-uuid';
 import colors from '../../theme/foundations/colours';
-import { useSetRecoilState } from 'recoil';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { deviceDataAtom } from './atoms/intervalPanelAtoms';
 import toast from 'react-hot-toast';
 import Dashboard from '../../api/Dashboard/Dashboard';
-import { logDataAtom } from './logPanel/atoms/logPanelAtoms';
+import { logDataAtom, paginationMultipleAtom } from './logPanel/atoms/logPanelAtoms';
 
 const DashboardTopNav: React.FC = () => {
 
@@ -16,6 +16,8 @@ const DashboardTopNav: React.FC = () => {
 
     const setGlobalDeviceData = useSetRecoilState(deviceDataAtom);
     const setLogData = useSetRecoilState(logDataAtom);
+
+    const resetPagination = useResetRecoilState(paginationMultipleAtom);
 
     const getDeviceData = async (end: string) => {
 
@@ -74,8 +76,10 @@ const DashboardTopNav: React.FC = () => {
                             bgColor={index === active ? colors.main.activeTopNav : ''}
                             color={index === active ? colors.main.usafaBlue : colors.main.ceruBlue}
                             onClick={async () => {
+                                toast.success('Now displaying data for new date range.');
                                 setActive(index);
                                 if (item !== 'Custom') {
+                                    resetPagination();
                                     await getDeviceData(topNavItems[item]);
                                     await getLogData(topNavItems[item]);
                                 }
