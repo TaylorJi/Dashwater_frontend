@@ -26,10 +26,30 @@ const LogPanel: React.FC = () => {
 
         } else {
 
+            ///////////////////////// NEW /////////////////////////////////
+            let totalData = 0;
+            const devicesWorkSheet = XLSX.aoa_to_sheet([]);
+            XLSX.book_append_sheet(workbook, devicesWorkSheet, 'All Devices');
+            let skipHeader = false;
+
             Object.entries(formattedData).map(([sheetName, data]) => {
                 const worksheet = XLSX.json_to_sheet(data);
-                XLSX.book_append_sheet(workbook, worksheet, sheetName);
+                XLSX.book_append_sheet(workbook, worksheet, `${sheetName}_(${data.length})`);
+                totalData += data.length;
+                XLSX.sheet_add_json(devicesWorkSheet, data, { skipHeader: skipHeader, origin: -1 });
+                skipHeader = true;
             });
+
+            const allDevicesSheet = workbook.Sheets['All Devices'];
+            workbook.SheetNames[0] = `All Devices_${totalData}`
+            workbook.Sheets[`All Devices_${totalData}`] = allDevicesSheet;
+
+            //////////////////////////////////////////////////////////
+
+            // Object.entries(formattedData).map(([sheetName, data]) => {
+            //     const worksheet = XLSX.json_to_sheet(data);
+            //     XLSX.book_append_sheet(workbook, worksheet, sheetName);
+            // });
 
             XLSXWriteFile(workbook, 'yvr-devices-log.xlsx');
 
