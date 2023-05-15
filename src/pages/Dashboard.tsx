@@ -1,5 +1,5 @@
 import { Box, Flex, Text, useMediaQuery } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DashboardTabs from '../components/dashboard/DashboardTabs';
 import DashboardTopNav from '../components/dashboard/DashboardTopNav';
 import DashboardTopSelect from '../components/dashboard/DashboardTopSelect';
@@ -7,12 +7,21 @@ import MapCard from '../components/dashboard/map/MapCard';
 import TideCard from '../components/dashboard/tide/TideCard';
 import WeatherCard from '../components/dashboard/weather/WeatherCard';
 import BaseLayout from "../components/layout/BaseLayout";
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
 
     const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
     // For some reason, the log table will cause the entire page to overflow unless I 
     // adjust the width it takes up in the first Flex component
+
+    const navigate = useNavigate();
+
+    // useEffect(() => {
+    //     if (!global.userAuthenticated) {
+    //         navigate('/');
+    //     }
+    // }, []);
 
     return (
         <BaseLayout isNavbarVisible={true}>

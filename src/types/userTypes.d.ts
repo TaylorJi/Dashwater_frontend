@@ -13,6 +13,7 @@ declare global {
     var role: string,
     var userRole: string,
     var userEmail: string,
+    var userAuthenticated: boolean,
 }
 
 export {};

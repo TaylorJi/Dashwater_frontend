@@ -20,13 +20,16 @@ const Login: React.FC = () => {
 
     const handleLogin = async (email: string, password: string) => {
         setIsLoading(true);
+        console.log('authenticated: ' + global.userAuthenticated);
 
         const user = await Authentication.authenticateUser(email, password);
         if (user) {
-            setIsLoading(false);
             global.userRole = user["role"];
             global.userEmail = user["email"];
+            global.userAuthenticated = true;
+            setIsLoading(false);
             navigate('/dashboard');
+            // history.pushState('/dashboard');
         } else {
             setIsLoading(false);
             toast.error('User with this email and password does not exist.')

@@ -25,6 +25,7 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({ isOpen, onClose }
     const handleLogout = () => {
         global.userEmail = '';
         global.userRole = '';
+        global.userAuthenticated = false;
         navigate('/');
     };
 
