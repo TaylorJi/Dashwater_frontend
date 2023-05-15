@@ -25,8 +25,6 @@ const LogPanel: React.FC = () => {
             toast.error('There was a problem exporting the report. Please try again!');
 
         } else {
-
-            ///////////////////////// NEW /////////////////////////////////
             let totalData = 0;
             const devicesWorkSheet = XLSX.aoa_to_sheet([]);
             XLSX.book_append_sheet(workbook, devicesWorkSheet, 'All Devices');
@@ -43,13 +41,6 @@ const LogPanel: React.FC = () => {
             const allDevicesSheet = workbook.Sheets['All Devices'];
             workbook.SheetNames[0] = `All Devices_${totalData}`
             workbook.Sheets[`All Devices_${totalData}`] = allDevicesSheet;
-
-            //////////////////////////////////////////////////////////
-
-            // Object.entries(formattedData).map(([sheetName, data]) => {
-            //     const worksheet = XLSX.json_to_sheet(data);
-            //     XLSX.book_append_sheet(workbook, worksheet, sheetName);
-            // });
 
             XLSXWriteFile(workbook, 'yvr-devices-log.xlsx');
 

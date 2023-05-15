@@ -13,30 +13,6 @@ export const remapDataForExport = (logData: logDataType[]) => {
 
     try {
 
-        // const reformattedSheets: Record<string, FormattedExportType[]> = {};
-
-        // const sheetName = 'Device Data';
-
-        // reformattedSheets[`${sheetName} (${logData.length})`] = logData.map((data) => {
-        //     return {
-        //         Device_ID: data.id,
-        //         Date_Time: data.time,
-        //         Dissolved_Oxygen: data.dissolvedOxygen === MISSING_VALUE ? '' : data.dissolvedOxygen,
-        //         Electrical_Conductivity: data.electricalConductivity === MISSING_VALUE ? '' : data.electricalConductivity,
-        //         pH: data.pH === MISSING_VALUE ? '' : data.pH,
-        //         Turbidity: data.turbidity === MISSING_VALUE ? '' : data.turbidity,
-        //         Total_Dissolved_Solids: data.totalDissolvedSolids === MISSING_VALUE ? '' : data.totalDissolvedSolids,
-        //         Temperature: data.temperature === MISSING_VALUE ? '' : data.temperature,
-        //         Water_Flow: data.waterFlow === MISSING_VALUE ? '' : data.waterFlow,
-        //         Water_Pressure: data.waterPressure === MISSING_VALUE ? '' : data.waterPressure
-        //     };
-        // });
-
-        // return reformattedSheets;
-
-
-        //////////////////////////////////////////////// NEW //////////////////////////////////////////////////////////////////
-
         const reformattedSheets = logData.reduce((allData: Record<string, FormattedExportType[]>, currentData) => {
             if (!allData[`Device ${currentData.id}`]) {
                 allData[`Device ${currentData.id}`] = [];
@@ -57,8 +33,6 @@ export const remapDataForExport = (logData: logDataType[]) => {
         }, {})
 
         return reformattedSheets;
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     } catch (_err) {
         return false;
