@@ -3,7 +3,7 @@ import { API_URL } from '../Environments';
 
 const validateSession = async () => {
     try {
-        const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/session/validateSession`);
+        const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/session/validateSession`, { withCredentials: true });
 
         if (response.status === 200) {
             return response.data.user;
@@ -21,7 +21,9 @@ const createSession = async (userId: string) => {
     try {
         const response: any = await axios.post<any, AxiosResponse<string[]>>(`${API_URL}/session/createSession`, {
             userId: userId
-        });
+        },
+        { withCredentials: true  });
+
 
         if (response.status === 200) {
             return response.data.user;
@@ -36,7 +38,7 @@ const createSession = async (userId: string) => {
 
 const deleteSession = async () => {
     try {
-        const response: any = await axios.delete<any, AxiosResponse<string[]>>(`${API_URL}/session/deleteSession`);
+        const response: any = await axios.delete<any, AxiosResponse<string[]>>(`${API_URL}/session/deleteSession`, { withCredentials: true });
 
         if (response.status === 200) {
             return true;

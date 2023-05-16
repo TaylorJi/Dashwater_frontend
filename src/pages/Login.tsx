@@ -25,21 +25,21 @@ const Login: React.FC = () => {
 
             const user = await Authentication.authenticateUser(email, password);
             if (user) {
-                console.log(user);
                 const isSessionCreated = await Sessions.createSession(user._id);
                 if (isSessionCreated) {
                     navigate('/dashboard');
                 } else {
+                    setIsLoading(false);
                     toast.error('There was a problem creating a session. Try again.');
                 }
             } else {
+                setIsLoading(false);
                 toast.error('User with this email and password does not exist.');
             }
         } catch (err) {
+            setIsLoading(false);
             console.log(err)
             toast.error('There was a problem logging in. Try again.');
-        } finally {
-            setIsLoading(false);
         }
         
     }
