@@ -22,3 +22,11 @@ type buoyInfo = {
 };
 
 
+type deviceMapInfo = {
+  name: string;
+  id: string;
+  x: number;
+  y: number;
+}
+
+

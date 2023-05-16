@@ -1,15 +1,13 @@
 //TODO: Delete/replace this after Recoil for device manager is updated
-
-
 import axios, { AxiosResponse } from 'axios';
 import { API_URL } from '../../api/Environments';
-
 
 //TODO: Replace this with selector to device manager atom
 export const getAllDeviceInfo = async () => {
     try {
         const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/device/getAllDevices`)
         if(response.status === 200) {
+
           const rawData = response.data.text
           let buoyData: { name: string; id: number; x: number; y: number }[] = [];
           rawData.map( (buoy: any) => {
@@ -19,6 +17,7 @@ export const getAllDeviceInfo = async () => {
               x: buoy.location.coordinates[1],
               y: buoy.location.coordinates[0],
             })
+            return buoyData
           })
           return buoyData
         }
@@ -28,10 +27,6 @@ export const getAllDeviceInfo = async () => {
         return null;
     }
 }
-
-
-
-
 
 //TODO: Remove/refactor after testing the new function that fetches from db
 export const getBuoyMapData = (buoyData: buoyInfo) => {

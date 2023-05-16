@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Marker } from "react-leaflet";
 import L from "leaflet";
 import mapMarkerBlue from "../../../assets/images/mapMarkers/marker-icon-2x.png";
