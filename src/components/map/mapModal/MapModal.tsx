@@ -11,7 +11,6 @@ import {
   Button,
   Divider,
   HStack,
-  Spacer,
   useMediaQuery,
 } from "@chakra-ui/react";
 import Map from "../mapContainer/Map";
@@ -22,7 +21,6 @@ import typography from "../../../theme/foundations/typography";
 import mockBuoyData from "../../../mockData/mockBuoyIdData.json";
 import { tileServer, mapModalSpecs } from "../mapConstants";
 import { getBuoyMapData } from "../mapHelpers";
-import axios from "axios";
 
 type MapModalProps = {
   isOpen: boolean;

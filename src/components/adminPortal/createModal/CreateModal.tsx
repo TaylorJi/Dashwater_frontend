@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import {
   Text,
   Modal,
@@ -30,7 +30,6 @@ type CreateModalProps = {
   };
 
 
-
 const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
     const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
 
@@ -50,7 +49,6 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
 
     const onSubmit = async (data: any) => {
         data.role = role;
-        console.log(data);
         let validation: boolean = true;
         if (!checkEmail(data.email)) {
             toast.error('Wrong email format');
@@ -63,10 +61,6 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
         if (validation) {
             AdminPortal.createUser(data);
         }
-        // let response: Promise<boolean> = AdminPortal.createUser(data);
-        // if (await response) {
-        //     toast.success("Successfully created user!");
-        // }
     }
 
     const checkEmail = (email: string): boolean => {

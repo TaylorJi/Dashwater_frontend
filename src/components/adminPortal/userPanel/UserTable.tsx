@@ -6,17 +6,14 @@ import AdminPortal from '../../../api/AdminPortal/AdminPortal';
 
 const UserTable: React.FC = () => {
 
-    // const [userData, setUserData] = useState<userDataType | null>(null);
     const [userData, setUserData] = useState([]);
     let idArray: string[] = [];
 
     const getUserData = async () => {
         try {
             const data = await AdminPortal.getUser();
-            // console.log(data);
             if (data) {
                 setUserData(data);
-                // console.log(data);
             } else {
                 toast.error('Oh no! There was a problem fetching weather data. Please refresh the page.');
             }
@@ -41,8 +38,6 @@ const UserTable: React.FC = () => {
         getUserData();
     }, []);
 
-    // console.log(userData[0]);
-    // const userSettingsData = useState<userDataType | null>(userData)[0];
 
     return (
         <>
@@ -80,18 +75,6 @@ const UserTable: React.FC = () => {
                     }
 
                     
-                    {/* {userData ?
-                        userData['data'].map(user => {
-                            return (
-                                <Tr>
-                                <Td>{user._id}</Td>
-                                <Td>{user.email}</Td>
-                                <Td>{user.password}</Td>
-                                <Td>{user.role}</Td>
-                            </Tr>
-                            )
-                        }) : <></>
-                    } */}
                 </Tbody>
             </Table>        
         </>

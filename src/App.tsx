@@ -12,13 +12,13 @@ function App() {
     <Routes>
       <Route path='/' element={<Login />} />
 
-      <Route path='/dashboard' element={global.userAuthenticated ? <Dashboard /> : <Login />} /> {/**element={<Dashboard />}  element={global.userAuthenticated ? <Dashboard /> : <Login />}*/}
+      <Route path='/dashboard' element={<Dashboard />} /> 
 
-      <Route path='/alerts' element={<Alerts />} /> {/**   element={global.userAuthenticated ? <Alerts /> : <Login />} */}
+      <Route path='/alerts' element={<Alerts />} /> 
 
-      <Route path='/manageDevices' element={<DeviceManager />} /> {/**  element={global.userAuthenticated ? <DeviceManager /> : <Login />} */}
+      <Route path='/manageDevices' element={<DeviceManager />} /> 
 
-      <Route path='/adminPortal' element={<Admin/>} /> {/**  element={global.userAuthenticated ? <Admin /> : <Login />} */}
+      <Route path='/adminPortal' element={<Admin/>} /> 
 
       <Route path='404' element={<NotFound />} />
 

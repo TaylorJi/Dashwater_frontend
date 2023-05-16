@@ -48,7 +48,6 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
     const onSubmit = async (data: any) => {
         data._id = global._id;
         data.role = global.role;
-        console.log(data);
 
         let validation: boolean = true;
         if (!checkEmail(data.email)) {
@@ -103,7 +102,6 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                         <FormControl isRequired mb={'12px'}>
                             <FormLabel>Email</FormLabel>
                             <Input id="email" placeholder='Email' defaultValue={global.email} {...register('email', { shouldUnregister: true })} />
-                            {/* <Text id="emailFormat" visibility={"hidden"}>Wrong email format</Text> */}
                         </FormControl>
                         <FormControl isRequired mb={'12px'}>
                             <FormLabel>Password</FormLabel>

@@ -1,13 +1,6 @@
 import React from 'react';
-import Icon from '@chakra-ui/icon';
-import { Select } from '@chakra-ui/select';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Button, Flex, Text, useMediaQuery, Center, useDisclosure, Box } from '@chakra-ui/react';
+import { Flex, Text, useMediaQuery, Box } from '@chakra-ui/react';
 import BaseLayout from '../components/layout/BaseLayout';
-import colors from '../theme/foundations/colours';
-import UserTable from '../components/adminPortal/userPanel/UserTable';
-import CrudButtons from '../components/adminPortal/userPanel/CrudButtons';
 import AdminPortalTabs from '../components/adminPortal/AdminPortalTabs';
 
 
@@ -21,16 +14,6 @@ const AdminPortal: React.FC = () => {
                 <Text fontSize={isLargeScreen ? "3xl" : "2xl"} fontWeight="bold">
                     Admin Portal
                 </Text>
-                {/* <Text fontSize='2xl' fontWeight='bold' pl="4rem" pt="2rem">
-                    User Table
-                </Text>
-                <Center px="4rem" pt="1rem" pb="1rem">
-                    <UserTable />
-                </Center>
-                <CrudButtons /> */}
-                {/* <Center px="2rem" pt="1rem" pb="1rem">
-                    <AdminPortalTabs />
-                </Center> */}
                 <Box
                     py='2rem'
                     px='1rem'
