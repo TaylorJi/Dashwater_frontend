@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import L from "leaflet";
 import "../mapStyles.css";
 import {
   MapContainer,
