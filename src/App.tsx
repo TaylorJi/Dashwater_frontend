@@ -19,8 +19,7 @@ function App() {
     <>
     <Routes>
       <Route path='/' element={<Login />} />
-
-<<<<<<< HEAD
+      
       <Route path='/dashboard' element={<Dashboard />} /> 
 
       <Route path='/alerts' element={<Alerts />} /> 
@@ -28,15 +27,6 @@ function App() {
       <Route path='/manageDevices' element={<DeviceManager />} /> 
 
       <Route path='/adminPortal' element={<Admin/>} /> 
-=======
-      <Route path='/dashboard' element={global.userAuthenticated ? <Dashboard /> : <Login />} /> {/**element={<Dashboard />}  element={global.userAuthenticated ? <Dashboard /> : <Login />}*/}
-
-      <Route path='/alerts' element={global.userAuthenticated ? <Alerts /> : <Login />} /> {/** element={<Alerts />}  element={global.userAuthenticated ? <Alerts /> : <Login />} */}
-
-      <Route path='/manageDevices' element={global.userAuthenticated ? <DeviceManager /> : <Login />} /> {/** element={<DeviceManager />} element={global.userAuthenticated ? <DeviceManager /> : <Login />} */}
-
-      <Route path='/adminPortal' element={global.userAuthenticated ? <Admin /> : <Login />} /> {/** element={<Admin/>} element={global.userAuthenticated ? <Admin /> : <Login />} */}
->>>>>>> 74954f78c6cd9315be3589125358c7a691ef686c
 
       <Route path='404' element={<NotFound />} />
 
