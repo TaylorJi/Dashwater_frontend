@@ -16,7 +16,7 @@ type buoySettingsRowProps = {
 const BuoySettingsRow: React.FC<buoySettingsRowProps> = ({ buoy }) => {
 
     return (
-            <Tr>
+            <Tr h='6rem'>
                 <Td><Text as='b'>{buoy.name}</Text></Td>
                 <Td>{buoy.id}</Td>
                 <Td>
