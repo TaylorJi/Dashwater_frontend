@@ -25,9 +25,30 @@ const testEndpoint = async (msg: string) => {
 };
 
 
-const Authentication = {
-    testEndpoint
+const authenticateUser = async (email: string, password: string) => {
+    try {
+        const response: any = await axios.post<any, AxiosResponse<string[]>>(`${API_URL}/user/validateUser`,
+            {
+                email: email,
+                password: password
+            }
+        );
 
+        if (response.status === 200) {
+            return response.data.text;
+        }
+
+        return null;
+
+    } catch(_err) {
+        return null;
+    }
+}
+
+
+const Authentication = {
+    testEndpoint,
+    authenticateUser
 };
 
 export default Authentication;

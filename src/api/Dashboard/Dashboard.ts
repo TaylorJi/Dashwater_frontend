@@ -57,10 +57,88 @@ const getCachedData = async (end: string) => {
 
 };
 
+const getCachedLogData = async (end: string) => {
+
+    try {
+
+        const response: any = await axios.post<any, AxiosResponse<string[]>>(`${API_URL}/ts/getCachedLogData`, {
+            end: end
+        });
+
+        if (response.status === 200) {
+            return response.data.data;
+        }
+        return null;
+
+    } catch (_err) {
+        return null;
+    }
+
+};
+
+const getCustomRangeData = async (start: string, end: string) => {
+
+    try {
+
+        const response: any = await axios.post<any, AxiosResponse<string[]>>(`${API_URL}/ts/getCustomRangeData`, {
+            start: start,
+            end: end
+        });
+
+        if (response.status === 200) {
+            return response.data.data;
+        }
+        return null;
+
+    } catch (_err) {
+        return null;
+    }
+
+};
+
+const getCustomRangeLogData = async (start: string, end: string) => {
+
+    try {
+
+        const response: any = await axios.post<any, AxiosResponse<string[]>>(`${API_URL}/ts/getCustomRangeLogData`, {
+            start: start,
+            end: end
+        });
+
+        if (response.status === 200) {
+            return response.data.data;
+        }
+        return null;
+
+    } catch (_err) {
+        return null;
+    }
+
+};
+
+
+const getCachedHighLowHistorical = async () => {
+    try {
+        const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/ts/getCachedHistorical`);
+
+        if (response.status === 200) {
+            return response.data.data;
+        }
+        return null;
+
+    } catch (_err) {
+        return null;
+    }
+}
+
 const Dashboard = {
     getWeather,
     getTide,
-    getCachedData
+    getCachedData,
+    getCachedLogData,
+    getCustomRangeData,
+    getCustomRangeLogData,
+    getCachedHighLowHistorical
 };
 
 export default Dashboard;
