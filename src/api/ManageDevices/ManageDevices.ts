@@ -1,4 +1,4 @@
-const saveDeviceSettings = async (name: string, lat: number, long: number) => {
+const saveDeviceSettings = async (settings: generalSettingsType) => {
     // do DB stuff in try-catch block
     return true;
 
