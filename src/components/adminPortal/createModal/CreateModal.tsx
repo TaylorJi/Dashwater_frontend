@@ -39,7 +39,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
     }; 
 
-    var role = "";
+    var role = "User";
 
     const {
         handleSubmit,
