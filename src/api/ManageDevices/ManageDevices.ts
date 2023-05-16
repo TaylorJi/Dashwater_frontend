@@ -1,12 +1,20 @@
+
 const saveDeviceSettings = async (name: string, lat: number, long: number) => {
     // do DB stuff in try-catch block
     return true;
 
 };
-
-const saveThresholdSettings = async () => {
+//takes in array
+const saveThresholdSettings = async (myArray: any[]) => {
     // do DB stuff in try-catch block
-    return true;
+    try {
+        console.log(myArray)
+        return true;
+    }
+    catch (err) {
+        console.log(err);
+        return false;
+    }
 }
 
 const saveCalibrationPoint = async (calibrationInfo: sensorType) => {
