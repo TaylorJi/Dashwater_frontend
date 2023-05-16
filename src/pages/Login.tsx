@@ -9,6 +9,9 @@ import Authentication from '../api/Authentication/Authentication';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import colors from '../theme/foundations/colours';
+import App from '../App';
+import ReactDOM from 'react-dom/client';
+import index from 
 
 
 const Login: React.FC = () => {
@@ -28,6 +31,11 @@ const Login: React.FC = () => {
             global.userAuthenticated = true;
             setIsLoading(false);
             navigate('/dashboard');
+<<<<<<< HEAD
+=======
+            root.render(<App />);
+            // history.push('/dashboard');
+>>>>>>> 74954f78c6cd9315be3589125358c7a691ef686c
         } else {
             setIsLoading(false);
             toast.error('User with this email and password does not exist.')
