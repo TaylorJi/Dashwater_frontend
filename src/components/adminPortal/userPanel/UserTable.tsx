@@ -67,7 +67,7 @@ const UserTable: React.FC = () => {
                                     </Td>
                                     <Td>{user['_id']}</Td>
                                     <Td>{user['email']}</Td>
-                                    <Td>{user['password']}</Td>
+                                    <Td>*******</Td>
                                     <Td>{user['role']}</Td>
                                 </Tr>
                             )}
