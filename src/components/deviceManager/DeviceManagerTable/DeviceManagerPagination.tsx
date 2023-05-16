@@ -10,13 +10,9 @@ import colors from '../../../theme/foundations/colours';
 const DeviceManagerPagination: React.FC<{setDisplayedDevices: any}> = ({ setDisplayedDevices }) => {
 
     const allDevices = useRecoilValue(allDevicesDetails);
-    const [currPage, setCurrPage] = useState(1);
+    const [currPage, setCurrPage] = useState<number>(1);
     const DEVICES_PER_PAGE = 2;
     const NUM_OF_PAGES = Math.ceil(allDevices.length / DEVICES_PER_PAGE);
-
-    useEffect(() => {
-        setCurrPage(1);
-    }, []);
 
     useEffect(() => {
         if (allDevices) {
