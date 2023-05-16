@@ -1,4 +1,4 @@
-import { Box, Button, Flex, IconButton, Icon } from "@chakra-ui/react";
+import { Button, Flex, IconButton, Icon } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
