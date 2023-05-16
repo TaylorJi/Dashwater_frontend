@@ -11,9 +11,7 @@ import DeviceManagerPagination from './DeviceManagerPagination';
 const DeviceManagerTable: React.FC = () => {
     const devicesSettingsData = useRecoilValue(allDevicesDetails);
 
-    /////////// NEW (PROP) //////////////////
     const [displayedDevices, setDisplayedDevices] = useState([]);
-    ////////////////////////////////////////
 
     return (
         <Flex
