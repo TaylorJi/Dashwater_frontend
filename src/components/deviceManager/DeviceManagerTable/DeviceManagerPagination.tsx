@@ -1,155 +1,104 @@
-import { Button, Center, Icon, Select } from '@chakra-ui/react';
+import { Box, Button, Flex, IconButton, Icon } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect } from 'react';
-import uuid from 'react-uuid';
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import uuid from "react-uuid";
+import { useRecoilValue } from "recoil";
+import { allDevicesDetails } from "../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms";
 import colors from '../../../theme/foundations/colours';
-import { allDevicesDetails, devicesPerPageAtom, devicesPaginationMultipleAtom } from '../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
 
-const DeviceManagerPagination: React.FC = () => {
+const DeviceManagerPagination: React.FC<{setDisplayedDevices: any}> = ({ setDisplayedDevices }) => {
 
     const allDevices = useRecoilValue(allDevicesDetails);
-    const [currPagination, setCurrPagination] = useRecoilState(devicesPaginationMultipleAtom);
-    const [devicesPerPage, setDevicesPerPage] = useRecoilState(devicesPerPageAtom);
-
-    const resetPagination = useResetRecoilState(devicesPaginationMultipleAtom);
-    const resetDevicesPerPage = useResetRecoilState(devicesPerPageAtom);
+    const [currPage, setCurrPage] = useState(1);
+    const DEVICES_PER_PAGE = 2;
+    const NUM_OF_PAGES = Math.ceil(allDevices.length / DEVICES_PER_PAGE);
 
     useEffect(() => {
-        return () => {
-            resetPagination();
-            resetDevicesPerPage();
-        }
+        setCurrPage(1);
     }, []);
+
+    useEffect(() => {
+        if (allDevices) {
+            const deviceStart = (currPage - 1) * DEVICES_PER_PAGE;
+            const deviceEnd = currPage * DEVICES_PER_PAGE;
+            setDisplayedDevices(allDevices.slice(deviceStart, deviceEnd));
+        }
+    }, [allDevices, currPage]);
 
     return (
         <>
             {
                 allDevices &&
-                <Center
+                <Flex
+                    gap='0.5rem'
                     mt='2rem'
+                    justifyContent='center'
                 >
-                    <Button
-                        size='sm'
-                        colorScheme='main'
+                    <IconButton
+                        size='md'
+                        bg={colors.main.usafaBlue}
                         color='white'
-                        leftIcon={<Icon
+                        aria-label='Previous Page'
+                        icon={<Icon
                             as={FontAwesomeIcon}
                             icon={faChevronLeft}
-                            color='white'
                         />}
-                        isDisabled={currPagination === 0}
+                        rounded='full'
                         _hover={{
                             bg: colors.main.activeMainButton
                         }}
+                        isDisabled={currPage === 1}
                         onClick={() => {
-                            if (currPagination !== 0) {
-                                setCurrPagination(currPagination - 1);
+                            if (currPage !== 1) {
+                                setCurrPage(currPage - 1);
                             }
                         }}
-                    >
-                        Prev Page
-                    </Button>
-
-                    <Select
-                        size='sm'
-                        mr='0.5rem'
-                        ml='1rem'
-                        w='20rem'
-                        borderRadius='0.25rem'
-                        borderColor={colors.main.usafaBlue}
-                        onChange={(e) => {
-                            setCurrPagination(parseInt(e.target.value));
-                        }}
-                        value={currPagination}
-                    >
-                        {
-                            allDevices.map((device, index) => {
-                                if (index * devicesPerPage < allDevices.length) {
-                                    // the last page
-                                    if ((index + 1) * devicesPerPage > allDevices.length) {
-                                        return (
-                                            <option
-                                                value={index}
-                                                key={uuid()}
-                                            >
-                                                Devices {index * devicesPerPage + 1} to {allDevices.length}
-                                            </option>
-                                        );
-
-                                    } else {
-                                        return (
-                                            <option
-                                                value={index}
-                                                key={uuid()}
-                                            >
-                                                Devices {index * devicesPerPage + 1} to {(index + 1) * devicesPerPage}
-                                            </option>
-                                        );
-                                    }
-                                }
-                            })
-                        }
-                    </Select>
-
-                    <Select
-                        size='sm'
-                        mr='1rem'
-                        w='10rem'
-                        borderRadius='0.25rem'
-                        borderColor={colors.main.usafaBlue}
-                        onChange={(e) => {
-                            resetPagination();
-                            setDevicesPerPage(parseInt(e.target.value));
-                        }}
-                        value={devicesPerPage}
-                    >
-                        <option
-                            value={2}
-                            key={uuid()}
-                        >
-                            2 devices per page
-                        </option>
-                        <option
-                            value={4}
-                            key={uuid()}
-                        >
-                            4 devices per page
-                        </option>
-                        <option
-                            value={6}
-                            key={uuid()}
-                        >
-                            6 devices per page
-                        </option>
-                    </Select>
-
-                    <Button
-                        size='sm'
-                        colorScheme='main'
+                    />
+                    {
+                        Array.from({length: NUM_OF_PAGES}, (_, i) => i + 1).map((pageIndex) => {
+                            return (
+                                <Button
+                                    size='md'
+                                    bg={currPage === pageIndex ? colors.main.activeMainButton : colors.main.usafaBlue}
+                                    color='white'
+                                    rounded='full'
+                                    _hover={{
+                                        bg: colors.main.activeMainButton
+                                    }}
+                                    onClick={() => setCurrPage(pageIndex)}
+                                    key={uuid()}
+                                >
+                                    {pageIndex}
+                                </Button>
+                            )
+                        })
+                    }
+                    <IconButton
+                        size='md'
+                        bg={colors.main.usafaBlue}
                         color='white'
-                        rightIcon={<Icon
+                        aria-label="Next Page"
+                        icon={<Icon
                             as={FontAwesomeIcon}
                             icon={faChevronRight}
-                            color='white'
                         />}
-                        isDisabled={(currPagination + 1) * devicesPerPage >= allDevices.length}
+                        rounded='full'
                         _hover={{
                             bg: colors.main.activeMainButton
                         }}
+                        isDisabled={currPage === NUM_OF_PAGES}
                         onClick={() => {
-                            if ((currPagination + 1) * devicesPerPage < allDevices.length) {
-                                setCurrPagination(currPagination + 1);
+                            if (currPage !== NUM_OF_PAGES) {
+                                setCurrPage(currPage + 1);
                             }
                         }}
-                    >
-                        Next Page
-                    </Button>
-                </Center>
+                    />
+                </Flex>
             }
         </>
     )
+
 };
 
 export default DeviceManagerPagination;

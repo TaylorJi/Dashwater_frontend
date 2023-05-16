@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table, Thead, Tbody, Tr, Th, Flex } from '@chakra-ui/react';
 import BuoySettingsRow from './BuoySettingsRow';
 import colors from '../../../theme/foundations/colours';
 import uuid from 'react-uuid';
-import { allDevicesDetails, displayedDevicesDataSelector } from '../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
+import { allDevicesDetails } from '../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
 import { useRecoilValue } from 'recoil';
 import DeviceManagerPagination from './DeviceManagerPagination';
 
@@ -11,7 +11,9 @@ import DeviceManagerPagination from './DeviceManagerPagination';
 const DeviceManagerTable: React.FC = () => {
     const devicesSettingsData = useRecoilValue(allDevicesDetails);
 
-    const displayedDevicesSettingsData = useRecoilValue(displayedDevicesDataSelector);
+    /////////// NEW (PROP) //////////////////
+    const [displayedDevices, setDisplayedDevices] = useState([]);
+    ////////////////////////////////////////
 
     return (
         <Flex
@@ -28,8 +30,8 @@ const DeviceManagerTable: React.FC = () => {
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {displayedDevicesSettingsData ?
-                        displayedDevicesSettingsData.map(buoy => {
+                    {displayedDevices ?
+                        displayedDevices.map(buoy => {
                             return (
                                 <BuoySettingsRow
                                     buoy={buoy}
@@ -39,7 +41,9 @@ const DeviceManagerTable: React.FC = () => {
                     }
                 </Tbody>
             </Table>
-            <DeviceManagerPagination />
+            <DeviceManagerPagination
+                setDisplayedDevices={setDisplayedDevices}
+            />
         </Flex>
     );
 };
