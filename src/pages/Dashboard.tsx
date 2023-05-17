@@ -7,7 +7,6 @@ import MapCard from '../components/dashboard/map/MapCard';
 import TideCard from '../components/dashboard/tide/TideCard';
 import WeatherCard from '../components/dashboard/weather/WeatherCard';
 import BaseLayout from "../components/layout/BaseLayout";
-import { useNavigate } from 'react-router-dom';
 
 const Dashboard: React.FC = () => {
 

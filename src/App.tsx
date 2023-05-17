@@ -7,7 +7,6 @@ import DeviceManager from './pages/DeviceManager';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import Admin from './pages/AdminPortal';
-import PrivateRoute from './components/adminPortal/PrivateRoute';
 
 // function App() {
 //   useEffect(() => {
@@ -47,26 +46,28 @@ import PrivateRoute from './components/adminPortal/PrivateRoute';
 
 function App() {
   useEffect(() => {
-    console.log('global.userAuthenticated: ' + global.userAuthenticated);
   }, []);
+
+  let authenticatd = localStorage.getItem('authenticated');
+  console.log('authenticated: ' + authenticatd);
 
   const routes = useRoutes([
     { path: '/', element: <Login /> },
     {
       path: '/dashboard',
-      element: global.userAuthenticated ? <Dashboard /> : <Navigate to="/" replace />,
+      element: authenticatd === 'true' ? <Dashboard /> : <Navigate to="/" replace />,
     },
     {
       path: '/alerts',
-      element: global.userAuthenticated ? <Alerts /> : <Navigate to="/" replace />,
+      element: authenticatd === 'true' ? <Alerts /> : <Navigate to="/" replace />,
     },
     {
       path: '/manageDevices',
-      element: global.userAuthenticated ? <DeviceManager /> : <Navigate to="/" replace />,
+      element: authenticatd === 'true' ? <DeviceManager /> : <Navigate to="/" replace />,
     },
     {
       path: '/adminPortal',
-      element: global.userAuthenticated ? <Admin /> : <Navigate to="/" replace />,
+      element: authenticatd === 'true' ? <Admin /> : <Navigate to="/" replace />,
     },
     { path: '404', element: <NotFound /> },
     { path: '*', element: <Navigate to="404" replace /> },

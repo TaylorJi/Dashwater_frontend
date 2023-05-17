@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { API_URL } from "../Environments";
-
+import { Navigate } from 'react-router';
 
 type createUserResponse = {
     email: string,
@@ -53,9 +53,11 @@ const createUser = async (user: any) => {
     } else {
     }
 };
-      
+     
+
 
 const deleteUser = async (idArray: string[]) => {
+
     for (let i = 0; i < idArray.length; i++) {
         const request: any = await axios.delete<deleteUserResponse>(`${API_URL}/user/deleteUser/${idArray[i]}`)
     }
