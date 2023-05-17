@@ -4,7 +4,7 @@ import { API_URL } from "../Environments";
 const getWeather = async () => {
     try {
 
-        const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/weather/getWeather`);
+        const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/weather/getWeather`, { withCredentials: true });
 
         if (response.status === 200) {
             return response.data.data;
@@ -23,7 +23,7 @@ const getTide = async () => {
 
     try {
 
-        const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/weather/getTide`);
+        const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/weather/getTide`, { withCredentials: true });
 
         if (response.status === 200) {
             return response.data.data;
@@ -44,7 +44,7 @@ const getCachedData = async (end: string) => {
 
         const response: any = await axios.post<any, AxiosResponse<string[]>>(`${API_URL}/ts/getCachedData`, {
             end: end
-        });
+        }, { withCredentials: true });
 
         if (response.status === 200) {
             return response.data.data;
@@ -63,7 +63,7 @@ const getCachedLogData = async (end: string) => {
 
         const response: any = await axios.post<any, AxiosResponse<string[]>>(`${API_URL}/ts/getCachedLogData`, {
             end: end
-        });
+        }, { withCredentials: true });
 
         if (response.status === 200) {
             return response.data.data;
