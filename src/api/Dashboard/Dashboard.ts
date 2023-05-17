@@ -83,7 +83,7 @@ const getCustomRangeData = async (start: string, end: string) => {
         const response: any = await axios.post<any, AxiosResponse<string[]>>(`${API_URL}/ts/getCustomRangeData`, {
             start: start,
             end: end
-        });
+        }, { withCredentials: true });
 
         if (response.status === 200) {
             return response.data.data;
@@ -103,7 +103,7 @@ const getCustomRangeLogData = async (start: string, end: string) => {
         const response: any = await axios.post<any, AxiosResponse<string[]>>(`${API_URL}/ts/getCustomRangeLogData`, {
             start: start,
             end: end
-        });
+        }, { withCredentials: true });
 
         if (response.status === 200) {
             return response.data.data;
@@ -119,7 +119,7 @@ const getCustomRangeLogData = async (start: string, end: string) => {
 
 const getCachedHighLowHistorical = async () => {
     try {
-        const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/ts/getCachedHistorical`);
+        const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/ts/getCachedHistorical`, { withCredentials: true });
 
         if (response.status === 200) {
             return response.data.data;
