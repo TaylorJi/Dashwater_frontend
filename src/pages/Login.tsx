@@ -166,7 +166,7 @@ const Login: React.FC = () => {
                                 <PopoverArrow />
                                 <PopoverCloseButton />
                                 <PopoverHeader>Contact Information</PopoverHeader>
-                                <PopoverBody>Please contact 'admin@email.com' to change a password.</PopoverBody>
+                                <PopoverBody>Please contact 'admin@admin.ca' to change a password.</PopoverBody>
                             </PopoverContent>
                         </Popover>
                         {/* <Box>
