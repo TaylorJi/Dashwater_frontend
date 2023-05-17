@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import BaseLayout from '../components/layout/BaseLayout';
-import welcomeBgImage from '../assets/images/cristian-palmer-3leBubkp5hk-unsplash.png';
 import loginFormBgImage from '../assets/images/login-form-background.png';
 import yvrLogo from '../assets/images/yvr-logo.png';
 import bcitlogo from '../assets/images/bcitlogo.png';
@@ -39,7 +38,7 @@ const Login: React.FC = () => {
             >
                 <Flex
                     w='50%'
-                    bgImage={welcomeBgImage}
+                    bgImage="https://i.imgur.com/s9rWIHK.jpg"
                     bgSize='cover'
                     bgRepeat='no-repeat'
                     opacity='0.9'

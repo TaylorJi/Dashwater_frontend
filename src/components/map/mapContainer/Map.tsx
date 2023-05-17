@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import L from "leaflet";
 import "../mapStyles.css";
 import {
@@ -49,8 +49,8 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
     settingsCoords,
   } = props;
   const editableFG = React.useRef<L.FeatureGroup | null>(null);
-  
-  const [map, setMap] = useState<any>(); 
+
+  const [map, setMap] = useState<any>();
   const [bounds, setBounds] = useState<any>(null);
 
   const handleDrawCreated = (event: any) => {
@@ -115,7 +115,7 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
           <Marker icon={cardIcon} position={[buoy.x, buoy.y]} />
         ))
       ) : isSettings ? (
-        
+
         <Marker
           icon={cardIcon}
           position={settingsCoords ? settingsCoords : [0, 0]}
