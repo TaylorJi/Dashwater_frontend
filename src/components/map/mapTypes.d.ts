@@ -11,15 +11,12 @@ type buoyMapInfo = {
 
 //TODO:This will need to be replaced
 type buoyInfo = {
-  buoys?: {
-    name: string;
-    id: string;
-    location: {
-      x: number;
-      y: number;
-    };
+  name: string;
+  id: number;
+  x: number;
+  y: number;
   }[];
-};
+
 
 
 type deviceMapInfo = {

@@ -34,14 +34,12 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
   const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
   const [mapKey, setMapKey] = useState<number>(0);
   const { long, lat, zVal, zSet, cLong, cLat } = mapModalSpecs;
-
-  const data = getDeviceDetailInfo(deviceDetails[0]);
- 
+  const [propData, setPropData] = useState<buoyInfo | undefined>();
+  
   useEffect(()=> {
-    console.log(data)
+    const data = getDeviceDetailInfo(deviceDetails[0]);
+    setPropData(data)
   }, [])
-
-  const [propData, setPropData] = useState<any>(data);
 
   const urlArc = tileServer.ARC_MAP;
   const urlCarto = tileServer.CARTO_MAP;

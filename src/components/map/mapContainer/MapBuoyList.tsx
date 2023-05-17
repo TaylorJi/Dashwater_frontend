@@ -1,8 +1,8 @@
 import React from "react";
 import MapListItem from "./MapListItem";
-
 import { Text, Stack, Card, CardBody } from "@chakra-ui/react";
 import uuid from 'react-uuid'
+
 const MapBuoyList: React.FC<buoyMapInfo> = (props) => {
   return (
     <Card minW={"30%"} minH={"400px"}>
