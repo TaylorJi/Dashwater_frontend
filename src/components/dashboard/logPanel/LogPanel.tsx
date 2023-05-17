@@ -32,15 +32,15 @@ const LogPanel: React.FC = () => {
 
             Object.entries(formattedData).map(([sheetName, data]) => {
                 const worksheet = XLSX.json_to_sheet(data);
-                XLSX.book_append_sheet(workbook, worksheet, `${sheetName}_(${data.length})`);
+                XLSX.book_append_sheet(workbook, worksheet, `${sheetName} (${data.length})`);
                 totalData += data.length;
                 XLSX.sheet_add_json(devicesWorkSheet, data, { skipHeader: skipHeader, origin: -1 });
                 skipHeader = true;
             });
 
             const allDevicesSheet = workbook.Sheets['All Devices'];
-            workbook.SheetNames[0] = `All Devices_${totalData}`
-            workbook.Sheets[`All Devices_${totalData}`] = allDevicesSheet;
+            workbook.SheetNames[0] = `All Devices (${totalData})`
+            workbook.Sheets[`All Devices (${totalData})`] = allDevicesSheet;
 
             XLSXWriteFile(workbook, 'yvr-devices-log.xlsx');
 

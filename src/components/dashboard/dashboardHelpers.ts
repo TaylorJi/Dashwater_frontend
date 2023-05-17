@@ -40,15 +40,4 @@ export const remapDataForExport = (logData: logDataType[]) => {
 
 };
 
-export const circleGraphColors = (percent: number) => {
-
-    if (percent < 10 || percent > 90) {
-        return colors.main.warning;
-    } else if (percent < 30 || percent > 70) {
-        return colors.main.mediumWarning;
-    } else {
-        return colors.main.acidGreen
-    }
-};
-
 export const MISSING_VALUE = -9999;
