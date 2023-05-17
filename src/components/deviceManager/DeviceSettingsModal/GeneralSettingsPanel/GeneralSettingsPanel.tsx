@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Flex,
@@ -8,6 +8,7 @@ import {
   Input,
   Button,
   Divider,
+  Textarea,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
@@ -22,35 +23,36 @@ import Map from "../../../map/mapContainer/Map";
 
 type generalSettingsPanelProps = {
   name: string;
+  description: string;
   long: number;
   lat: number;
 };
 
 const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
   name,
+  description,
   lat,
   long,
 }) => {
-  const [buoyName, setBuoyName] = useState<string>(name);
-  const [latitude, setLatitude] = useState<string>(lat.toString());
-  const [longitude, setLongitude] = useState<string>(long.toString());
+  const [deviceSettings, setDevicesSettings] = useState<generalSettingsType>({} as generalSettingsPanelProps);
+
+  useEffect(() => {
+    setDevicesSettings({
+      'name': name, 
+      'description': description, 
+      'lat': lat, 
+      'long': long})
+  }, []);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const resetCoordinates = () => {
-    setLatitude(lat.toString());
-    setLongitude(long.toString());
+    setDevicesSettings({...deviceSettings, 'lat': lat, 'long': long});
   };
 
   const saveDeviceSettings = async () => {
-    const latNum = parseFloat(latitude);
-    const longNum = parseFloat(longitude);
-
     setIsLoading(true);
-    const response = await ManageDevices.saveDeviceSettings(
-      buoyName,
-      latNum,
-      longNum
-    );
+    const response = await ManageDevices.saveDeviceSettings(deviceSettings);
     if (response) {
       toast.success("Device settings saved!");
     } else {
@@ -67,21 +69,34 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
         Name
       </Text>
       <Input
-        value={buoyName}
+        value={deviceSettings.name}
         onChange={(e) => {
           const newName = e.target.value;
-          setBuoyName(newName);
+          setDevicesSettings({...deviceSettings, 'name': newName});
         }}
         onBlur={() => {
-          if (buoyName.length === 0 || buoyName.length > 25) {
+          if (deviceSettings.name.length === 0 || deviceSettings.name.length > 25) {
             toast.error("Name must be between 1 and 25 characters.");
-            setBuoyName(name);
+            setDevicesSettings({...deviceSettings, 'name': name});
           }
         }}
       />
       <Text fontSize="sm" color="gray.500" my="0.25rem">
         Enter the alias name for the device.
       </Text>
+
+      <Text fontWeight="semibold" mb="0.25rem">
+        Description
+      </Text>
+      <Textarea
+        resize='vertical'
+        value={deviceSettings.description}
+        onChange={(e) => {
+          const newDescription = e.target.value;
+          setDevicesSettings({...deviceSettings, 'description': newDescription});
+        }}
+        placeholder="Enter a description for the device."
+      />
 
       <Divider my="1rem" />
 
@@ -103,8 +118,8 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
             isModal={false}
             isSettings={true}
             settingsCoords={[
-              isNaN(Number(latitude)) ? 0 : Number(latitude),
-              isNaN(Number(longitude)) ? 0 : Number(longitude),
+              isNaN(Number(deviceSettings.lat)) ? 0 : Number(deviceSettings.lat),
+              isNaN(Number(deviceSettings.long)) ? 0 : Number(deviceSettings.long),
             ]}
           />
         </GridItem>
@@ -115,17 +130,17 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
           <NumberInput
             precision={4}
             step={0.0001}
-            value={latitude}
+            value={deviceSettings.lat}
             min={-90}
             max={90}
             onChange={(e) => {
-              setLatitude(e);
+              setDevicesSettings({...deviceSettings, 'lat': +e});
             }}
             onBlur={(e) => {
               // quirk on chakra's part, but I can't make it reset to default if the value is "-",
               // it just goes to the minimum, e.g. -90
               if (e.target.value === "") {
-                setLatitude(lat.toString());
+                setDevicesSettings({...deviceSettings, 'lat': +e});
               }
             }}
           >
@@ -142,16 +157,16 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
           <NumberInput
             precision={4}
             step={0.0001}
-            value={longitude}
+            value={deviceSettings.long}
             allowMouseWheel={false}
             min={-180}
             max={180}
             onChange={(e) => {
-              setLongitude(e);
+              setDevicesSettings({...deviceSettings, 'long': +e});
             }}
             onBlur={(e) => {
               if (e.target.value === "") {
-                setLongitude(long.toString());
+                setDevicesSettings({...deviceSettings, 'long': +e});
               }
             }}
           >
