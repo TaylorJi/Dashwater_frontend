@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import BaseLayout from '../components/layout/BaseLayout';
-import welcomeBgImage from '../assets/images/cristian-palmer-3leBubkp5hk-unsplash.png';
 import loginFormBgImage from '../assets/images/login-form-background.png';
 import yvrLogo from '../assets/images/yvr-logo.png';
 import bcitlogo from '../assets/images/bcitlogo.png';
@@ -9,6 +8,7 @@ import Authentication from '../api/Authentication/Authentication';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import colors from '../theme/foundations/colours';
+import Sessions from '../api/Sessions/Sessions';
 
 
 const Login: React.FC = () => {
@@ -19,16 +19,27 @@ const Login: React.FC = () => {
 
 
     const handleLogin = async (email: string, password: string) => {
-        setIsLoading(true);
+        try {
+            setIsLoading(true);
 
-        const user = await Authentication.authenticateUser(email, password);
-        if (user) {
+            const user = await Authentication.authenticateUser(email, password);
+            if (user) {
+                const isSessionCreated = await Sessions.createSession(user._id);
+                if (isSessionCreated) {
+                    navigate('/dashboard');
+                } else {
+                    setIsLoading(false);
+                    toast.error('There was a problem creating a session. Try again.');
+                }
+            } else {
+                setIsLoading(false);
+                toast.error('User with this email and password does not exist.');
+            }
+        } catch (err) {
             setIsLoading(false);
-            navigate('/dashboard')
-        } else {
-            setIsLoading(false);
-            toast.error('User with this email and password does not exist.')
+            toast.error('There was a problem logging in. Try again.');
         }
+        
     }
 
     return (
@@ -39,7 +50,7 @@ const Login: React.FC = () => {
             >
                 <Flex
                     w='50%'
-                    bgImage={welcomeBgImage}
+                    bgImage="https://i.imgur.com/s9rWIHK.jpg"
                     bgSize='cover'
                     bgRepeat='no-repeat'
                     opacity='0.9'
@@ -127,7 +138,7 @@ const Login: React.FC = () => {
                                 Password
                             </Text>
                             <Input
-                                type='text'
+                                type='password'
                                 placeholder='Password'
                                 border='2px'
                                 borderColor={colors.main.ceruBlue}

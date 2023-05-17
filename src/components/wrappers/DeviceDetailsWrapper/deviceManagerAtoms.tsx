@@ -4,3 +4,4 @@ export const allDevicesDetails = atom<deviceSettingsType[]>({
     key: 'allDevicesDetailsAtom',
     default: []
 });
+

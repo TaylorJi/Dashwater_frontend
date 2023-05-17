@@ -70,11 +70,17 @@ type ExportReportDataType = {
 type GaugeDataType = {
     metric: string;
     unit: string;
-    stable: number;
-    warning: number;
+    low: number;
+    high: number;
     current: number;
 };
 
 type RawGaugeDataType = {
     [key: string]: GaugeDataType[]
 }
+
+type userDataType = {
+    email: string,
+    userId: string,
+    role: string
+};
