@@ -17,11 +17,19 @@ const Login: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
+    const bcrypt = require('bcryptjs');
+
+    const hashPassword = async (password: string) => {
+        const salt = await bcrypt.genSalt(10); // version of hashing
+        const hashedPassword =  await bcrypt.hash(password, salt); // hash password
+        return hashedPassword;
+    }
 
     const handleLogin = async (email: string, password: string) => {
         setIsLoading(true);
+        let hashedPW = await hashPassword(password);
 
-        const user = await Authentication.authenticateUser(email, password);
+        const user = await Authentication.authenticateUser(email, hashedPW);
         if (user) {
             global.userRole = user["role"];
             global.userEmail = user["email"];

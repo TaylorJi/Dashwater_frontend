@@ -39,6 +39,20 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
     }; 
 
+    const bcrypt = require('bcryptjs');
+
+    const hashPassword = async (password: string) => {
+        try {
+            const salt = await bcrypt.genSalt(10); // version of hashing
+            const hashedPassword =  await bcrypt.hash(password, salt); // hash password
+            return hashedPassword;
+    
+        } catch (err) {
+            console.error("Error retrieving user.");
+            return null;
+        }
+    }
+
     var role = "User";
 
     const {
@@ -57,6 +71,10 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
         if (!checkPassword(data.password)) {
             toast.error('Password length should be between 8 to 20 which contains one uppercase, one numeric digit and one special character');
             validation = false;
+        }
+        let hashedPW = hashPassword(data.password);
+        if (hashedPW) {
+            data.password = hashedPW;
         }
         if (validation) {
             AdminPortal.createUser(data);
