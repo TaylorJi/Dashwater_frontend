@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   Modal,
@@ -19,8 +19,9 @@ import { SelectContext } from "../SelectContext";
 import colors from "../../../theme/foundations/colours";
 import typography from "../../../theme/foundations/typography";
 import { tileServer, mapModalSpecs } from "../mapConstants";
-import { getAllDeviceInfo } from "../mapHelpers";
+import { getDeviceDetailInfo } from "../mapHelpers";
 import { selectedIdsAtom } from "./atoms/selectedIdsAtom";
+import { allDevicesDetails } from "../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms";
 import { useRecoilState } from "recoil";
 type MapModalProps = {
   isOpen: boolean;
@@ -28,30 +29,19 @@ type MapModalProps = {
 };
 
 const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
-  const [selectedIds, setSelectedIds] = useRecoilState(selectedIdsAtom);
-
+  const [_selectedIds, setSelectedIds] = useRecoilState(selectedIdsAtom);
+  const deviceDetails = useRecoilState(allDevicesDetails);
   const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
   const [mapKey, setMapKey] = useState<number>(0);
   const { long, lat, zVal, zSet, cLong, cLat } = mapModalSpecs;
 
-  const [propData, setData] = useState<any>(null);
+  const data = getDeviceDetailInfo(deviceDetails[0]);
+ 
+  useEffect(()=> {
+    console.log(data)
+  }, [])
 
-  //TODO: This is a temp solution; will need to replace with data from device manager atom
-  const getDeviceData = async () => {
-    try {
-      const data = await getAllDeviceInfo();
-      if (data) {
-        setData(data);
-      }
-    } catch (_err) {
-      console.log(_err);
-    }
-  };
-
-  React.useEffect(() => {
-    getDeviceData();
-    console.log(selectedIds)
-  }, [selectedIds]);
+  const [propData, setPropData] = useState<any>(data);
 
   const urlArc = tileServer.ARC_MAP;
   const urlCarto = tileServer.CARTO_MAP;
