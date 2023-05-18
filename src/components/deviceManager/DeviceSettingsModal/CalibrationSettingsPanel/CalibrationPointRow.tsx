@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Tr,
     Td,
@@ -11,11 +11,30 @@ type calibrationPointRowProps = {
     unit: string;
     point: calibrationPointType;
     setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
-
+    setSensorCalibrationPoints: React.Dispatch<React.SetStateAction<calibrationPointType[]>>;
+    sensorCalibrationPoints: calibrationPointType[];
 }
 
-const CalibrationPointRow: React.FC<calibrationPointRowProps> = ({ number, point, unit, setUnsavedChanges }) => {
-    const [digitalValue, setDigitalValue] = useState<number | string>(point.digital_value);
+const CalibrationPointRow: React.FC<calibrationPointRowProps> = ({ number, point, unit, setUnsavedChanges, setSensorCalibrationPoints, sensorCalibrationPoints }) => {
+    const [digitalValue, setDigitalValue] = useState<number | string>(point.digitalValue);
+
+    useEffect(() => {
+        setDigitalValue(point.digitalValue);
+    }, [point])
+
+    const updateCalibrationPoints = (val: string) => {
+        setSensorCalibrationPoints(
+            sensorCalibrationPoints.map(p => {
+                if (p.id === point.id) {
+                    return {
+                        ...p,
+                        digitalValue: +val
+                    }
+                }
+                return p;
+            })
+        ) 
+    }
 
     return (
         <Tr>
@@ -23,25 +42,22 @@ const CalibrationPointRow: React.FC<calibrationPointRowProps> = ({ number, point
                 {number}
             </Td>
             <Td>
-                {point.physical_value}
+                {point.physicalValue}
             </Td>
             <Td>
                 <NumberInput
                     precision={2}
-                    value={point.digital_value}
-                    onChange={i => {
+                    value={digitalValue}
+                    onChange={val => {
+                        updateCalibrationPoints(val);
                         setUnsavedChanges(true);
-                        if (i === '-') {
-                            setDigitalValue('-');
-                        }
-                        if (i === '') {
-                            setDigitalValue('');
-                        }
-                        let newMax = parseInt(i);
-                        if (!isNaN(newMax))
-                            setDigitalValue(newMax);
-
                     }}
+                    onBlur={e => {
+                        if (e.target.value === "") {
+                            updateCalibrationPoints("0");
+                            setUnsavedChanges(true);
+                        } 
+                      }}
                 >
                     <NumberInputField />
                 </NumberInput>

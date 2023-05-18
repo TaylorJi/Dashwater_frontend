@@ -1,37 +1,61 @@
 import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import axios from 'axios';
 import { allDevicesDetails } from './deviceManagerAtoms';
-import mockBuoyData from '../../../mockData/mockBuoyData.json';
+import { toast } from 'react-hot-toast';
+import ManageDevices from '../../../api/ManageDevices/ManageDevices';
+import LoadingGraphic from '../../layout/LoadingGraphic';
+import { Box, Center } from '@chakra-ui/react';
+
+/**
+ * This component is a wrapper for the device manager page which can be used to load the 
+ * allDevicesDetails atom.
+ * 
+ */
 
 type deviceDetailsWrapperProps = {
     children?: React.ReactNode;
 }
 
 const DeviceDetailsWrapper: React.FC<deviceDetailsWrapperProps> = ({ children }) => {
-    const setDevicesDetails = useRecoilState(allDevicesDetails)[1];
 
-    
-    useEffect(() => {
+    const [deviceDetails, setDevicesDetails] = useRecoilState(allDevicesDetails);
 
-        const fetchData = async () => {
-            // TO DO: replace with actual API call
-            // const res = await axios.get('./mockData/mockBuoyData.json');
-            // return res.data.buoys;
+    const fetchData = async () => {
 
-            return mockBuoyData.buoys;
+        try {
+            const data = await ManageDevices.getDevicesSettings();
+            if (data) {
+                setDevicesDetails(data);
+            } else {
+                toast.error('There was an error fetching device data - please refresh and try again.');
+            }
+
+        } catch (_err) {
+            return null;
         }
-        
-        fetchData().then(data => {
-            setDevicesDetails(data);
-        });
+    }
 
-        return () => {
-            // cleanup
-        };
+    useEffect(() => {
+        fetchData();
     }, []);
 
-    return <>{children}</>;
+    return (
+        <>
+            {
+                deviceDetails.length > 0
+                    ?
+                    <>
+                        {children}
+                    </>
+                    :
+                    <Box
+                        marginTop='15rem'
+                    >
+                        <LoadingGraphic />
+                    </Box>
+            }
+        </>
+    );
 };
 
 

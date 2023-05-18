@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import colors from '../../../../theme/foundations/colours';
 import {
     Divider,
@@ -8,6 +8,9 @@ import {
 import { buoySensorTags } from '../../../../theme/metrics/buoySensorTags';
 import uuid from 'react-uuid';
 import CalibrationTable from './CalibrationTable';
+import { mockCalibrationData } from '../../../../mockData/mockCalibrationData';
+import { useRecoilState } from 'recoil';
+import { calibrationPoints } from '../../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
 
 type calibrationSettingsPanelProps = {
     sensors: sensorType[];
@@ -16,6 +19,26 @@ type calibrationSettingsPanelProps = {
 const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sensors }) => {
     const [currentMetric, setCurrentMetric] = useState<string>("");
     const [currentSensor, setCurrentSensor] = useState<sensorType>({} as sensorType);
+    const [unsavedChanges, setUnsavedChanges] = useState<boolean>(false);
+    const [_allCalibrationPoints, setAllCalibrationPoints] = useRecoilState(calibrationPoints);
+
+    const fetchCalibrationPoints = async () => {
+        const calibrationPoints: {
+            [key: string]: calibrationPointType[];
+        } = {};
+        sensors.forEach((sensor: sensorType) => {
+            calibrationPoints[sensor.id] = mockCalibrationData[sensor.id]
+        });
+        setAllCalibrationPoints(calibrationPoints);
+    };
+
+    useEffect(() => {
+        // load all sensor calibration points on panel open
+        fetchCalibrationPoints();
+        return () => {
+            // cleanup
+        };
+    }, []);
 
     return (
         <>
@@ -23,6 +46,7 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                 Metric
             </Text>
             <Select
+                isDisabled={unsavedChanges}
                 size='sm'
                 borderRadius='0.25rem'
                 w='15rem'
@@ -30,7 +54,7 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                 value={currentMetric}
                 borderColor={colors.main.usafaBlue}
                 onChange={e => {
-                    let sensor = sensors.find(sensor => sensor.metric_type === e.target.value)
+                    let sensor = sensors.find(sensor => sensor.metric === e.target.value)
                     if (sensor) {
                         setCurrentMetric(e.target.value);
                         setCurrentSensor(sensor);
@@ -41,10 +65,10 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                     sensors.map(sensor => {
                         return (
                             <option
-                                value={sensor.metric_type}
+                                value={sensor.metric}
                                 key={uuid()}
                             >
-                                {buoySensorTags[sensor.metric_type].label}
+                                {buoySensorTags[sensor.metric].label}
                             </option>
                         )
                     })
@@ -52,12 +76,16 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
             </Select>
 
             <Text
+                as={unsavedChanges ? 'b' : 'span'}
                 mb={4}
-                as='span'
                 fontSize='sm'
-                color='gray.500'
+                color={unsavedChanges ? colors.main.mossGreen : 'gray.600'}
             >
-                Select a metric to add calibration value points.
+                {
+                    !unsavedChanges ? 
+                    'Select a metric to add calibration value points.' 
+                    : 
+                    'Save or revert changes before selecting a new metric.'}
             </Text>
 
             <Divider
@@ -68,6 +96,8 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                 currentMetric !== "" &&
                 <CalibrationTable
                     sensor={currentSensor}
+                    setUnsavedChanges={setUnsavedChanges}
+                    unsavedChanges={unsavedChanges}
                 />
             }
         </>

@@ -1,17 +1,27 @@
-import { Button, Flex, IconButton, Icon } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
+import {
+    Button,
+    Flex,
+    IconButton,
+    Icon
+} from "@chakra-ui/react";
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import uuid from "react-uuid";
-import { useRecoilValue } from "recoil";
-import { allDevicesDetails } from "../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms";
 import colors from '../../../theme/foundations/colours';
+import uuid from "react-uuid";
 
-const DeviceManagerPagination: React.FC<{setDisplayedDevices: any}> = ({ setDisplayedDevices }) => {
+import { allDevicesDetails } from "../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms";
 
-    const allDevices = useRecoilValue(allDevicesDetails);
+
+type deviceManagerPaginationProps = {
+    setDisplayedDevices: any;
+}
+
+const DeviceManagerPagination: React.FC<deviceManagerPaginationProps> = ({ setDisplayedDevices }) => {
+    const [allDevices, _setAllDevices] = useRecoilState(allDevicesDetails);
     const [currPage, setCurrPage] = useState<number>(1);
-    const DEVICES_PER_PAGE = 2;
+    const DEVICES_PER_PAGE = 5;
     const NUM_OF_PAGES = Math.ceil(allDevices.length / DEVICES_PER_PAGE);
 
     useEffect(() => {
@@ -52,7 +62,7 @@ const DeviceManagerPagination: React.FC<{setDisplayedDevices: any}> = ({ setDisp
                         }}
                     />
                     {
-                        Array.from({length: NUM_OF_PAGES}, (_, i) => i + 1).map((pageIndex) => {
+                        Array.from({ length: NUM_OF_PAGES }, (_, i) => i + 1).map((pageIndex) => {
                             return (
                                 <Button
                                     size='md'

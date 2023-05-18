@@ -9,19 +9,12 @@ import colors from '../../theme/foundations/colours';
 import MapModal from '../map/mapModal/MapModal';
 
 const DashboardTopSelect: React.FC = () => {
-    const {isOpen, onOpen, onClose} = useDisclosure();
-    
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
     return (
         <>
-            <Select
-                size='sm'
-                borderRadius='0.25rem'
-                placeholder='Select Devices'
-                w='15rem'
-                borderColor={colors.main.usafaBlue}
-            />
+            <MapModal isOpen={isOpen} onClose={onClose} />
             <Button
-                size='sm'
                 bg='main.acidGreen'
                 ml='0.5rem'
                 color='white'
@@ -36,19 +29,8 @@ const DashboardTopSelect: React.FC = () => {
                 }}
                 onClick={onOpen}
             >
-                Select by Map
+                Select Devices by Map
             </Button>
-
-            <Select
-                size='sm'
-                borderRadius='0.25rem'
-                placeholder='Select Metrics'
-                ml='2rem'
-                w='15rem'
-                borderColor={colors.main.usafaBlue}
-            />
-            
-            <MapModal isOpen={isOpen} onClose={onClose}/>
 
         </>
     );

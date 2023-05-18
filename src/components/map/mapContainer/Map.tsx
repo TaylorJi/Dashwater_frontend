@@ -13,6 +13,7 @@ import BoxSelector from "./BoxSelector";
 import "leaflet-draw/dist/leaflet.draw.css";
 import { cardIcon } from "../mapConstants";
 import { LayerEvent } from "leaflet";
+import uuid from 'react-uuid';
 
 type mapProps = {
   long: number;
@@ -50,7 +51,6 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
   } = props;
   const editableFG = React.useRef<L.FeatureGroup | null>(null);
 
-  const [map, setMap] = useState<any>();
   const [bounds, setBounds] = useState<any>(null);
 
   const handleDrawCreated = (event: any) => {
@@ -86,7 +86,7 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
       zoom={zoomVal}
       zoomSnap={zoomSet}
       center={center}
-      ref={setMap}
+ 
       zoomControl={false}
       bounceAtZoomLimits={true}
     >
@@ -108,11 +108,11 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
 
       {buoys && isModal ? (
         buoys.map((buoy) => (
-          <MapMarker buoyId={buoy.id} coords={[buoy.x, buoy.y]} />
+          <MapMarker buoyId={buoy.id} coords={[buoy.x, buoy.y]} key={uuid()}/>
         ))
       ) : buoys && !isModal ? (
         buoys.map((buoy) => (
-          <Marker icon={cardIcon} position={[buoy.x, buoy.y]} />
+          <Marker icon={cardIcon} position={[buoy.x, buoy.y]} key={uuid()}/>
         ))
       ) : isSettings ? (
 

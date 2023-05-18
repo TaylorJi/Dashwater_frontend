@@ -1,4 +1,4 @@
-import { Box, Flex, Text, useMediaQuery } from '@chakra-ui/react';
+import { Box, Flex, Spacer, Text, useMediaQuery } from '@chakra-ui/react';
 import React from 'react';
 import DashboardTabs from '../components/dashboard/DashboardTabs';
 import DashboardTopNav from '../components/dashboard/DashboardTopNav';
@@ -39,7 +39,7 @@ const Dashboard: React.FC = () => {
 
                         <WeatherCard />
                         <TideCard />
-                        <MapCard/>
+                        <MapCard />
 
                     </Box>
 
@@ -53,16 +53,12 @@ const Dashboard: React.FC = () => {
 
                 >
                     <Flex
-                        flexDir={isLargeScreen ? 'row' : 'column'}
+                        alignItems='center'
                     >
-                        <Flex
-                            mr={isLargeScreen ? '3rem' : '0'}
-                        >
-                            <DashboardTopSelect />
-
-                        </Flex>
 
                         <DashboardTopNav />
+                        <Spacer />
+                        <DashboardTopSelect />
 
                     </Flex>
 

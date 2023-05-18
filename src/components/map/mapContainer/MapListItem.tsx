@@ -1,5 +1,5 @@
 import { Checkbox, HStack, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { SelectContext } from "../SelectContext";
 
 type listItemProps = {
@@ -8,8 +8,8 @@ type listItemProps = {
 };
 
 const MapListItem: React.FC<listItemProps> = ({ deviceName, id }) => {
-  const { ids, updateSelected, updateIds } = React.useContext(SelectContext);
-  const [checked, setChecked] = React.useState<boolean>(false);
+  const { ids, updateSelected, updateIds } = useContext(SelectContext);
+  const [checked, setChecked] = useState<boolean>(false);
 
   const handleSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = event.target.checked;
@@ -18,7 +18,7 @@ const MapListItem: React.FC<listItemProps> = ({ deviceName, id }) => {
     else updateIds(ids.filter((currentId) => currentId !== id));
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (ids.includes(id)) setChecked(true);
     else setChecked(false);
   }, [ids, id]);
@@ -31,7 +31,7 @@ const MapListItem: React.FC<listItemProps> = ({ deviceName, id }) => {
         onChange={handleSelect}
         isChecked={checked}
       />
-      <Text size={"lg"}>{deviceName}</Text>
+      <Text size={"lg"}>{`${deviceName} (device ${id})`}</Text>
     </HStack>
   );
 };

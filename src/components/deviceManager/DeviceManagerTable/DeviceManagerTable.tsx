@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
-import { Table, Thead, Tbody, Tr, Th, Flex } from '@chakra-ui/react';
-import BuoySettingsRow from './BuoySettingsRow';
-import colors from '../../../theme/foundations/colours';
-import uuid from 'react-uuid';
-import { allDevicesDetails } from '../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
+import React from 'react';
 import { useRecoilValue } from 'recoil';
-import DeviceManagerPagination from './DeviceManagerPagination';
+import {
+    Table,
+    Thead,
+    Tbody,
+    Tr,
+    Th,
+    Flex
+} from '@chakra-ui/react';
+import uuid from 'react-uuid';
+import colors from '../../../theme/foundations/colours';
+import BuoySettingsRow from './BuoySettingsRow';
+import { allDevicesDetails } from '../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
 
 
 const DeviceManagerTable: React.FC = () => {
-    const devicesSettingsData = useRecoilValue(allDevicesDetails);
+    const allDevices = useRecoilValue(allDevicesDetails);
 
-    const [displayedDevices, setDisplayedDevices] = useState([]);
+    // const [displayedDevices, setDisplayedDevices] = useState([]);
 
     return (
         <Flex
@@ -28,20 +34,21 @@ const DeviceManagerTable: React.FC = () => {
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {displayedDevices ?
-                        displayedDevices.map(buoy => {
+                    {allDevices &&
+                        allDevices.map(buoy => {
                             return (
                                 <BuoySettingsRow
                                     buoy={buoy}
-                                    key={uuid()} />
+                                    key={uuid()}
+                                />
                             )
-                        }) : <></>
+                        })
                     }
                 </Tbody>
             </Table>
-            <DeviceManagerPagination
+            {/* <DeviceManagerPagination
                 setDisplayedDevices={setDisplayedDevices}
-            />
+            /> */}
         </Flex>
     );
 };
