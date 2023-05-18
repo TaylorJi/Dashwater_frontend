@@ -15,7 +15,6 @@ const DashboardTopNav: React.FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const [active, setActive] = useState<number>(0);
-    const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
 
     const setGlobalDeviceData = useSetRecoilState(deviceDataAtom);
     const setLogData = useSetRecoilState(logDataAtom);
