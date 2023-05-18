@@ -46,6 +46,7 @@ type sensorType = {
 
 type calibrationPointType = {
     id: number;
-    digital_value: number;
-    physical_value: number;
+    digitalValue: number;
+    physicalValue: number;
+    sensorId: number;
 }

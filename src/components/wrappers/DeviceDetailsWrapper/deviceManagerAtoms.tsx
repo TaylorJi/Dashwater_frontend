@@ -5,7 +5,7 @@ export const allDevicesDetails = atom<deviceSettingsType[]>({
     default: []
 });
 
-export const calibrationPoints = atom<calibrationPointType[]>({
+export const calibrationPoints = atom<{[key: string]: calibrationPointType[]}>({
     key: 'calibrationPointsAtom',
-    default: []
+    default: {}
 });

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import colors from '../../../../theme/foundations/colours';
 import {
     Divider,
@@ -8,6 +8,9 @@ import {
 import { buoySensorTags } from '../../../../theme/metrics/buoySensorTags';
 import uuid from 'react-uuid';
 import CalibrationTable from './CalibrationTable';
+import { mockCalibrationData } from '../../../../mockData/mockCalibrationData';
+import { useRecoilState } from 'recoil';
+import { calibrationPoints } from '../../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
 
 type calibrationSettingsPanelProps = {
     sensors: sensorType[];
@@ -16,6 +19,24 @@ type calibrationSettingsPanelProps = {
 const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sensors }) => {
     const [currentMetric, setCurrentMetric] = useState<string>("");
     const [currentSensor, setCurrentSensor] = useState<sensorType>({} as sensorType);
+    const [allCalibrationPoints, setAllCalibrationPoints] = useRecoilState(calibrationPoints);
+
+    const fetchCalibrationPoints = async () => {
+        const calibrationPoints: {
+            [key: string]: calibrationPointType[];
+        } = {};
+        sensors.forEach((sensor: sensorType) => {
+            calibrationPoints[sensor.id] = mockCalibrationData[sensor.id]
+        });
+        setAllCalibrationPoints(calibrationPoints);
+    };
+
+    useEffect(() => {
+        fetchCalibrationPoints();
+        return () => {
+            // cleanup
+        };
+    }, []);
 
     return (
         <>

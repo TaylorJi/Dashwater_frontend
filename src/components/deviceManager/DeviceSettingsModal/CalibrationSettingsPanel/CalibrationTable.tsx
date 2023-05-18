@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import colors from '../../../../theme/foundations/colours';
 import {
     Table,
@@ -20,8 +20,8 @@ import {
 import { toast } from 'react-hot-toast';
 import CalibrationPointRow from './CalibrationPointRow';
 import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
-import mockCalibrationData from '../../../../mockData/mockCalibrationData.json';
-
+import { useRecoilValue } from 'recoil';
+import { calibrationPoints } from '../../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
 
 type calibrationTableProp = {
     sensor: sensorType;
@@ -31,9 +31,15 @@ const CalibrationTable: React.FC<calibrationTableProp> = ({ sensor }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef(null);
 
+    const allCalibrationPoints = useRecoilValue(calibrationPoints);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [unsavedChanges, setUnsavedChanges] = useState<boolean>(false);
     const [sensorInfo, setSensorInfo] = useState<sensorType>({} as sensorType);
+    const [sensorCalibrationPoints, setSensorCalibrationPoints] = useState(allCalibrationPoints[sensor.id]);
+
+    useEffect(() => {
+        setSensorCalibrationPoints(allCalibrationPoints[sensor.id]);
+    }, [sensor])
 
     const saveCalibrationPoint = async () => {
         setIsLoading(true);
@@ -69,10 +75,10 @@ const CalibrationTable: React.FC<calibrationTableProp> = ({ sensor }) => {
                 </Thead>
                 <Tbody>
                     {
-                        mockCalibrationData.length > 0 ?
+                        sensorCalibrationPoints.length > 0 ?
                         // NOTE: When device data is pulled, ensure that calibration
                         // points are sorted by id in ascending order. Here, we assume it is sorted.
-                            mockCalibrationData.map((point, index) => {
+                            sensorCalibrationPoints.map((point, index) => {
                                 return (
                                     <CalibrationPointRow
                                         number={index + 1}

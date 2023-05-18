@@ -15,7 +15,7 @@ type calibrationPointRowProps = {
 }
 
 const CalibrationPointRow: React.FC<calibrationPointRowProps> = ({ number, point, unit, setUnsavedChanges }) => {
-    const [digitalValue, setDigitalValue] = useState<number | string>(point.digital_value);
+    const [digitalValue, setDigitalValue] = useState<number | string>(point.digitalValue);
 
     return (
         <Tr>
@@ -23,12 +23,12 @@ const CalibrationPointRow: React.FC<calibrationPointRowProps> = ({ number, point
                 {number}
             </Td>
             <Td>
-                {point.physical_value}
+                {point.physicalValue}
             </Td>
             <Td>
                 <NumberInput
                     precision={2}
-                    value={point.digital_value}
+                    value={point.digitalValue}
                     onChange={i => {
                         setUnsavedChanges(true);
                         if (i === '-') {
