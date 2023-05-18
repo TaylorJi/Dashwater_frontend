@@ -21,8 +21,18 @@ import typography from "../../../theme/foundations/typography";
 import { tileServer, mapModalSpecs } from "../mapConstants";
 import { getDeviceDetailInfo } from "../mapHelpers";
 import { selectedIdsAtom } from "./atoms/selectedIdsAtom";
-import { allDevicesDetails } from "../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms";
 import { useRecoilState } from "recoil";
+import { mockData } from './../../../mockData/mockMapData'
+
+//TODO: For next teams:
+//      Commented out code is the implementation
+//      for data from deviceManager atom but each call
+//      to cloud takes ~10 s so team used mock data.
+//      This needs to be changed to read from the atom
+//      once the devices API is fixed on the Cloud
+
+// import { allDevicesDetails } from "../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms";
+
 type MapModalProps = {
   isOpen: boolean;
   onClose: () => void;
@@ -30,14 +40,14 @@ type MapModalProps = {
 
 const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
   const [_selectedIds, setSelectedIds] = useRecoilState(selectedIdsAtom);
-  const deviceDetails = useRecoilState(allDevicesDetails);
+  // const deviceDetails = useRecoilState(allDevicesDetails);
   const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
   const [mapKey, setMapKey] = useState<number>(0);
   const { long, lat, zVal, zSet, cLong, cLat } = mapModalSpecs;
   const [buoyInfo, setBuoyInfo] = useState<buoyInfo | undefined>();
-  
+
   useEffect(()=> {
-    const mapBuoyInfo = getDeviceDetailInfo(deviceDetails[0]);
+    const mapBuoyInfo = getDeviceDetailInfo(mockData);
     setBuoyInfo(mapBuoyInfo)
   }, [])
 
