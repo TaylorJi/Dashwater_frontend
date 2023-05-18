@@ -54,7 +54,7 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ sensors
                             return (
                                 <ThresholdSettingsRow
                                     key={uuid()}
-                                    metric={buoySensorTags[sensor.metric_type].label}
+                                    metric={buoySensorTags[sensor.metric].label}
                                     metricSensor={sensor}
                                 />
                             );

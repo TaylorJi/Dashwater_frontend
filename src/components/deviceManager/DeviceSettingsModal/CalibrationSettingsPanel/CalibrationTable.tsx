@@ -20,6 +20,7 @@ import {
 import { toast } from 'react-hot-toast';
 import CalibrationPointRow from './CalibrationPointRow';
 import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
+import mockCalibrationData from '../../../../mockData/mockCalibrationData.json';
 
 
 type calibrationTableProp = {
@@ -47,12 +48,12 @@ const CalibrationTable: React.FC<calibrationTableProp> = ({ sensor }) => {
     };
 
     const handleChange = (point: calibrationPointType) => { 
-        setSensorInfo({ ... sensor, calibration_points: sensor.calibration_points.map(p => {
-            if (p.id === point.id) {
-                return point;
-            }
-            return p;
-        })});
+        // setSensorInfo({ ... sensor, calibration_points: sensor.calibration_points.map(p => {
+        //     if (p.id === point.id) {
+        //         return point;
+        //     }
+        //     return p;
+        // })});
     };
 
     return (
@@ -68,15 +69,15 @@ const CalibrationTable: React.FC<calibrationTableProp> = ({ sensor }) => {
                 </Thead>
                 <Tbody>
                     {
-                        sensor['calibration_points'].length > 0 ?
+                        mockCalibrationData.length > 0 ?
                         // NOTE: When device data is pulled, ensure that calibration
                         // points are sorted by id in ascending order. Here, we assume it is sorted.
-                            sensor['calibration_points'].map((point, index) => {
+                            mockCalibrationData.map((point, index) => {
                                 return (
                                     <CalibrationPointRow
                                         number={index + 1}
                                         point={point}
-                                        unit={sensor.default_metric_unit}
+                                        unit={sensor.defaultUnit}
                                         setUnsavedChanges={setUnsavedChanges}
                                         key={index}
                                     />
