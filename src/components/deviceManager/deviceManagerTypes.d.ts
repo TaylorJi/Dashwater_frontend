@@ -50,3 +50,17 @@ type calibrationPointType = {
     physicalValue: number;
     sensorId: number;
 }
+
+type defaultThresholdType = {
+    metric: string;
+    defaultMin: number;
+    defaultMax: number;
+}
+
+type userThresholdType = {
+    sensorId: number;
+    deviceId: number;
+    minVal: number;
+    maxVal: number;
+    alert: boolean;
+}

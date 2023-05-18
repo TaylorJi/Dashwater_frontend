@@ -18,6 +18,33 @@ const saveThresholdSettings = async () => {
     return true;
 };
 
+const getDefaultThresholds = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/defaultThreshold/getAllDefaultThresholds`, { withCredentials: true });
+        if (response.status === 200) {
+            return response.data;
+        }
+        return null;
+    } catch (_err) {
+        return null;
+    }
+}
+
+const getUserThresholdsByDevice = async (userId: string | undefined, deviceId: number) => {
+    try {
+        const response = await axios.get(`${API_URL}/userThreshold/getUserThresholdsByDevice/${userId}/${deviceId}`,
+            { withCredentials: true });
+
+        if (response.status === 200) {
+            return response.data;
+        }
+        return null;
+
+    } catch (_err) {
+        return null;
+    }
+}
+
 const saveCalibrationPoints = async (calibrationPoints: calibrationPointType[]) => {
     // calibrationPoints.forEach((point: calibrationPointType) => {
     //     // PUT to AWS DB
@@ -40,6 +67,8 @@ const getDevicesSettings = async () => {
 };
 
 const ManageDevices = {
+    getDefaultThresholds,
+    getUserThresholdsByDevice,
     saveDeviceSettings,
     saveThresholdSettings,
     saveCalibrationPoints,

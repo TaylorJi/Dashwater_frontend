@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import React, { useState, useEffect } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { 
     Table, 
     Thead, 
@@ -16,8 +16,6 @@ import colors from '../../../../theme/foundations/colours';
 import { buoySensorTags } from '../../../../theme/metrics/buoySensorTags';
 import ThresholdSettingsRow from './ThresholdSettingsRow';
 import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
-import { allDevicesDetails } from '../../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
-
 
 type thresholdSettingsPanelProps = {
     sensors: sensorType[];
@@ -26,6 +24,7 @@ type thresholdSettingsPanelProps = {
 
 const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ sensors }) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
+
 
     const saveThresholdSettings = async () => {
         setIsLoading(true);
