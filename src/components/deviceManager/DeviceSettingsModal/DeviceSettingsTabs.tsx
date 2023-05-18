@@ -11,6 +11,7 @@ type deviceSettingsTabsProps = {
 }
 
 const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy }) => {
+
     return (
         <Tabs
             mt='1rem'
@@ -36,7 +37,7 @@ const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy }) => {
                 >
                     Thresholds
                 </Tab>
-                {/* <Tab
+                <Tab
                     mr='1rem'
                     borderBottomWidth='0.2rem'
                     _selected={{
@@ -45,7 +46,7 @@ const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy }) => {
                     }}
                 >
                     Calibration
-                </Tab> */}
+                </Tab>
             </TabList>
 
             <TabPanels
@@ -53,10 +54,8 @@ const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy }) => {
             >
                 <TabPanel>
                     <GeneralSettingsPanel
-                        name={buoy.name}
-                        description={buoy.description}
-                        lat={buoy.locationY}
-                        long={buoy.locationX} />
+                        device={buoy}
+                     />
                 </TabPanel>
 
                 <TabPanel>
@@ -65,11 +64,11 @@ const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy }) => {
                     />
                 </TabPanel>
 
-                {/* <TabPanel>
+                <TabPanel>
                     <CalibrationSettingsPanel
                         sensors={buoy.sensors}
                     />
-                </TabPanel> */}
+                </TabPanel>
             </TabPanels>
         </Tabs>
     );

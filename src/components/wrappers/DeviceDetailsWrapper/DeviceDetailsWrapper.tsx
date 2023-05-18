@@ -4,6 +4,13 @@ import { allDevicesDetails } from './deviceManagerAtoms';
 import { toast } from 'react-hot-toast';
 import ManageDevices from '../../../api/ManageDevices/ManageDevices';
 
+/**
+ * This component is a wrapper for the device manager page which can be used to load the allDevicesDetails atom.
+ * However, the current implementation sets the atom up in the DeviceManagerPagination instead.
+ * 
+ * Thus, this component is not currently in use.
+ */
+
 type deviceDetailsWrapperProps = {
     children?: React.ReactNode;
 }

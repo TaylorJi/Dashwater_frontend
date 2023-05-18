@@ -20,8 +20,8 @@ type deviceSettingsType = {
 type generalSettingsType = {
     name: string;
     description: string;
-    long: number;
-    lat: number;
+    locationX: number;
+    locationY: number;
   };
 
 type deviceSensorTagsType = {
@@ -46,6 +46,7 @@ type sensorType = {
 
 type calibrationPointType = {
     id: number;
-    digital_value: number;
-    physical_value: number;
+    digitalValue: number;
+    physicalValue: number;
+    sensorId: number;
 }

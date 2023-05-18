@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Tr, Td, NumberInput, NumberInputField, Switch } from '@chakra-ui/react';
+import { 
+    Tr, 
+    Td, 
+    NumberInput, 
+    NumberInputField, 
+    Switch 
+} from '@chakra-ui/react';
 
 type thresholdSettingRowProps = {
     metric: string;
