@@ -31,7 +31,7 @@ const MapListItem: React.FC<listItemProps> = ({ deviceName, id }) => {
         onChange={handleSelect}
         isChecked={checked}
       />
-      <Text size={"lg"}>{deviceName}</Text>
+      <Text size={"lg"}>{`${deviceName} (device ${id})`}</Text>
     </HStack>
   );
 };

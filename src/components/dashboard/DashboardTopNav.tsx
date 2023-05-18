@@ -63,9 +63,7 @@ const DashboardTopNav: React.FC = () => {
     }, []);
 
     return (
-        <Flex
-            mt={isLargeScreen ? '0' : '1rem'}
-        >
+        <Flex>
             <CustomRangeModal isOpen={isOpen} onClose={onClose} />
             {
                 Object.keys(topNavItems).map((item, index) => {

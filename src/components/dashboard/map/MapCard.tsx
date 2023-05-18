@@ -1,26 +1,16 @@
 import { Box } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import Map from "../../map/mapContainer/Map";
 import { tileServer, mapCardSpecs } from "../../map/mapConstants";
-import { useRecoilState } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { getDeviceDetailInfo } from "../../map/mapHelpers";
-
-//TODO: For next teams:
-//      Commented out code is the implementation
-//      for data from deviceManager atom but each call
-//      to cloud takes ~10 s so team used mock data.
-//      This needs to be changed to read from the atom
-//      once the devices API is fixed on the Cloud
-
-import { mockData } from './../../../mockData/mockMapData';
-
-// import { allDevicesDetails } from "../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms";
+import { allDevicesDetails } from "../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms";
 
 const MapCard: React.FC = () => {
   const { long, lat, zVal, zSet, cLat, cLong } = mapCardSpecs;
-  // const deviceDetails = useRecoilState(allDevicesDetails)
-  const mapBuoyInfo = getDeviceDetailInfo(mockData);
-  const [buoyInfo, _setBuoyInfo] = React.useState<buoyInfo>(mapBuoyInfo)
+  const deviceDetails = useRecoilValue(allDevicesDetails)
+  const mapBuoyInfo = getDeviceDetailInfo(deviceDetails);
+  const [buoyInfo, _setBuoyInfo] = useState<buoyInfo>(mapBuoyInfo);
 
   return (
     <Box my="0.5rem">
