@@ -30,7 +30,7 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                 value={currentMetric}
                 borderColor={colors.main.usafaBlue}
                 onChange={e => {
-                    let sensor = sensors.find(sensor => sensor.metric_type === e.target.value)
+                    let sensor = sensors.find(sensor => sensor.metric === e.target.value)
                     if (sensor) {
                         setCurrentMetric(e.target.value);
                         setCurrentSensor(sensor);
@@ -41,10 +41,10 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                     sensors.map(sensor => {
                         return (
                             <option
-                                value={sensor.metric_type}
+                                value={sensor.metric}
                                 key={uuid()}
                             >
-                                {buoySensorTags[sensor.metric_type].label}
+                                {buoySensorTags[sensor.metric].label}
                             </option>
                         )
                     })
