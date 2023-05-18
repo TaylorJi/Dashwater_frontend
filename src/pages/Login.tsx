@@ -3,7 +3,7 @@ import BaseLayout from '../components/layout/BaseLayout';
 import loginFormBgImage from '../assets/images/login-form-background.png';
 import yvrLogo from '../assets/images/yvr-logo.png';
 import bcitlogo from '../assets/images/bcitlogo.png';
-import { Box, Button, Flex, Heading, Image, Input, Link, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Image, Input, Link, Text, useMediaQuery, VStack } from '@chakra-ui/react';
 import Authentication from '../api/Authentication/Authentication';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
@@ -19,6 +19,8 @@ const Login: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const resetSidebarOpen = useResetRecoilState(sidebarOpenAtom);
+
+    const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
 
     useEffect(() => {
         resetSidebarOpen();
@@ -65,7 +67,7 @@ const Login: React.FC = () => {
                     direction='column'
                 >
                     <Box
-                        h='30%'
+                        h={isLargeScreen ? '35%' : '55%'}
                         w='80%'
                         bgColor='rgba(0, 36, 59, 0.5)'
                         borderRadius='md'
@@ -82,6 +84,7 @@ const Login: React.FC = () => {
                             mx='2rem'
                             mb='2rem'
                             color='white'
+                            fontSize={isLargeScreen ? 'md' : 'sm'}
                         >
                             The YVR International Airport collaborates with BCIT Internet of Things to
                             introduce the smart devices water monitoring project. This project is built by
