@@ -1,7 +1,8 @@
-import { GridItem, Tooltip, Text, Flex, Box, useMediaQuery } from '@chakra-ui/react';
+import { GridItem, Tooltip, Text, Flex, Box, useMediaQuery, Center } from '@chakra-ui/react';
 import React from 'react';
 import CircleGraph from '../../graphs/CicleGraph';
 import BaseCard from '../../layout/BaseCard';
+import { MISSING_VALUE } from '../dashboardHelpers';
 
 type intervalGridItemProps = {
     item: GaugeDataType;
@@ -41,15 +42,24 @@ const OverviewGridItem: React.FC<intervalGridItemProps> = ({ item }) => {
                             ml='-0.75rem'
                             justifyContent='center'
                         >
-
-                            <CircleGraph
-                                percent={
-                                    ((item['current'] - item['low']) / (item['high'] - item['low'])) * 100
-                                }
-                                value={Number(item['current'].toFixed(3))}
-                                unit={item['unit']}
-                            />
-
+                            {
+                                item['current'] === MISSING_VALUE ?
+                                    <Center>
+                                        <Text
+                                            color='gray.300'
+                                            fontStyle='italic'
+                                        >
+                                            No data available for this time.
+                                        </Text>
+                                    </Center>
+                                    : <CircleGraph
+                                        percent={
+                                            ((item['current'] - item['low']) / (item['high'] - item['low'])) * 100
+                                        }
+                                        value={Number(item['current'].toFixed(3))}
+                                        unit={item['unit']}
+                                    />
+                            }
 
                         </Flex>
                     </Tooltip>
