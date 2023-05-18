@@ -26,7 +26,9 @@ function App() {
       <Route path='/alerts'
         element={
           <Authentication>
-            <Alerts />
+            <DeviceDetailsWrapper>
+              <Alerts />
+            </DeviceDetailsWrapper>
           </Authentication>
         }
       />
