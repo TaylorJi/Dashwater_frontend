@@ -65,7 +65,7 @@ const Login: React.FC = () => {
                     direction='column'
                 >
                     <Box
-                        h='40%'
+                        h='30%'
                         w='80%'
                         bgColor='rgba(0, 36, 59, 0.5)'
                         borderRadius='md'
@@ -79,12 +79,16 @@ const Login: React.FC = () => {
                         </Heading>
                         <Text
                             mt='1rem'
-                            ml='2rem'
-                            mr='2rem'
-                            mb='3rem'
+                            mx='2rem'
+                            mb='2rem'
                             color='white'
                         >
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quos fugiat sed similique neque reprehenderit nisi facilis, hic quas inventore porro dolores iusto at dolore beatae esse est non cupiditate.
+                            The YVR International Airport collaborates with BCIT Internet of Things to
+                            introduce the smart devices water monitoring project. This project is built by
+                            students from end-to-end. The dashboard provides real-time data on water
+                            metrics by leveraging in-house built devices with sensors and data visualization.
+                            This project delivers actionable insights that improve safety, reliability, and
+                            sustainability of YVR's water infrastructure.
                         </Text>
                         <Link
                             ml='2rem'
