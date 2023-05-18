@@ -21,17 +21,8 @@ import typography from "../../../theme/foundations/typography";
 import { tileServer, mapModalSpecs } from "../mapConstants";
 import { getDeviceDetailInfo } from "../mapHelpers";
 import { selectedIdsAtom } from "./atoms/selectedIdsAtom";
-import { useRecoilState } from "recoil";
-import { mockData } from './../../../mockData/mockMapData'
-
-//TODO: For next teams:
-//      Commented out code is the implementation
-//      for data from deviceManager atom but each call
-//      to cloud takes ~10 s so team used mock data.
-//      This needs to be changed to read from the atom
-//      once the devices API is fixed on the Cloud
-
-// import { allDevicesDetails } from "../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms";
+import { allDevicesDetails } from "../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 type MapModalProps = {
   isOpen: boolean;
@@ -39,17 +30,17 @@ type MapModalProps = {
 };
 
 const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
-  const [_selectedIds, setSelectedIds] = useRecoilState(selectedIdsAtom);
-  // const deviceDetails = useRecoilState(allDevicesDetails);
+  const setSelectedIds = useSetRecoilState(selectedIdsAtom);
+  const deviceDetails = useRecoilValue(allDevicesDetails);
   const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
   const [mapKey, setMapKey] = useState<number>(0);
   const { long, lat, zVal, zSet, cLong, cLat } = mapModalSpecs;
   const [buoyInfo, setBuoyInfo] = useState<buoyInfo | undefined>();
 
-  useEffect(()=> {
-    const mapBuoyInfo = getDeviceDetailInfo(mockData);
+  useEffect(() => {
+    const mapBuoyInfo = getDeviceDetailInfo(deviceDetails);
     setBuoyInfo(mapBuoyInfo)
-  }, [])
+  }, []);
 
   const urlArc = tileServer.ARC_MAP;
   const urlCarto = tileServer.CARTO_MAP;
@@ -158,7 +149,7 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
                 bg: colors.main.ceruBlue,
               }}
               onClick={() => {
-                setSelectedIds(ids.map((id: number)=> {
+                setSelectedIds(ids.map((id: number) => {
                   return String(id)
                 }));
                 onClose();
