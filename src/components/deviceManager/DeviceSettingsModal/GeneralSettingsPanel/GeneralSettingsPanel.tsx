@@ -8,6 +8,8 @@ import {
   Input,
   Button,
   Divider,
+  HStack,
+  Switch,
   Textarea,
   NumberDecrementStepper,
   NumberIncrementStepper,
@@ -22,32 +24,20 @@ import { mapCardSpecs, tileServer } from "../../../map/mapConstants";
 import Map from "../../../map/mapContainer/Map";
 
 type generalSettingsPanelProps = {
-  name: string;
-  description: string;
-  long: number;
-  lat: number;
+  device: deviceSettingsType;
 };
 
-const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
-  name,
-  description,
-  lat,
-  long,
-}) => {
-  const [deviceSettings, setDevicesSettings] = useState<generalSettingsType>({} as generalSettingsPanelProps);
+const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ device }) => {
+  const [deviceSettings, setDevicesSettings] = useState<deviceSettingsType>({} as deviceSettingsType);
 
   useEffect(() => {
-    setDevicesSettings({
-      'name': name, 
-      'description': description, 
-      'lat': lat, 
-      'long': long})
+    setDevicesSettings(device)
   }, []);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const resetCoordinates = () => {
-    setDevicesSettings({...deviceSettings, 'lat': lat, 'long': long});
+    setDevicesSettings({ ...deviceSettings, 'locationY': device.locationY, 'locationX': device.locationX });
   };
 
   const saveDeviceSettings = async () => {
@@ -65,25 +55,59 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
 
   return (
     <Box>
-      <Text fontWeight="semibold" mb="0.25rem">
-        Name
-      </Text>
-      <Input
-        value={deviceSettings.name}
-        onChange={(e) => {
-          const newName = e.target.value;
-          setDevicesSettings({...deviceSettings, 'name': newName});
-        }}
-        onBlur={() => {
-          if (deviceSettings.name.length === 0 || deviceSettings.name.length > 25) {
-            toast.error("Name must be between 1 and 25 characters.");
-            setDevicesSettings({...deviceSettings, 'name': name});
+
+      <HStack align='flex-start' gap={20} mb={3}>
+        <Box>
+          <Text fontWeight="semibold" mb="0.25rem">
+            Name
+          </Text>
+          <Input
+            maxLength={25}
+            w='sm'
+            value={deviceSettings.name}
+            onChange={(e) => {
+              const newName = e.target.value;
+              setDevicesSettings({ ...deviceSettings, 'name': newName });
+            }}
+            onBlur={() => {
+              if (deviceSettings.name.length === 0 || deviceSettings.name.length > 25) {
+                toast.error("Name must be between 1 and 25 characters.");
+                setDevicesSettings({ ...deviceSettings, 'name': device.name });
+              }
+            }}
+          />
+          <Text fontSize="sm" color="gray.500" my="0.25rem">
+            Enter the alias name for the device.
+          </Text>
+        </Box>
+
+        <Box>
+          <Text fontWeight="semibold" mb="0.25rem">
+            Device Status
+          </Text>
+          <Switch
+            aria-label='Device active state'
+            colorScheme='green'
+            isChecked={deviceSettings.active}
+            onChange={
+              _e => {
+                setDevicesSettings({ ...deviceSettings, 'active': !deviceSettings.active });
+              }
+            }
+          />
+          {
+            deviceSettings.active ? (
+              <Text fontSize="sm" color='green' my="0.25rem">
+                Active
+              </Text>
+            ) : (
+              <Text fontSize="sm" color="gray.500" my="0.25rem">
+                Inactive
+              </Text>
+            )
           }
-        }}
-      />
-      <Text fontSize="sm" color="gray.500" my="0.25rem">
-        Enter the alias name for the device.
-      </Text>
+        </Box>
+      </HStack>
 
       <Text fontWeight="semibold" mb="0.25rem">
         Description
@@ -91,9 +115,9 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
       <Textarea
         resize='vertical'
         value={deviceSettings.description}
-        onChange={(e) => {
+        onChange={e => {
           const newDescription = e.target.value;
-          setDevicesSettings({...deviceSettings, 'description': newDescription});
+          setDevicesSettings({ ...deviceSettings, 'description': newDescription });
         }}
         placeholder="Enter a description for the device."
       />
@@ -118,8 +142,8 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
             isModal={false}
             isSettings={true}
             settingsCoords={[
-              isNaN(Number(deviceSettings.lat)) ? 0 : Number(deviceSettings.lat),
-              isNaN(Number(deviceSettings.long)) ? 0 : Number(deviceSettings.long),
+              isNaN(Number(deviceSettings.locationY)) ? 0 : Number(deviceSettings.locationY),
+              isNaN(Number(deviceSettings.locationX)) ? 0 : Number(deviceSettings.locationX),
             ]}
           />
         </GridItem>
@@ -130,17 +154,17 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
           <NumberInput
             precision={4}
             step={0.0001}
-            value={deviceSettings.lat}
+            value={deviceSettings.locationY}
             min={-90}
             max={90}
             onChange={(e) => {
-              setDevicesSettings({...deviceSettings, 'lat': +e});
+              setDevicesSettings({ ...deviceSettings, 'locationY': +e });
             }}
             onBlur={(e) => {
               // quirk on chakra's part, but I can't make it reset to default if the value is "-",
               // it just goes to the minimum, e.g. -90
               if (e.target.value === "") {
-                setDevicesSettings({...deviceSettings, 'lat': +e});
+                setDevicesSettings({ ...deviceSettings, 'locationY': +e });
               }
             }}
           >
@@ -157,16 +181,16 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
           <NumberInput
             precision={4}
             step={0.0001}
-            value={deviceSettings.long}
+            value={deviceSettings.locationX}
             allowMouseWheel={false}
             min={-180}
             max={180}
             onChange={(e) => {
-              setDevicesSettings({...deviceSettings, 'long': +e});
+              setDevicesSettings({ ...deviceSettings, 'locationX': +e });
             }}
             onBlur={(e) => {
               if (e.target.value === "") {
-                setDevicesSettings({...deviceSettings, 'long': +e});
+                setDevicesSettings({ ...deviceSettings, 'locationX': +e });
               }
             }}
           >
@@ -205,7 +229,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
           }}
           loadingText="Saving"
         >
-          Save
+          Save Settings
         </Button>
       </Flex>
     </Box>

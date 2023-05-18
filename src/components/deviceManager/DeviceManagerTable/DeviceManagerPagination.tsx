@@ -34,6 +34,8 @@ const DeviceManagerPagination: React.FC<deviceManagerPaginationProps> = ({ setDi
                 const data = await ManageDevices.getDevicesSettings();
                 if (data) {
                     setAllDevices(data);
+                    console.log(data);
+
                 } else {
                     toast.error('There was an error fetching device data - please refresh and try again.');
                 }

@@ -20,8 +20,8 @@ type deviceSettingsType = {
 type generalSettingsType = {
     name: string;
     description: string;
-    long: number;
-    lat: number;
+    locationX: number;
+    locationY: number;
   };
 
 type deviceSensorTagsType = {

@@ -1,10 +1,16 @@
 import axios from "axios";
 import { API_URL } from "../Environments";
 
-const saveDeviceSettings = async (settings: generalSettingsType) => {
-    // do DB stuff in try-catch block
-    return true;
-
+const saveDeviceSettings = async (newSettings: generalSettingsType) => {
+    try {
+        const response = await axios.put(`${API_URL}/device/updateDeviceSettings`, newSettings, { withCredentials: true });
+        if (response.status === 200) {
+            return true;
+        }
+        return false;
+    } catch (_err) {
+        return null;
+    }
 };
 
 const saveThresholdSettings = async () => {
