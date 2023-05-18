@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Thead, Tbody, Tr, Th, Flex } from '@chakra-ui/react';
 import BuoySettingsRow from './BuoySettingsRow';
 import colors from '../../../theme/foundations/colours';
 import uuid from 'react-uuid';
-import { allDevicesDetails } from '../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
-import { useRecoilValue } from 'recoil';
 import DeviceManagerPagination from './DeviceManagerPagination';
+import DeviceManagerTableSkeleton from './DeviceManagerTableSkeleton/DeviceManagerTableSkeleton';
 
 
 const DeviceManagerTable: React.FC = () => {
-    const devicesSettingsData = useRecoilValue(allDevicesDetails);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [displayedDevices, setDisplayedDevices] = useState([]);
 
@@ -28,19 +27,21 @@ const DeviceManagerTable: React.FC = () => {
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {displayedDevices ?
+                    {displayedDevices &&
                         displayedDevices.map(buoy => {
                             return (
                                 <BuoySettingsRow
                                     buoy={buoy}
                                     key={uuid()} />
                             )
-                        }) : <></>
+                        }) 
                     }
+                    {isLoading && <DeviceManagerTableSkeleton />}
                 </Tbody>
             </Table>
             <DeviceManagerPagination
                 setDisplayedDevices={setDisplayedDevices}
+                setIsLoading={setIsLoading}
             />
         </Flex>
     );

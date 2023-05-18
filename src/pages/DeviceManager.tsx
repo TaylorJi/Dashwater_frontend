@@ -24,7 +24,7 @@ const DeviceManager: React.FC = () => {
 
   return (
     <BaseLayout isNavbarVisible={true}>
-      <DeviceDetailsWrapper>
+      {/* <DeviceDetailsWrapper> */}
         <Flex w="100%" minH="100vh" py="2rem" pr="1rem" flexDirection="column">
           <Text fontSize={isLargeScreen ? "3xl" : "2xl"} fontWeight="bold">
             Manage Devices
@@ -72,7 +72,7 @@ const DeviceManager: React.FC = () => {
             <DeviceManagerTable />
           </Center>
         </Flex>
-      </DeviceDetailsWrapper>
+      {/* </DeviceDetailsWrapper> */}
     </BaseLayout>
   );
 };
