@@ -78,3 +78,9 @@ type GaugeDataType = {
 type RawGaugeDataType = {
     [key: string]: GaugeDataType[]
 }
+
+type userDataType = {
+    email: string,
+    userId: string,
+    role: string
+};

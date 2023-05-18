@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
-import colors from '../../../../theme/foundations/colours';
-import { Tr, Td, NumberInput, NumberInputField, Switch } from '@chakra-ui/react';
+import { 
+    Tr, 
+    Td, 
+    NumberInput, 
+    NumberInputField, 
+    Switch 
+} from '@chakra-ui/react';
 
 type thresholdSettingRowProps = {
     metric: string;
@@ -8,9 +13,9 @@ type thresholdSettingRowProps = {
 }
 
 const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = ({ metric, metricSensor }) => {
-    const [isAlert, setIsAlert] = useState<boolean>(metricSensor.alert);
-    const [metricMin, setMetricMin] = useState<number | string>(metricSensor.min);
-    const [metricMax, setMetricMax] = useState<number | string>(metricSensor.max);
+    const [isAlert, setIsAlert] = useState<boolean>(true);
+    const [metricMin, setMetricMin] = useState<number | string>(metricSensor.minVal);
+    const [metricMax, setMetricMax] = useState<number | string>(metricSensor.maxVal);
 
     return (
         <Tr rowGap={0.25}>
@@ -52,7 +57,7 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = ({ metric, metr
                 </NumberInput>
             </Td>
             <Td>
-                {metricSensor.default_metric_unit}
+                {metricSensor.defaultUnit}
             </Td>
             <Td>
                 <Switch

@@ -47,7 +47,6 @@ export const cardIconSpecs = {
 export const cardIcon: L.Icon = L.icon({
   iconRetinaUrl: mapMarkerBlue,
   iconUrl: mapMarkerBlue,
-  // shadowUrl: iconShadow,
   iconSize: [cardIconSpecs.xSize, cardIconSpecs.ySize],
   iconAnchor: [cardIconSpecs.xAnchor, cardIconSpecs.yAnchor],
   popupAnchor: [cardIconSpecs.xPopAnchor, cardIconSpecs.yPopAnchor],

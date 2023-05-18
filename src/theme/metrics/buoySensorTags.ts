@@ -1,39 +1,39 @@
 import colors from '../foundations/colours';
 
 export const buoySensorTags: deviceSensorTagsType = {
-    "dissolved_o2": {
+    "do": {
         "color": colors.tag.dissolvedO2,
         "label": "Oxygen"
     },
-    "pH": {
+    "ph": {
         "color": colors.tag.pH,
         "label": "pH"
     },
-    "electrical_conductivity": {
+    "ec": {
         "color": colors.tag.electricalConductivity,
         "label": "Conductivity"
     },
-    "turbidity": {
+    "tbd": {
         "color": colors.tag.turbidity,
         "label": "Turbidity"
     },
-    "dissolved_solids": {
+    "tds": {
         "color": colors.tag.disolvedSolids,
-        "label": "Solids"
+        "label": "Dissolved Solids"
     },
     "temp": {
         "color": colors.tag.temp,
         "label": "Temperature"
     },
-    "water_lvl": {
+    "liqlev": {
         "color": colors.tag.waterLvl,
         "label": "Water Lvl"
     },
-    "water_flow": {
+    "wf": {
         "color": colors.tag.waterFlow,
         "label": "Water Flow"
     },
-    "water_pressure": {
+    "wp": {
         "color": colors.tag.waterPressure,
         "label": "Water Pressure"
     }

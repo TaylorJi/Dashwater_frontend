@@ -11,6 +11,7 @@ type deviceSettingsTabsProps = {
 }
 
 const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy }) => {
+
     return (
         <Tabs
             mt='1rem'
@@ -53,10 +54,8 @@ const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy }) => {
             >
                 <TabPanel>
                     <GeneralSettingsPanel
-                        name={buoy.name}
-                        description={buoy.description}
-                        lat={buoy.location.y}
-                        long={buoy.location.x} />
+                        device={buoy}
+                     />
                 </TabPanel>
 
                 <TabPanel>

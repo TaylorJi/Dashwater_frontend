@@ -1,17 +1,60 @@
-import React, { useState } from 'react';
-import { Table, Thead, Tbody, Tr, Th, Flex } from '@chakra-ui/react';
-import BuoySettingsRow from './BuoySettingsRow';
-import colors from '../../../theme/foundations/colours';
+import React, { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { 
+    Table, 
+    Thead, 
+    Tbody, 
+    Tr, 
+    Th, 
+    Flex 
+} from '@chakra-ui/react';
 import uuid from 'react-uuid';
-import { allDevicesDetails } from '../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
-import { useRecoilValue } from 'recoil';
+import { toast } from 'react-hot-toast';
+import colors from '../../../theme/foundations/colours';
+
+import BuoySettingsRow from './BuoySettingsRow';
 import DeviceManagerPagination from './DeviceManagerPagination';
+import DeviceManagerTableSkeleton from './DeviceManagerTableSkeleton/DeviceManagerTableSkeleton';
+import ManageDevices from "../../../api/ManageDevices/ManageDevices";
+import { allDevicesDetails } from '../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
+
 
 
 const DeviceManagerTable: React.FC = () => {
-    const devicesSettingsData = useRecoilValue(allDevicesDetails);
+    const [allDevices, setAllDevices] = useRecoilState(allDevicesDetails);
+
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [displayedDevices, setDisplayedDevices] = useState([]);
+
+
+    const fetchData = async () => {
+        setIsLoading(true);
+        try {
+            const data = await ManageDevices.getDevicesSettings();
+            if (data) {
+                setAllDevices(data);
+            } else {
+                toast.error('There was an error fetching device data - please refresh and try again.');
+            }
+        } catch (_err) {
+
+            return null;
+
+        }
+        setIsLoading(false);
+    }
+
+    useEffect(() => {
+        if (allDevices.length === 0) {
+            fetchData();
+        }
+
+        return () => {
+            // cleanup
+        };
+    }, []);
+
 
     return (
         <Flex
@@ -28,15 +71,17 @@ const DeviceManagerTable: React.FC = () => {
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {displayedDevices ?
+                    {displayedDevices &&
                         displayedDevices.map(buoy => {
                             return (
                                 <BuoySettingsRow
                                     buoy={buoy}
-                                    key={uuid()} />
+                                    key={uuid()}
+                                />
                             )
-                        }) : <></>
+                        }) 
                     }
+                    {isLoading && <DeviceManagerTableSkeleton />}
                 </Tbody>
             </Table>
             <DeviceManagerPagination

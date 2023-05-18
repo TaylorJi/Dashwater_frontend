@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 
-export const selectedIdsAtom = atom<number[]>({
-    key: 'sidebarOpenAtom',
+export const selectedIdsAtom = atom<string[]>({
+    key: 'selectedIdsAtom',
     default: []
 });

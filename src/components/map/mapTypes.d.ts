@@ -8,12 +8,15 @@ type buoyMapInfo = {
 };
 
 type buoyInfo = {
-  buoys?: {
-    name: string;
-    id: string;
-    location: {
-      x: number;
-      y: number;
-    };
-  }[];
+  name: string;
+  id: number;
+  x: number;
+  y: number;
+}[];
+
+type deviceMapInfo = {
+  name: string;
+  id: string;
+  x: number;
+  y: number;
 };

@@ -8,24 +8,21 @@ type deviceSettingsUnitsType = {
 };
 
 type deviceSettingsType = {
+    id: number;
     name: string;
     description: string;
-    id: string;
-    location: deviceLocationType;
+    locationX: number;
+    locationY: number;
+    active: boolean;
     sensors: sensorType[];
 };
 
 type generalSettingsType = {
     name: string;
     description: string;
-    long: number;
-    lat: number;
+    locationX: number;
+    locationY: number;
   };
-
-type deviceLocationType = {
-    x: number;
-    y: number
-};
 
 type deviceSensorTagsType = {
     [key: string]: {
@@ -35,17 +32,21 @@ type deviceSensorTagsType = {
 }
 
 type sensorType = {
-    metric_type: string;
-    default_metric_unit: string;
-    min: number;
-    max: number;
-    alert: boolean;
-    min_calibration_points: number;
-    calibration_points: calibrationPointType[];
+    id: number;
+    deviceId: number;
+    metric: string;
+    defaultUnit: string;
+    calibrated: boolean;
+    enabled: boolean;
+    maxVal: number;
+    minVal: number;
+    lastCalibrationDate: string;
+    minCalibrationPts: number;
 }
 
 type calibrationPointType = {
     id: number;
-    digital_value: number;
-    physical_value: number;
+    digitalValue: number;
+    physicalValue: number;
+    sensorId: number;
 }
