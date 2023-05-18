@@ -29,7 +29,6 @@ const getDevicesSettings = async () => {
 
             // filter by device 0 and 1 only (the only valid devices at this time)
             const validDevices = response.data.data.filter((device: any) => [0, 1].includes(device.id));
-            console.log(validDevices)
             return validDevices;
         }
     } catch (_err) {
