@@ -1,15 +1,13 @@
-export const getBuoyMapData = (buoyData: buoyInfo) => {
-    let mapData: { name: string; id: number; x: number; y: number }[] = [];
-    const data = buoyData.buoys?.map((buoy) => {
-      mapData.push({
-        name: buoy.name,
-        id: Number(buoy.id),
-        x: buoy.location.x,
-        y: buoy.location.y,
-      });
-      return mapData;
+export const getDeviceDetailInfo = (info: deviceSettingsType[]) => {
+  let buoyData: { name: string; id: number; x: number; y: number }[] = [];
+  info.map((buoy: any) => {
+    buoyData.push({
+      name: buoy.name,
+      id: Number(buoy.id),
+      x: buoy.locationY,
+      y: buoy.locationX,
     });
-    if (!data) return [];
-    return mapData;
-  };
+  });
 
+  return buoyData;
+};
