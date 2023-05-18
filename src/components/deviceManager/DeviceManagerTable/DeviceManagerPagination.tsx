@@ -11,7 +11,7 @@ const DeviceManagerPagination: React.FC<{setDisplayedDevices: any}> = ({ setDisp
 
     const allDevices = useRecoilValue(allDevicesDetails);
     const [currPage, setCurrPage] = useState<number>(1);
-    const DEVICES_PER_PAGE = 2;
+    const DEVICES_PER_PAGE = 5;
     const NUM_OF_PAGES = Math.ceil(allDevices.length / DEVICES_PER_PAGE);
 
     useEffect(() => {

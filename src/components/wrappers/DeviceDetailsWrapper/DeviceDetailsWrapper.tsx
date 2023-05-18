@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { allDevicesDetails } from './deviceManagerAtoms';
 import { toast } from 'react-hot-toast';
-import mockBuoyData from '../../../mockData/mockBuoyData.json';
 import ManageDevices from '../../../api/ManageDevices/ManageDevices';
 
 type deviceDetailsWrapperProps = {
@@ -39,7 +38,7 @@ const DeviceDetailsWrapper: React.FC<deviceDetailsWrapperProps> = ({ children })
         };
     }, []);
 
-    return <>{children}</>;
+    return <>{ children }</>;
 };
 
 

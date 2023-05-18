@@ -2,7 +2,7 @@
     "units": {
         "dissolved_o2": "mg/L",
         "electrical_conductivity": "mS/cm",
-        "pH": "pH",
+        "pH": "ph",
         "turbidity": "NTU",
         "dissolved_solids": "ppm",
         "temperature": "°C",
@@ -17,7 +17,7 @@
                 "id": "1234"
             },
             "time": "Feb 20, 2023 08:00",
-            "metric": "pH",
+            "metric": "ph",
             "metric_name": "pH",
             "data": true,
             "above_max": true,
@@ -41,7 +41,7 @@
                 "id": "345"
             },
             "time": "Feb 12, 2023 13:17",
-            "metric": "dissolved_o2",
+            "metric": "do",
             "metric_name": "Dissolved Oxygen",
             "data": true,
             "above_max": false,

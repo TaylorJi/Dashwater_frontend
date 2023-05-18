@@ -35,7 +35,7 @@ type sensorType = {
     id: number;
     deviceId: number;
     metric: string;
-    defaultMetric: string;
+    defaultUnit: string;
     calibrated: boolean;
     enabled: boolean;
     maxVal: number;
