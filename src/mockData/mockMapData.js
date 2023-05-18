@@ -6,13 +6,4 @@ export const mockData =  [{
     "active": true,
     "description": "Device in Guichon",
     "sensors": []
-},
-{
-    "id": 1,
-    "name": "Expo",
-    "locationX": -123.205,
-    "locationY": 49.19,
-    "active": true,
-    "description": "Device in Guichon",
-    "sensors": []
 }]
