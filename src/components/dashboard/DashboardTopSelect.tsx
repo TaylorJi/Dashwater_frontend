@@ -13,15 +13,8 @@ const DashboardTopSelect: React.FC = () => {
 
     return (
         <>
-            <Select
-                size='sm'
-                borderRadius='0.25rem'
-                placeholder='Select Devices'
-                w='15rem'
-                borderColor={colors.main.usafaBlue}
-            />
+            <MapModal isOpen={isOpen} onClose={onClose} />
             <Button
-                size='sm'
                 bg='main.acidGreen'
                 ml='0.5rem'
                 color='white'
@@ -36,10 +29,8 @@ const DashboardTopSelect: React.FC = () => {
                 }}
                 onClick={onOpen}
             >
-                Select by Map
+                Select Devices by Map
             </Button>
-
-            <MapModal isOpen={isOpen} onClose={onClose} />
 
         </>
     );

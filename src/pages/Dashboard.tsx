@@ -53,18 +53,12 @@ const Dashboard: React.FC = () => {
 
                 >
                     <Flex
-                        flexDir={isLargeScreen ? 'row' : 'column'}
+                        alignItems='center'
                     >
-                        <Flex
-                            mr={isLargeScreen ? '3rem' : '0'}
-                        >
-                            <DashboardTopSelect />
-
-                        </Flex>
-
-                        <Spacer />
 
                         <DashboardTopNav />
+                        <Spacer />
+                        <DashboardTopSelect />
 
                     </Flex>
 
