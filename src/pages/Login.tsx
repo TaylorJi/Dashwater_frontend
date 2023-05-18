@@ -39,7 +39,7 @@ const Login: React.FC = () => {
             setIsLoading(false);
             toast.error('There was a problem logging in. Try again.');
         }
-        
+
     }
 
     return (
@@ -151,6 +151,9 @@ const Login: React.FC = () => {
                             color='white'
                             isLoading={isLoading}
                             isDisabled={isLoading}
+                            _hover={{
+                                bg: colors.main.activeMainButton
+                            }}
                             onClick={async () => await handleLogin(email, password)}
                         >
                             Login
