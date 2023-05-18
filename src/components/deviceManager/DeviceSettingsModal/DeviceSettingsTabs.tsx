@@ -11,6 +11,7 @@ type deviceSettingsTabsProps = {
 }
 
 const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy }) => {
+
     return (
         <Tabs
             mt='1rem'

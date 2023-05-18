@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import colors from '../../../../theme/foundations/colours';
+import { useRecoilState } from 'recoil';
 import { 
     Table, 
     Thead, 
@@ -9,11 +9,14 @@ import {
     Flex,
     Button
 } from '@chakra-ui/react';
+import uuid from 'react-uuid';
 import { toast } from 'react-hot-toast';
+import colors from '../../../../theme/foundations/colours';
+
 import { buoySensorTags } from '../../../../theme/metrics/buoySensorTags';
 import ThresholdSettingsRow from './ThresholdSettingsRow';
 import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
-import uuid from 'react-uuid';
+import { allDevicesDetails } from '../../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
 
 
 type thresholdSettingsPanelProps = {

@@ -1,59 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { 
-    Button, 
-    Flex, 
-    IconButton, 
-    Icon } from "@chakra-ui/react";
+import {
+    Button,
+    Flex,
+    IconButton,
+    Icon
+} from "@chakra-ui/react";
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import colors from '../../../theme/foundations/colours';
-import { toast } from 'react-hot-toast';
 import uuid from "react-uuid";
 
 import { allDevicesDetails } from "../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms";
-import ManageDevices from "../../../api/ManageDevices/ManageDevices";
 
 
-type deviceManagerPaginationProps ={
+type deviceManagerPaginationProps = {
     setDisplayedDevices: any;
-    setIsLoading: any;
 }
 
-const DeviceManagerPagination: React.FC<deviceManagerPaginationProps> = ({ setDisplayedDevices, setIsLoading }) => {
-    const [allDevices, setAllDevices] = useRecoilState(allDevicesDetails);
+const DeviceManagerPagination: React.FC<deviceManagerPaginationProps> = ({ setDisplayedDevices }) => {
+    const [allDevices, _setAllDevices] = useRecoilState(allDevicesDetails);
     const [currPage, setCurrPage] = useState<number>(1);
     const DEVICES_PER_PAGE = 5;
     const NUM_OF_PAGES = Math.ceil(allDevices.length / DEVICES_PER_PAGE);
-
-
-    const fetchData = async () => {
-        if (allDevices.length === 0) {
-            setIsLoading(true);
-            try {
-                const data = await ManageDevices.getDevicesSettings();
-                if (data) {
-                    setAllDevices(data);
-                    console.log(data);
-
-                } else {
-                    toast.error('There was an error fetching device data - please refresh and try again.');
-                }
-            } catch(_err) {
-    
-                return null;
-    
-            }
-            setIsLoading(false);
-        }
-    }
-    
-    useEffect(() => {
-        fetchData();
-        return () => {
-            // cleanup
-        };
-    }, []);
 
     useEffect(() => {
         if (allDevices) {
@@ -93,7 +62,7 @@ const DeviceManagerPagination: React.FC<deviceManagerPaginationProps> = ({ setDi
                         }}
                     />
                     {
-                        Array.from({length: NUM_OF_PAGES}, (_, i) => i + 1).map((pageIndex) => {
+                        Array.from({ length: NUM_OF_PAGES }, (_, i) => i + 1).map((pageIndex) => {
                             return (
                                 <Button
                                     size='md'
