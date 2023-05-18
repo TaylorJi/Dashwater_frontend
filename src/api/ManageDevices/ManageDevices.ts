@@ -18,13 +18,11 @@ const saveThresholdSettings = async () => {
     return true;
 };
 
-const saveCalibrationPoint = async (calibrationInfo: sensorType) => {
+const saveCalibrationPoints = async (calibrationPoints: calibrationPointType[]) => {
+    // calibrationPoints.forEach((point: calibrationPointType) => {
+    //     // PUT to AWS DB
+    // }
     // do DB stuff for the metric type
-    return true;
-};
-
-const removePreviousCalibration = async () => {
-    // do DB stuff. should likely return the previous previous calibration points.
     return true;
 };
 
@@ -44,8 +42,7 @@ const getDevicesSettings = async () => {
 const ManageDevices = {
     saveDeviceSettings,
     saveThresholdSettings,
-    saveCalibrationPoint,
-    removePreviousCalibration,
+    saveCalibrationPoints,
     getDevicesSettings
 };
 

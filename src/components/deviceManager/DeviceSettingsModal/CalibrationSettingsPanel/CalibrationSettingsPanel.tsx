@@ -19,7 +19,8 @@ type calibrationSettingsPanelProps = {
 const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sensors }) => {
     const [currentMetric, setCurrentMetric] = useState<string>("");
     const [currentSensor, setCurrentSensor] = useState<sensorType>({} as sensorType);
-    const [allCalibrationPoints, setAllCalibrationPoints] = useRecoilState(calibrationPoints);
+    const [unsavedChanges, setUnsavedChanges] = useState<boolean>(false);
+    const [_allCalibrationPoints, setAllCalibrationPoints] = useRecoilState(calibrationPoints);
 
     const fetchCalibrationPoints = async () => {
         const calibrationPoints: {
@@ -32,6 +33,7 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
     };
 
     useEffect(() => {
+        // load all sensor calibration points on panel open
         fetchCalibrationPoints();
         return () => {
             // cleanup
@@ -44,6 +46,7 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                 Metric
             </Text>
             <Select
+                isDisabled={unsavedChanges}
                 size='sm'
                 borderRadius='0.25rem'
                 w='15rem'
@@ -73,12 +76,16 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
             </Select>
 
             <Text
+                as={unsavedChanges ? 'b' : 'span'}
                 mb={4}
-                as='span'
                 fontSize='sm'
-                color='gray.500'
+                color={unsavedChanges ? colors.main.mossGreen : 'gray.600'}
             >
-                Select a metric to add calibration value points.
+                {
+                    !unsavedChanges ? 
+                    'Select a metric to add calibration value points.' 
+                    : 
+                    'Save or revert changes before selecting a new metric.'}
             </Text>
 
             <Divider
@@ -89,6 +96,8 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                 currentMetric !== "" &&
                 <CalibrationTable
                     sensor={currentSensor}
+                    setUnsavedChanges={setUnsavedChanges}
+                    unsavedChanges={unsavedChanges}
                 />
             }
         </>
