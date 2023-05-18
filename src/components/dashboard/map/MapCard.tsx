@@ -11,9 +11,9 @@ const MapCard: React.FC = () => {
   const { long, lat, zVal, zSet, cLat, cLong } = mapCardSpecs;
 
   const deviceDetails = useRecoilState(allDevicesDetails)
-  const data = getDeviceDetailInfo(deviceDetails[0]);
+  const mapBuoyInfo = getDeviceDetailInfo(deviceDetails[0]);
  
-  const [propData, setPropData] = React.useState<any>(data)
+  const [buoyInfo, _setBuoyInfo] = React.useState<buoyInfo>(mapBuoyInfo)
 
 
   return (
@@ -28,7 +28,7 @@ const MapCard: React.FC = () => {
         drawable={false}
         mapId={"mapCardId"}
         isModal={false}
-        buoys={propData}
+        buoys={buoyInfo}
       />
     </Box>
   );

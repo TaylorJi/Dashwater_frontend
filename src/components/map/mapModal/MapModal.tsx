@@ -34,11 +34,11 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
   const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
   const [mapKey, setMapKey] = useState<number>(0);
   const { long, lat, zVal, zSet, cLong, cLat } = mapModalSpecs;
-  const [propData, setPropData] = useState<buoyInfo | undefined>();
+  const [buoyInfo, setBuoyInfo] = useState<buoyInfo | undefined>();
   
   useEffect(()=> {
-    const data = getDeviceDetailInfo(deviceDetails[0]);
-    setPropData(data)
+    const mapBuoyInfo = getDeviceDetailInfo(deviceDetails[0]);
+    setBuoyInfo(mapBuoyInfo)
   }, [])
 
   const urlArc = tileServer.ARC_MAP;
@@ -94,7 +94,7 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
         <ModalBody>
           <HStack>
             <SelectContext.Provider value={selectContext}>
-              <MapBuoyList buoys={propData} />
+              <MapBuoyList buoys={buoyInfo} />
               <Map
                 key={mapKey}
                 long={long}
@@ -102,7 +102,7 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
                 zoomVal={zVal}
                 zoomSet={zSet}
                 center={[cLat, cLong]}
-                buoys={propData}
+                buoys={buoyInfo}
                 tilePath={tilePath}
                 drawable={true}
                 mapId={"mapId"}
