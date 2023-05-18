@@ -1,13 +1,18 @@
-import { Button, Flex, IconButton, Icon } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { 
+    Button, 
+    Flex, 
+    IconButton, 
+    Icon } from "@chakra-ui/react";
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import uuid from "react-uuid";
-import { useRecoilValue, useRecoilState } from "recoil";
-import { allDevicesDetails } from "../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms";
 import colors from '../../../theme/foundations/colours';
-import ManageDevices from "../../../api/ManageDevices/ManageDevices";
 import { toast } from 'react-hot-toast';
+import uuid from "react-uuid";
+
+import { allDevicesDetails } from "../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms";
+import ManageDevices from "../../../api/ManageDevices/ManageDevices";
 
 
 type deviceManagerPaginationProps ={

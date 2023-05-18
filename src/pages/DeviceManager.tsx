@@ -5,7 +5,6 @@ import { Select } from "@chakra-ui/select";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DeviceManagerTable from "../components/deviceManager/DeviceManagerTable/DeviceManagerTable";
-import DeviceDetailsWrapper from "../components/wrappers/DeviceDetailsWrapper/DeviceDetailsWrapper";
 import colors from "../theme/foundations/colours";
 import MapModal from '../components/map/mapModal/MapModal';
 import {
@@ -24,7 +23,6 @@ const DeviceManager: React.FC = () => {
 
   return (
     <BaseLayout isNavbarVisible={true}>
-      {/* <DeviceDetailsWrapper> */}
         <Flex w="100%" minH="100vh" py="2rem" pr="1rem" flexDirection="column">
           <Text fontSize={isLargeScreen ? "3xl" : "2xl"} fontWeight="bold">
             Manage Devices
@@ -72,7 +70,6 @@ const DeviceManager: React.FC = () => {
             <DeviceManagerTable />
           </Center>
         </Flex>
-      {/* </DeviceDetailsWrapper> */}
     </BaseLayout>
   );
 };

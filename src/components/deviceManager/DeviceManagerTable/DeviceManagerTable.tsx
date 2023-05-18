@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Table, Thead, Tbody, Tr, Th, Flex } from '@chakra-ui/react';
 import BuoySettingsRow from './BuoySettingsRow';
 import colors from '../../../theme/foundations/colours';
