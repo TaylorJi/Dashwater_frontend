@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BaseLayout from '../components/layout/BaseLayout';
 import loginFormBgImage from '../assets/images/login-form-background.png';
 import yvrLogo from '../assets/images/yvr-logo.png';
@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import colors from '../theme/foundations/colours';
 import Sessions from '../api/Sessions/Sessions';
+import { useResetRecoilState } from 'recoil';
+import { sidebarOpenAtom } from '../components/layout/navigation/atoms/sidebarAtoms';
 
 
 const Login: React.FC = () => {
@@ -16,7 +18,11 @@ const Login: React.FC = () => {
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
+    const resetSidebarOpen = useResetRecoilState(sidebarOpenAtom);
 
+    useEffect(() => {
+        resetSidebarOpen();
+    }, []);
 
     const handleLogin = async (email: string, password: string) => {
         try {
