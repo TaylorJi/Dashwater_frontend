@@ -31,7 +31,6 @@ const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
 
     const fetchUserThresholds = async () => {
         const userThresholds = await ManageDevices.getUserThresholdsByDevice(userData?.userId, buoy.id)
-        console.log(userThresholds);
         setUserThresholdsByDevice(userThresholds);
     };
 
