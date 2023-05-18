@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { allDevicesDetails } from './deviceManagerAtoms';
 import { toast } from 'react-hot-toast';

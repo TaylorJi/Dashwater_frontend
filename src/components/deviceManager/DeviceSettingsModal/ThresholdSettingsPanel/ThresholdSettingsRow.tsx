@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import colors from '../../../../theme/foundations/colours';
 import { Tr, Td, NumberInput, NumberInputField, Switch } from '@chakra-ui/react';
 
 type thresholdSettingRowProps = {
