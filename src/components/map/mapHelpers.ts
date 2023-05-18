@@ -4,8 +4,8 @@ export const getDeviceDetailInfo = (info: deviceSettingsType[]) => {
     buoyData.push({
       name: buoy.name,
       id: Number(buoy.id),
-      x: buoy.location.y,
-      y: buoy.location.x,
+      x: buoy.locationY,
+      y: buoy.locationX,
     });
   });
 

@@ -7,14 +7,10 @@ import { getDeviceDetailInfo } from "../../map/mapHelpers";
 import { allDevicesDetails } from "../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms";
 
 const MapCard: React.FC = () => {
-
   const { long, lat, zVal, zSet, cLat, cLong } = mapCardSpecs;
-
   const deviceDetails = useRecoilState(allDevicesDetails)
   const mapBuoyInfo = getDeviceDetailInfo(deviceDetails[0]);
- 
   const [buoyInfo, _setBuoyInfo] = React.useState<buoyInfo>(mapBuoyInfo)
-
 
   return (
     <Box my="0.5rem">
@@ -35,4 +31,3 @@ const MapCard: React.FC = () => {
 };
 
 export default MapCard;
-
