@@ -84,7 +84,7 @@ const Login: React.FC = () => {
                 localStorage.setItem('failedLoginAttempts', JSON.stringify({'count': 0, 'lastFailedLoginAttemptDate': null}));
             }, disableDuration);
 
-            toast.error("Too many failed login attempts. Please wait 5 minutes before trying again.");
+            toast.error("You've tried too many times to log in - wait 5 minutes");
         }
     }
 
