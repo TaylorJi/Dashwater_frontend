@@ -24,7 +24,6 @@ const DeviceDetailsWrapper: React.FC<deviceDetailsWrapperProps> = ({ children })
 
         } catch(_err) {
 
-            console.log(_err)
             return null;
 
         }

@@ -55,43 +55,45 @@ const IntervalPanel: React.FC = () => {
                             {
                                 Object.keys(deviceData).map((key) => {
 
-                                    return (
+                                    if (Object.keys(deviceData[key]).length > 0) {
+                                        return (
 
-                                        <AccordionItem
-                                            key={uuid()}
-                                        >
-                                            <AccordionButton>
-                                                <Box
-                                                    as='span'
-                                                    flex='1'
-                                                    textAlign='left'
-                                                >
-                                                    <Text
-                                                        fontSize='xl'
-                                                        fontWeight='bold'
+                                            <AccordionItem
+                                                key={uuid()}
+                                            >
+                                                <AccordionButton>
+                                                    <Box
+                                                        as='span'
+                                                        flex='1'
+                                                        textAlign='left'
                                                     >
-                                                        {`Device ${key} Data`}
-                                                    </Text>
-                                                </Box>
-                                                <AccordionIcon />
-                                            </AccordionButton>
-                                            <AccordionPanel pb={4}>
-                                                <Grid templateColumns={`repeat(${isLargeScreen ? LG_COLS : SM_COLS}, 1fr)`} gap={3}>
-                                                    {
-                                                        deviceData[key].map((item) => {
-                                                            return (
-                                                                <IntervalGridItem
-                                                                    key={uuid()}
-                                                                    item={item}
-                                                                />
-                                                            )
-                                                        })
-                                                    }
-                                                </Grid>
-                                            </AccordionPanel>
-                                        </AccordionItem>
+                                                        <Text
+                                                            fontSize='xl'
+                                                            fontWeight='bold'
+                                                        >
+                                                            {`Device ${key} Data`}
+                                                        </Text>
+                                                    </Box>
+                                                    <AccordionIcon />
+                                                </AccordionButton>
+                                                <AccordionPanel pb={4}>
+                                                    <Grid templateColumns={`repeat(${isLargeScreen ? LG_COLS : SM_COLS}, 1fr)`} gap={3}>
+                                                        {
+                                                            deviceData[key].map((item) => {
+                                                                return (
+                                                                    <IntervalGridItem
+                                                                        key={uuid()}
+                                                                        item={item}
+                                                                    />
+                                                                )
+                                                            })
+                                                        }
+                                                    </Grid>
+                                                </AccordionPanel>
+                                            </AccordionItem>
 
-                                    )
+                                        )
+                                    }
 
                                 })
 
