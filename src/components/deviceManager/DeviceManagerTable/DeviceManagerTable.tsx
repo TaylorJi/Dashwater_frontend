@@ -1,38 +1,55 @@
-import React, { useState } from 'react';
-import { Table, Thead, Tbody, Tr, Th } from '@chakra-ui/react';
-import buoyData from '../../../mockData/mockBuoyData.json'
-import BuoySettingsRow from './BuoySettingsRow';
-import colors from '../../../theme/foundations/colours';
+import React from 'react';
+import { useRecoilValue } from 'recoil';
+import {
+    Table,
+    Thead,
+    Tbody,
+    Tr,
+    Th,
+    Flex
+} from '@chakra-ui/react';
 import uuid from 'react-uuid';
+import colors from '../../../theme/foundations/colours';
+import BuoySettingsRow from './BuoySettingsRow';
+import { allDevicesDetails } from '../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
 
 
 const DeviceManagerTable: React.FC = () => {
-    const buoySettingsData = useState<deviceManagerDataType | null>(buoyData)[0]; // eventual unpack setState
+    const allDevices = useRecoilValue(allDevicesDetails);
+
+    // const [displayedDevices, setDisplayedDevices] = useState([]);
 
     return (
-        <>
-            <Table >
-
-                <Thead bg={colors.main.lavender} h="3rem">
+        <Flex
+            w='100%'
+            flexDirection='column'
+        >
+            <Table layout='fixed'>
+                <Thead bg={colors.main.lavender} h="3rem" whiteSpace='nowrap'>
                     <Tr>
-                        <Th color={colors.main.usafaBlue}>Name</Th>
-                        <Th color={colors.main.usafaBlue}>ID</Th>
-                        <Th color={colors.main.usafaBlue}>Location</Th>
-                        <Th color={colors.main.usafaBlue}>Sensors</Th>
-                        <Th color={colors.main.usafaBlue}>Settings</Th>
+                        <Th color={colors.main.usafaBlue} w='15%'>Name</Th>
+                        <Th color={colors.main.usafaBlue} w='15%'>ID</Th>
+                        <Th color={colors.main.usafaBlue} w='60%'>Sensors</Th>
+                        <Th color={colors.main.usafaBlue} w='10%'>Settings</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {buoySettingsData ?
-                        buoyData['buoys'].map(buoy => {
+                    {allDevices &&
+                        allDevices.map(buoy => {
                             return (
-                                <BuoySettingsRow buoy={buoy} key={uuid()}/>
+                                <BuoySettingsRow
+                                    buoy={buoy}
+                                    key={uuid()}
+                                />
                             )
-                        }) : <></>
+                        })
                     }
                 </Tbody>
             </Table>
-        </>
+            {/* <DeviceManagerPagination
+                setDisplayedDevices={setDisplayedDevices}
+            /> */}
+        </Flex>
     );
 };
 

@@ -1,8 +1,6 @@
 import { CircularProgress, CircularProgressLabel, Text } from '@chakra-ui/react';
 import React from 'react';
 import colors from '../../theme/foundations/colours';
-import { circleGraphColors } from '../dashboard/dashboardHelpers';
-
 
 type circleGraphProps = {
     percent: number;
@@ -16,7 +14,7 @@ const CicleGraph: React.FC<circleGraphProps> = ({ percent, value, unit }) => {
         <CircularProgress
             size='8rem'
             value={percent}
-            color={circleGraphColors(percent)}
+            color={colors.main.usafaBlue}
         >
             <CircularProgressLabel>
                 <Text

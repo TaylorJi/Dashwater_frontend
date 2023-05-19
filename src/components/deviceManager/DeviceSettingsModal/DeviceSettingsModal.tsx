@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
     Modal,
     ModalOverlay,
@@ -17,7 +18,7 @@ import DeviceSettingsTabs from './DeviceSettingsTabs';
 import colors from '../../../theme/foundations/colours';
 
 type deviceSettingsModalProps = {
-    buoy: buoySettingsType;
+    buoy: deviceSettingsType;
 };
 
 const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
@@ -49,7 +50,9 @@ const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
                     </ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <DeviceSettingsTabs buoy={buoy} />
+                        <DeviceSettingsTabs
+                            buoy={buoy}
+                        />
                     </ModalBody>
                 </ModalContent>
             </Modal>

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import {
   Box,
   Flex,
@@ -8,6 +9,9 @@ import {
   Input,
   Button,
   Divider,
+  HStack,
+  Switch,
+  Textarea,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
@@ -19,47 +23,37 @@ import colors from "../../../../theme/foundations/colours";
 import ManageDevices from "../../../../api/ManageDevices/ManageDevices";
 import { mapCardSpecs, tileServer } from "../../../map/mapConstants";
 import Map from "../../../map/mapContainer/Map";
+import { allDevicesDetails } from "../../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms";
 
 type generalSettingsPanelProps = {
-  name: string;
-  long: number;
-  lat: number;
+  device: deviceSettingsType;
 };
 
-const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
-  name,
-  lat,
-  long,
-}) => {
-  const [buoyName, setBuoyName] = useState<string>(name);
-  const [latitude, setLatitude] = useState<string>(lat.toString());
-  const [longitude, setLongitude] = useState<string>(long.toString());
+const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ device }) => {
+  const [deviceSettings, setDevicesSettings] = useState<deviceSettingsType>({} as deviceSettingsType);
+  const [allDevicesAtomContent, setAllDevicsAtomContent] = useRecoilState<deviceSettingsType[]>(allDevicesDetails);
+
+  useEffect(() => {
+    setDevicesSettings(device)
+  }, []);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const searchCoordinates = async () => {
-    // do search stuff
-  };
-
   const resetCoordinates = () => {
-    setLatitude(lat.toString());
-    setLongitude(long.toString());
+    setDevicesSettings({ ...deviceSettings, 'locationY': device.locationY, 'locationX': device.locationX });
   };
 
   const saveDeviceSettings = async () => {
-    const latNum = parseFloat(latitude);
-    const longNum = parseFloat(longitude);
-
     setIsLoading(true);
-    const response = await ManageDevices.saveDeviceSettings(
-      buoyName,
-      latNum,
-      longNum
-    );
+    const response = await ManageDevices.saveDeviceSettings(deviceSettings);
     if (response) {
       toast.success("Device settings saved!");
+      const i = allDevicesAtomContent.findIndex(element => element.id === device.id);
+      const devicesArray = [...allDevicesAtomContent]
+      devicesArray[i] = {... allDevicesAtomContent[i], ...deviceSettings};
+      setAllDevicsAtomContent(devicesArray);
     } else {
-      toast.error(
-        "There was a problem saving your device settings. Please try again."
+      toast.error("There was a problem saving your device settings. Please try again."
       );
     }
     setIsLoading(false);
@@ -67,27 +61,78 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
 
   return (
     <Box>
-      <Text fontWeight="semibold" mb="0.25rem">
-        Name
-      </Text>
-      <Input
-        value={buoyName}
-        onChange={(e) => {
-          const newName = e.target.value;
-          setBuoyName(newName);
-        }}
-        onBlur={() => {
-          if (buoyName.length === 0 || buoyName.length > 25) {
-            toast.error("Name must be between 1 and 25 characters.");
-            setBuoyName(name);
+
+      <HStack align='flex-start' gap={20} mb={3}>
+        <Box>
+          <Text fontWeight="semibold" mb="0.25rem">
+            Name
+          </Text>
+          <Input
+            maxLength={25}
+            w='sm'
+            value={deviceSettings.name}
+            onChange={(e) => {
+              const newName = e.target.value;
+              setDevicesSettings({ ...deviceSettings, 'name': newName });
+            }}
+            onBlur={() => {
+              if (deviceSettings.name.length === 0 || deviceSettings.name.length > 25) {
+                toast.error("Name must be between 1 and 25 characters.");
+                setDevicesSettings({ ...deviceSettings, 'name': device.name });
+              }
+            }}
+          />
+          <Text fontSize="sm" color="gray.500" my="0.25rem">
+            Enter the alias name for the device.
+          </Text>
+        </Box>
+
+        <Box>
+          <Text fontWeight="semibold" mb="0.25rem">
+            Device Status
+          </Text>
+          <Switch
+            aria-label='Device active state'
+            colorScheme='green'
+            isChecked={deviceSettings.active}
+            onChange={
+              _e => {
+                setDevicesSettings({ ...deviceSettings, 'active': !deviceSettings.active });
+              }
+            }
+          />
+          {
+            deviceSettings.active ? (
+              <Text fontSize="sm" color='green' my="0.25rem">
+                Active
+              </Text>
+            ) : (
+              <Text fontSize="sm" color="gray.500" my="0.25rem">
+                Inactive
+              </Text>
+            )
           }
-        }}
-      />
-      <Text fontSize="sm" color="gray.500" my="0.25rem">
-        Enter the alias name for the device.
+        </Box>
+      </HStack>
+
+      <Text fontWeight="semibold" mb="0.25rem">
+        Description
       </Text>
+      <Textarea
+        resize='vertical'
+        value={deviceSettings.description}
+        onChange={e => {
+          const newDescription = e.target.value;
+          setDevicesSettings({ ...deviceSettings, 'description': newDescription });
+        }}
+        placeholder="Enter a description for the device."
+      />
 
       <Divider my="1rem" />
+
+      <Text fontWeight="semibold" mb="0.25rem">
+        Location
+      </Text>
 
       <Grid templateColumns="repeat(2, 1fr)" gap="3">
         <GridItem w="100%">
@@ -103,8 +148,8 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
             isModal={false}
             isSettings={true}
             settingsCoords={[
-              isNaN(Number(latitude)) ? 0 : Number(latitude),
-              isNaN(Number(longitude)) ? 0 : Number(longitude),
+              isNaN(Number(deviceSettings.locationY)) ? 0 : Number(deviceSettings.locationY),
+              isNaN(Number(deviceSettings.locationX)) ? 0 : Number(deviceSettings.locationX),
             ]}
           />
         </GridItem>
@@ -115,17 +160,17 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
           <NumberInput
             precision={4}
             step={0.0001}
-            value={latitude}
+            value={deviceSettings.locationY}
             min={-90}
             max={90}
             onChange={(e) => {
-              setLatitude(e);
+              setDevicesSettings({ ...deviceSettings, 'locationY': +e });
             }}
             onBlur={(e) => {
               // quirk on chakra's part, but I can't make it reset to default if the value is "-",
               // it just goes to the minimum, e.g. -90
               if (e.target.value === "") {
-                setLatitude(lat.toString());
+                setDevicesSettings({ ...deviceSettings, 'locationY': +e });
               }
             }}
           >
@@ -142,16 +187,16 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
           <NumberInput
             precision={4}
             step={0.0001}
-            value={longitude}
+            value={deviceSettings.locationX}
             allowMouseWheel={false}
             min={-180}
             max={180}
             onChange={(e) => {
-              setLongitude(e);
+              setDevicesSettings({ ...deviceSettings, 'locationX': +e });
             }}
             onBlur={(e) => {
               if (e.target.value === "") {
-                setLongitude(long.toString());
+                setDevicesSettings({ ...deviceSettings, 'locationX': +e });
               }
             }}
           >
@@ -176,16 +221,6 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
             >
               Reset
             </Button>
-            <Button
-              color="white"
-              bg={colors.main.acidGreen}
-              _hover={{
-                bg: colors.main.mossGreen,
-              }}
-              onClick={() => searchCoordinates()}
-            >
-              Search
-            </Button>
           </Flex>
         </GridItem>
       </Grid>
@@ -200,7 +235,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({
           }}
           loadingText="Saving"
         >
-          Save General
+          Save Settings
         </Button>
       </Flex>
     </Box>

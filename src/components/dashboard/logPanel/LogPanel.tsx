@@ -1,17 +1,21 @@
 import { Box, Button, Flex, Icon, Spacer } from '@chakra-ui/react';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useCallback } from 'react';
+import React from 'react';
 import colors from '../../../theme/foundations/colours';
 import Logs from './Logs';
-import { mockLogData } from '../../../mockData/dashboardMockData';
 import { utils as XLSX, writeFile as XLSXWriteFile } from 'xlsx';
 import { remapDataForExport } from '../dashboardHelpers';
 import toast from 'react-hot-toast';
+import LogSorting from './LogSorting';
+import { useRecoilValue } from 'recoil';
+import { logDataAtom } from './atoms/logPanelAtoms';
 
 const LogPanel: React.FC = () => {
 
-    const exportXLSX = useCallback((data: logDataType[]) => {
+    const logData = useRecoilValue(logDataAtom);
+
+    const exportXLSX = (data: logDataType[]) => {
 
         const workbook = XLSX.book_new();
 
@@ -21,26 +25,40 @@ const LogPanel: React.FC = () => {
             toast.error('There was a problem exporting the report. Please try again!');
 
         } else {
+            let totalData = 0;
+            const devicesWorkSheet = XLSX.aoa_to_sheet([]);
+            XLSX.book_append_sheet(workbook, devicesWorkSheet, 'All Devices');
+            let skipHeader = false;
 
             Object.entries(formattedData).map(([sheetName, data]) => {
                 const worksheet = XLSX.json_to_sheet(data);
-                XLSX.book_append_sheet(workbook, worksheet, sheetName);
+                XLSX.book_append_sheet(workbook, worksheet, `${sheetName} (${data.length})`);
+                totalData += data.length;
+                XLSX.sheet_add_json(devicesWorkSheet, data, { skipHeader: skipHeader, origin: -1 });
+                skipHeader = true;
             });
+
+            const allDevicesSheet = workbook.Sheets['All Devices'];
+            workbook.SheetNames[0] = `All Devices (${totalData})`
+            workbook.Sheets[`All Devices (${totalData})`] = allDevicesSheet;
 
             XLSXWriteFile(workbook, 'yvr-devices-log.xlsx');
 
             toast.success('The report for this time period was successfully generated.');
         }
 
-    }, []);
+    };
 
     return (
         <Box>
             <Flex
-                mb='0.75rem'
+                mt='0.75rem'
+                mb='1rem'
             >
+                <LogSorting />
                 <Spacer />
                 <Button
+                    size='sm'
                     bg='main.acidGreen'
                     ml='0.5rem'
                     color='white'
@@ -49,11 +67,14 @@ const LogPanel: React.FC = () => {
                         icon={faDownload}
                         color='white'
                     />}
+                    isDisabled={!logData}
                     _hover={{
                         bg: colors.main.mossGreen
                     }}
                     onClick={() => {
-                        exportXLSX(mockLogData);
+                        if (logData) {
+                            exportXLSX(logData);
+                        }
                     }}
                 >
                     Download

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router';
+import Authentication from './components/dashboard/auth/Authentication';
+import DeviceDetailsWrapper from './components/wrappers/DeviceDetailsWrapper/DeviceDetailsWrapper';
 import Alerts from './pages/Alerts';
 import Dashboard from './pages/Dashboard';
 import DeviceManager from './pages/DeviceManager';
@@ -11,11 +13,35 @@ function App() {
     <Routes>
       <Route path='/' element={<Login />} />
 
-      <Route path='/dashboard' element={<Dashboard />} />
+      <Route path='/dashboard'
+        element={
+          <Authentication>
+            <DeviceDetailsWrapper>
+              <Dashboard />
+            </DeviceDetailsWrapper>
+          </Authentication>
+        }
+      />
 
-      <Route path='/alerts' element={<Alerts />} />
+      <Route path='/alerts'
+        element={
+          <Authentication>
+            <DeviceDetailsWrapper>
+              <Alerts />
+            </DeviceDetailsWrapper>
+          </Authentication>
+        }
+      />
 
-      <Route path='/manageDevices' element={<DeviceManager />} />
+      <Route path='/manageDevices'
+        element={
+          <Authentication>
+            <DeviceDetailsWrapper>
+              <DeviceManager />
+            </DeviceDetailsWrapper>
+          </Authentication>
+        }
+      />
 
       <Route path='404' element={<NotFound />} />
 

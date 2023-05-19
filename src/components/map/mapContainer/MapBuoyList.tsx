@@ -1,7 +1,7 @@
 import React from "react";
 import MapListItem from "./MapListItem";
-
 import { Text, Stack, Card, CardBody } from "@chakra-ui/react";
+import uuid from 'react-uuid'
 
 const MapBuoyList: React.FC<buoyMapInfo> = (props) => {
   return (
@@ -10,7 +10,7 @@ const MapBuoyList: React.FC<buoyMapInfo> = (props) => {
         <Stack>
           {props.buoys ? (
             props.buoys.map((buoy) => (
-              <MapListItem deviceName={buoy.name} id={buoy.id} />
+              <MapListItem deviceName={buoy.name} id={buoy.id} key={uuid()}/>
             ))
           ) : (
             <Text>No devices currently available</Text>

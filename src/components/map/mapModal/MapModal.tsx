@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   Modal,
@@ -18,9 +18,11 @@ import MapBuoyList from "../mapContainer/MapBuoyList";
 import { SelectContext } from "../SelectContext";
 import colors from "../../../theme/foundations/colours";
 import typography from "../../../theme/foundations/typography";
-import mockBuoyData from "../../../mockData/mockBuoyIdData.json";
 import { tileServer, mapModalSpecs } from "../mapConstants";
-import { getBuoyMapData } from "../mapHelpers";
+import { getDeviceDetailInfo } from "../mapHelpers";
+import { selectedIdsAtom } from "./atoms/selectedIdsAtom";
+import { allDevicesDetails } from "../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 type MapModalProps = {
   isOpen: boolean;
@@ -28,19 +30,25 @@ type MapModalProps = {
 };
 
 const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
+  const setSelectedIds = useSetRecoilState(selectedIdsAtom);
+  const deviceDetails = useRecoilValue(allDevicesDetails);
   const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
-
+  const [mapKey, setMapKey] = useState<number>(0);
   const { long, lat, zVal, zSet, cLong, cLat } = mapModalSpecs;
+  const [buoyInfo, setBuoyInfo] = useState<buoyInfo | undefined>();
 
-  const propData = getBuoyMapData(mockBuoyData);
+  useEffect(() => {
+    const mapBuoyInfo = getDeviceDetailInfo(deviceDetails);
+    setBuoyInfo(mapBuoyInfo)
+  }, []);
 
   const urlArc = tileServer.ARC_MAP;
   const urlCarto = tileServer.CARTO_MAP;
 
-  const [tilePath, setPath] = React.useState<string>(urlArc);
-  const [selected, setSelect] = React.useState<boolean>(false);
+  const [tilePath, setPath] = useState<string>(urlArc);
+  const [selected, setSelect] = useState<boolean>(false);
 
-  const [ids, setIds] = React.useState<number[]>([]);
+  const [ids, setIds] = useState<number[]>([]);
 
   const selectContext = React.useMemo(() => {
     const updateSelected = (select: boolean, id: number) => {
@@ -87,14 +95,15 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
         <ModalBody>
           <HStack>
             <SelectContext.Provider value={selectContext}>
-              <MapBuoyList buoys={propData} />
+              <MapBuoyList buoys={buoyInfo} />
               <Map
+                key={mapKey}
                 long={long}
                 lat={lat}
                 zoomVal={zVal}
                 zoomSet={zSet}
                 center={[cLat, cLong]}
-                buoys={propData}
+                buoys={buoyInfo}
                 tilePath={tilePath}
                 drawable={true}
                 mapId={"mapId"}
@@ -115,9 +124,10 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
               _hover={{
                 bg: colors.main.mossGreen,
               }}
-              onClick={() =>
-                tilePath === urlArc ? setPath(urlCarto) : setPath(urlArc)
-              }
+              onClick={() => {
+                tilePath === urlArc ? setPath(urlCarto) : setPath(urlArc);
+                setMapKey(mapKey + 1);
+              }}
             >
               Switch Map
             </Button>
@@ -137,6 +147,12 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
               bg={colors.main.usafaBlue}
               _hover={{
                 bg: colors.main.ceruBlue,
+              }}
+              onClick={() => {
+                setSelectedIds(ids.map((id: number) => {
+                  return String(id)
+                }));
+                onClose();
               }}
             >
               Confirm
