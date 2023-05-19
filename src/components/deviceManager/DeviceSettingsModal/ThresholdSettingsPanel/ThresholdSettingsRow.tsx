@@ -120,7 +120,7 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
                     onChange={i => { setMaxVal(+i) }}
                     onBlur={i => {
                         if (i.target.value === "") {
-                            setMinVal(+i)
+                            setMaxVal(+i)
                         }
                     }}
                 >
