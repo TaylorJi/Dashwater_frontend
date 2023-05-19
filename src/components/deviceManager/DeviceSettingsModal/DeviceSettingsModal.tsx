@@ -29,14 +29,14 @@ const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
     const userData = useRecoilValue(userDataAtom);
     const setUserThresholdsByDevice = useSetRecoilState(userDeviceThresholds);
 
-    const fetchUserThresholds = async () => {
-        const userThresholds = await ManageDevices.getUserThresholdsByDevice(userData?.userId, buoy.id)
-        setUserThresholdsByDevice(userThresholds);
-    };
+    // const fetchUserThresholds = async () => {
+    //     const userThresholds = await ManageDevices.getUserThresholdsByDevice(userData?.userId, buoy.id)
+    //     setUserThresholdsByDevice(userThresholds);
+    // };
 
-    useEffect(() => {
-        fetchUserThresholds();
-    }, []);
+    // useEffect(() => {
+    //     fetchUserThresholds();
+    // }, [buoy]);
 
     return (
         <>

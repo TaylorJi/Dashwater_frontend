@@ -22,7 +22,7 @@ const getDefaultThresholds = async () => {
     try {
         const response = await axios.get(`${API_URL}/defaultThreshold/getAllDefaultThresholds`, { withCredentials: true });
         if (response.status === 200) {
-            return response.data;
+            return response.data.data;
         }
         return null;
     } catch (_err) {
@@ -36,7 +36,8 @@ const getUserThresholdsByDevice = async (userId: string | undefined, deviceId: n
             { withCredentials: true });
 
         if (response.status === 200) {
-            return response.data;
+            console.log(response.data.data);
+            return response.data.data;
         }
         return null;
 

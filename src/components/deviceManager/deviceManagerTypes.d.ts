@@ -64,3 +64,12 @@ type userThresholdType = {
     maxVal: number;
     alert: boolean;
 }
+
+type updatedThresholdType = {
+    userId: string;
+    sensorId: number;
+    deviceId: number;
+    minVal: string | number;
+    maxVal: string | number;
+    alert: boolean;
+}

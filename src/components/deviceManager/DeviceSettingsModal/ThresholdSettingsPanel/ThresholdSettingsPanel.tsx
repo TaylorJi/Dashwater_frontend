@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { 
-    Table, 
-    Thead, 
-    Tbody, 
-    Tr, 
+import { useRecoilValue } from 'recoil';
+import {
+    Table,
+    Thead,
+    Tbody,
+    Tr,
     Th,
     Flex,
     Button
@@ -16,15 +16,38 @@ import colors from '../../../../theme/foundations/colours';
 import { buoySensorTags } from '../../../../theme/metrics/buoySensorTags';
 import ThresholdSettingsRow from './ThresholdSettingsRow';
 import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
+import { defaultThresholds } from '../../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
+import { userDataAtom } from '../../../dashboard/atoms/globalDashboardAtoms';
 
 type thresholdSettingsPanelProps = {
-    sensors: sensorType[];
+    buoy: deviceSettingsType;
 }
 
 
-const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ sensors }) => {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy }) => {
+    const userData = useRecoilValue(userDataAtom);
 
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const defaultMetricThresholds = useRecoilValue<defaultThresholdType[]>(defaultThresholds);
+    const [updatedThresholds, setUpdatedThresholds] = useState<updatedThresholdType[]>([]);
+    const [userThresholds, setUserThresholds] = useState<userThresholdType[]>([]);
+
+    const getThresholdMin = (sensorId: number, metric: string) => {
+        const userThreshold = userThresholds.find(threshold => threshold.sensorId === sensorId);
+        const defaultThreshold = defaultMetricThresholds.find(threshold => threshold.metric === metric);
+        return userThreshold ? userThreshold.minVal : defaultThreshold? defaultThreshold.defaultMin : 0;
+    }
+
+    const getThresholdMax = (sensorId: number, metric: string) => {
+        const userThreshold = userThresholds.find(threshold => threshold.sensorId === sensorId);
+        const defaultThreshold = defaultMetricThresholds.find(threshold => threshold.metric === metric);
+        return userThreshold ? userThreshold.maxVal : defaultThreshold? defaultThreshold.defaultMax : 0;
+    }
+
+    const getAlertStatus = (sensorId: number) => {
+        const userThreshold = userThresholds.find(threshold => threshold.sensorId === sensorId);
+        return userThreshold? userThreshold.alert : false;
+    }
 
     const saveThresholdSettings = async () => {
         setIsLoading(true);
@@ -36,6 +59,15 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ sensors
         }
         setIsLoading(false);
     };
+
+    const fetchUserThresholds = async () => {
+        const userThresholds = await ManageDevices.getUserThresholdsByDevice(userData?.userId, buoy.id);
+        setUserThresholds(userThresholds);
+    };
+
+    useEffect(() => {
+        fetchUserThresholds();
+    }, []);
 
     return (
         <>
@@ -52,12 +84,17 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ sensors
                 </Thead>
                 <Tbody>
                     {
-                        sensors.map((sensor => {
+                        buoy.sensors.map((sensor => {
                             return (
                                 <ThresholdSettingsRow
-                                    key={uuid()}
+                                    key={sensor.id}
+                                    deviceId={buoy.id}
                                     metric={buoySensorTags[sensor.metric].label}
-                                    metricSensor={sensor}
+                                    minVal={getThresholdMin(sensor.id, sensor.metric)}
+                                    maxVal={getThresholdMax(sensor.id, sensor.metric)}
+                                    alert={getAlertStatus(sensor.id)}
+                                    defaultUnit={sensor.defaultUnit}
+                                    setUpdatedThresholds={setUpdatedThresholds}
                                 />
                             );
                         }))

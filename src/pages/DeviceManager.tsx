@@ -16,11 +16,10 @@ import { defaultThresholds } from "../components/wrappers/DeviceDetailsWrapper/d
 
 const DeviceManager: React.FC = () => {
   const [isLargeScreen] = useMediaQuery("(min-width: 1600px)");
-  const setDefaultThresholdsAtom = useSetRecoilState(defaultThresholds)
+  const setDefaultThresholdsAtom = useSetRecoilState(defaultThresholds);
 
   const fetchDefaultThresholds = async () => {
     const defaultThresholds = await ManageDevices.getDefaultThresholds();
-    console.log(defaultThresholds)
     setDefaultThresholdsAtom(defaultThresholds);
   }
 

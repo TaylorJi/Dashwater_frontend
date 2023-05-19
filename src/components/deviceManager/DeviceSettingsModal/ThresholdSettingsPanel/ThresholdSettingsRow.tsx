@@ -1,38 +1,52 @@
 import React, { useState } from 'react';
-import { 
-    Tr, 
-    Td, 
-    NumberInput, 
-    NumberInputField, 
-    Switch 
+import { useRecoilValue } from 'recoil';
+import {
+    Tr,
+    Td,
+    NumberInput,
+    NumberInputField,
+    Switch
 } from '@chakra-ui/react';
+import { userDataAtom } from '../../../dashboard/atoms/globalDashboardAtoms';
 
 type thresholdSettingRowProps = {
+    key: number;
+    deviceId: number;
     metric: string;
-    metricSensor: sensorType;
+    minVal: string | number;
+    maxVal: string | number;
+    alert: boolean;
+    defaultUnit: string;
+    setUpdatedThresholds: React.Dispatch<React.SetStateAction<updatedThresholdType[]>>
 }
 
-const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = ({ metric, metricSensor }) => {
-    const [isAlert, setIsAlert] = useState<boolean>(true);
-    const [metricMin, setMetricMin] = useState<number | string>(metricSensor.minVal);
-    const [metricMax, setMetricMax] = useState<number | string>(metricSensor.maxVal);
+const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = ({ key, deviceId, metric, minVal, maxVal, defaultUnit, alert, setUpdatedThresholds }) => {
+    const userId = useRecoilValue(userDataAtom)?.userId
+    const [thresholdSettings, setThresholdSettings] = useState({
+        userId: userId,
+        sensorId: key,
+        deviceId: deviceId,
+        minVal: minVal,
+        maxVal: maxVal,
+        alert: alert,
+    })
 
     return (
         <Tr rowGap={0.25}>
             <Td>{metric}</Td>
             <Td>
                 <NumberInput
-                    value={metricMin}
+                    value={thresholdSettings.minVal}
                     onChange={i => {
                         if (i === '-') {
-                            setMetricMin('-');
+                            setThresholdSettings({ ...thresholdSettings, 'minVal': '-' });
                         }
                         if (i === '') {
-                            setMetricMin('');
+                            setThresholdSettings({ ...thresholdSettings, 'minVal': '' });
                         }
                         let newMin = parseInt(i);
                         if (!isNaN(newMin))
-                            setMetricMin(newMin);
+                            setThresholdSettings({ ...thresholdSettings, 'minVal': newMin });
                     }}
                 >
                     <NumberInputField />
@@ -40,31 +54,31 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = ({ metric, metr
             </Td>
             <Td>
                 <NumberInput
-                    value={metricMax}
+                    value={thresholdSettings.maxVal}
                     onChange={i => {
                         if (i === '-') {
-                            setMetricMax('-');
+                            setThresholdSettings({ ...thresholdSettings, 'maxVal': '-' });
                         }
                         if (i === '') {
-                            setMetricMax('');
+                            setThresholdSettings({ ...thresholdSettings, 'maxVal': '' });
                         }
                         let newMax = parseInt(i);
                         if (!isNaN(newMax))
-                            setMetricMax(newMax);
+                            setThresholdSettings({ ...thresholdSettings, 'maxVal': newMax });
                     }}
                 >
                     <NumberInputField />
                 </NumberInput>
             </Td>
             <Td>
-                {metricSensor.defaultUnit}
+                {defaultUnit}
             </Td>
             <Td>
                 <Switch
                     aria-label='Metric alert state'
-                    isChecked={isAlert}
+                    isChecked={thresholdSettings.alert}
                     onChange={_e => {
-                        setIsAlert(!isAlert);
+                        setThresholdSettings({ ...thresholdSettings, 'alert': !thresholdSettings.alert });
                     }}
                 />
             </Td>
