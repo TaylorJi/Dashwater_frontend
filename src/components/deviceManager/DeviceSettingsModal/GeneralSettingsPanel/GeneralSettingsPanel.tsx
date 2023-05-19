@@ -46,8 +46,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ device }) =
     if (response) {
       toast.success("Device settings saved!");
     } else {
-      toast.error(
-        "There was a problem saving your device settings. Please try again."
+      toast.error("There was a problem saving your device settings. Please try again."
       );
     }
     setIsLoading(false);
