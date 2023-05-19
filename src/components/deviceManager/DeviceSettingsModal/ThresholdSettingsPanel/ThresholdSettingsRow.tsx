@@ -5,7 +5,10 @@ import {
     Td,
     NumberInput,
     NumberInputField,
-    Switch
+    Switch,
+    NumberInputStepper,
+    NumberIncrementStepper,
+    NumberDecrementStepper
 } from '@chakra-ui/react';
 import { userDataAtom } from '../../../dashboard/atoms/globalDashboardAtoms';
 
@@ -22,15 +25,15 @@ type thresholdSettingRowProps = {
 }
 
 const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
-    const { 
+    const {
         deviceId,
-        sensorId, 
-        metric, 
-        minVal, 
-        maxVal, 
-        defaultUnit, 
-        alert, 
-        setUpdatedThresholds, 
+        sensorId,
+        metric,
+        minVal,
+        maxVal,
+        defaultUnit,
+        alert,
+        setUpdatedThresholds,
         updatedThresholds } = props
 
     const userId = useRecoilValue(userDataAtom)?.userId
@@ -92,18 +95,40 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
             <Td>{metric}</Td>
             <Td>
                 <NumberInput
+                    precision={2}
+                    step={0.01}
                     value={thresholdSettings.minVal}
-                    onChange={i => { setMinVal(+i) }}
+                    onChange={i => setMinVal(+i)}
+                    onBlur={i => {
+                        if (i.target.value === "") {
+                            setMinVal(+i)
+                        }
+                    }}
                 >
                     <NumberInputField />
+                    <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
                 </NumberInput>
             </Td>
             <Td>
                 <NumberInput
+                    precision={2}
+                    step={0.01}
                     value={thresholdSettings.maxVal}
                     onChange={i => { setMaxVal(+i) }}
+                    onBlur={i => {
+                        if (i.target.value === "") {
+                            setMinVal(+i)
+                        }
+                    }}
                 >
                     <NumberInputField />
+                    <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
                 </NumberInput>
             </Td>
             <Td>
