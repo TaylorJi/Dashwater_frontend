@@ -9,7 +9,6 @@ import {
     Flex,
     Button
 } from '@chakra-ui/react';
-import uuid from 'react-uuid';
 import { toast } from 'react-hot-toast';
 import colors from '../../../../theme/foundations/colours';
 
@@ -19,6 +18,7 @@ import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
 import { defaultThresholds } from '../../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
 import { userDataAtom } from '../../../dashboard/atoms/globalDashboardAtoms';
 import LoadingGraphic from '../../../layout/LoadingGraphic';
+import uuid from 'react-uuid';
 
 type thresholdSettingsPanelProps = {
     buoy: deviceSettingsType;
@@ -32,6 +32,7 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
     const defaultMetricThresholds = useRecoilValue<defaultThresholdType[]>(defaultThresholds);
     const [updatedThresholds, setUpdatedThresholds] = useState<updatedThresholdType[]>([]);
     const [userThresholds, setUserThresholds] = useState<userThresholdType[] | null>(null);
+    const [unsavedChanges, setUnsavedChanges] = useState<boolean>(false);
 
     const getThresholdMin = (sensorId: number, metric: string) => {
         if (userThresholds) {
@@ -75,16 +76,21 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
     }
 
     const saveThresholdSettings = async () => {
+        if (!updatedThresholds.length) {
+            return toast("There are no new changes to save.", { icon: '🤔' })
+        }
+
         try {
             setIsLoading(true);
-            const res = await ManageDevices.saveThresholdSettings();
-            if (res) {
+            const response = await ManageDevices.saveThresholdSettings(updatedThresholds);
+            if (response) {
                 toast.success('Threshold settings saved!');
+                setUpdatedThresholds([]);
             } else {
-                toast.error('There was a problem saving your device threshold settings. Please try again.')
+                toast.error('There was a problem saving your device threshold settings. Please try again.');
             }
         } catch (_err) {
-            toast.error('Trouble saving thresholds, please try again.')
+            toast.error('There was a problem saving your device threshold settings. Please try again.');
         } finally {
             setIsLoading(false);
         }
@@ -120,7 +126,8 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
                                     buoy.sensors.map((sensor => {
                                         return (
                                             <ThresholdSettingsRow
-                                                key={sensor.id}
+                                                key={uuid()}
+                                                sensorId={sensor.id}
                                                 deviceId={buoy.id}
                                                 metric={buoySensorTags[sensor.metric].label}
                                                 minVal={getThresholdMin(sensor.id, sensor.metric)}
@@ -128,6 +135,7 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
                                                 alert={getAlertStatus(sensor.id)}
                                                 defaultUnit={sensor.defaultUnit}
                                                 setUpdatedThresholds={setUpdatedThresholds}
+                                                updatedThresholds={updatedThresholds}
                                             />
                                         );
                                     }))
@@ -142,18 +150,18 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
                                 bg={colors.main.usafaBlue}
                                 color='white'
                                 isLoading={isLoading}
-                                onClick={async () => await saveThresholdSettings()}
+                                loadingText='Saving'
+                                onClick={saveThresholdSettings}
                                 _hover={{
                                     bg: colors.main.ceruBlue
                                 }}
-                                loadingText='Saving'
                             >
                                 Save Thresholds
                             </Button>
                         </Flex>
                     </>
                     :
-                    <LoadingGraphic/>
+                    <LoadingGraphic />
             }
 
         </>

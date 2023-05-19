@@ -10,26 +10,74 @@ import {
 import { userDataAtom } from '../../../dashboard/atoms/globalDashboardAtoms';
 
 type thresholdSettingRowProps = {
-    key: number;
     deviceId: number;
+    sensorId: number;
     metric: string;
     minVal: number;
     maxVal: number;
     alert: boolean;
     defaultUnit: string;
     setUpdatedThresholds: React.Dispatch<React.SetStateAction<updatedThresholdType[]>>
+    updatedThresholds: updatedThresholdType[]
 }
 
-const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = ({ key, deviceId, metric, minVal, maxVal, defaultUnit, alert, setUpdatedThresholds }) => {
+const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
+    const { 
+        deviceId,
+        sensorId, 
+        metric, 
+        minVal, 
+        maxVal, 
+        defaultUnit, 
+        alert, 
+        setUpdatedThresholds, 
+        updatedThresholds } = props
+
     const userId = useRecoilValue(userDataAtom)?.userId
-    const [thresholdSettings, setThresholdSettings] = useState({
+    const [thresholdSettings, setThresholdSettings] = useState<updatedThresholdType>({
         userId: userId,
-        sensorId: key,
+        sensorId: sensorId,
         deviceId: deviceId,
         minVal: minVal,
         maxVal: maxVal,
         alert: alert,
-    })
+    });
+
+    const setMinVal = (newValue: number) => {
+        setThresholdSettings({ ...thresholdSettings, 'minVal': newValue });
+        const i = updatedThresholds.findIndex(element => element.sensorId === thresholdSettings.sensorId);
+        const newThresholds = updatedThresholds;
+        if (i > -1) {
+            newThresholds[i] = thresholdSettings;
+        } else {
+            newThresholds.push(thresholdSettings);
+        }
+        setUpdatedThresholds(newThresholds);
+    };
+
+    const setMaxVal = (newValue: number) => {
+        setThresholdSettings({ ...thresholdSettings, 'maxVal': newValue });
+        const i = updatedThresholds.findIndex(element => element.sensorId === thresholdSettings.sensorId);
+        const newThresholds = updatedThresholds;
+        if (i > -1) {
+            newThresholds[i] = thresholdSettings;
+        } else {
+            newThresholds.push(thresholdSettings);
+        }
+        setUpdatedThresholds(newThresholds);
+    };
+
+    const setAlert = () => {
+        setThresholdSettings({ ...thresholdSettings, 'alert': !thresholdSettings.alert });
+        const i = updatedThresholds.findIndex(element => element.sensorId === thresholdSettings.sensorId);
+        const newThresholds = updatedThresholds;
+        if (i > -1) {
+            newThresholds[i] = thresholdSettings;
+        } else {
+            newThresholds.push(thresholdSettings);
+        }
+        setUpdatedThresholds(newThresholds);
+    }
 
     return (
         <Tr rowGap={0.25}>
@@ -38,7 +86,7 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = ({ key, deviceI
                 <NumberInput
                     value={thresholdSettings.minVal}
                     onChange={i => {
-                            setThresholdSettings({ ...thresholdSettings, 'minVal': +i });
+                            setMinVal(+i);
                        }}
                 >
                     <NumberInputField />
@@ -48,7 +96,7 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = ({ key, deviceI
                 <NumberInput
                     value={thresholdSettings.maxVal}
                     onChange={i => {
-                            setThresholdSettings({ ...thresholdSettings, 'maxVal': +i });
+                            setMaxVal(+i);
                     }}
                 >
                     <NumberInputField />
@@ -61,9 +109,7 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = ({ key, deviceI
                 <Switch
                     aria-label='Metric alert state'
                     isChecked={thresholdSettings.alert}
-                    onChange={_e => {
-                        setThresholdSettings({ ...thresholdSettings, 'alert': !thresholdSettings.alert });
-                    }}
+                    onChange={setAlert}
                 />
             </Td>
         </Tr>

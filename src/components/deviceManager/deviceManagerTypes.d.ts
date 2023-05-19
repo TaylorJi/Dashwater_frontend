@@ -66,7 +66,7 @@ type userThresholdType = {
 }
 
 type updatedThresholdType = {
-    userId: string;
+    userId: string | undefined;
     sensorId: number;
     deviceId: number;
     minVal: string | number;
