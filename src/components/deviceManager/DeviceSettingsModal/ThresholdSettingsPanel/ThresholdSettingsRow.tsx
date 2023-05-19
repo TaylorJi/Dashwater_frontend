@@ -13,8 +13,8 @@ type thresholdSettingRowProps = {
     key: number;
     deviceId: number;
     metric: string;
-    minVal: string | number;
-    maxVal: string | number;
+    minVal: number;
+    maxVal: number;
     alert: boolean;
     defaultUnit: string;
     setUpdatedThresholds: React.Dispatch<React.SetStateAction<updatedThresholdType[]>>
@@ -38,16 +38,8 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = ({ key, deviceI
                 <NumberInput
                     value={thresholdSettings.minVal}
                     onChange={i => {
-                        if (i === '-') {
-                            setThresholdSettings({ ...thresholdSettings, 'minVal': '-' });
-                        }
-                        if (i === '') {
-                            setThresholdSettings({ ...thresholdSettings, 'minVal': '' });
-                        }
-                        let newMin = parseInt(i);
-                        if (!isNaN(newMin))
-                            setThresholdSettings({ ...thresholdSettings, 'minVal': newMin });
-                    }}
+                            setThresholdSettings({ ...thresholdSettings, 'minVal': +i });
+                       }}
                 >
                     <NumberInputField />
                 </NumberInput>
@@ -56,15 +48,7 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = ({ key, deviceI
                 <NumberInput
                     value={thresholdSettings.maxVal}
                     onChange={i => {
-                        if (i === '-') {
-                            setThresholdSettings({ ...thresholdSettings, 'maxVal': '-' });
-                        }
-                        if (i === '') {
-                            setThresholdSettings({ ...thresholdSettings, 'maxVal': '' });
-                        }
-                        let newMax = parseInt(i);
-                        if (!isNaN(newMax))
-                            setThresholdSettings({ ...thresholdSettings, 'maxVal': newMax });
+                            setThresholdSettings({ ...thresholdSettings, 'maxVal': +i });
                     }}
                 >
                     <NumberInputField />

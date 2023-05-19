@@ -16,9 +16,6 @@ import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DeviceSettingsTabs from './DeviceSettingsTabs';
 import colors from '../../../theme/foundations/colours';
-import ManageDevices from '../../../api/ManageDevices/ManageDevices';
-import { userDataAtom } from '../../dashboard/atoms/globalDashboardAtoms';
-import { userDeviceThresholds } from '../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
 
 type deviceSettingsModalProps = {
     buoy: deviceSettingsType;
@@ -26,17 +23,6 @@ type deviceSettingsModalProps = {
 
 const DeviceSettingsModal: React.FC<deviceSettingsModalProps> = ({ buoy }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const userData = useRecoilValue(userDataAtom);
-    const setUserThresholdsByDevice = useSetRecoilState(userDeviceThresholds);
-
-    // const fetchUserThresholds = async () => {
-    //     const userThresholds = await ManageDevices.getUserThresholdsByDevice(userData?.userId, buoy.id)
-    //     setUserThresholdsByDevice(userThresholds);
-    // };
-
-    // useEffect(() => {
-    //     fetchUserThresholds();
-    // }, [buoy]);
 
     return (
         <>

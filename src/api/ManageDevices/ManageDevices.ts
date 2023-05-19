@@ -36,7 +36,6 @@ const getUserThresholdsByDevice = async (userId: string | undefined, deviceId: n
             { withCredentials: true });
 
         if (response.status === 200) {
-            console.log(response.data.data);
             return response.data.data;
         }
         return null;
