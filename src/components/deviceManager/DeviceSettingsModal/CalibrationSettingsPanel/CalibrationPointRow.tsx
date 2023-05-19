@@ -3,7 +3,10 @@ import {
     Tr,
     Td,
     NumberInput,
-    NumberInputField
+    NumberInputField,
+    NumberInputStepper,
+    NumberIncrementStepper,
+    NumberDecrementStepper
 } from '@chakra-ui/react';
 
 type calibrationPointRowProps = {
@@ -47,6 +50,7 @@ const CalibrationPointRow: React.FC<calibrationPointRowProps> = ({ number, point
             <Td>
                 <NumberInput
                     precision={2}
+                    step={0.01}
                     value={digitalValue}
                     onChange={val => {
                         updateCalibrationPoints(val);
@@ -60,6 +64,11 @@ const CalibrationPointRow: React.FC<calibrationPointRowProps> = ({ number, point
                       }}
                 >
                     <NumberInputField />
+                    <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                    </NumberInputStepper>
+                    
                 </NumberInput>
             </Td>
             <Td>

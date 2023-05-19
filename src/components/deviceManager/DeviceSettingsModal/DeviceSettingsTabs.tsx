@@ -60,7 +60,7 @@ const DeviceSettingsTabs: React.FC<deviceSettingsTabsProps> = ({ buoy }) => {
 
                 <TabPanel>
                     <ThresholdSettingsPanel
-                        sensors={buoy.sensors}
+                        buoy={buoy}
                     />
                 </TabPanel>
 
