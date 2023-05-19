@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import {
   Box,
   Flex,
@@ -22,6 +23,7 @@ import colors from "../../../../theme/foundations/colours";
 import ManageDevices from "../../../../api/ManageDevices/ManageDevices";
 import { mapCardSpecs, tileServer } from "../../../map/mapConstants";
 import Map from "../../../map/mapContainer/Map";
+import { allDevicesDetails } from "../../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms";
 
 type generalSettingsPanelProps = {
   device: deviceSettingsType;
@@ -29,6 +31,7 @@ type generalSettingsPanelProps = {
 
 const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ device }) => {
   const [deviceSettings, setDevicesSettings] = useState<deviceSettingsType>({} as deviceSettingsType);
+  const [allDevicesAtomContent, setAllDevicsAtomContent] = useRecoilState<deviceSettingsType[]>(allDevicesDetails);
 
   useEffect(() => {
     setDevicesSettings(device)
@@ -45,6 +48,10 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ device }) =
     const response = await ManageDevices.saveDeviceSettings(deviceSettings);
     if (response) {
       toast.success("Device settings saved!");
+      const i = allDevicesAtomContent.findIndex(element => element.id === device.id);
+      const devicesArray = [...allDevicesAtomContent]
+      devicesArray[i] = {... allDevicesAtomContent[i], ...deviceSettings};
+      setAllDevicsAtomContent(devicesArray);
     } else {
       toast.error("There was a problem saving your device settings. Please try again."
       );

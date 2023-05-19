@@ -45,7 +45,6 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
         maxVal: maxVal,
         alert: alert,
     });
-    const [isAlert, setIsAlert] = useState<boolean>(alert);
 
     const setMinVal = (newValue: number) => {
         setThresholdSettings({ ...thresholdSettings, 'minVal': newValue });

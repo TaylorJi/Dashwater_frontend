@@ -17,7 +17,6 @@ import ThresholdSettingsRow from './ThresholdSettingsRow';
 import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
 import { defaultThresholds } from '../../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
 import { userDataAtom } from '../../../dashboard/atoms/globalDashboardAtoms';
-import LoadingGraphic from '../../../layout/LoadingGraphic';
 import uuid from 'react-uuid';
 
 type thresholdSettingsPanelProps = {
