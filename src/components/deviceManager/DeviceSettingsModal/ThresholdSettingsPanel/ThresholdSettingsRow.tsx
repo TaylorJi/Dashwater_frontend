@@ -42,6 +42,7 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
         maxVal: maxVal,
         alert: alert,
     });
+    const [isAlert, setIsAlert] = useState<boolean>(alert);
 
     const setMinVal = (newValue: number) => {
         setThresholdSettings({ ...thresholdSettings, 'minVal': newValue });
@@ -67,17 +68,24 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
         setUpdatedThresholds(newThresholds);
     };
 
-    const setAlert = () => {
-        setThresholdSettings({ ...thresholdSettings, 'alert': !thresholdSettings.alert });
+    const setAlert = (newValue: boolean) => {
+        setThresholdSettings({ ...thresholdSettings, 'alert': newValue });
         const i = updatedThresholds.findIndex(element => element.sensorId === thresholdSettings.sensorId);
         const newThresholds = updatedThresholds;
         if (i > -1) {
-            newThresholds[i] = thresholdSettings;
+            console.log(newValue)
+            newThresholds[i] = {
+                ...thresholdSettings,
+                alert: newValue
+            };
         } else {
-            newThresholds.push(thresholdSettings);
+            newThresholds.push({
+                ...thresholdSettings,
+                alert: newValue
+            });
         }
         setUpdatedThresholds(newThresholds);
-    }
+    };
 
     return (
         <Tr rowGap={0.25}>
@@ -85,9 +93,7 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
             <Td>
                 <NumberInput
                     value={thresholdSettings.minVal}
-                    onChange={i => {
-                            setMinVal(+i);
-                       }}
+                    onChange={i => { setMinVal(+i) }}
                 >
                     <NumberInputField />
                 </NumberInput>
@@ -95,9 +101,7 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
             <Td>
                 <NumberInput
                     value={thresholdSettings.maxVal}
-                    onChange={i => {
-                            setMaxVal(+i);
-                    }}
+                    onChange={i => { setMaxVal(+i) }}
                 >
                     <NumberInputField />
                 </NumberInput>
@@ -109,7 +113,7 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
                 <Switch
                     aria-label='Metric alert state'
                     isChecked={thresholdSettings.alert}
-                    onChange={setAlert}
+                    onChange={i => { setAlert(i.target.checked) }}
                 />
             </Td>
         </Tr>

@@ -32,7 +32,6 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
     const defaultMetricThresholds = useRecoilValue<defaultThresholdType[]>(defaultThresholds);
     const [updatedThresholds, setUpdatedThresholds] = useState<updatedThresholdType[]>([]);
     const [userThresholds, setUserThresholds] = useState<userThresholdType[] | null>(null);
-    const [unsavedChanges, setUnsavedChanges] = useState<boolean>(false);
 
     const getThresholdMin = (sensorId: number, metric: string) => {
         if (userThresholds) {
@@ -79,13 +78,14 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
         if (!updatedThresholds.length) {
             return toast("There are no new changes to save.", { icon: '🤔' })
         }
-
         try {
             setIsLoading(true);
+            console.log(updatedThresholds);
             const response = await ManageDevices.saveThresholdSettings(updatedThresholds);
             if (response) {
                 toast.success('Threshold settings saved!');
                 setUpdatedThresholds([]);
+                fetchUserThresholds();
             } else {
                 toast.error('There was a problem saving your device threshold settings. Please try again.');
             }

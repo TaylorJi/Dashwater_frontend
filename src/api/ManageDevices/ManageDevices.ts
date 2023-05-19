@@ -15,7 +15,6 @@ const saveDeviceSettings = async (newSettings: generalSettingsType) => {
 
 const saveThresholdSettings = async (thresholds: updatedThresholdType[]) => {
     try {
-        console.log(thresholds)
         for (let i = 0; i < thresholds.length; i++) {
             const response = await axios.put(`${API_URL}/userThreshold/updateUserThreshold`, thresholds[i], { withCredentials: true });
             if (response.status !== 200) {
