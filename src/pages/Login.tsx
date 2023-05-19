@@ -27,9 +27,10 @@ const Login: React.FC = () => {
 
     const handleLogin = async (email: string, password: string) => {
         setIsLoading(true);
-        let hashedPW = await hashPassword(password);
+        // let hashedPW = await hashPassword(password);
+        // console.log('hashedPW: ' + hashedPW);
 
-        const user = await Authentication.authenticateUser(email, hashedPW);
+        const user = await Authentication.authenticateUser(email, password);
         if (user) {
             global.userRole = user["role"];
             global.userEmail = user["email"];

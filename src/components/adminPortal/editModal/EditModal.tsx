@@ -74,9 +74,10 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
         }
         if (!data.password) {
             data.password = global.password;
-        } else {
-            data.password = hashPassword(data.password);
-        }
+        } 
+        // else {
+        //     data.password = hashPassword(data.password);
+        // }
 
         if (validation) {
             AdminPortal.updateUser(data);

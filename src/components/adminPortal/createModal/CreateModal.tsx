@@ -72,10 +72,10 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
             toast.error('Password length should be between 8 to 20 which contains one uppercase, one numeric digit and one special character');
             validation = false;
         }
-        let hashedPW = hashPassword(data.password);
-        if (hashedPW) {
-            data.password = hashedPW;
-        }
+        // let hashedPW = hashPassword(data.password);
+        // if (hashedPW) {
+        //     data.password = hashedPW;
+        // }
         if (validation) {
             AdminPortal.createUser(data);
         }
