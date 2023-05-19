@@ -108,7 +108,7 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
     return (
         <>
             {
-                userThresholds ?
+                userThresholds &&
                     <>
                         <Table>
 
@@ -160,10 +160,7 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
                             </Button>
                         </Flex>
                     </>
-                    :
-                    <LoadingGraphic />
             }
-
         </>
     );
 }
