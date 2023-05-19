@@ -76,7 +76,6 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
         const i = updatedThresholds.findIndex(element => element.sensorId === thresholdSettings.sensorId);
         const newThresholds = updatedThresholds;
         if (i > -1) {
-            console.log(newValue)
             newThresholds[i] = {
                 ...thresholdSettings,
                 alert: newValue

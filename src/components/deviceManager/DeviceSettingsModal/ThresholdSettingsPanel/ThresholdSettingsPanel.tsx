@@ -80,7 +80,6 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
         }
         try {
             setIsLoading(true);
-            console.log(updatedThresholds);
             const response = await ManageDevices.saveThresholdSettings(updatedThresholds);
             if (response) {
                 toast.success('Threshold settings saved!');
