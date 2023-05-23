@@ -141,7 +141,7 @@ const Login: React.FC = () => {
                                 Password
                             </Text>
                             <Input
-                                type='password'
+                                type='text'
                                 placeholder='Password'
                                 border='2px'
                                 borderColor={colors.main.ceruBlue}
