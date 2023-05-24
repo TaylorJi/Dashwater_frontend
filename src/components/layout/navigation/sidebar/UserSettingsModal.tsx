@@ -25,7 +25,6 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({ isOpen, onClose }
     
 
     const handleLogout = () => {
-        console.log('inside handleLogout');
         global.userRole = '';
         localStorage.setItem('authenticated', 'false');
         localStorage.setItem('userEmail', "");

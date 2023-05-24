@@ -45,6 +45,20 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
         formState: { errors, isSubmitting },
     } = useForm();
 
+    const bcrypt = require('bcryptjs');
+
+    const hashPassword = async (password: string) => {
+        try {
+            const salt = await bcrypt.genSalt(10); // version of hashing
+            const hashedPassword =  await bcrypt.hash(password, salt); // hash password
+            return hashedPassword;
+    
+        } catch (err) {
+            console.error("Error retrieving user.");
+            return null;
+        }
+    }
+
     const onSubmit = async (data: any) => {
         data._id = global._id;
         data.role = global.role;
@@ -54,10 +68,17 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
             toast.error('Wrong email format');
             validation = false;
         } 
-        if (!checkPassword(data.password)) {
+        if (data.password && !checkPassword(data.password)) {
             toast.error('Password length should be between 8 to 20 which contains one uppercase, one numeric digit and one special character');
             validation = false;
         }
+        if (!data.password) {
+            data.password = global.password;
+        } 
+        // else {
+        //     data.password = hashPassword(data.password);
+        // }
+
         if (validation) {
             AdminPortal.updateUser(data);
         }
@@ -105,7 +126,7 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                         </FormControl>
                         <FormControl isRequired mb={'12px'}>
                             <FormLabel>Password</FormLabel>
-                            <Input id="password" type={showPassword ? "text" : "password"} placeholder="Password" defaultValue={global.password}
+                            <Input id="password" type={showPassword ? "text" : "password"} placeholder="Password" 
                             {...register('password', { shouldUnregister: true })} />
                         <Button onClick={togglePasswordVisibility} mt="2" size="sm">
                         {showPassword ? 'Hide' : 'Show'} Password

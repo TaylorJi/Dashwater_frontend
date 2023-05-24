@@ -4,7 +4,7 @@ import welcomeBgImage from '../assets/images/cristian-palmer-3leBubkp5hk-unsplas
 import loginFormBgImage from '../assets/images/login-form-background.png';
 import yvrLogo from '../assets/images/yvr-logo.png';
 import bcitlogo from '../assets/images/bcitlogo.png';
-import { Box, Button, Flex, Heading, Image, Input, Link, Text, VStack, Popover, PopoverTrigger, PopoverContent, PopoverBody, PopoverArrow, PopoverCloseButton, PopoverHeader} from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Image, Input, Link, Text, VStack, Popover, PopoverTrigger, PopoverContent, PopoverBody, PopoverArrow, PopoverCloseButton, PopoverHeader } from '@chakra-ui/react';
 import Authentication from '../api/Authentication/Authentication';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
@@ -17,9 +17,25 @@ const Login: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
+    const bcrypt = require('bcryptjs');
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    };
+
+
+    const hashPassword = async (password: string) => {
+        const salt = await bcrypt.genSalt(10); // version of hashing
+        const hashedPassword = await bcrypt.hash(password, salt); // hash password
+        return hashedPassword;
+    }
 
     const handleLogin = async (email: string, password: string) => {
         setIsLoading(true);
+        // let hashedPW = await hashPassword(password);
+        // console.log('hashedPW: ' + hashedPW);
 
         const user = await Authentication.authenticateUser(email, password);
         if (user) {
@@ -133,7 +149,7 @@ const Login: React.FC = () => {
                                 Password
                             </Text>
                             <Input
-                                type='password'
+                                type={showPassword ? "text" : "password"}
                                 placeholder='Password'
                                 border='2px'
                                 borderColor={colors.main.ceruBlue}
@@ -150,14 +166,16 @@ const Login: React.FC = () => {
                         >
                             Login
                         </Button>
+                        <Button onClick={togglePasswordVisibility} mt="2" size="sm">
+                            {showPassword ? 'Hide' : 'Show'} Password</Button>
                         <Popover>
                             <PopoverTrigger>
                                 <Text
                                     as='u'
                                     textAlign={'center'}
                                     mb={'1rem'}
-                                    _hover={{ 
-                                        cursor:'pointer'
+                                    _hover={{
+                                        cursor: 'pointer'
                                     }}
                                 >
                                     Forgot password?
@@ -167,7 +185,7 @@ const Login: React.FC = () => {
                                 <PopoverArrow />
                                 <PopoverCloseButton />
                                 <PopoverHeader>Contact Information</PopoverHeader>
-                                <PopoverBody>Please contact 'admin@email.com' to change a password.</PopoverBody>
+                                <PopoverBody>Please contact 'admin@admin.ca' to change a password.</PopoverBody>
                             </PopoverContent>
                         </Popover>
                     </VStack>
