@@ -158,7 +158,8 @@ const Login: React.FC = () => {
                                     pt={'0.3rem'}
                                     mr={'0.3rem'}
                                     icon={showPassword ? faEyeSlash : faEye}    
-                                    onClick={togglePasswordVisibility}                         
+                                    onClick={togglePasswordVisibility}     
+                                    w={5}                    
                                 />
                             </Flex>
 
