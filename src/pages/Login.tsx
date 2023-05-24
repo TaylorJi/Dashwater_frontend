@@ -23,8 +23,9 @@ const Login: React.FC = () => {
 
         const user = await Authentication.authenticateUser(email, password);
         if (user) {
+            localStorage.setItem('userEmail', user["email"]);
+            localStorage.setItem('userRole', user["role"]);
             global.userRole = user["role"];
-            global.userEmail = user["email"];
             localStorage.setItem('authenticated', 'true');
             setIsLoading(false);
             navigate('/dashboard');
@@ -169,18 +170,6 @@ const Login: React.FC = () => {
                                 <PopoverBody>Please contact 'admin@email.com' to change a password.</PopoverBody>
                             </PopoverContent>
                         </Popover>
-                        {/* <Box>
-                            <Text
-                                as='u'
-                                textAlign={'center'}
-                                mb={'1rem'}
-                                _hover={{ 
-                                    cursor:'pointer'
-                                 }}
-                            >
-                                Forgot password?
-                            </Text>
-                        </Box> */}
                     </VStack>
                 </Flex>
             </Flex>

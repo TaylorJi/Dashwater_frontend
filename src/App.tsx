@@ -49,7 +49,6 @@ function App() {
   }, []);
 
   let authenticatd = localStorage.getItem('authenticated');
-  console.log('authenticated: ' + authenticatd);
 
   const routes = useRoutes([
     { path: '/', element: <Login /> },

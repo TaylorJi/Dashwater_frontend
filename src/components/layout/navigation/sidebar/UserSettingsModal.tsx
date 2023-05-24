@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -20,13 +20,16 @@ type UserSettingsModalProps = {
 const UserSettingsModal: React.FC<UserSettingsModalProps> = ({ isOpen, onClose }) => {
 
     const navigate = useNavigate();
+    var userRole = localStorage.getItem('userRole');
+    var userEmail = localStorage.getItem('userEmail');
     
 
     const handleLogout = () => {
         console.log('inside handleLogout');
-        global.userEmail = '';
         global.userRole = '';
         localStorage.setItem('authenticated', 'false');
+        localStorage.setItem('userEmail', "");
+        localStorage.setItem('userRole', "");
         navigate('/');
     };
 
@@ -38,10 +41,10 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({ isOpen, onClose }
                 <ModalCloseButton />
                 <ModalBody>
                     <Text>
-                        <Text as={'span'} fontWeight='semibold'>Email:</Text> {global.userEmail}
+                        <Text as={'span'} fontWeight='semibold'>Email:</Text> {userEmail}
                     </Text>
                     <Text>
-                        <Text as={'span'} fontWeight='semibold'>Access Level:</Text> {global.userRole}
+                        <Text as={'span'} fontWeight='semibold'>Access Level:</Text> {userRole}
                     </Text>
                     <Divider mt='1rem' />
                 </ModalBody>
