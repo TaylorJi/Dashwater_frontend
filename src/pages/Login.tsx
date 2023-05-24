@@ -4,11 +4,14 @@ import welcomeBgImage from '../assets/images/cristian-palmer-3leBubkp5hk-unsplas
 import loginFormBgImage from '../assets/images/login-form-background.png';
 import yvrLogo from '../assets/images/yvr-logo.png';
 import bcitlogo from '../assets/images/bcitlogo.png';
-import { Box, Button, Flex, Heading, Image, Input, Link, Text, VStack, Popover, PopoverTrigger, PopoverContent, PopoverBody, PopoverArrow, PopoverCloseButton, PopoverHeader } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Image, Input, Link, Text, VStack, Popover, PopoverTrigger, PopoverContent, PopoverBody, PopoverArrow, PopoverCloseButton, Spacer, PopoverHeader, Icon, IconButton, Stack } from '@chakra-ui/react';
 import Authentication from '../api/Authentication/Authentication';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import colors from '../theme/foundations/colours';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 
 const Login: React.FC = () => {
@@ -142,12 +145,23 @@ const Login: React.FC = () => {
                             />
                         </Box>
                         <Box w='35%'>
-                            <Text
-                                fontWeight='bold'
-                                mb={'0.5rem'}
-                            >
-                                Password
-                            </Text>
+                            <Flex direction='row'>
+                                <Text
+                                    fontWeight='bold'
+                                    mb={'0.5rem'}
+                                >
+                                    Password
+                                </Text>
+                                <Spacer />
+                                <Icon
+                                    as={FontAwesomeIcon}
+                                    pt={'0.3rem'}
+                                    mr={'0.3rem'}
+                                    icon={showPassword ? faEyeSlash : faEye}    
+                                    onClick={togglePasswordVisibility}                         
+                                />
+                            </Flex>
+
                             <Input
                                 type={showPassword ? "text" : "password"}
                                 placeholder='Password'
@@ -166,8 +180,8 @@ const Login: React.FC = () => {
                         >
                             Login
                         </Button>
-                        <Button onClick={togglePasswordVisibility} mt="2" size="sm">
-                            {showPassword ? 'Hide' : 'Show'} Password</Button>
+                        {/* <Button onClick={togglePasswordVisibility} mt="2" size="sm">
+                            {showPassword ? 'Hide' : 'Show'} Password</Button> */}
                         <Popover>
                             <PopoverTrigger>
                                 <Text
