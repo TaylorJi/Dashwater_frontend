@@ -18,7 +18,7 @@ const saveThresholdSettings = async (myArray: any[]) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            userId: "jack",
+            userId: "645d74bedc0258b56913dcc6",
             deviceId: id,
             metricId: label,
             min: min,
