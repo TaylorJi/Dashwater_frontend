@@ -9,7 +9,7 @@ const saveThresholdSettings = async (myArray: any[]) => {
     for (let i = 0; i < myArray.length; i++) {
       const item = myArray[i];
       const { label, id, bouy, min, max } = item;
-      console.log(id);
+      console.log(item);
       const response = await fetch(
         "http://localhost:8085/api/userThreshold/createUserThreshold",
         {

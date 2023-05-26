@@ -19,9 +19,10 @@ const ThresholdSettingsPanel: React.FC<ThresholdSettingsPanelProps> = ({
   buoy,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [sensorSettings, setSensorSettings] = useState<sensorType[]>(sensors);
 
   const saveThresholdSettings = async () => {
-    const inputs = sensors.map((sensor) => {
+    const inputs = sensorSettings.map((sensor) => {
       const label = buoySensorTags[sensor.metric_type].label;
       const { min, max, alert } = sensor;
       const id = buoy.id;
@@ -39,6 +40,17 @@ const ThresholdSettingsPanel: React.FC<ThresholdSettingsPanelProps> = ({
     setIsLoading(false);
   };
 
+  const handleSensorSettingsChange = (
+    index: number,
+    newSettings: sensorType
+  ) => {
+    setSensorSettings((prevSettings) => {
+      const updatedSettings = [...prevSettings];
+      updatedSettings[index] = newSettings;
+      return updatedSettings;
+    });
+  };
+
   return (
     <>
       <Table>
@@ -52,11 +64,15 @@ const ThresholdSettingsPanel: React.FC<ThresholdSettingsPanelProps> = ({
           </Tr>
         </Thead>
         <Tbody>
-          {sensors.map((sensor) => {
+          {sensorSettings.map((sensor, index, onChange) => {
             return (
               <ThresholdSettingsRow
+                key={index}
                 metric={buoySensorTags[sensor.metric_type].label}
                 metricSensor={sensor}
+                onChange={(newSettings) =>
+                  handleSensorSettingsChange(index, newSettings)
+                }
               />
             );
           })}
