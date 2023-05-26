@@ -5,13 +5,18 @@ import { toast } from "react-hot-toast";
 import { buoySensorTags } from "../../../../theme/metrics/buoySensorTags";
 import ThresholdSettingsRow from "./ThresholdSettingsRow";
 import ManageDevices from "../../../../api/ManageDevices/ManageDevices";
+import DeviceSettingsModal, {
+  buoySettingsType,
+} from "../../DeviceSettingsModal/DeviceSettingsModal";
 
-type thresholdSettingsPanelProps = {
+type ThresholdSettingsPanelProps = {
+  buoy: buoySettingsType;
   sensors: sensorType[];
 };
 
-const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({
+const ThresholdSettingsPanel: React.FC<ThresholdSettingsPanelProps> = ({
   sensors,
+  buoy,
 }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -19,7 +24,8 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({
     const inputs = sensors.map((sensor) => {
       const label = buoySensorTags[sensor.metric_type].label;
       const { min, max, alert } = sensor;
-      return { label, min, max, alert };
+      const id = buoy.id;
+      return { label, id, min, max, alert };
     });
     setIsLoading(true);
     const res = await ManageDevices.saveThresholdSettings(inputs);

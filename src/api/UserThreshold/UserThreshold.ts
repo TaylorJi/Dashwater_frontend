@@ -1,14 +1,13 @@
 import axios, { AxiosResponse } from "axios";
 import { API_URL } from "../Environments";
 
-const getWeather = async () => {
+const UserThresholdCreate = async (msg: string) => {
   try {
     const response: any = await axios.get<any, AxiosResponse<string[]>>(
-      `${API_URL}/nada/getWeather`
+      `${API_URL}/userThreshold/createUserThreshold`
     );
-
     if (response.status === 200) {
-      return response.data.data;
+      return response.data.text;
     }
 
     return null;
@@ -17,14 +16,13 @@ const getWeather = async () => {
   }
 };
 
-const getTide = async () => {
+const UserThresholdUpdate = async (msg: string) => {
   try {
     const response: any = await axios.get<any, AxiosResponse<string[]>>(
-      `${API_URL}/weather/getTide`
+      `${API_URL}/userThreshold/updateUserThreshold`
     );
-
     if (response.status === 200) {
-      return response.data.data;
+      return response.data.text;
     }
 
     return null;
@@ -33,9 +31,9 @@ const getTide = async () => {
   }
 };
 
-const Dashboard = {
-  getWeather,
-  getTide,
+const UserThreshold = {
+  UserThresholdCreate,
+  UserThresholdUpdate,
 };
 
-export default Dashboard;
+export default UserThreshold;
