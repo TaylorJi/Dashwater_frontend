@@ -2,15 +2,13 @@
 Front-end repo for the 2023 iteration of the IoT Dashboard
 
 ## Team Members
-Susan Li
+Nash Baek
 
-Sally Poon
+Taylor Ji
 
-Jackson Marsnas
+Siwoon Lim
 
-Semih Erguven
-
-Basil Kim
+Ellen Jung
 
 ## Starting the Application
 Make sure the back-end is running first!
