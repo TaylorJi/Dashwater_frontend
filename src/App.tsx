@@ -1,19 +1,22 @@
-import React from 'react';
-import { Navigate, Route, Routes } from 'react-router';
-import Authentication from './components/dashboard/auth/Authentication';
-import DeviceDetailsWrapper from './components/wrappers/DeviceDetailsWrapper/DeviceDetailsWrapper';
-import Alerts from './pages/Alerts';
-import Dashboard from './pages/Dashboard';
-import DeviceManager from './pages/DeviceManager';
-import Login from './pages/Login';
-import NotFound from './pages/NotFound';
+import React, { useEffect } from "react";
+import { useRoutes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router";
+import Authentication from "./components/dashboard/auth/Authentication";
+import DeviceDetailsWrapper from "./components/wrappers/DeviceDetailsWrapper/DeviceDetailsWrapper";
+import Alerts from "./pages/Alerts";
+import Dashboard from "./pages/Dashboard";
+import DeviceManager from "./pages/DeviceManager";
+import Login from "./pages/Login";
+import NotFound from "./pages/NotFound";
+import Admin from "./pages/AdminPortal";
 
 function App() {
   return (
     <Routes>
-      <Route path='/' element={<Login />} />
+      <Route path="/" element={<Login />} />
 
-      <Route path='/dashboard'
+      <Route
+        path="/dashboard"
         element={
           <Authentication>
             <DeviceDetailsWrapper>
@@ -23,7 +26,8 @@ function App() {
         }
       />
 
-      <Route path='/alerts'
+      <Route
+        path="/alerts"
         element={
           <Authentication>
             <DeviceDetailsWrapper>
@@ -33,7 +37,8 @@ function App() {
         }
       />
 
-      <Route path='/manageDevices'
+      <Route
+        path="/manageDevices"
         element={
           <Authentication>
             <DeviceDetailsWrapper>
@@ -43,10 +48,20 @@ function App() {
         }
       />
 
-      <Route path='404' element={<NotFound />} />
+      <Route
+        path="/adminPortal"
+        element={
+          <Authentication>
+            {/* <DeviceDetailsWrapper> */}
+              <Admin />
+            {/* </DeviceDetailsWrapper> */}
+          </Authentication>
+        }
+      />
 
-      <Route path='*' element={<Navigate to='404' replace />} />
+      <Route path="404" element={<NotFound />} />
 
+      <Route path="*" element={<Navigate to="404" replace />} />
     </Routes>
   );
 }

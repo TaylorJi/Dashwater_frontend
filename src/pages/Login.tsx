@@ -3,7 +3,8 @@ import BaseLayout from '../components/layout/BaseLayout';
 import loginFormBgImage from '../assets/images/login-form-background.png';
 import yvrLogo from '../assets/images/yvr-logo.png';
 import bcitlogo from '../assets/images/bcitlogo.png';
-import { Box, Button, Flex, Heading, Image, Input, Link, Text, useMediaQuery, VStack } from '@chakra-ui/react';
+// import { Box, Button, Flex, Heading, Image, Input, Link, Text, useMediaQuery, VStack } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Image, Input, Link, Text, VStack,useMediaQuery, Popover, PopoverTrigger, PopoverContent, PopoverBody, PopoverArrow, PopoverCloseButton, Spacer, PopoverHeader, Icon, IconButton, Stack } from '@chakra-ui/react';
 import Authentication from '../api/Authentication/Authentication';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
@@ -11,6 +12,9 @@ import colors from '../theme/foundations/colours';
 import Sessions from '../api/Sessions/Sessions';
 import { useResetRecoilState } from 'recoil';
 import { sidebarOpenAtom } from '../components/layout/navigation/atoms/sidebarAtoms';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 
 const Login: React.FC = () => {
@@ -20,6 +24,12 @@ const Login: React.FC = () => {
     const [isDisabled, setIsDisabled] = useState(false);
     const navigate = useNavigate();
     const resetSidebarOpen = useResetRecoilState(sidebarOpenAtom);
+
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword((prevShowPassword) => !prevShowPassword);
+    };
 
     const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
 
@@ -99,6 +109,10 @@ const Login: React.FC = () => {
                 const isSessionCreated = await Sessions.createSession(user._id);
                 if (isSessionCreated) {
                     localStorage.setItem('failedLoginAttempts', JSON.stringify({'count': 0, 'lastFailedLoginAttemptDate': null}));
+                    localStorage.setItem('userEmail', user["email"]);
+                    localStorage.setItem('userRole', user["role"]);
+                    global.userRole = user["role"];
+                    localStorage.setItem('authenticated', 'true');
                     navigate('/dashboard');
                 } else {
                     setIsLoading(false);
@@ -199,6 +213,7 @@ const Login: React.FC = () => {
                         <Box w='35%'>
                             <Text
                                 fontWeight='bold'
+                                mb={'0.5rem'}
                             >
                                 Email
                             </Text>
@@ -212,13 +227,32 @@ const Login: React.FC = () => {
                             />
                         </Box>
                         <Box w='35%'>
-                            <Text
+                            {/* <Text
                                 fontWeight='bold'
+                                mb={'0.5rem'}
                             >
                                 Password
-                            </Text>
+                            </Text> */}
+                            <Flex direction='row'>
+                                <Text
+                                    fontWeight='bold'
+                                    mb={'0.5rem'}
+                                >
+                                    Password
+                                </Text>
+                                <Spacer />
+                                <Icon
+                                    as={FontAwesomeIcon}
+                                    pt={'0.3rem'}
+                                    mr={'0.3rem'}
+                                    icon={showPassword ? faEyeSlash : faEye}    
+                                    onClick={togglePasswordVisibility}     
+                                    w={5}                    
+                                />
+                            </Flex>
                             <Input
-                                type='password'
+                                // type='password'
+                                type={showPassword ? "text" : "password"}
                                 placeholder='Password'
                                 border='2px'
                                 borderColor={colors.main.ceruBlue}
@@ -239,6 +273,26 @@ const Login: React.FC = () => {
                         >
                             Login
                         </Button>
+                        <Popover>
+                            <PopoverTrigger>
+                                <Text
+                                    as='u'
+                                    textAlign={'center'}
+                                    mb={'1rem'}
+                                    _hover={{
+                                        cursor: 'pointer'
+                                    }}
+                                >
+                                    Forgot password?
+                                </Text>
+                            </PopoverTrigger>
+                            <PopoverContent>
+                                <PopoverArrow />
+                                <PopoverCloseButton />
+                                <PopoverHeader>Contact Information</PopoverHeader>
+                                <PopoverBody>Please contact 'yvradmin@gmail.com' to change a password.</PopoverBody>
+                            </PopoverContent>
+                        </Popover>
                     </VStack>
                 </Flex>
             </Flex>

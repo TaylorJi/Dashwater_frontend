@@ -1,4 +1,4 @@
-import { faDiagramProject, faBell, faSdCard } from '@fortawesome/free-solid-svg-icons';
+import { faDiagramProject, faBell, faSdCard, faLock } from '@fortawesome/free-solid-svg-icons';
 
 export const sidebarCategories = [
     {
@@ -15,5 +15,10 @@ export const sidebarCategories = [
         'icon': faSdCard,
         'description': 'Manage Devices',
         'link': '/manageDevices'
+    },
+    {
+        'icon': faLock,
+        'description': 'Admin Portal',
+        'link': '/adminPortal'
     }
 ];
