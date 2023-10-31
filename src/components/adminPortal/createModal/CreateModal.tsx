@@ -116,8 +116,8 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
                                     }
                                 } >
                                 <HStack spacing='20px'>
-                                    <Radio value='User'>User</Radio>
-                                    <Radio value='Admin'>Admin</Radio>
+                                    <Radio value='user'>User</Radio>
+                                    <Radio value='admin'>Admin</Radio>
                                 </HStack>
                             </RadioGroup>
                         </FormControl>

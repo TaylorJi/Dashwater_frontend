@@ -91,11 +91,22 @@ const createUser = async (user: any) => {
 };
 
 const deleteUser = async (idArray: string[]) => {
-
-    for (let i = 0; i < idArray.length; i++) {
-        const request: any = await axios.delete<deleteUserResponse>(`${API_URL}/user/deleteUser/${idArray[i]}`)
+    try {
+        const request: any = await axios.post(USER_URL,
+            {
+                operation: "delete",
+                emails: idArray
+            });
+        if (request.status === 200) {
+            window.location.reload();
+        }
+    } catch (_err) {
+        console.error("Error in deleteUser:", _err);
     }
-    window.location.reload();
+    // for (let i = 0; i < idArray.length; i++) {
+    //     const request: any = await axios.delete<deleteUserResponse>(`${API_URL}/user/deleteUser/${idArray[i]}`)
+    // }
+    // window.location.reload();
 };
 
 const getSingleUser = async (idArray: string[]) => {
@@ -115,16 +126,40 @@ const getSingleUser = async (idArray: string[]) => {
 };
 
 const updateUser = async (user: any) => {
-    const response: any = await axios.put<updateUserResponse>(`${API_URL}/user/updateUser/${user._id}`,
-        { email: user.email, password: user.password, role: user.role },
-        {
-            headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-            },
-        },);
-    if (response.status === 200) {
-        window.location.reload();
+    // const response: any = await axios.put<updateUserResponse>(`${API_URL}/user/updateUser/${user._id}`,
+    //     { email: user.email, password: user.password, role: user.role },
+    //     {
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             Accept: 'application/json',
+    //         },
+    //     },);
+    // if (response.status === 200) {
+    //     window.location.reload();
+    // }
+    try {
+        const response: any = await axios.post(USER_URL,
+            {
+                operation: "update",
+                users_data: [
+                    {
+                        email: user.email,
+                        password: user.password,
+                        role: user.role
+                    }
+                ]
+            }
+        );
+
+        if (response.status === 200) {
+            window.location.reload();
+        } else {
+            console.log("Response Status:", response.status);
+            console.log("Response Data:", response.data);
+        }
+
+    } catch (error) {
+        console.error("Error in createUser:", error);
     }
 };
 
