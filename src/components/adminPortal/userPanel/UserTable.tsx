@@ -12,7 +12,6 @@ const UserTable: React.FC = () => {
     const getUserData = async () => {
         try {
             const data = await AdminPortal.getUser();
-            console.log("User Data from getUser:", data);
             if (data) {
                 setUserData(data);
             } else {

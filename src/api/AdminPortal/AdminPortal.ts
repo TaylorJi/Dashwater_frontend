@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { API_URL } from "../Environments";
+import { API_URL, USER_URL } from "../Environments";
 import { Navigate } from 'react-router';
 
 type createUserResponse = {
@@ -18,6 +18,7 @@ type updateUserResponse = {
 type deleteUserResponse = {
     userId: string
 };
+
 
 // const getUser = async () => {
 //     try {
@@ -39,12 +40,9 @@ type deleteUserResponse = {
 
 const getUser = async () => {
     try {
-        const response = await axios.post("https://ma93xudga3.execute-api.us-east-1.amazonaws.com/prod/data/", {
+        const response = await axios.post(USER_URL, {
             operation: "scan"
         });
-
-        console.log("Response Status:", response.status);
-        console.log("Response Data:", response.data);
 
         if (response.status === 200) {
             const users = response.data.items.map((item: { email: { S: string }, password: { S: string }, role: { S: string } }, index: number) => ({
@@ -54,7 +52,6 @@ const getUser = async () => {
                 role: item.role.S,
             }));
 
-            console.log("Mapped Users:", users);
             return users;
         }
 
@@ -67,24 +64,31 @@ const getUser = async () => {
 };
 
 const createUser = async (user: any) => {
-    // show up the new component allowing admin to create a new user 
-    // currently hardcoded test user account create when create button is clicked 
-    // update email, password part 
-    const response: any = await axios.post<createUserResponse>(`${API_URL}/user/createUser`,
-    {email: user.email, password: user.password, role: user.role}, 
-    {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      },);
-    if (response.status === 200) {
-        window.location.reload();
-    } else {
+    try {
+        const response: any = await axios.post(USER_URL,
+            {
+                operation: "update",
+                users_data: [
+                    {
+                        email: user.email,
+                        password: user.password,
+                        role: user.role
+                    }
+                ]
+            }
+        );
+
+        if (response.status === 200) {
+            window.location.reload();
+        } else {
+            console.log("Response Status:", response.status);
+            console.log("Response Data:", response.data);
+        }
+
+    } catch (error) {
+        console.error("Error in createUser:", error);
     }
 };
-
-
 
 const deleteUser = async (idArray: string[]) => {
 
@@ -113,13 +117,13 @@ const getSingleUser = async (idArray: string[]) => {
 
 const updateUser = async (user: any) => {
     const response: any = await axios.put<updateUserResponse>(`${API_URL}/user/updateUser/${user._id}`,
-    {email: user.email, password: user.password, role: user.role}, 
-    {
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-      },);
+        { email: user.email, password: user.password, role: user.role },
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+            },
+        },);
     if (response.status === 200) {
         window.location.reload();
     }
