@@ -60,7 +60,6 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
     // }
 
     const onSubmit = async (data: any) => {
-        data._id = global._id;
         data.role = global.role;
 
         let validation: boolean = true;
@@ -116,10 +115,10 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                 <ModalCloseButton onClick={onClose} />
                 <ModalBody>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <FormControl isRequired mb={'12px'}>
+                        {/* <FormControl isRequired mb={'12px'}>
                             <FormLabel>User ID</FormLabel>
                             <Input id="_id" placeholder='User ID' defaultValue={global._id} disabled={true} />
-                        </FormControl>
+                        </FormControl> */}
                         <FormControl isRequired mb={'12px'}>
                             <FormLabel>Email</FormLabel>
                             <Input id="email" placeholder='Email' defaultValue={global.email} {...register('email', { shouldUnregister: true })} />
@@ -141,8 +140,8 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                                     }
                                 } >
                                 <HStack spacing='20px'>
-                                    <Radio value='User'>User</Radio>
-                                    <Radio value='Admin'>Admin</Radio>
+                                    <Radio value='user'>User</Radio>
+                                    <Radio value='admin'>Admin</Radio>
                                 </HStack>
                             </RadioGroup>
                         </FormControl>
