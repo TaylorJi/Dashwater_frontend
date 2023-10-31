@@ -12,6 +12,7 @@ const UserTable: React.FC = () => {
     const getUserData = async () => {
         try {
             const data = await AdminPortal.getUser();
+            console.log("User Data from getUser:", data);
             if (data) {
                 setUserData(data);
             } else {
@@ -19,6 +20,7 @@ const UserTable: React.FC = () => {
             }
 
         } catch (_err) {
+            console.error("Error in getUserData:", _err);
             toast.error('Oh no! There was a problem fetching weather data. Please refresh the page.');
         }
 
@@ -46,7 +48,7 @@ const UserTable: React.FC = () => {
 
                 <Thead bg={colors.main.lavender} h="3rem">
                     <Tr>
-                    <Th color={colors.main.usafaBlue}></Th>
+                        <Th color={colors.main.usafaBlue}></Th>
                         <Th color={colors.main.usafaBlue}>Id</Th>
                         <Th color={colors.main.usafaBlue}>Email</Th>
                         <Th color={colors.main.usafaBlue}>Password</Th>
@@ -58,25 +60,24 @@ const UserTable: React.FC = () => {
                     {userData ?
                         userData.map(
                             (user) => {
-                            return (
-                                <Tr>
-                                    <Td>
-                                        <Checkbox
-                                            onChange={() => onSelectedChange(user['_id'])}
-                                        ></Checkbox>
-                                    </Td>
-                                    <Td>{user['_id']}</Td>
-                                    <Td>{user['email']}</Td>
-                                    <Td>*******</Td>
-                                    <Td>{user['role']}</Td>
-                                </Tr>
-                            )}
+                                return (
+                                    <Tr key={user['_id']}>
+                                        <Td>
+                                            <Checkbox
+                                                onChange={() => onSelectedChange(user['_id'])}
+                                            ></Checkbox>
+                                        </Td>
+                                        <Td>{user['_id']}</Td>
+                                        <Td>{user['email']}</Td>
+                                        <Td>*******</Td>
+                                        <Td>{user['role']}</Td>
+                                    </Tr>
+                                )
+                            }
                         ) : <></>
                     }
-
-
                 </Tbody>
-            </Table>        
+            </Table>
         </>
     )
 };

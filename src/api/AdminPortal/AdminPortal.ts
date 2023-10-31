@@ -19,22 +19,52 @@ type deleteUserResponse = {
     userId: string
 };
 
+// const getUser = async () => {
+//     try {
+//         // const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/user/getUser`);
+//         const response = await axios.post("https://ma93xudga3.execute-api.us-east-1.amazonaws.com/prod/data/", {
+//             operation: "scan"
+//         });
+
+//         if (response.status === 200) {
+//             return response.data.data;
+//         }
+
+//         return null;
+
+//     } catch (_err) {
+//         return null;
+//     }
+// };
+
 const getUser = async () => {
     try {
+        const response = await axios.post("https://ma93xudga3.execute-api.us-east-1.amazonaws.com/prod/data/", {
+            operation: "scan"
+        });
 
-        const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/user/getUser`);
+        console.log("Response Status:", response.status);
+        console.log("Response Data:", response.data);
 
         if (response.status === 200) {
-            return response.data.data;
+            const users = response.data.items.map((item: { email: { S: string }, password: { S: string }, role: { S: string } }, index: number) => ({
+                _id: index, // Temporarily use index as an ID
+                email: item.email.S,
+                password: item.password.S,
+                role: item.role.S,
+            }));
+
+            console.log("Mapped Users:", users);
+            return users;
         }
 
         return null;
 
     } catch (_err) {
+        console.error("Error in getUser:", _err);
         return null;
     }
 };
-
 
 const createUser = async (user: any) => {
     // show up the new component allowing admin to create a new user 
