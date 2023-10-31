@@ -26,12 +26,12 @@ const UserTable: React.FC = () => {
 
     };
 
-    const onSelectedChange = (id: string) => {
-        if (idArray.includes(id)) {
-            let index = idArray.indexOf(id);
+    const onSelectedChange = (email: string) => {
+        if (idArray.includes(email)) {
+            let index = idArray.indexOf(email);
             idArray.splice(index, 1);
         } else {
-            idArray.push(id);
+            idArray.push(email);
         }
         global.idArray = idArray;
     }
@@ -64,7 +64,7 @@ const UserTable: React.FC = () => {
                                     <Tr key={user['_id']}>
                                         <Td>
                                             <Checkbox
-                                                onChange={() => onSelectedChange(user['_id'])}
+                                                onChange={() => onSelectedChange(user['email'])}
                                             ></Checkbox>
                                         </Td>
                                         <Td>{user['_id']}</Td>

@@ -96,9 +96,8 @@ const deleteUser = async (idArray: string[]) => {
 
 const getSingleUser = async (idArray: string[]) => {
     try {
-        const response: any = await axios.get<any, AxiosResponse<string>>(`${API_URL}/user/getSingleUser/${idArray[0]}`)
+        const response: any = await axios.get<any, AxiosResponse<string>>(`https://ma93xudga3.execute-api.us-east-1.amazonaws.com/prod/data/?email=${idArray[0]}`)
         if (response.status === 200) {
-            global._id = response.data["_id"];
             global.email = response.data["email"];
             global.password = response.data["password"];
             global.role = response.data["role"];
