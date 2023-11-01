@@ -21,7 +21,7 @@ const AdminPortalTabs: React.FC = () => {
                 >
                     User Management
                 </Tab>
-                <Tab
+                {/* <Tab
                     mr='1rem'
                     borderBottomWidth='0.2rem'
                     _selected={{
@@ -50,7 +50,7 @@ const AdminPortalTabs: React.FC = () => {
                     }}
                 >
                     Reporting
-                </Tab>
+                </Tab> */}
             </TabList>
 
             <TabPanels>

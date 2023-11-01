@@ -14,6 +14,7 @@ import { useResetRecoilState } from 'recoil';
 import { sidebarOpenAtom } from '../components/layout/navigation/atoms/sidebarAtoms';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { randomBytes } from 'crypto';
 // import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 
@@ -106,7 +107,8 @@ const Login: React.FC = () => {
 
             const user = await Authentication.authenticateUser(email, password);
             if (user) {
-                const isSessionCreated = await Sessions.createSession(user._id);
+                // const isSessionCreated = await Sessions.createSession(user.email);
+                const isSessionCreated = await Sessions.createSession("64647e0fd22c80b2bec73cad"); // it's hardcoded as we don't have user id which is a string of 12 bytes or a string of 24 hex characters or an integer
                 if (isSessionCreated) {
                     localStorage.setItem('failedLoginAttempts', JSON.stringify({'count': 0, 'lastFailedLoginAttemptDate': null}));
                     localStorage.setItem('userEmail', user["email"]);

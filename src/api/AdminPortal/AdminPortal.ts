@@ -45,11 +45,11 @@ const getUser = async () => {
         });
 
         if (response.status === 200) {
-            const users = response.data.items.map((item: { email: { S: string }, password: { S: string }, role: { S: string } }, index: number) => ({
+            // const users = response.data.items.map((item: { email: { S: string }, password: { S: string }, role: { S: string } }, index: number) => ({
+            const users = response.data.items.map((item: { email: string, role: string }, index: number) => ({
                 _id: index, // Temporarily use index as an ID
-                email: item.email.S,
-                password: item.password.S,
-                role: item.role.S,
+                email: item.email,
+                role: item.role,
             }));
 
             return users;
@@ -67,14 +67,10 @@ const createUser = async (user: any) => {
     try {
         const response: any = await axios.post(USER_URL,
             {
-                operation: "update",
-                users_data: [
-                    {
-                        email: user.email,
-                        password: user.password,
-                        role: user.role
-                    }
-                ]
+                operation: "add",
+                email: user.email,
+                password: user.password,
+                role: user.role
             }
         );
 
@@ -113,6 +109,7 @@ const getSingleUser = async (idArray: string[]) => {
     try {
         const response: any = await axios.get<any, AxiosResponse<string>>(`https://ma93xudga3.execute-api.us-east-1.amazonaws.com/prod/data/?email=${idArray[0]}`)
         if (response.status === 200) {
+            console.log(response.data);
             global.email = response.data["email"];
             global.password = response.data["password"];
             global.role = response.data["role"];

@@ -50,10 +50,10 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({ isOpen, onClose }
                 <ModalCloseButton />
                 <ModalBody>
                     <Text>
-                        <Text as={'span'} fontWeight='semibold'>Email:</Text> {userData?.email}
+                        <Text as={'span'} fontWeight='semibold'>Email:</Text> {localStorage.getItem("userEmail")}
                     </Text>
                     <Text>
-                        <Text as={'span'} fontWeight='semibold'>Access Level:</Text> {userData?.role}
+                        <Text as={'span'} fontWeight='semibold'>Access Level:</Text> {localStorage.getItem("userRole")}
                     </Text>
                     <Divider mt='1rem' />
                 </ModalBody>

@@ -23,7 +23,7 @@ const createSession = async (userId: string) => {
             userId: userId
         },
         { withCredentials: true  });
-
+        
 
         if (response.status === 200) {
             return response.data.user;
@@ -32,6 +32,7 @@ const createSession = async (userId: string) => {
         return null;
 
     } catch(_err) {
+        console.log('Session: ' + _err)
         return null;
     }
 }

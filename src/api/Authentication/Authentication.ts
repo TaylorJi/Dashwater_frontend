@@ -1,18 +1,19 @@
 import axios, { AxiosResponse } from 'axios';
-import { API_URL } from '../Environments';
+import { USER_URL } from "../Environments";
 
 
 const authenticateUser = async (email: string, password: string) => {
     try {
-        const response: any = await axios.post<any, AxiosResponse<string[]>>(`${API_URL}/user/validateUser`,
+        const response: any = await axios.post(USER_URL,
             {
+                operation: "verify",
                 email: email,
                 password: password
             }
         );
 
         if (response.status === 200) {
-            return response.data.user;
+            return response.data;
         }
 
         return null;
