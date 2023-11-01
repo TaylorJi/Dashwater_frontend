@@ -42,7 +42,6 @@ const UserTable: React.FC = () => {
 
     return (
         <>
-
             <Table >
 
                 <Thead bg={colors.main.lavender} h="3rem">
