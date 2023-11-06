@@ -22,6 +22,7 @@ const BuoySettingsRow: React.FC<buoySettingsRowProps> = ({ buoy }) => {
                 <Td>
                     {
                         buoy['sensors'].map(sensor => {
+                            console.log(sensor.metric);
                             return (
                                 <SensorTag metricKey={sensor.metric} key={uuid()} />
                             );

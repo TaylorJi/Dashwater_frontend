@@ -19,9 +19,9 @@ function App() {
         path="/dashboard"
         element={
           <Authentication>
-            {/* <DeviceDetailsWrapper> */}
+            <DeviceDetailsWrapper>
               <Dashboard />
-            {/* </DeviceDetailsWrapper> */}
+            </DeviceDetailsWrapper>
           </Authentication>
         }
       />
@@ -30,9 +30,9 @@ function App() {
         path="/alerts"
         element={
           <Authentication>
-            {/* <DeviceDetailsWrapper> */}
+            <DeviceDetailsWrapper>
               <Alerts />
-            {/* </DeviceDetailsWrapper> */}
+            </DeviceDetailsWrapper>
           </Authentication>
         }
       />
@@ -41,9 +41,9 @@ function App() {
         path="/manageDevices"
         element={
           <Authentication>
-            {/* <DeviceDetailsWrapper> */}
+            <DeviceDetailsWrapper>
               <DeviceManager />
-            {/* </DeviceDetailsWrapper> */}
+            </DeviceDetailsWrapper>
           </Authentication>
         }
       />
