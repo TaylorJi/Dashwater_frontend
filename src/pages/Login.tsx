@@ -116,26 +116,41 @@ const Login: React.FC = () => {
             })
     
             user.authenticateUser(authDetails, {
-                onSuccess: async (data) => {
-                    console.log("Cognito Response: ", data);
-    
-                    // const isSessionCreated = await Sessions.createSession(
-                    //     "64647e0fd22c80b2bec73cad"
-                    //   ); // it's hardcoded as we don't have user id which is a string of 12 bytes or a string of 24 hex characters or an integer
-                    //   if (isSessionCreated) {
-                    //     localStorage.setItem(
-                    //       "failedLoginAttempts",
-                    //       JSON.stringify({ count: 0, lastFailedLoginAttemptDate: null })
-                    //     );
-                    //     localStorage.setItem("userEmail", email);
-                    //     // localStorage.setItem("userRole", user["role"]);
-                    //     // global.userRole = user["role"];
-                    //     localStorage.setItem("authenticated", "true");
-                    //     navigate("/dashboard");
-                    //   } else {
-                    //     setIsLoading(false);
-                    //     toast.error("There was a problem creating a session. Try again.");
-                    //   }
+                onSuccess: async (cognitoData) => {
+                    
+                    // NOTE: Please decide how you want to pass the JWT token to the backend. Need to include this JWT token in the header when making requests to AWS.
+
+                    let idToken = cognitoData.getIdToken();
+                    let jwtToken = idToken.getJwtToken(); //Pass this token to backend
+                    let idTokenPayload = idToken.payload;
+                    let userRole = idTokenPayload["cognito:groups"][0];
+
+                    console.log("Cognito Response: ", cognitoData);
+                    console.log("JWT token: ", jwtToken);
+                    console.log("userRole: ", userRole)
+                    
+                    // ------------ KEEPING ORIGINAL DASHBOARD SESSION CREATION LOGIC ------------//
+                    
+                    const isSessionCreated = await Sessions.createSession(
+                        "64647e0fd22c80b2bec73cad"
+                      ); // it's hardcoded as we don't have user id which is a string of 12 bytes or a string of 24 hex characters or an integer
+                      if (isSessionCreated) {
+                        localStorage.setItem(
+                          "failedLoginAttempts",
+                          JSON.stringify({ count: 0, lastFailedLoginAttemptDate: null })
+                        );
+                        localStorage.setItem("userEmail", email);
+                        localStorage.setItem("userRole", userRole); //CHANGED: updated this with the userRole retrieved from cognito
+                        global.userRole = userRole;  //CHANGED: updated this with the userRole retrieved from cognito
+                        localStorage.setItem("authenticated", "true");
+                        navigate("/dashboard");
+                      } else {
+                        setIsLoading(false);
+                        toast.error("There was a problem creating a session. Try again.");
+                      }
+
+                  // ------------ ABOVE CODE IS ORIGINAL DASHBOARD LOGIC ------------//
+
                 },
                 onFailure: (err) => {
                     console.error("Cognito Response: ", err);
