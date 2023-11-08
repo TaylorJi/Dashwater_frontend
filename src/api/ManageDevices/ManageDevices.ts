@@ -2,14 +2,37 @@ import axios from "axios";
 import { API_URL } from "../Environments";
 
 const saveDeviceSettings = async (newSettings: generalSettingsType) => {
+    // try {
+    //     const response = await axios.put(`${API_URL}/device/updateDeviceSettings`, newSettings, { withCredentials: true });
+    //     if (response.status === 200) {
+    //         return true;
+    //     }
+    //     return false;
+    // } catch (_err) {
+    //     return false;
+    // }
+
     try {
-        const response = await axios.put(`${API_URL}/device/updateDeviceSettings`, newSettings, { withCredentials: true });
+        const response = await axios.post(`${API_URL}/device/updateDeviceSettings`, {
+            operation: "scan"
+        });
+
         if (response.status === 200) {
-            return true;
+            // const users = response.data.items.map((item: { email: { S: string }, password: { S: string }, role: { S: string } }, index: number) => ({
+            const users = response.data.items.map((item: { email: string, role: string }, index: number) => ({
+                _id: index, // Temporarily use index as an ID
+                email: item.email,
+                role: item.role,
+            }));
+
+            return users;
         }
-        return false;
+
+        return null;
+
     } catch (_err) {
-        return false;
+        console.error("Error in getUser:", _err);
+        return null;
     }
 };
 

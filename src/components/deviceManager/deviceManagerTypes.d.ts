@@ -86,6 +86,7 @@ type userThresholdType = {
     minVal: number;
     maxVal: number;
     alert: boolean;
+    power: boolean;
 }
 
 type updatedThresholdType = {
@@ -95,4 +96,5 @@ type updatedThresholdType = {
     minVal: string | number;
     maxVal: string | number;
     alert: boolean;
+    power: boolean;
 }
