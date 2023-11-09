@@ -125,15 +125,10 @@ const Login: React.FC = () => {
                     let idTokenPayload = idToken.payload;
                     let userRole = idTokenPayload["cognito:groups"][0];
 
-                    let accessToken = cognitoData.getAccessToken();
-                    let accessJwtToken = accessToken.getJwtToken()
-
                     console.log("Cognito Response: ", cognitoData);
                     console.log("IdToken - JWT token: ", jwtToken);
                     console.log("userRole: ", userRole)
 
-                    console.log("AccessToken - JWT token: ", accessJwtToken);
-                    
                     // ------------ KEEPING ORIGINAL DASHBOARD SESSION CREATION LOGIC ------------//
                     
                     const isSessionCreated = await Sessions.createSession(
