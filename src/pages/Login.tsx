@@ -35,6 +35,8 @@ const Login: React.FC = () => {
     const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
 
     useEffect(() => {
+        localStorage.removeItem('userRole');
+        localStorage.removeItem('userEmail');
         resetSidebarOpen();
     }, []);
 
@@ -115,7 +117,11 @@ const Login: React.FC = () => {
                     localStorage.setItem('userRole', user["role"]);
                     global.userRole = user["role"];
                     localStorage.setItem('authenticated', 'true');
-                    navigate('/dashboard');
+                    if (user["role"] === 'admin') {
+                        navigate('/adminPortal');
+                    } else {
+                        navigate('/dashboard');
+                    }
                 } else {
                     setIsLoading(false);
                     toast.error('There was a problem creating a session. Try again.');
