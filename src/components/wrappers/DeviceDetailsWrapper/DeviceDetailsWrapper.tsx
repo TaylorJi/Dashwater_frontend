@@ -19,6 +19,7 @@ type deviceDetailsWrapperProps = {
 const DeviceDetailsWrapper: React.FC<deviceDetailsWrapperProps> = ({ children }) => {
 
     const [deviceDetails, setDevicesDetails] = useRecoilState(allDevicesDetails);
+    // const [sensorDetials, setSensorsDetails] = useRecoilState(allDevicesDetails.);
 
     const fetchData = async () => {
 

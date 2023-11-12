@@ -9,6 +9,76 @@ import { faCircleQuestion, faUserCircle } from '@fortawesome/free-solid-svg-icon
 import UserSettingsModal from './UserSettingsModal';
 import uuid from 'react-uuid';
 
+// const Sidebar: React.FC = () => {
+
+//     const { isOpen, onOpen, onClose } = useDisclosure();
+
+//     const isCollapsed = useRecoilValue(sidebarOpenAtom);
+
+//     const [currPath, setCurrPath] = useState<string>('');
+
+//     useEffect(() => {
+//         setCurrPath(window.location.pathname);
+//     }, []);
+
+//     return (
+//         <>
+//             <UserSettingsModal isOpen={isOpen} onClose={onClose} />
+//             <Box
+//                 h='100vh'
+//                 w={isCollapsed ? '4.5rem' : '17rem'}
+//                 p='1rem'
+//                 bgColor='main.lavender'
+//                 pos='fixed'
+//                 zIndex={1000}
+//                 overflow='hidden'
+//                 transition={'all 0.3s ease-in-out'}
+//             >
+//                 <Flex
+//                     flexDir='column'
+//                     h='100%'
+//                 >
+//                     <SidebarTopMenuItem />
+
+//                     {
+//                         sidebarCategories.map((category) => {
+//                             return (
+//                                 <SidebarItem
+//                                     currPath={currPath}
+//                                     icon={category['icon']}
+//                                     link={category['link']}
+//                                     description={category['description']}
+//                                     isExternal={false}
+//                                     key={uuid()}
+//                                 />
+//                             );
+//                         })
+//                     }
+//                     <Spacer />
+//                     <SidebarItem
+//                         currPath={currPath}
+//                         icon={faCircleQuestion}
+//                         link={'https://bcit-reseach-long-term-issp.github.io/docs/dashboard/'}
+//                         description={'Go to Docs'}
+//                         isExternal={true}
+//                     />
+//                     <Box
+//                         onClick={() => onOpen()}
+//                     >
+//                         <SidebarItem
+//                             currPath={currPath}
+//                             icon={faUserCircle}
+//                             link={null}
+//                             description={'User Settings'}
+//                             isExternal={false}
+//                         />
+//                     </Box>
+//                 </Flex>
+//             </Box>
+//         </>
+//     );
+// };
+
 const Sidebar: React.FC = () => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -16,9 +86,13 @@ const Sidebar: React.FC = () => {
     const isCollapsed = useRecoilValue(sidebarOpenAtom);
 
     const [currPath, setCurrPath] = useState<string>('');
+    const [userRole, setUserRole] = useState<string>('');
 
     useEffect(() => {
         setCurrPath(window.location.pathname);
+        // Fetch user's role from local storage or backend
+        const role = localStorage.getItem('userRole');
+        setUserRole(role || '');
     }, []);
 
     return (
@@ -41,7 +115,10 @@ const Sidebar: React.FC = () => {
                     <SidebarTopMenuItem />
 
                     {
-                        sidebarCategories.map((category) => {
+                        sidebarCategories
+                        .filter(category => 
+                            !(category.description === 'Admin Portal' && userRole !== 'admin'))
+                        .map((category) => {
                             return (
                                 <SidebarItem
                                     currPath={currPath}

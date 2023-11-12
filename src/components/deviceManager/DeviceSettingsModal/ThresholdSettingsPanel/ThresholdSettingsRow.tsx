@@ -19,6 +19,7 @@ type thresholdSettingRowProps = {
     minVal: number;
     maxVal: number;
     alert: boolean;
+    power: boolean;
     defaultUnit: string;
     setUpdatedThresholds: React.Dispatch<React.SetStateAction<updatedThresholdType[]>>
     updatedThresholds: updatedThresholdType[]
@@ -33,6 +34,7 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
         maxVal,
         defaultUnit,
         alert,
+        power,
         setUpdatedThresholds,
         updatedThresholds } = props
 
@@ -44,6 +46,7 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
         minVal: minVal,
         maxVal: maxVal,
         alert: alert,
+        power: power
     });
 
     const setMinVal = (newValue: number) => {
@@ -87,6 +90,29 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
         }
         setUpdatedThresholds(newThresholds);
     };
+
+    const setPower = (newValue: boolean) => {
+        setThresholdSettings({ ...thresholdSettings, 'power': newValue });
+        const i = updatedThresholds.findIndex(element => element.sensorId === thresholdSettings.sensorId);
+        const newThresholds = updatedThresholds;
+        if (i > -1) {
+            newThresholds[i] = {
+                ...thresholdSettings,
+                power: newValue
+            };
+        } else {
+            newThresholds.push({
+                ...thresholdSettings,
+                power: newValue
+            });
+        }
+        setUpdatedThresholds(newThresholds);
+    };
+    
+
+
+
+
 
     return (
         <Tr rowGap={0.25}>
@@ -137,6 +163,13 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
                     aria-label='Metric alert state'
                     isChecked={thresholdSettings.alert}
                     onChange={i => { setAlert(i.target.checked) }}
+                />
+            </Td>
+            <Td>
+                <Switch
+                    aria-label='Power status'
+                    isChecked={thresholdSettings.power} // Changed this to thresholdSettings.power
+                    onChange={i => { setPower(i.target.checked) }}
                 />
             </Td>
         </Tr>

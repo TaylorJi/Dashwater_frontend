@@ -32,35 +32,35 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
     const [updatedThresholds, setUpdatedThresholds] = useState<updatedThresholdType[]>([]);
     const [userThresholds, setUserThresholds] = useState<userThresholdType[] | null>(null);
 
-    const getThresholdMin = (sensorId: number, metric: string) => {
-        if (userThresholds) {
-            const userThreshold = userThresholds.find(threshold => threshold.sensorId === sensorId);
-            if (!userThreshold) {
-                const defaultThreshold = defaultMetricThresholds.find(threshold => threshold.metric === metric);
-                if (!defaultThreshold) {
-                    return 0;
-                }
-                return defaultThreshold.defaultMin;
-            }
-            return userThreshold.minVal;
-        }
-        return 0;
-    }
+    // const getThresholdMin = (sensorId: number, metric: string) => {
+    //     if (userThresholds) {
+    //         const userThreshold = userThresholds.find(threshold => threshold.sensorId === sensorId);
+    //         if (!userThreshold) {
+    //             const defaultThreshold = defaultMetricThresholds.find(threshold => threshold.metric === metric);
+    //             if (!defaultThreshold) {
+    //                 return 0;
+    //             }
+    //             return defaultThreshold.defaultMin;
+    //         }
+    //         return userThreshold.minVal;
+    //     }
+    //     return 0;
+    // }
 
-    const getThresholdMax = (sensorId: number, metric: string) => {
-        if (userThresholds) {
-            const userThreshold = userThresholds.find(threshold => threshold.sensorId === sensorId);
-            if (!userThreshold) {
-                const defaultThreshold = defaultMetricThresholds.find(threshold => threshold.metric === metric);
-                if (!defaultThreshold) {
-                    return 0;
-                }
-                return defaultThreshold.defaultMax;
-            }
-            return userThreshold.maxVal;
-        }
-        return 0;
-    }
+    // const getThresholdMax = (sensorId: number, metric: string) => {
+    //     if (userThresholds) {
+    //         const userThreshold = userThresholds.find(threshold => threshold.sensorId === sensorId);
+    //         if (!userThreshold) {
+    //             const defaultThreshold = defaultMetricThresholds.find(threshold => threshold.metric === metric);
+    //             if (!defaultThreshold) {
+    //                 return 0;
+    //             }
+    //             return defaultThreshold.defaultMax;
+    //         }
+    //         return userThreshold.maxVal;
+    //     }
+    //     return 0;
+    // }
 
     const getAlertStatus = (sensorId: number) => {
         if (userThresholds) {
@@ -69,6 +69,17 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
                 return false;
             }
             return userThreshold.alert;
+        }
+        return false;
+    }
+
+    const getPowerStatus = (sensorId: number) => {
+        if (userThresholds) {
+            const userThreshold = userThresholds.find(threshold => threshold.sensorId === sensorId);
+            if (!userThreshold) {
+                return false;
+            }
+            return userThreshold.power; // Make sure this is power, not alert
         }
         return false;
     }
@@ -99,6 +110,8 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
         setUserThresholds(userThresholds);
     };
 
+    
+
     useEffect(() => {
         fetchUserThresholds();
     }, []);
@@ -117,20 +130,25 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
                                     <Th color={colors.main.usafaBlue}>Max</Th>
                                     <Th color={colors.main.usafaBlue}>Unit</Th>
                                     <Th color={colors.main.usafaBlue}>Alert</Th>
+                                    <Th color={colors.main.usafaBlue}>Power</Th>
                                 </Tr>
                             </Thead>
                             <Tbody>
                                 {
                                     buoy.sensors.map((sensor => {
+                                        console.log(sensor); 
                                         return (
                                             <ThresholdSettingsRow
                                                 key={uuid()}
                                                 sensorId={sensor.id}
                                                 deviceId={buoy.id}
                                                 metric={buoySensorTags[sensor.metric].label}
-                                                minVal={getThresholdMin(sensor.id, sensor.metric)}
-                                                maxVal={getThresholdMax(sensor.id, sensor.metric)}
+                                                // minVal={getThresholdMin(sensor.id, sensor.metric)}
+                                                // maxVal={getThresholdMax(sensor.id, sensor.metric)}
+                                                minVal = {sensor.minVal}
+                                                maxVal={sensor.maxVal}
                                                 alert={getAlertStatus(sensor.id)}
+                                                power={getPowerStatus(sensor.id)}
                                                 defaultUnit={sensor.defaultUnit}
                                                 setUpdatedThresholds={setUpdatedThresholds}
                                                 updatedThresholds={updatedThresholds}

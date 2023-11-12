@@ -45,20 +45,6 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
         formState: { errors, isSubmitting },
     } = useForm();
 
-    // const bcrypt = require('bcryptjs');
-
-    // const hashPassword = async (password: string) => {
-    //     try {
-    //         const salt = await bcrypt.genSalt(10); // version of hashing
-    //         const hashedPassword =  await bcrypt.hash(password, salt); // hash password
-    //         return hashedPassword;
-
-    //     } catch (err) {
-    //         console.error("Error retrieving user.");
-    //         return null;
-    //     }
-    // }
-
     const onSubmit = async (data: any) => {
         data.role = global.role;
 
@@ -74,9 +60,7 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
         if (!data.password) {
             data.password = global.password;
         } 
-        // else {
-        //     data.password = hashPassword(data.password);
-        // }
+        data.oldEmail = global.email;
 
         if (validation) {
             AdminPortal.updateUser(data);
@@ -93,6 +77,8 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
         return regexp.test(pw);
     }
 
+    const [userRole, setUserRole] = useState(localStorage.getItem('userRole') || 'User');
+    console.log("userRole", userRole);
 
     return (
         <Modal
@@ -115,10 +101,6 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                 <ModalCloseButton onClick={onClose} />
                 <ModalBody>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        {/* <FormControl isRequired mb={'12px'}>
-                            <FormLabel>User ID</FormLabel>
-                            <Input id="_id" placeholder='User ID' defaultValue={global._id} disabled={true} />
-                        </FormControl> */}
                         <FormControl isRequired mb={'12px'}>
                             <FormLabel>Email</FormLabel>
                             <Input id="email" placeholder='Email' defaultValue={global.email} {...register('email', { shouldUnregister: true })} />
@@ -131,20 +113,23 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                         {showPassword ? 'Hide' : 'Show'} Password
                         </Button>
                         </FormControl>
-                        <FormControl isRequired mb={'1px'}>
-                            <FormLabel>Role</FormLabel>
-                            <RadioGroup id="role" defaultValue={global.role} name="role"
-                                onChange={
-                                    function(value) {
-                                        global.role = value;
-                                    }
-                                } >
-                                <HStack spacing='20px'>
-                                    <Radio value='user'>User</Radio>
-                                    <Radio value='admin'>Admin</Radio>
-                                </HStack>
-                            </RadioGroup>
-                        </FormControl>
+
+                        {userRole !== 'User' && (
+                            <FormControl isRequired mb={'1px'}>
+                                <FormLabel>Role</FormLabel>
+                                <RadioGroup id="role" defaultValue={global.role} name="role"
+                                    onChange={
+                                        function(value) {
+                                            global.role = value;
+                                        }
+                                    } >
+                                    <HStack spacing='20px'>
+                                        <Radio value='user'>User</Radio>
+                                        <Radio value='admin'>Admin</Radio>
+                                    </HStack>
+                                </RadioGroup>
+                            </FormControl>
+                        )}
 
                         <HStack
                         spacing={isLargeScreen ? "1.5rem" : "0.5rem"}
