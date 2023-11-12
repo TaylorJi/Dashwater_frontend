@@ -14,6 +14,8 @@ import { useResetRecoilState } from 'recoil';
 import { sidebarOpenAtom } from '../components/layout/navigation/atoms/sidebarAtoms';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
+import UserPool from "../components/helpers/userPool";
 // import { randomBytes } from 'crypto';
 // import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
@@ -101,42 +103,104 @@ const Login: React.FC = () => {
         }
     }
 
-
-
     const handleLogin = async (email: string, password: string) => {
         try {
             setIsLoading(true);
+    
+            
+            const user = new CognitoUser({
+                Username: email,
+                Pool: UserPool,
+            });
+    
+            const authDetails = new AuthenticationDetails({
+                Username: email,
+                Password: password,
+            })
+    
+            user.authenticateUser(authDetails, {
+                onSuccess: async (cognitoData) => {
+                    
+                    // NOTE: Please decide how you want to pass the JWT token to the backend. Need to include this JWT token in the header when making requests to AWS.
 
-            const user = await Authentication.authenticateUser(email, password);
-            if (user) {
-                // const isSessionCreated = await Sessions.createSession(user.email);
-                const isSessionCreated = await Sessions.createSession("64647e0fd22c80b2bec73cad"); // it's hardcoded as we don't have user id which is a string of 12 bytes or a string of 24 hex characters or an integer
-                if (isSessionCreated) {
-                    localStorage.setItem('failedLoginAttempts', JSON.stringify({'count': 0, 'lastFailedLoginAttemptDate': null}));
-                    localStorage.setItem('userEmail', user["email"]);
-                    localStorage.setItem('userRole', user["role"]);
-                    global.userRole = user["role"];
-                    localStorage.setItem('authenticated', 'true');
-                    if (user["role"] === 'admin') {
-                        navigate('/adminPortal');
-                    } else {
-                        navigate('/dashboard');
-                    }
-                } else {
+                    let idToken = cognitoData.getIdToken();
+                    let jwtToken = idToken.getJwtToken(); //Pass this token to backend
+                    let idTokenPayload = idToken.payload;
+                    let userRole = idTokenPayload["cognito:groups"][0];
+
+                    console.log("Cognito Response: ", cognitoData);
+                    console.log("IdToken - JWT token: ", jwtToken);
+                    console.log("userRole: ", userRole)
+
+                    // ------------ KEEPING ORIGINAL DASHBOARD SESSION CREATION LOGIC ------------//
+                    
+                    const isSessionCreated = await Sessions.createSession(
+                        "64647e0fd22c80b2bec73cad"
+                      ); // it's hardcoded as we don't have user id which is a string of 12 bytes or a string of 24 hex characters or an integer
+                      if (isSessionCreated) {
+                        localStorage.setItem(
+                          "failedLoginAttempts",
+                          JSON.stringify({ count: 0, lastFailedLoginAttemptDate: null })
+                        );
+                        localStorage.setItem("userEmail", email);
+                        localStorage.setItem("userRole", userRole); //CHANGED: updated this with the userRole retrieved from cognito
+                        global.userRole = userRole;  //CHANGED: updated this with the userRole retrieved from cognito
+                        localStorage.setItem("authenticated", "true");
+                        navigate("/dashboard");
+                      } else {
+                        setIsLoading(false);
+                        toast.error("There was a problem creating a session. Try again.");
+                      }
+
+                  // ------------ ABOVE CODE IS ORIGINAL DASHBOARD LOGIC ------------//
+
+                },
+                onFailure: (err) => {
+                    console.error("Cognito Response: ", err);
+                    handleFailedLoginAttempt();
                     setIsLoading(false);
-                    toast.error('There was a problem creating a session. Try again.');
+                    toast.error("User with this email and password does not exist.");
                 }
-            } else {
-                handleFailedLoginAttempt();
-                setIsLoading(false);
-                toast.error('User with this email and password does not exist.');
-            }
+            })
+    
         } catch (err) {
-            setIsLoading(false);
-            toast.error('There was a problem logging in. Try again.');
+          setIsLoading(false);
+          toast.error("There was a problem logging in. Try again.");
         }
+      };
 
-    }
+
+
+    // const handleLogin = async (email: string, password: string) => {
+    //     try {
+    //         setIsLoading(true);
+
+    //         const user = await Authentication.authenticateUser(email, password);
+    //         if (user) {
+    //             // const isSessionCreated = await Sessions.createSession(user.email);
+    //             const isSessionCreated = await Sessions.createSession("64647e0fd22c80b2bec73cad"); // it's hardcoded as we don't have user id which is a string of 12 bytes or a string of 24 hex characters or an integer
+    //             if (isSessionCreated) {
+    //                 localStorage.setItem('failedLoginAttempts', JSON.stringify({'count': 0, 'lastFailedLoginAttemptDate': null}));
+    //                 localStorage.setItem('userEmail', user["email"]);
+    //                 localStorage.setItem('userRole', user["role"]);
+    //                 global.userRole = user["role"];
+    //                 localStorage.setItem('authenticated', 'true');
+    //                 navigate('/dashboard');
+    //             } else {
+    //                 setIsLoading(false);
+    //                 toast.error('There was a problem creating a session. Try again.');
+    //             }
+    //         } else {
+    //             handleFailedLoginAttempt();
+    //             setIsLoading(false);
+    //             toast.error('User with this email and password does not exist.');
+    //         }
+    //     } catch (err) {
+    //         setIsLoading(false);
+    //         toast.error('There was a problem logging in. Try again.');
+    //     }
+
+    // }
 
     return (
         <BaseLayout isNavbarVisible={false}>
@@ -176,7 +240,7 @@ const Login: React.FC = () => {
                         >
                             The YVR International Airport collaborates with BCIT Internet of Things to
                             introduce the smart devices water monitoring project. This project is built by
-                            students from end-to-end. The dashboard provides real-time data on water
+                            students from end-to-end. Tqhe dashboard provides real-time data on water
                             metrics by leveraging in-house built devices with sensors and data visualization.
                             This project delivers actionable insights that improve safety, reliability, and
                             sustainability of YVR's water infrastructure.
