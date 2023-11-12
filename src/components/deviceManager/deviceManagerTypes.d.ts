@@ -21,7 +21,6 @@ type deviceSettingsType = {
     locationX: number,
     locationY: number,
     active: boolean,
-    // timeInterval: int,
     sensors: sensorType[],
     sensor_ids: number[]
 };
@@ -58,7 +57,7 @@ type sensorType = {
     metric: string,
     defaultUnit: string,
     alerts: boolean,
-    threshold: number,
+    power: boolean,
     // calibrated: boolean,
     // enabled: boolean,
     minVal: number,
