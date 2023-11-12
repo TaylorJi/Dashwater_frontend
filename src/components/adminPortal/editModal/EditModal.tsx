@@ -77,6 +77,8 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
         return regexp.test(pw);
     }
 
+    const [userRole, setUserRole] = useState(localStorage.getItem('userRole') || 'User');
+    console.log("userRole", userRole);
 
     return (
         <Modal
@@ -111,20 +113,23 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                         {showPassword ? 'Hide' : 'Show'} Password
                         </Button>
                         </FormControl>
-                        <FormControl isRequired mb={'1px'}>
-                            <FormLabel>Role</FormLabel>
-                            <RadioGroup id="role" defaultValue={global.role} name="role"
-                                onChange={
-                                    function(value) {
-                                        global.role = value;
-                                    }
-                                } >
-                                <HStack spacing='20px'>
-                                    <Radio value='user'>User</Radio>
-                                    <Radio value='admin'>Admin</Radio>
-                                </HStack>
-                            </RadioGroup>
-                        </FormControl>
+
+                        {userRole !== 'User' && (
+                            <FormControl isRequired mb={'1px'}>
+                                <FormLabel>Role</FormLabel>
+                                <RadioGroup id="role" defaultValue={global.role} name="role"
+                                    onChange={
+                                        function(value) {
+                                            global.role = value;
+                                        }
+                                    } >
+                                    <HStack spacing='20px'>
+                                        <Radio value='user'>User</Radio>
+                                        <Radio value='admin'>Admin</Radio>
+                                    </HStack>
+                                </RadioGroup>
+                            </FormControl>
+                        )}
 
                         <HStack
                         spacing={isLargeScreen ? "1.5rem" : "0.5rem"}
