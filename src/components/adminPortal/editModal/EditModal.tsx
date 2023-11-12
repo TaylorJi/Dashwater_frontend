@@ -77,9 +77,6 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
         return regexp.test(pw);
     }
 
-    const [userRole, setUserRole] = useState(localStorage.getItem('userRole') || 'User');
-    console.log("userRole", userRole);
-
     return (
         <Modal
         isOpen={isOpen}
@@ -113,10 +110,8 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                         {showPassword ? 'Hide' : 'Show'} Password
                         </Button>
                         </FormControl>
-
-                        {userRole !== 'User' && (
                             <FormControl isRequired mb={'1px'}>
-                                <FormLabel>Role</FormLabel>
+                                {/* <FormLabel>Role</FormLabel>
                                 <RadioGroup id="role" defaultValue={global.role} name="role"
                                     onChange={
                                         function(value) {
@@ -127,10 +122,8 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                                         <Radio value='user'>User</Radio>
                                         <Radio value='admin'>Admin</Radio>
                                     </HStack>
-                                </RadioGroup>
+                                </RadioGroup> */}
                             </FormControl>
-                        )}
-
                         <HStack
                         spacing={isLargeScreen ? "1.5rem" : "0.5rem"}
                         mr={isLargeScreen ? "1rem" : "0.5rem"}
