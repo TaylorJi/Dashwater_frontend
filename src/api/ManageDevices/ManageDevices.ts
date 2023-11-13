@@ -17,6 +17,7 @@ const saveDeviceSettings = async (newSettings: deviceSettingsType) => {
 
 const saveThresholdSettings = async (thresholds: updatedThresholdType[]) => {
     try {
+        console.log("saveThresholdSettings called");
         for (let i = 0; i < thresholds.length; i++) {
             const response = await axios.put(`${API_URL}/userThreshold/updateUserThreshold`, thresholds[i], { withCredentials: true });
             if (response.status !== 200) {
@@ -43,8 +44,9 @@ const getDefaultThresholds = async () => {
 
 const getUserThresholdsByDevice = async (userId: string | undefined, deviceId: number) => {
     try {
+        console.log("getUserThresholdsByDevice loaded");
         const response = await axios.get(`${API_URL}/userThreshold/getUserThresholdsByDevice/${userId}/${deviceId}`,
-            { withCredentials: true });
+        { withCredentials: true });
 
         if (response.status === 200) {
             return response.data.data;
@@ -66,6 +68,7 @@ const saveCalibrationPoints = async (calibrationPoints: calibrationPointType[]) 
 
 const getDevicesSettings = async () => {
     try {
+        console.log("getAllDeviceSetting loaded.");
         const response: any = await axios.get(`${API_URL}/device/getAllDevicesSettings`, { withCredentials: true });
         if (response.status === 200) {
             // filter by device 0 and 1 only (the only valid devices at this time)
