@@ -191,6 +191,8 @@ const Login: React.FC = () => {
                 JSON.stringify({ count: 0, lastFailedLoginAttemptDate: null })
               );
               localStorage.setItem("sessionId", isSessionCreated.sessionId);
+              console.log("sessionId: ", localStorage.getItem("sessionId"));
+              console.log("userToken: ", localStorage.getItem("userToken"));
               localStorage.setItem("userEmail", userEmail);
               localStorage.setItem("userRole", userRole); //CHANGED: updated this with the userRole retrieved from cognito
               global.userRole = userRole; //CHANGED: updated this with the userRole retrieved from cognito

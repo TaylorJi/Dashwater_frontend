@@ -66,10 +66,37 @@ const saveCalibrationPoints = async (calibrationPoints: calibrationPointType[]) 
     return true;
 };
 
+// const getDevicesSettings = async () => {
+//     try {
+//         console.log("getAllDeviceSetting loaded.");
+//         const response: any = await axios.get(`${API_URL}/device/getAllDevicesSettings`, { withCredentials: true });
+//         if (response.status === 200) {
+//             // filter by device 0 and 1 only (the only valid devices at this time)
+//             // const validDevices = response.data.data.filter((device: any) => [0, 1].includes(device.id));
+//             // return validDevices;
+//             return response.data.data;
+//         }
+//     } catch (_err) {
+//         return null;
+//     }
+// };
+
 const getDevicesSettings = async () => {
     try {
-        console.log("getAllDeviceSetting loaded.");
-        const response: any = await axios.get(`${API_URL}/device/getAllDevicesSettings`, { withCredentials: true });
+        const sessionId = localStorage.getItem("sessionId");
+        // const response = await axios.post(
+        //     `${API_URL}/device/getAllDevicesSettings`,
+        //     { token: token },
+        //     { withCredentials: true }
+        // );
+
+        const response = await axios.post(`${API_URL}/device/getAllDevicesSettings`, {
+            headers: {
+                "Authorization": `Bearer ${sessionId}`
+            },
+            sessionToken: sessionId,
+            withCredentials: true
+        });
         if (response.status === 200) {
             // filter by device 0 and 1 only (the only valid devices at this time)
             // const validDevices = response.data.data.filter((device: any) => [0, 1].includes(device.id));
@@ -77,6 +104,7 @@ const getDevicesSettings = async () => {
             return response.data.data;
         }
     } catch (_err) {
+        console.log("Error in getDevicesSettings:", _err);
         return null;
     }
 };

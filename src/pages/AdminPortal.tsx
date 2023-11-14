@@ -11,7 +11,7 @@ const AdminPortal: React.FC = () => {
     return (
         <BaseLayout isNavbarVisible={true}>
             <Flex w="100%" minH="100vh" py="2rem" pr="1rem" flexDirection="column">
-                <Text fontSize={isLargeScreen ? "3xl" : "2xl"} fontWeight="bold">
+            <Text fontSize={isLargeScreen ? "3xl" : "2xl"} fontWeight="bold">
                     Admin Portal
                 </Text>
                 <Box
