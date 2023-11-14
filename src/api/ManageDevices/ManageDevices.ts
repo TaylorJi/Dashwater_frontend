@@ -84,19 +84,19 @@ const saveCalibrationPoints = async (calibrationPoints: calibrationPointType[]) 
 const getDevicesSettings = async () => {
     try {
         const sessionId = localStorage.getItem("sessionId");
-        // const response = await axios.post(
-        //     `${API_URL}/device/getAllDevicesSettings`,
-        //     { token: token },
-        //     { withCredentials: true }
-        // );
+        const response = await axios.post(
+            `${API_URL}/device/getAllDevicesSettings`,
+            { token: sessionId },
+            { withCredentials: true }
+        );
 
-        const response = await axios.post(`${API_URL}/device/getAllDevicesSettings`, {
-            headers: {
-                "Authorization": `Bearer ${sessionId}`
-            },
-            sessionToken: sessionId,
-            withCredentials: true
-        });
+        // const response = await axios.post(`${API_URL}/device/getAllDevicesSettings`, {
+        //     headers: {
+        //         "Authorization": `Bearer ${sessionId}`
+        //     },
+        //     sessionToken: sessionId,
+        //     withCredentials: true
+        // });
         if (response.status === 200) {
             // filter by device 0 and 1 only (the only valid devices at this time)
             // const validDevices = response.data.data.filter((device: any) => [0, 1].includes(device.id));
