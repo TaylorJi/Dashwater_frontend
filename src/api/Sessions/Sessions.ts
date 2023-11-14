@@ -1,9 +1,21 @@
 import axios, { AxiosResponse } from 'axios';
 import { API_URL } from '../Environments';
 
+
+const sessionId = localStorage.getItem('sessionId');
+console.log(sessionId);
+
 const validateSession = async () => {
     try {
-        const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/session/validateSession`, { withCredentials: true });
+        console.log("entering validate session")
+        const response = await axios.post(`${API_URL}/session/validateSession`, {
+            headers: {
+                "Authorization": `Bearer ${sessionId}`
+            },
+            sessionToken: sessionId,
+            withCredentials: true
+        });
+        console.log(response);
 
         if (response.status === 200) {
             return response.data.user;
@@ -17,10 +29,12 @@ const validateSession = async () => {
 }
 
 
-const createSession = async (userId: string) => {
+const createSession = async (userId: string, idToken: string, userRole: string) => {
     try {
         const response: any = await axios.post<any, AxiosResponse<string[]>>(`${API_URL}/session/createSession`, {
-            userId: userId
+            userId: userId,
+            idToken: idToken,
+            userRole: userRole
         },
         { withCredentials: true  });
         
@@ -39,7 +53,13 @@ const createSession = async (userId: string) => {
 
 const deleteSession = async () => {
     try {
-        const response: any = await axios.delete<any, AxiosResponse<string[]>>(`${API_URL}/session/deleteSession`, { withCredentials: true });
+        const response: any = await axios.delete<any, AxiosResponse<string[]>>(`${API_URL}/session/deleteSession`, {
+            headers: {
+                "Authorization": `Bearer ${sessionId}`
+            },
+            withCredentials: true
+            
+            });
 
         if (response.status === 200) {
             return true;
