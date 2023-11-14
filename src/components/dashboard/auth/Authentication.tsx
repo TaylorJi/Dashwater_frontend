@@ -20,6 +20,7 @@ const Authentication: React.FC<AuthenticationProps> = ({ children }) => {
     const resetUserData = useResetRecoilState(userDataAtom);
     
     const handleSessionValidation = async () => {
+        console.log('Validating session...');
 
         const sessionValid = await Sessions.validateSession();
 

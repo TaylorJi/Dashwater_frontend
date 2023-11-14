@@ -23,18 +23,18 @@ function App() {
             <DeviceDetailsWrapper>
               <Dashboard />
             </DeviceDetailsWrapper>
-          </Authentication>
+           </Authentication>
         }
       />
 
       <Route
         path="/alerts"
         element={
-          <Authentication>
+          // <Authentication>
             <DeviceDetailsWrapper>
               <Alerts />
             </DeviceDetailsWrapper>
-          </Authentication>
+          // </Authentication>
         }
       />
 
@@ -45,7 +45,7 @@ function App() {
             <DeviceDetailsWrapper>
               <DeviceManager />
             </DeviceDetailsWrapper>
-          </Authentication>
+           </Authentication>
         }
       />
 
