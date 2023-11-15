@@ -7,7 +7,11 @@ console.log(sessionId);
 
 const saveDeviceSettings = async (newSettings: deviceSettingsType) => {
     try {
-        const response = await axios.post(`${API_URL}/device/updateDeviceSettings`, newSettings, { withCredentials: true });
+        const requestBody = {
+            newSettings: newSettings,
+            sessionId: sessionId,
+        };
+        const response = await axios.post(`${API_URL}/device/updateDeviceSettings`, requestBody, { withCredentials: true });
         console.log("Response from saveDeviceSettings:", response); // log the response to the console
         if (response.status === 200) {
             return true;
