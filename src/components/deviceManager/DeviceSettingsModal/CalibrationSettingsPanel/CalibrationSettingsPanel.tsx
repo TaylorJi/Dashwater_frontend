@@ -41,16 +41,16 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
     const saveChanges = async () => {
         if (unsavedChanges) {
             const newSettings: deviceSettingsType = {
-                id: currentSensor.deviceId, // assuming this matches the 'id' field in deviceSettingsType
-                name: '', // fill in the appropriate value
-                description: '', // fill in the appropriate value
-                locationX: 0, // fill in the appropriate value
-                locationY: 0, // fill in the appropriate value
-                active: true, // fill in the appropriate value
-                sensors: sensors.map(sensor => 
-                    sensor.id === currentSensor.id ? 
-                    { ...sensor, calibratedValues: allCalibrationPoints } : 
-                    sensor
+                id: currentSensor.deviceId,
+                name: '',
+                description: '',
+                locationX: 0,
+                locationY: 0,
+                active: true,
+                sensors: sensors.map(sensor =>
+                    sensor.id === currentSensor.id ?
+                        { ...sensor, calibratedValues: allCalibrationPoints[currentSensor.id] } :
+                        sensor
                 ),
                 sensor_ids: sensors.map(sensor => sensor.id)
             };
@@ -60,7 +60,7 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
             }
         }
     };
-    
+
 
     return (
         <>
@@ -104,10 +104,10 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                 color={unsavedChanges ? colors.main.mossGreen : 'gray.600'}
             >
                 {
-                    !unsavedChanges ? 
-                    'Select a metric to add calibration value points.' 
-                    : 
-                    'Save or revert changes before selecting a new metric.'}
+                    !unsavedChanges ?
+                        'Select a metric to add calibration value points.'
+                        :
+                        'Save or revert changes before selecting a new metric.'}
             </Text>
 
             <Divider

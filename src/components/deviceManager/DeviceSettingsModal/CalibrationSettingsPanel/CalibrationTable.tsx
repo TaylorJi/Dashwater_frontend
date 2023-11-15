@@ -27,9 +27,10 @@ type calibrationTableProp = {
     sensor: sensorType;
     setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
     unsavedChanges: React.SetStateAction<boolean>;
+    saveChanges: () => Promise<void>;
 }
 
-const CalibrationTable: React.FC<calibrationTableProp> = ({ sensor, unsavedChanges, setUnsavedChanges }) => {
+const CalibrationTable: React.FC<calibrationTableProp> = ({ sensor, unsavedChanges, setUnsavedChanges, saveChanges}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef(null);
 

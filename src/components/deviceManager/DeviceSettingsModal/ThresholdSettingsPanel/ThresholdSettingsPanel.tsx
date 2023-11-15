@@ -25,14 +25,14 @@ type thresholdSettingsPanelProps = {
 
 
 const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy }) => {
-    const userData = useRecoilValue(userDataAtom);
+    // const userData = useRecoilValue(userDataAtom);
 
     const [deviceSettings, setDevicesSettings] = useState<deviceSettingsType>({} as deviceSettingsType);
     const [allDevicesAtomContent, setAllDevicsAtomContent] = useRecoilState<deviceSettingsType[]>(allDevicesDetails);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [updatedThresholds, setUpdatedThresholds] = useState<updatedThresholdType[]>([]);
-    const [userThresholds, setUserThresholds] = useState<userThresholdType[] | null>(null);
+    // const [userThresholds, setUserThresholds] = useState<userThresholdType[] | null>(null);
 
     // const getAlertStatus = (sensorId: number) => {
     //     if (userThresholds) {
@@ -106,7 +106,7 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
     return (
         <>
             {
-                userThresholds &&
+                // userThresholds &&
                 <>
                     <Table>
 
