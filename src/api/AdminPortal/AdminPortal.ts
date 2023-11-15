@@ -20,6 +20,8 @@ type deleteUserResponse = {
 };
 
 
+const sessionId = localStorage.getItem('sessionId');
+
 // const getUser = async () => {
 //     try {
 //         // const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/user/getUser`);
@@ -42,6 +44,9 @@ const getUser = async () => {
     try {
         const sessionId = localStorage.getItem('sessionId');
         const response = await axios.post(USER_URL, {
+            headers: {
+                "Authorization": `Bearer ${sessionId}`
+            },
             operation: "scan"
         },
         {
