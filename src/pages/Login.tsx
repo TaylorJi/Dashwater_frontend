@@ -63,6 +63,7 @@ const Login: React.FC = () => {
   const [isLargeScreen] = useMediaQuery("(min-width: 1600px)");
 
   useEffect(() => {
+    localStorage.setItem("userRole", "");
     resetSidebarOpen();
   }, []);
 
