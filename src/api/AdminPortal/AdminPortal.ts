@@ -42,12 +42,17 @@ const sessionId = localStorage.getItem('sessionId');
 
 const getUser = async () => {
     try {
+        const sessionId = localStorage.getItem('sessionId');
         const response = await axios.post(USER_URL, {
             headers: {
                 "Authorization": `Bearer ${sessionId}`
             },
             operation: "scan"
-        });
+        },
+        {
+            headers: { Authorization: `${sessionId}` },
+        }
+        );
 
         if (response.status === 200) {
             // const users = response.data.items.map((item: { email: { S: string }, password: { S: string }, role: { S: string } }, index: number) => ({
@@ -70,12 +75,16 @@ const getUser = async () => {
 
 const createUser = async (user: any) => {
     try {
+        const sessionId = localStorage.getItem('sessionId');
         const response: any = await axios.post(USER_URL,
             {
                 operation: "add",
                 email: user.email,
                 password: user.password,
                 role: user.role
+            },
+            {
+                headers: { Authorization: `${sessionId}` },
             }
         );
 
@@ -93,11 +102,16 @@ const createUser = async (user: any) => {
 
 const deleteUser = async (idArray: string[]) => {
     try {
+        const sessionId = localStorage.getItem('sessionId');
         const request: any = await axios.post(USER_URL,
             {
                 operation: "delete",
                 emails: idArray
-            });
+            },
+            {
+                headers: { Authorization: `${sessionId}` },
+            }
+            );
         if (request.status === 200) {
             window.location.reload();
         }
@@ -112,6 +126,7 @@ const deleteUser = async (idArray: string[]) => {
 
 const getSingleUser = async (idArray: string[]) => {
     try {
+        const sessionId = localStorage.getItem('sessionId');
         const response: any = await axios.get<any, AxiosResponse<string>>(`https://ma93xudga3.execute-api.us-east-1.amazonaws.com/prod/data/?email=${idArray[0]}`)
         if (response.status === 200) {
             console.log(response.data);
@@ -140,6 +155,7 @@ const updateUser = async (user: any) => {
     //     window.location.reload();
     // }
     try {
+        const sessionId = localStorage.getItem('sessionId');
         const response: any = await axios.post(USER_URL,
             {
                 operation: "update",
@@ -147,6 +163,9 @@ const updateUser = async (user: any) => {
                 "new email": user.email,
                 password: user.password,
                 role: user.role
+            },
+            {
+                headers: { Authorization: `${sessionId}` },
             }
         );
 

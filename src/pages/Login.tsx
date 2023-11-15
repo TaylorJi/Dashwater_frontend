@@ -192,6 +192,8 @@ const Login: React.FC = () => {
                 JSON.stringify({ count: 0, lastFailedLoginAttemptDate: null })
               );
               localStorage.setItem("sessionId", isSessionCreated.sessionId);
+              console.log("sessionId: ", localStorage.getItem("sessionId"));
+              console.log("userToken: ", localStorage.getItem("userToken"));
               localStorage.setItem("userEmail", userEmail);
               localStorage.setItem("userRole", userRole); //CHANGED: updated this with the userRole retrieved from cognito
               global.userRole = userRole; //CHANGED: updated this with the userRole retrieved from cognito
@@ -229,32 +231,19 @@ const Login: React.FC = () => {
 
   return (
     <BaseLayout isNavbarVisible={false}>
-      <Flex w="100%" minH="100vh">
         <Flex
-          w="50%"
-          bgImage="https://i.imgur.com/s9rWIHK.jpg"
-          bgSize="cover"
-          bgRepeat="no-repeat"
-          opacity="0.9"
-          alignItems="center"
-          justifyContent="center"
-          direction="column"
+            w='100%'
+            minH='100vh'
         >
-          <Box
-            h={isLargeScreen ? "35%" : "55%"}
-            w="80%"
-            bgColor="rgba(0, 36, 59, 0.5)"
-            borderRadius="md"
-          >
-            <Heading py="1rem" color="white" textAlign="center">
-              YVR x BCIT IoT
-            </Heading>
-            <Text
-              mt="1rem"
-              mx="2rem"
-              mb="2rem"
-              color="white"
-              fontSize={isLargeScreen ? "md" : "sm"}
+            <Flex
+                w='50%'
+                bgImage="https://i.imgur.com/s9rWIHK.jpg"
+                bgSize='cover'
+                bgRepeat='no-repeat'
+                opacity='0.9'
+                alignItems='center'
+                justifyContent='center'
+                direction='column'
             >
               The YVR International Airport collaborates with BCIT Internet of
               Things to introduce the smart devices water monitoring project.
@@ -310,71 +299,257 @@ const Login: React.FC = () => {
                                 mb={'0.5rem'}
                             >
                                 Password
-                            </Text> */}
-              <Flex direction="row">
-                <Text fontWeight="bold" mb={"0.5rem"}>
-                  Password
-                </Text>
-                <Spacer />
-                <Icon
-                  as={FontAwesomeIcon}
-                  pt={"0.3rem"}
-                  mr={"0.3rem"}
-                  icon={showPassword ? faEyeSlash : faEye}
-                  onClick={togglePasswordVisibility}
-                  w={5}
-                />
-              </Flex>
-              <Input
-                // type='password'
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                border="2px"
-                borderColor={colors.main.ceruBlue}
-                isDisabled={isDisabled}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Box>
-            <Button
-              w="20%"
-              bg={colors.main.usafaBlue}
-              color="white"
-              isLoading={isLoading}
-              isDisabled={isLoading || isDisabled}
-              _hover={{
-                bg: colors.main.activeMainButton,
-              }}
-              onClick={async () => await handleLogin(email, password)}
-            >
-              Login
-            </Button>
-            <Popover>
-              <PopoverTrigger>
-                <Text
-                  as="u"
-                  textAlign={"center"}
-                  mb={"1rem"}
-                  _hover={{
-                    cursor: "pointer",
-                  }}
-                >
-                  Forgot password?
-                </Text>
-              </PopoverTrigger>
-              <PopoverContent>
-                <PopoverArrow />
-                <PopoverCloseButton />
-                <PopoverHeader>Contact Information</PopoverHeader>
-                <PopoverBody>
-                  Please contact 'yvradmin@gmail.com' to change a password.
-                </PopoverBody>
-              </PopoverContent>
-            </Popover>
-          </VStack>
+                            </Text>
+                            <Spacer />
+                            <Icon
+                                as={FontAwesomeIcon}
+                                pt={'0.3rem'}
+                                mr={'0.3rem'}
+                                icon={showPassword ? faEyeSlash : faEye}    
+                                onClick={togglePasswordVisibility}     
+                                w={5}                    
+                            />
+                        </Flex>
+                        <Input
+                            // type='password'
+                            type={showPassword ? "text" : "password"}
+                            placeholder='Password'
+                            border='2px'
+                            borderColor={colors.main.ceruBlue}
+                            isDisabled={isDisabled}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </Box>
+                    <Button
+                        w='20%'
+                        bg={colors.main.usafaBlue}
+                        color='white'
+                        isLoading={isLoading}
+                        isDisabled={isLoading || isDisabled}
+                        _hover={{
+                            bg: colors.main.activeMainButton
+                        }}
+                        onClick={async () => await handleLogin(email, password)}
+                    >
+                        Login
+                    </Button>
+                    <Popover>
+                        <PopoverTrigger>
+                            <Text
+                                as='u'
+                                textAlign={'center'}
+                                mb={'1rem'}
+                                _hover={{
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                Forgot password?
+                            </Text>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                            <PopoverArrow />
+                            <PopoverCloseButton />
+                            <PopoverHeader>Contact Information</PopoverHeader>
+                            <PopoverBody>Please contact 'yvradmin@gmail.com' to change a password.</PopoverBody>
+                        </PopoverContent>
+                    </Popover>
+                </VStack>
+            </Flex>
         </Flex>
-      </Flex>
     </BaseLayout>
-  );
+);
 };
+
+//   return (
+//     <BaseLayout isNavbarVisible={false}>
+//       <Flex w="100%" minH="100vh">
+//         <Flex
+//           w="50%"
+//           bgImage="https://i.imgur.com/s9rWIHK.jpg"
+//           bgSize="cover"
+//           bgRepeat="no-repeat"
+//           opacity="0.9"
+//           alignItems="center"
+//           justifyContent="center"
+//           direction="column"
+//         >
+//           <Box
+//             h={isLargeScreen ? "35%" : "55%"}
+//             w="80%"
+//             bgColor="rgba(0, 36, 59, 0.5)"
+//             borderRadius="md"
+//           >
+//             <Heading py="1rem" color="white" textAlign="center">
+//               YVR x BCIT IoT
+//             </Heading>
+//             <Text
+//               mt="1rem"
+//               mx="2rem"
+//               mb="2rem"
+//               color="white"
+//               fontSize={isLargeScreen ? "md" : "sm"}
+//             >
+//                 <Flex
+//                     w='50%'
+//                     bgImage="https://i.imgur.com/s9rWIHK.jpg"
+//                     bgSize='cover'
+//                     bgRepeat='no-repeat'
+//                     opacity='0.9'
+//                     alignItems='center'
+//                     justifyContent='center'
+//                     direction='column'
+//                 >
+//                     <Box
+//                         h={isLargeScreen ? '35%' : '55%'}
+//                         w='80%'
+//                         bgColor='rgba(0, 36, 59, 0.5)'
+//                         borderRadius='md'
+//                     >
+//                         <Heading
+//                             py='1rem'
+//                             color='white'
+//                             textAlign='center'
+//                         >
+//                             YVR x BCIT IoT
+//                         </Heading>
+//                         <Text
+//                             mt='1rem'
+//                             mx='2rem'
+//                             mb='2rem'
+//                             color='white'
+//                             fontSize={isLargeScreen ? 'md' : 'sm'}
+//                         >
+//                             The YVR International Airport collaborates with BCIT Internet of Things to
+//                             introduce the smart devices water monitoring project. This project is built by
+//                             students from end-to-end. Tqhe dashboard provides real-time data on water
+//                             metrics by leveraging in-house built devices with sensors and data visualization.
+//                             This project delivers actionable insights that improve safety, reliability, and
+//                             sustainability of YVR's water infrastructure.
+//                         </Text>
+//                         <Link
+//                             ml='2rem'
+//                             color='white'
+//                             textDecoration='underline'
+//                             href='https://www.bcit.ca/applied-research/centre-for-internet-of-things-iot/'
+//                             isExternal
+//                         >
+//                             Learn more about BCIT IoT
+//                         </Link>
+
+//                     </Box>
+//                     <Image
+//                         mt='1rem'
+//                         mr='auto'
+//                         ml='10%'
+//                         src={bcitlogo}
+//                     />
+//                 </Flex>
+//                 <Flex
+//                     w='50%'
+//                     bgImage={loginFormBgImage}
+//                     bgSize='100% 100%'
+//                     bgRepeat='no-repeat'
+//                     alignItems='center'
+//                 >
+//                     <VStack spacing='6'>
+//                         <Image
+//                             boxSize='30%'
+//                             src={yvrLogo}
+//                             alt='YVR LOGO'
+//                             borderRadius='lg'
+//                         />
+//                         <Heading
+//                             size='lg'
+//                         >
+//                             Sign In to Dashboard
+//                         </Heading>
+//                         <Box w='35%'>
+//                             <Text
+//                                 fontWeight='bold'
+//                                 mb={'0.5rem'}
+//                             >
+//                                 Email
+//                             </Text>
+//                             <Input
+//                                 type='text'
+//                                 placeholder='Email'
+//                                 border='2px'
+//                                 borderColor={colors.main.ceruBlue}
+//                                 isDisabled={isDisabled}
+//                                 onChange={(e) => setEmail(e.target.value)}
+//                             />
+//                         </Box>
+//                         <Box w='35%'>
+//                             {/* <Text
+//                                 fontWeight='bold'
+//                                 mb={'0.5rem'}
+//                             >
+//                                 Password
+//                             </Text> */}
+//               <Flex direction="row">
+//                 <Text fontWeight="bold" mb={"0.5rem"}>
+//                   Password
+//                 </Text>
+//                 <Spacer />
+//                 <Icon
+//                   as={FontAwesomeIcon}
+//                   pt={"0.3rem"}
+//                   mr={"0.3rem"}
+//                   icon={showPassword ? faEyeSlash : faEye}
+//                   onClick={togglePasswordVisibility}
+//                   w={5}
+//                 />
+//               </Flex>
+//               <Input
+//                 // type='password'
+//                 type={showPassword ? "text" : "password"}
+//                 placeholder="Password"
+//                 border="2px"
+//                 borderColor={colors.main.ceruBlue}
+//                 isDisabled={isDisabled}
+//                 onChange={(e) => setPassword(e.target.value)}
+//               />
+//             </Box>
+//             <Button
+//               w="20%"
+//               bg={colors.main.usafaBlue}
+//               color="white"
+//               isLoading={isLoading}
+//               isDisabled={isLoading || isDisabled}
+//               _hover={{
+//                 bg: colors.main.activeMainButton,
+//               }}
+//               onClick={async () => await handleLogin(email, password)}
+//             >
+//               Login
+//             </Button>
+//             <Popover>
+//               <PopoverTrigger>
+//                 <Text
+//                   as="u"
+//                   textAlign={"center"}
+//                   mb={"1rem"}
+//                   _hover={{
+//                     cursor: "pointer",
+//                   }}
+//                 >
+//                   Forgot password?
+//                 </Text>
+//               </PopoverTrigger>
+//               <PopoverContent>
+//                 <PopoverArrow />
+//                 <PopoverCloseButton />
+//                 <PopoverHeader>Contact Information</PopoverHeader>
+//                 <PopoverBody>
+//                   Please contact 'yvradmin@gmail.com' to change a password.
+//                 </PopoverBody>
+//               </PopoverContent>
+//             </Popover>
+//           </VStack>
+//         </Flex>
+//       </Flex>
+//     </BaseLayout>
+//   );
+// };
 
 export default Login;
