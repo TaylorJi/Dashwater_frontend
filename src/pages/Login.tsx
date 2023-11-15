@@ -204,8 +204,7 @@ const Login: React.FC = () => {
                 localStorage.getItem("authenticated")
                
               );
-              const test = ManageDevices.test();
-              console.log("test: ", test);
+            
               navigate("/dashboard");
             } else {
               setIsLoading(false);
