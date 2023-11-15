@@ -35,7 +35,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ device }) =
 
   useEffect(() => {
     setDevicesSettings(device)
-  }, []);
+  }, [device]);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

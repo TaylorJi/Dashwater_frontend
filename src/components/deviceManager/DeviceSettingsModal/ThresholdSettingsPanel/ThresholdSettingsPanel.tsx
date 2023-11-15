@@ -34,27 +34,27 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
     const [updatedThresholds, setUpdatedThresholds] = useState<updatedThresholdType[]>([]);
     const [userThresholds, setUserThresholds] = useState<userThresholdType[] | null>(null);
 
-    const getAlertStatus = (sensorId: number) => {
-        if (userThresholds) {
-            const userThreshold = userThresholds.find(threshold => threshold.sensorId === sensorId);
-            if (!userThreshold) {
-                return false;
-            }
-            return userThreshold.alerts;
-        }
-        return false;
-    }
+    // const getAlertStatus = (sensorId: number) => {
+    //     if (userThresholds) {
+    //         const userThreshold = userThresholds.find(threshold => threshold.sensorId === sensorId);
+    //         if (!userThreshold) {
+    //             return false;
+    //         }
+    //         return userThreshold.alerts;
+    //     }
+    //     return false;
+    // }
 
-    const getPowerStatus = (sensorId: number) => {
-        if (userThresholds) {
-            const userThreshold = userThresholds.find(threshold => threshold.sensorId === sensorId);
-            if (!userThreshold) {
-                return false;
-            }
-            return userThreshold.power; // Make sure this is power, not alert
-        }
-        return false;
-    }
+    // const getPowerStatus = (sensorId: number) => {
+    //     if (userThresholds) {
+    //         const userThreshold = userThresholds.find(threshold => threshold.sensorId === sensorId);
+    //         if (!userThreshold) {
+    //             return false;
+    //         }
+    //         return userThreshold.power; // Make sure this is power, not alert
+    //     }
+    //     return false;
+    // }
 
     useEffect(() => {
         setDevicesSettings(buoy)
@@ -94,16 +94,14 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
         setIsLoading(false);
     };
 
-    const fetchUserThresholds = async () => {
-        const userThresholds = await ManageDevices.getUserThresholdsByDevice(userData?.userId, buoy.id);
-        setUserThresholds(userThresholds);
-    };
+    // const fetchUserThresholds = async () => {
+    //     const userThresholds = await ManageDevices.getUserThresholdsByDevice(userData?.userId, buoy.id);
+    //     setUserThresholds(userThresholds);
+    // };
 
-
-
-    useEffect(() => {
-        fetchUserThresholds();
-    }, []);
+    // useEffect(() => {
+    //     fetchUserThresholds();
+    // }, []);
 
     return (
         <>

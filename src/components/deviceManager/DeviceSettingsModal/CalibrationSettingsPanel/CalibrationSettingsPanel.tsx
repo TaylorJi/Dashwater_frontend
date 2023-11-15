@@ -1,44 +1,66 @@
 import React, { useEffect, useState } from 'react';
-import colors from '../../../../theme/foundations/colours';
 import {
-    Divider,
     Text,
     Select,
+    Divider,
 } from '@chakra-ui/react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import colors from '../../../../theme/foundations/colours';
 import { buoySensorTags } from '../../../../theme/metrics/buoySensorTags';
 import uuid from 'react-uuid';
 import CalibrationTable from './CalibrationTable';
-import { mockCalibrationData } from '../../../../mockData/mockCalibrationData';
-import { useRecoilState } from 'recoil';
 import { calibrationPoints } from '../../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
+import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
+import { userDataAtom } from '../../../dashboard/atoms/globalDashboardAtoms';
 
 type calibrationSettingsPanelProps = {
     sensors: sensorType[];
 }
 
 const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sensors }) => {
+    const userData = useRecoilValue(userDataAtom);
     const [currentMetric, setCurrentMetric] = useState<string>("");
     const [currentSensor, setCurrentSensor] = useState<sensorType>({} as sensorType);
     const [unsavedChanges, setUnsavedChanges] = useState<boolean>(false);
-    const [_allCalibrationPoints, setAllCalibrationPoints] = useRecoilState(calibrationPoints);
+    const [allCalibrationPoints, setAllCalibrationPoints] = useRecoilState(calibrationPoints);
 
     const fetchCalibrationPoints = async () => {
-        const calibrationPoints: {
-            [key: string]: calibrationPointType[];
-        } = {};
-        sensors.forEach((sensor: sensorType) => {
-            calibrationPoints[sensor.id] = mockCalibrationData[sensor.id]
-        });
-        setAllCalibrationPoints(calibrationPoints);
+        if (userData?.userId) {
+            const devicesSettings = await ManageDevices.getDevicesSettings();
+            if (devicesSettings) {
+                const calibrationPoints = devicesSettings.find((setting: { deviceId: number; }) => setting.deviceId === sensors[0].deviceId).calibrationPoints;
+                setAllCalibrationPoints(calibrationPoints);
+            }
+        }
     };
 
     useEffect(() => {
-        // load all sensor calibration points on panel open
         fetchCalibrationPoints();
-        return () => {
-            // cleanup
-        };
-    }, []);
+    }, [sensors]);
+
+    const saveChanges = async () => {
+        if (unsavedChanges) {
+            const newSettings: deviceSettingsType = {
+                id: currentSensor.deviceId, // assuming this matches the 'id' field in deviceSettingsType
+                name: '', // fill in the appropriate value
+                description: '', // fill in the appropriate value
+                locationX: 0, // fill in the appropriate value
+                locationY: 0, // fill in the appropriate value
+                active: true, // fill in the appropriate value
+                sensors: sensors.map(sensor => 
+                    sensor.id === currentSensor.id ? 
+                    { ...sensor, calibratedValues: allCalibrationPoints } : 
+                    sensor
+                ),
+                sensor_ids: sensors.map(sensor => sensor.id)
+            };
+            const saveStatus = await ManageDevices.saveDeviceSettings(newSettings);
+            if (saveStatus) {
+                setUnsavedChanges(false);
+            }
+        }
+    };
+    
 
     return (
         <>
@@ -98,6 +120,7 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                     sensor={currentSensor}
                     setUnsavedChanges={setUnsavedChanges}
                     unsavedChanges={unsavedChanges}
+                    saveChanges={saveChanges}
                 />
             }
         </>

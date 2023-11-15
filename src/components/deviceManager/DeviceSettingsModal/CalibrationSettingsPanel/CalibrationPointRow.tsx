@@ -19,19 +19,21 @@ type calibrationPointRowProps = {
 }
 
 const CalibrationPointRow: React.FC<calibrationPointRowProps> = ({ number, point, unit, setUnsavedChanges, setSensorCalibrationPoints, sensorCalibrationPoints }) => {
-    const [digitalValue, setDigitalValue] = useState<number | string>(point.digitalValue);
+    const [digitalValues, setDigitalValues] = useState<number[]>(point.digitalValue);
 
     useEffect(() => {
-        setDigitalValue(point.digitalValue);
+        setDigitalValues(point.digitalValue);
     }, [point])
 
-    const updateCalibrationPoints = (val: string) => {
+    const updateCalibrationPoints = (index: number, val: string) => {
         setSensorCalibrationPoints(
             sensorCalibrationPoints.map(p => {
                 if (p.id === point.id) {
+                    let newDigitalValues = [...p.digitalValue];
+                    newDigitalValues[index] = +val;
                     return {
                         ...p,
-                        digitalValue: +val
+                        digitalValue: newDigitalValues
                     }
                 }
                 return p;
@@ -45,32 +47,33 @@ const CalibrationPointRow: React.FC<calibrationPointRowProps> = ({ number, point
                 {number}
             </Td>
             <Td>
-                {point.physicalValue}
+                {point.physicalValue.join(', ')}
             </Td>
-            <Td>
-                <NumberInput
-                    precision={2}
-                    step={0.01}
-                    value={digitalValue}
-                    onChange={val => {
-                        updateCalibrationPoints(val);
-                        setUnsavedChanges(true);
-                    }}
-                    onBlur={e => {
-                        if (e.target.value === "") {
-                            updateCalibrationPoints("0");
+            {digitalValues.map((digitalValue, index) => (
+                <Td key={index}>
+                    <NumberInput
+                        precision={2}
+                        step={0.01}
+                        value={digitalValue}
+                        onChange={val => {
+                            updateCalibrationPoints(index, val);
                             setUnsavedChanges(true);
-                        } 
-                      }}
-                >
-                    <NumberInputField />
-                    <NumberInputStepper>
-                        <NumberIncrementStepper />
-                        <NumberDecrementStepper />
-                    </NumberInputStepper>
-                    
-                </NumberInput>
-            </Td>
+                        }}
+                        onBlur={e => {
+                            if (e.target.value === "") {
+                                updateCalibrationPoints(index, "0");
+                                setUnsavedChanges(true);
+                            } 
+                        }}
+                    >
+                        <NumberInputField />
+                        <NumberInputStepper>
+                            <NumberIncrementStepper />
+                            <NumberDecrementStepper />
+                        </NumberInputStepper>
+                    </NumberInput>
+                </Td>
+            ))}
             <Td>
                 {unit}
             </Td>

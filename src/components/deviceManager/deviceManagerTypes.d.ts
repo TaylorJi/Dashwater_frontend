@@ -40,37 +40,24 @@ type deviceSensorTagsType = {
 }
 
 type sensorType = {
-    // id: number;
-    // deviceId: number;
-    // metric: string;
-    // defaultUnit: string;
-    // calibrated: boolean;
-    // enabled: boolean;
-    // maxVal: number;
-    // minVal: number;
-    // lastCalibrationDate: string;
-    // minCalibrationPts: number;
     id: number,
     deviceId: number,
-    lastCalibrationDate: string,
-    // minCalibrationPts: number,
+    // lastCalibrationDate: string,
     metric: string,
     defaultUnit: string,
     alerts: boolean,
     power: boolean,
-    // calibrated: boolean,
-    // enabled: boolean,
     minVal: number,
     maxVal: number,
     physicalValues: number[],
-    calibratedValues: number[]
+    calibratedValues: calibrationPointType[]
 }
 
 type calibrationPointType = {
-    id: number;
-    digitalValue: number;
-    physicalValue: number;
-    sensorId: number;
+    id: number,
+    dateLastCalibrated: string;
+    physicalValue: number[];
+    digitalValue: number[];
 }
 
 type defaultThresholdType = {
