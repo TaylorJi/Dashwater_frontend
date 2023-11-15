@@ -84,7 +84,7 @@ type userThresholdType = {
     deviceId: number;
     minVal: number;
     maxVal: number;
-    alert: boolean;
+    alerts: boolean;
     power: boolean;
 }
 
@@ -92,8 +92,8 @@ type updatedThresholdType = {
     userId: string | undefined;
     sensorId: number;
     deviceId: number;
-    minVal: string | number;
-    maxVal: string | number;
-    alert: boolean;
+    minVal:  number;
+    maxVal: number;
+    alerts: boolean;
     power: boolean;
 }

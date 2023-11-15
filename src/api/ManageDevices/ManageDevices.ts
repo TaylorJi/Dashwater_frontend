@@ -8,32 +8,17 @@ console.log(sessionId);
 const saveDeviceSettings = async (newSettings: deviceSettingsType) => {
     try {
         const requestBody = {
-            newSettings: newSettings,
+            newSettings: newSettings,  // object now includes sensor_ids
             sessionId: sessionId,
         };
         const response = await axios.post(`${API_URL}/device/updateDeviceSettings`, requestBody, { withCredentials: true });
-        console.log("Response from saveDeviceSettings:", response); // log the response to the console
+        console.log("Response from saveDeviceSettings:", response);
         if (response.status === 200) {
             return true;
         }
         return false;
     } catch (err) {
-        console.error("Error in saveDeviceSettings:", err); // log the error to the console
-        return false;
-    }
-};
-
-const saveThresholdSettings = async (thresholds: updatedThresholdType[]) => {
-    try {
-        console.log("saveThresholdSettings called");
-        for (let i = 0; i < thresholds.length; i++) {
-            const response = await axios.put(`${API_URL}/userThreshold/updateUserThreshold`, thresholds[i], { withCredentials: true });
-            if (response.status !== 200) {
-                return false;
-            }
-        }
-        return true;
-    } catch (_err) {
+        console.error("Error in saveDeviceSettings:", err);
         return false;
     }
 };
@@ -141,7 +126,7 @@ const ManageDevices = {
     getDefaultThresholds,
     getUserThresholdsByDevice,
     saveDeviceSettings,
-    saveThresholdSettings,
+    // saveThresholdSettings,
     saveCalibrationPoints,
     getDevicesSettings,
     test

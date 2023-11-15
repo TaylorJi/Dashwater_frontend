@@ -18,7 +18,7 @@ type thresholdSettingRowProps = {
     metric: string;
     minVal: number;
     maxVal: number;
-    alert: boolean;
+    alerts: boolean;
     power: boolean;
     defaultUnit: string;
     setUpdatedThresholds: React.Dispatch<React.SetStateAction<updatedThresholdType[]>>
@@ -33,7 +33,7 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
         minVal,
         maxVal,
         defaultUnit,
-        alert,
+        alerts,
         power,
         setUpdatedThresholds,
         updatedThresholds } = props
@@ -45,7 +45,7 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
         deviceId: deviceId,
         minVal: minVal,
         maxVal: maxVal,
-        alert: alert,
+        alerts: alerts,
         power: power
     });
 
@@ -74,18 +74,18 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
     };
 
     const setAlert = (newValue: boolean) => {
-        setThresholdSettings({ ...thresholdSettings, 'alert': newValue });
+        setThresholdSettings({ ...thresholdSettings, 'alerts': newValue });
         const i = updatedThresholds.findIndex(element => element.sensorId === thresholdSettings.sensorId);
         const newThresholds = updatedThresholds;
         if (i > -1) {
             newThresholds[i] = {
                 ...thresholdSettings,
-                alert: newValue
+                alerts: newValue
             };
         } else {
             newThresholds.push({
                 ...thresholdSettings,
-                alert: newValue
+                alerts: newValue
             });
         }
         setUpdatedThresholds(newThresholds);
@@ -161,7 +161,7 @@ const ThresholdSettingsRow: React.FC<thresholdSettingRowProps> = (props) => {
             <Td>
                 <Switch
                     aria-label='Metric alert state'
-                    isChecked={thresholdSettings.alert}
+                    isChecked={thresholdSettings.alerts}
                     onChange={i => { setAlert(i.target.checked) }}
                 />
             </Td>
