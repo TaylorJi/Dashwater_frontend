@@ -1,10 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { Button, Stack, Text, useDisclosure } from '@chakra-ui/react';
+import { Button, Stack, Text, UseDisclosureReturn, useDisclosure } from '@chakra-ui/react';
 import colors from '../../../theme/foundations/colours';
 import AdminPortal from '../../../api/AdminPortal/AdminPortal';
 import EditModal from '../editModal/EditModal';
 import CreateModal from '../createModal/CreateModal';
+
+export const editUser = async (idArray: string[], editModal: UseDisclosureReturn) => {
+    if (idArray === undefined) {
+        idArray = [];
+    }
+    if (idArray.length !== 1) {
+        toast.error('You should select only one user');
+    } else {
+        await AdminPortal.getSingleUser(idArray);
+        editModal.onOpen();
+    }
+};
+
 
 const CrudButtons: React.FC = () => {
 
@@ -30,6 +43,7 @@ const CrudButtons: React.FC = () => {
             toast.error('You should select only one user');
         } else {
             await AdminPortal.getSingleUser(idArray);
+            console.log("idArray: ", idArray);
             editModal.onOpen()
         }
     };

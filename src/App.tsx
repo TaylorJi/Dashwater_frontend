@@ -9,6 +9,7 @@ import DeviceManager from "./pages/DeviceManager";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Admin from "./pages/AdminPortal";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   return (
@@ -48,14 +49,22 @@ function App() {
         }
       />
 
-      <Route
+      {/* <Route
         path="/adminPortal"
         element={
           <Authentication>
-            {/* <DeviceDetailsWrapper> */}
               <Admin />
-            {/* </DeviceDetailsWrapper> */}
           </Authentication>
+        }
+      /> */}
+      <Route
+        path="/adminPortal"
+        element={
+          <ProtectedRoute>
+            <Authentication>
+              <Admin />
+            </Authentication>
+          </ProtectedRoute>
         }
       />
 

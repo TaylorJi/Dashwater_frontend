@@ -74,6 +74,7 @@ const OverviewPanel: React.FC = () => {
                                                     LG_COLS : SM_COLS}, 1fr)`} gap={3}>
                                                     {
                                                         deviceData[key].map((item) => {
+                                                            console.log(`Key: ${key}, Item:`, item)
                                                             return (
                                                                 <OverviewGridItem
                                                                     key={uuid()}

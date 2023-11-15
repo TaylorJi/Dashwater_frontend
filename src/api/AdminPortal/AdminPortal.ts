@@ -143,13 +143,10 @@ const updateUser = async (user: any) => {
         const response: any = await axios.post(USER_URL,
             {
                 operation: "update",
-                users_data: [
-                    {
-                        email: user.email,
-                        password: user.password,
-                        role: user.role
-                    }
-                ]
+                "old email": user.oldEmail,
+                "new email": user.email,
+                password: user.password,
+                role: user.role
             }
         );
 

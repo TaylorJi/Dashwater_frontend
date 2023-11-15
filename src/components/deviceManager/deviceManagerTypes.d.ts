@@ -8,13 +8,21 @@ type deviceSettingsUnitsType = {
 };
 
 type deviceSettingsType = {
-    id: number;
-    name: string;
-    description: string;
-    locationX: number;
-    locationY: number;
-    active: boolean;
-    sensors: sensorType[];
+    // id: number;
+    // name: string;
+    // description: string;
+    // locationX: number;
+    // locationY: number;
+    // active: boolean;
+    // sensors: sensorType[];
+    id: number,
+    name: string,
+    description: string,
+    locationX: number,
+    locationY: number,
+    active: boolean,
+    sensors: sensorType[],
+    sensor_ids: number[]
 };
 
 type generalSettingsType = {
@@ -32,16 +40,30 @@ type deviceSensorTagsType = {
 }
 
 type sensorType = {
-    id: number;
-    deviceId: number;
-    metric: string;
-    defaultUnit: string;
-    calibrated: boolean;
-    enabled: boolean;
-    maxVal: number;
-    minVal: number;
-    lastCalibrationDate: string;
-    minCalibrationPts: number;
+    // id: number;
+    // deviceId: number;
+    // metric: string;
+    // defaultUnit: string;
+    // calibrated: boolean;
+    // enabled: boolean;
+    // maxVal: number;
+    // minVal: number;
+    // lastCalibrationDate: string;
+    // minCalibrationPts: number;
+    id: number,
+    deviceId: number,
+    lastCalibrationDate: string,
+    // minCalibrationPts: number,
+    metric: string,
+    defaultUnit: string,
+    alerts: boolean,
+    power: boolean,
+    // calibrated: boolean,
+    // enabled: boolean,
+    minVal: number,
+    maxVal: number,
+    physicalValues: number[],
+    calibratedValues: number[]
 }
 
 type calibrationPointType = {
@@ -63,6 +85,7 @@ type userThresholdType = {
     minVal: number;
     maxVal: number;
     alert: boolean;
+    power: boolean;
 }
 
 type updatedThresholdType = {
@@ -72,4 +95,5 @@ type updatedThresholdType = {
     minVal: string | number;
     maxVal: string | number;
     alert: boolean;
+    power: boolean;
 }

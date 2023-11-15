@@ -8,15 +8,18 @@ type sensorTagProps = {
 
 
 const SensorTag: React.FC<sensorTagProps> = ({ metricKey }) => {
+    const buoySensor = buoySensorTags[metricKey];
+    if (!buoySensor) {
+        console.warn(`Unknown metricKey: ${metricKey}`);
+        return null; // or return a default component
+    }
     return (
-
         <Tag
-            bg={buoySensorTags[metricKey].color}
+            bg={buoySensor.color}
             m='.125rem'
         >
-            {buoySensorTags[metricKey].label}
+            {buoySensor.label}
         </Tag>
-
     );
 };
 
