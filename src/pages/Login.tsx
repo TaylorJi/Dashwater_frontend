@@ -40,6 +40,7 @@ import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
 import UserPool from "../components/helpers/userPool";
 import axios from "axios";
 import { Session } from "inspector";
+import ManageDevices from "../api/ManageDevices/ManageDevices";
 // import { randomBytes } from 'crypto';
 // import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
@@ -199,7 +200,10 @@ const Login: React.FC = () => {
               console.log(
                 "authenticated: ",
                 localStorage.getItem("authenticated")
+               
               );
+              const test = ManageDevices.test();
+              console.log("test: ", test);
               navigate("/dashboard");
             } else {
               setIsLoading(false);
