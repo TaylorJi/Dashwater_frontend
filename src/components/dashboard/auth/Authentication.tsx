@@ -23,6 +23,7 @@ const Authentication: React.FC<AuthenticationProps> = ({ children }) => {
         console.log('Validating session...');
 
         const sessionValid = await Sessions.validateSession();
+        console.log("sessionValid: " + sessionValid);
 
         if (sessionValid) {
 
