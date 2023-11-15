@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { API_URL } from "../Environments";
 
+const sessionId = localStorage.getItem('sessionId');
 const getWeather = async () => {
     try {
 
@@ -131,6 +132,25 @@ const getCachedHighLowHistorical = async () => {
     }
 }
 
+
+const getAllBuoyIds = async () => {
+    try {
+        const response = await axios.get(`${API_URL}/ts/getAllBuoyIds`, 
+        {
+            headers: {
+                "Authorization": `Bearer ${sessionId}`
+            },
+            withCredentials: true
+        });
+        if (response.status === 200) {
+            return response.data;
+        }
+     
+    } catch (_err) {
+        return null;
+    }
+}
+
 const Dashboard = {
     getWeather,
     getTide,
@@ -138,7 +158,9 @@ const Dashboard = {
     getCachedLogData,
     getCustomRangeData,
     getCustomRangeLogData,
-    getCachedHighLowHistorical
+    getCachedHighLowHistorical,
+    getAllBuoyIds
+
 };
 
 export default Dashboard;
