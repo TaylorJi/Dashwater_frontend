@@ -81,17 +81,27 @@ const getUser = async () => {
 const createUser = async (user: any) => {
     try {
         const sessionId = localStorage.getItem('sessionId');
-        const response: any = await axios.post(USER_URL,
-            {
-                operation: "add",
-                email: user.email,
-                password: user.password,
-                role: user.role
-            },
-            {
-                headers: { Authorization: `${sessionId}` },
-            }
+        const requestBody = {
+            sessionId: sessionId,
+            email: user.email,
+            password: user.password,
+            role: user.role
+        };
+        const response = await axios.post(`${API_URL}/user/createUser`,
+        requestBody,
+        { withCredentials: true }
         );
+        // const response: any = await axios.post(USER_URL,
+        //     {
+        //         operation: "add",
+        //         email: user.email,
+        //         password: user.password,
+        //         role: user.role
+        //     },
+        //     {
+        //         headers: { Authorization: `${sessionId}` },
+        //     }
+        // );
 
         if (response.status === 200) {
             window.location.reload();
@@ -108,16 +118,24 @@ const createUser = async (user: any) => {
 const deleteUser = async (idArray: string[]) => {
     try {
         const sessionId = localStorage.getItem('sessionId');
-        const request: any = await axios.post(USER_URL,
-            {
-                operation: "delete",
-                emails: idArray
-            },
-            {
-                headers: { Authorization: `${sessionId}` },
-            }
-            );
-        if (request.status === 200) {
+        const requestBody = {
+            sessionId: sessionId,
+            email: idArray[0]
+        };
+        const response = await axios.post(`${API_URL}/user/deleteUser`,
+        requestBody,
+        { withCredentials: true }
+        );
+        // const request: any = await axios.post(USER_URL,
+        //     {
+        //         operation: "delete",
+        //         emails: idArray
+        //     },
+        //     {
+        //         headers: { Authorization: `${sessionId}` },
+        //     }
+        //     );
+        if (response.status === 200) {
             window.location.reload();
         }
     } catch (_err) {
