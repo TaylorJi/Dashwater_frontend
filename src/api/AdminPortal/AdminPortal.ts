@@ -42,17 +42,23 @@ const sessionId = localStorage.getItem('sessionId');
 
 const getUser = async () => {
     try {
-        const response = await axios.post(USER_URL, {
-            headers: {
-                "Authorization": `Bearer ${sessionId}`
-            },
-            operation: "scan"
-        },
-        {
-            headers: { Authorization: `${sessionId}` },
-        }
+        const sessionId = localStorage.getItem('sessionId');
+        // const response = await axios.get(USER_URL, {
+        //     headers: {
+        //         "Authorization": `${sessionId}`
+        //     },
+            
+        // },
+        // );
+        const requestBody = {
+            sessionId: sessionId,
+        };
+        const response = await axios.post(`${API_URL}/user/getUser`,
+        requestBody,
+        { withCredentials: true }
         );
 
+        console.log("getUser status: " + response.status);
         if (response.status === 200) {
             // const users = response.data.items.map((item: { email: { S: string }, password: { S: string }, role: { S: string } }, index: number) => ({
             const users = response.data.items.map((item: { email: string, role: string }, index: number) => ({
