@@ -9,18 +9,24 @@ const UserTable: React.FC = () => {
     const [userData, setUserData] = useState([]);
     let idArray: string[] = [];
 
+    function isVoid(variable: unknown): variable is void {
+        return typeof variable === 'undefined';
+    }
+
     const getUserData = async () => {
         try {
             const data = await AdminPortal.getUser();
-            if (data) {
-                setUserData(data);
-            } else {
-                toast.error('Oh no! There was a problem fetching weather data. Please refresh the page.');
+            if(!isVoid(data)) {
+                if (data) {
+                    setUserData(data);
+                } else {
+                    toast.error('Oh no! There was a problem fetching user data. Please refresh the page.');
+                }
             }
 
         } catch (_err) {
             console.error("Error in getUserData:", _err);
-            toast.error('Oh no! There was a problem fetching weather data. Please refresh the page.');
+            toast.error('Oh no! There was a problem fetching user data. Please refresh the page.');
         }
 
     };
