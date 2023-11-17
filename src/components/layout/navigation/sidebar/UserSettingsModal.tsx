@@ -37,6 +37,7 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({ isOpen, onClose }
             const logOutResponse = await Sessions.deleteSession();
 
             if (logOutResponse) {
+                localStorage.setItem("userRole", "");
                 resetUserData();
                 document.cookie = 'sessionCookie= ; expires = Thu, 01 Jan 1970 00:00:00 GMT'
                 navigate('../')

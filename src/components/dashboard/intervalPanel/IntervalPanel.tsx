@@ -21,6 +21,8 @@ const IntervalPanel: React.FC = () => {
     const getDeviceData = async (end: string) => {
 
         try {
+            // console.log(await Dashboard.getAllBuoyIds());
+            // const data = await Dashboard.getAllBuoyIds();
             const data = await Dashboard.getCachedData(end);
 
             if (data) {

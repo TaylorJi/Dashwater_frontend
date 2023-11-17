@@ -44,6 +44,7 @@ import ManageDevices from "../api/ManageDevices/ManageDevices";
 // import { randomBytes } from 'crypto';
 // import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
+
 const Login: React.FC = () => {
   const [email, setEmail] = useState("testAdmin29@email.com");
   const [password, setPassword] = useState("Testing123!");
@@ -63,6 +64,7 @@ const Login: React.FC = () => {
   const [isLargeScreen] = useMediaQuery("(min-width: 1600px)");
 
   useEffect(() => {
+    localStorage.setItem("userRole", "");
     resetSidebarOpen();
   }, []);
 
@@ -204,8 +206,7 @@ const Login: React.FC = () => {
                 localStorage.getItem("authenticated")
                
               );
-              const test = ManageDevices.test();
-              console.log("test: ", test);
+            
               navigate("/dashboard");
             } else {
               setIsLoading(false);
