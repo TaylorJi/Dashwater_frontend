@@ -58,7 +58,6 @@ const getUser = async () => {
         { withCredentials: true }
         );
 
-        console.log("getUser status: " + response.status);
         if (response.status === 200) {
             // const users = response.data.items.map((item: { email: { S: string }, password: { S: string }, role: { S: string } }, index: number) => ({
             const users = response.data.items.map((item: { email: string, role: string }, index: number) => ({
@@ -150,13 +149,21 @@ const deleteUser = async (idArray: string[]) => {
 const getSingleUser = async (idArray: string[]) => {
     try {
         const sessionId = localStorage.getItem('sessionId');
-        const response: any = await axios.get<any, AxiosResponse<string>>(`https://ma93xudga3.execute-api.us-east-1.amazonaws.com/prod/data/?email=${idArray[0]}`)
+        const requestBody = {
+            sessionId: sessionId,
+            email: idArray[0]
+        };
+        const response: any = await axios.post(`${API_URL}/user/getSingleUser`,
+        requestBody,
+        { withCredentials: true }
+        );
+        // const response: any = await axios.get<any, AxiosResponse<string>>(`https://ma93xudga3.execute-api.us-east-1.amazonaws.com/prod/data/?email=${idArray[0]}`)
         if (response.status === 200) {
             console.log(response.data);
-            global.email = response.data["email"];
-            global.password = response.data["password"];
-            global.role = response.data["role"];
-            return response.data;
+            global.email = response["email"];
+            // global.password = response.data["password"];
+            global.role = response["role"];
+            return response;
         }
         return null;
 
@@ -166,30 +173,28 @@ const getSingleUser = async (idArray: string[]) => {
 };
 
 const updateUser = async (user: any) => {
-    // const response: any = await axios.put<updateUserResponse>(`${API_URL}/user/updateUser/${user._id}`,
-    //     { email: user.email, password: user.password, role: user.role },
-    //     {
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             Accept: 'application/json',
-    //         },
-    //     },);
-    // if (response.status === 200) {
-    //     window.location.reload();
-    // }
     try {
         const sessionId = localStorage.getItem('sessionId');
-        const response: any = await axios.post(USER_URL,
-            {
-                operation: "update",
-                "old email": user.oldEmail,
-                "new email": user.email,
-                password: user.password,
-                role: user.role
-            },
-            {
-                headers: { Authorization: `${sessionId}` },
-            }
+        const requestBody = {
+            sessionId: sessionId,
+            user: user
+        };
+        // const response1: any = await axios.post(USER_URL,
+        //     {
+        //         operation: "update",
+        //         "old email": user.oldEmail,
+        //         "new email": user.email,
+        //         password: user.password,
+        //         role: user.role
+        //     },
+        //     {
+        //         headers: { Authorization: `${sessionId}` },
+        //     }
+        // );
+
+        const response: any = await axios.post(`${API_URL}/user/updateUser`,
+        requestBody,
+        { withCredentials: true }
         );
 
         if (response.status === 200) {
