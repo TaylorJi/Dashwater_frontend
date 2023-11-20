@@ -152,7 +152,6 @@ const getAllBuoyIds = async () => {
 }
 
 const test = async () => {
-    console.log("Dashboard test is being called")
     try{
         const response = await axios.get(`${API_URL}/ts/test`, 
         {
@@ -161,7 +160,10 @@ const test = async () => {
             },
             withCredentials: true
         });
-        console.log(response);
+        if (response.status === 200) {
+            console.log(response.data.data);
+            return response.data.data;
+        }
 
     } catch (_err) {
         console.log(_err);
