@@ -110,7 +110,7 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                         {showPassword ? 'Hide' : 'Show'} Password
                         </Button>
                         </FormControl>
-                            <FormControl isRequired mb={'1px'}>
+                            {/* <FormControl isRequired mb={'1px'}>
                                 <FormLabel>Role</FormLabel>
                                 <RadioGroup id="role" defaultValue={global.role} name="role"
                                     onChange={
@@ -123,7 +123,7 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                                         <Radio value='admin'>Admin</Radio>
                                     </HStack>
                                 </RadioGroup>
-                            </FormControl>
+                            </FormControl> */}
                         <HStack
                         spacing={isLargeScreen ? "1.5rem" : "0.5rem"}
                         mr={isLargeScreen ? "1rem" : "0.5rem"}

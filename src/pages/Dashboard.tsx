@@ -39,7 +39,7 @@ const Dashboard: React.FC = () => {
 
                         <WeatherCard />
                         <TideCard />
-                        {/* <MapCard /> */}
+                        <MapCard />
 
                     </Box>
 
