@@ -151,6 +151,25 @@ const getAllBuoyIds = async () => {
     }
 }
 
+const test = async () => {
+    console.log("Dashboard test is being called")
+    try{
+        const response = await axios.get(`${API_URL}/ts/test`, 
+        {
+            headers: {
+                "Authorization": `Bearer ${sessionId}`
+            },
+            withCredentials: true
+        });
+        console.log(response);
+
+    } catch (_err) {
+        console.log(_err);
+        return null;
+
+    }
+}
+
 const Dashboard = {
     getWeather,
     getTide,
@@ -159,7 +178,8 @@ const Dashboard = {
     getCustomRangeData,
     getCustomRangeLogData,
     getCachedHighLowHistorical,
-    getAllBuoyIds
+    getAllBuoyIds,
+    test
 
 };
 

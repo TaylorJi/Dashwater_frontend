@@ -28,33 +28,27 @@ const TestPanel: React.FC = () => {
   const LG_COLS = 4;
   const SM_COLS = 3;
 
-  // const getAllBuoyIds = async () => {
-  //     try {
-  //         const data = await Dashboard.getAllBuoyIds();
-  //         console.log(data);
-  //         console.log(data.data.length);
-  //         console.log(data.data[0].buoy_id);
-  //         console.log("test");
+  const getTest = async () => {
+    try {
+      console.log("Test")
+      const response = await Dashboard.test();
 
-  //         if (data && typeof data === 'object') {
-  //             const buoyIds = Object.keys(data);
-  //             console.log(buoyIds);
-  //             setBuoyIds(buoyIds);
-  //         } else {
-  //                 toast.error('No buoy IDs available.');
-  //         }
-  //         // if (data && Array.isArray(data)) {
-  //         //     setBuoyIds(data);
-  //         // } else {
-  //         //     // Handle the case where data is null or undefined
-  //         //     console.error('Received null or undefined data');
-  //         //     toast.error('No buoy IDs available.');
-  //         //     setBuoyIds([]); // Optionally set to empty array to clear previous data
-  //         // }
-  //     } catch {
-  //         toast.error('There was an error fetching overview data - please refresh and try again.');
-  //     }
-  // }
+
+      // If response.data is an object with numeric keys, convert it to an array
+      // if (response && typeof response.data === 'object') {
+      //   // Convert the object values to an array and then map to get buoy_id
+      //   const ids = Object.values(response.data).map((buoyData: any) => buoyData.buoy_id);
+      //   setBuoyIds(ids);
+      // } else {
+      //   console.error("Unexpected response data structure:", response.data);
+      //   toast.error("Unable to retrieve buoy IDs.");
+      //   setBuoyIds([]);
+      // }
+    } catch (error) {
+      console.error("Error fetching buoy IDs:", error);
+      toast.error("There was an error fetching the buoy IDs - please refresh and try again.");
+    }
+  };
 
   const getAllBuoyIds = async () => {
     try {
@@ -80,7 +74,7 @@ const TestPanel: React.FC = () => {
 
   useEffect(() => {
     // getHistoricalHighLow();
-    getAllBuoyIds();
+    getTest();
   }, []);
 
   return (
