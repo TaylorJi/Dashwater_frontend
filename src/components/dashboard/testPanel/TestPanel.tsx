@@ -20,41 +20,82 @@ interface Buoy {
     buoy_id: number | string;
   }
 
+  interface SensorData {
+    sensor_name: string;
+    'measure_value::double': number;
+    time: string;
+  }
+
 const TestPanel: React.FC = () => {
-  const [deviceData, setDeviceData] = useState<RawGaugeDataType | null>(null);
+  const [sensorData, setSensorData] = useState<SensorData[]>([]);
+
+  // const [deviceData, setDeviceData] = useState<RawGaugeDataType | null>(null);
   const [isLargeScreen] = useMediaQuery("(min-width: 1600px)");
   const [buoyIds, setBuoyIds] = useState<string[]>([]); // Add state for buoy IDs
 
   const LG_COLS = 4;
   const SM_COLS = 3;
 
-  // const getAllBuoyIds = async () => {
-  //     try {
-  //         const data = await Dashboard.getAllBuoyIds();
-  //         console.log(data);
-  //         console.log(data.data.length);
-  //         console.log(data.data[0].buoy_id);
-  //         console.log("test");
-
-  //         if (data && typeof data === 'object') {
-  //             const buoyIds = Object.keys(data);
-  //             console.log(buoyIds);
-  //             setBuoyIds(buoyIds);
-  //         } else {
-  //                 toast.error('No buoy IDs available.');
-  //         }
-  //         // if (data && Array.isArray(data)) {
-  //         //     setBuoyIds(data);
-  //         // } else {
-  //         //     // Handle the case where data is null or undefined
-  //         //     console.error('Received null or undefined data');
-  //         //     toast.error('No buoy IDs available.');
-  //         //     setBuoyIds([]); // Optionally set to empty array to clear previous data
-  //         // }
-  //     } catch {
-  //         toast.error('There was an error fetching overview data - please refresh and try again.');
+  // const getTest = async () => {
+  //   try {
+  //     console.log("Test")
+  //     const response = await Dashboard.test();
+  //     console.log(response.length);
+  //     console.log(typeof response);
+  //     if (response && Array.isArray(response)) {
+  //       // Assuming response is the array of sensor data
+  //       setSensorData(response);
   //     }
-  // }
+   
+  //   } catch (error) {
+  //     console.error("Error fetching buoy IDs:", error);
+  //     toast.error("There was an error fetching the buoy IDs - please refresh and try again.");
+  //   }
+  // };
+
+  // const getTest = async () => {
+  //   try {
+  //     const response = await Dashboard.test();
+  //     if (response && Array.isArray(response)) {
+  //       // Flatten the array of objects into an array of SensorData
+  //       const flattenedData = response.flatMap((item) =>
+  //         Object.keys(item).map((key) => ({
+  //           sensor_name: key,
+  //           // Access the property with bracket notation due to special characters
+  //           'measure_value::double': item[key]['measure_value::double'],
+  //         }))
+  //       );
+  //       setSensorData(flattenedData);
+  //     } else {
+  //       console.error("Unexpected response data structure:", response);
+  //       toast.error("Unable to retrieve sensor data.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching sensor data:", error);
+  //     toast.error("There was an error fetching the sensor data - please refresh and try again.");
+  //   }
+  // };
+
+  const getTest = async () => {
+    try {
+      const response = await Dashboard.test();
+      if (response && Array.isArray(response)) {
+        // Map the response to your SensorData structure
+        const sensorDataArray: SensorData[] = response.map(sensorItem => ({
+          sensor_name: sensorItem.sensor_name,
+          'measure_value::double': sensorItem['measure_value::double'],
+          time: sensorItem.time
+        }));
+        setSensorData(sensorDataArray);
+      } else {
+        console.error("Unexpected response data structure:", response);
+        toast.error("Unable to retrieve sensor data.");
+      }
+    } catch (error) {
+      console.error("Error fetching sensor data:", error);
+      toast.error("There was an error fetching the sensor data - please refresh and try again.");
+    }
+  };
 
   const getAllBuoyIds = async () => {
     try {
@@ -80,37 +121,31 @@ const TestPanel: React.FC = () => {
 
   useEffect(() => {
     // getHistoricalHighLow();
-    getAllBuoyIds();
+    getTest();
   }, []);
 
   return (
     <>
-      {/* <Box>
+
+           <Box>
         <Text fontSize="xl" fontWeight="bold" mb={4}>
-          Buoy IDs:
+          Sensor Data:
         </Text>
         <ul>
-          {buoyIds.map((id) => (
-            <li key={id}>Buoy ID: {id}</li>
+          {sensorData.map((data, index) => (
+            // <li key={index}>
+            //   {data.sensor_name}: {data['measure_value::double']}
+            // </li>
+            <li key={uuid()}>
+              Time: {data.time} <br />
+            {data.sensor_name}: {data['measure_value::double']}
+          </li>
           ))}
         </ul>
-      </Box> */}
+      </Box>
+      
 
-      <Accordion allowMultiple>
-        {buoyIds.map((id) => (
-          <AccordionItem key={id}>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                Buoy ID: {id}
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              {/* Additional details or data related to the buoy ID can be rendered here */}
-            </AccordionPanel>
-          </AccordionItem>
-        ))}
-      </Accordion>
+ 
     </>
   );
 };
