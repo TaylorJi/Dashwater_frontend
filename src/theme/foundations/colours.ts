@@ -1,4 +1,3 @@
-
 const colors = {
   main: {
     500: '#02558B', // this is to just set default button color to usafa
@@ -39,7 +38,9 @@ const colors = {
     electricalConductivity: '#FFD66E',
     waterFlow: '#77D1F3',
     waterLvl: '#20D9D2',
-    waterPressure: '#72DDC3'
+    waterPressure: '#72DDC3',
+    ch4: '#FFA66F',
+    co2: '#ead1dc'
   }
 };
 
