@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { API_URL, USER_URL } from "../Environments";
+import { API_URL } from "../Environments";
 import { Navigate } from 'react-router';
 
 type createUserResponse = {
@@ -43,13 +43,6 @@ const sessionId = localStorage.getItem('sessionId');
 const getUser = async () => {
     try {
         const sessionId = localStorage.getItem('sessionId');
-        // const response = await axios.get(USER_URL, {
-        //     headers: {
-        //         "Authorization": `${sessionId}`
-        //     },
-            
-        // },
-        // );
         const requestBody = {
             sessionId: sessionId,
         };
@@ -59,7 +52,6 @@ const getUser = async () => {
         );
 
         if (response.status === 200) {
-            // const users = response.data.items.map((item: { email: { S: string }, password: { S: string }, role: { S: string } }, index: number) => ({
             const users = response.data.items.map((item: { email: string, role: string }, index: number) => ({
                 _id: index, // Temporarily use index as an ID
                 email: item.email,
@@ -90,17 +82,6 @@ const createUser = async (user: any) => {
         requestBody,
         { withCredentials: true }
         );
-        // const response: any = await axios.post(USER_URL,
-        //     {
-        //         operation: "add",
-        //         email: user.email,
-        //         password: user.password,
-        //         role: user.role
-        //     },
-        //     {
-        //         headers: { Authorization: `${sessionId}` },
-        //     }
-        // );
 
         if (response.status === 200) {
             window.location.reload();
@@ -125,25 +106,12 @@ const deleteUser = async (idArray: string[]) => {
         requestBody,
         { withCredentials: true }
         );
-        // const request: any = await axios.post(USER_URL,
-        //     {
-        //         operation: "delete",
-        //         emails: idArray
-        //     },
-        //     {
-        //         headers: { Authorization: `${sessionId}` },
-        //     }
-        //     );
         if (response.status === 200) {
             window.location.reload();
         }
     } catch (_err) {
         console.error("Error in deleteUser:", _err);
     }
-    // for (let i = 0; i < idArray.length; i++) {
-    //     const request: any = await axios.delete<deleteUserResponse>(`${API_URL}/user/deleteUser/${idArray[i]}`)
-    // }
-    // window.location.reload();
 };
 
 const getSingleUser = async (idArray: string[]) => {
@@ -157,12 +125,9 @@ const getSingleUser = async (idArray: string[]) => {
         requestBody,
         { withCredentials: true }
         );
-        // const response: any = await axios.get<any, AxiosResponse<string>>(`https://ma93xudga3.execute-api.us-east-1.amazonaws.com/prod/data/?email=${idArray[0]}`)
         if (response.status === 200) {
-            console.log(response.data);
-            global.email = response["email"];
-            // global.password = response.data["password"];
-            global.role = response["role"];
+            global.email = response.data.email;
+            global.role = response.data.role;
             return response;
         }
         return null;
@@ -179,18 +144,6 @@ const updateUser = async (user: any) => {
             sessionId: sessionId,
             user: user
         };
-        // const response1: any = await axios.post(USER_URL,
-        //     {
-        //         operation: "update",
-        //         "old email": user.oldEmail,
-        //         "new email": user.email,
-        //         password: user.password,
-        //         role: user.role
-        //     },
-        //     {
-        //         headers: { Authorization: `${sessionId}` },
-        //     }
-        // );
 
         const response: any = await axios.post(`${API_URL}/user/updateUser`,
         requestBody,

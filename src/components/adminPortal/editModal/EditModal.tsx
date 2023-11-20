@@ -104,7 +104,7 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                         </FormControl>
                         <FormControl isRequired mb={'12px'}>
                             <FormLabel>Password</FormLabel>
-                            <Input id="password" type={showPassword ? "text" : "password"} placeholder="Password" defaultValue={global.password}
+                            <Input id="password" type={showPassword ? "text" : "password"} placeholder="Password" //defaultValue={global.password}
                             {...register('password', { shouldUnregister: true })} />
                         <Button onClick={togglePasswordVisibility} mt="2" size="sm">
                         {showPassword ? 'Hide' : 'Show'} Password

@@ -45,7 +45,6 @@ const CrudButtons: React.FC = () => {
             toast.error('You should select only one user');
         } else {
             await AdminPortal.getSingleUser(idArray);
-            console.log("idArray: ", idArray);
             editModal.onOpen()
         }
     };
