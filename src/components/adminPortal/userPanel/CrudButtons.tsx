@@ -28,8 +28,10 @@ const CrudButtons: React.FC = () => {
         if (idArray === undefined) {
             idArray = [];
         }
-        if (idArray.length <= 0) {
-            toast.error('You should select user first');
+        // if (idArray.length <= 0) {
+        //     toast.error('You should select user first');
+        if (idArray.length !== 1) { // changed it to 1 as AWS accepts only one user at a time
+            toast.error('You should select only one user');
         } else {
             AdminPortal.deleteUser(idArray);
         }
@@ -43,7 +45,6 @@ const CrudButtons: React.FC = () => {
             toast.error('You should select only one user');
         } else {
             await AdminPortal.getSingleUser(idArray);
-            console.log("idArray: ", idArray);
             editModal.onOpen()
         }
     };

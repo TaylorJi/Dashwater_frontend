@@ -104,25 +104,25 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                         </FormControl>
                         <FormControl isRequired mb={'12px'}>
                             <FormLabel>Password</FormLabel>
-                            <Input id="password" type={showPassword ? "text" : "password"} placeholder="Password" defaultValue={global.password}
+                            <Input id="password" type={showPassword ? "text" : "password"} placeholder="Password" //defaultValue={global.password}
                             {...register('password', { shouldUnregister: true })} />
                         <Button onClick={togglePasswordVisibility} mt="2" size="sm">
                         {showPassword ? 'Hide' : 'Show'} Password
                         </Button>
                         </FormControl>
                             <FormControl isRequired mb={'1px'}>
-                                {/* <FormLabel>Role</FormLabel>
+                                <FormLabel>Role</FormLabel>
                                 <RadioGroup id="role" defaultValue={global.role} name="role"
                                     onChange={
-                                        function(value) {
-                                            global.role = value;
+                                        function(newRole) {
+                                            global.role = newRole;
                                         }
                                     } >
                                     <HStack spacing='20px'>
                                         <Radio value='user'>User</Radio>
                                         <Radio value='admin'>Admin</Radio>
                                     </HStack>
-                                </RadioGroup> */}
+                                </RadioGroup>
                             </FormControl>
                         <HStack
                         spacing={isLargeScreen ? "1.5rem" : "0.5rem"}

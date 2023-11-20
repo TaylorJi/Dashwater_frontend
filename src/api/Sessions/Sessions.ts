@@ -24,6 +24,7 @@ const validateSession = async () => {
         return null;
 
     } catch(_err) {
+        console.log('validateSession error: ' + _err);
         return null;
     }
 }
