@@ -18,10 +18,42 @@ const OverviewPanel: React.FC = () => {
     const LG_COLS = 4;
     const SM_COLS = 3;
 
+    const getSensors = async () => {
+        let sensorMinMax = [];
+        try {
+            const data = await Dashboard.getSensors("device");
+            console.log('OverviewPanel.tsx - getSensors() - data:', data);
+            for (let i = 0; i < data.length; i++) {
+                let sensor = data[i].sensor_name;
+                let values = await Dashboard.getCachedHighLowHistorical("device", sensor);
+                let min = values.min;
+                let max = values.max;
+                console.log("sensor: ", sensor);
+                console.log("min: ", min);
+                console.log("max: ", max);
+            }
+
+
+
+            console.log(data[0].sensor_name)
+
+
+        } catch (error) {
+            console.error('OverviewPanel.tsx - getSensors() - error:', error);
+            toast.error('There was an error fetching overview data - please refresh and try again.');
+        }
+    }
+
+
+
+
     const getHistoricalHighLow = async () => {
 
         try {
-            const data = await Dashboard.getCachedHighLowHistorical();
+            const data = await Dashboard.getCachedHighLowHistorical("device", "co2");
+            console.log('OverviewPanel.tsx - getHistoricalHighLow() - data:', data);
+
+
 
             if (data) {
                 setDeviceData(data);
@@ -38,11 +70,24 @@ const OverviewPanel: React.FC = () => {
 
     useEffect(() => {
         getHistoricalHighLow();
+        getSensors();
     }, []);
 
     return (
         <>
-            {
+         {/* <Box>
+                <Text fontSize="xl" fontWeight="bold">Sensors:</Text>
+                <ul>
+                    {sensors.map(sensor => (
+                        <li key={sensor}>{sensor}</li>
+                    ))}
+                </ul>
+            </Box> */}
+
+
+
+
+            {/* {
                 deviceData ?
                     <>
                         {
@@ -98,7 +143,7 @@ const OverviewPanel: React.FC = () => {
                     </>
                     :
                     <LoadingGraphic />
-            }
+            } */}
         </>
     );
 };
