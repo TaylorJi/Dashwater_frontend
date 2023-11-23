@@ -84,3 +84,17 @@ type userDataType = {
     userId: string,
     role: string
 };
+
+type DeviceSensorDataType = {
+    deviceName: string;
+    sensorUnit: string;
+    sensorName: string;
+    measureValue: string;
+    time: number;
+};
+
+type sensorDataType = {
+    sensorName: string;
+    min: number;
+    max: number;
+};

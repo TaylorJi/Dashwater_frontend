@@ -10,10 +10,19 @@ import { toast } from 'react-hot-toast';
 import LoadingGraphic from '../../layout/LoadingGraphic';
 import { get } from 'http';
 
+interface SensorData {
+    sensorName: string;
+    min: number;
+    max: number;
+}
+
 
 const OverviewPanel: React.FC = () => {
 
     const [deviceData, setDeviceData] = useState<RawGaugeDataType | null>(null);
+    const [deviceSensorValue, setDeviceSensorValue] = useState<DeviceSensorDataType[]>([]);
+    const [sensorData, setSensorData] = useState<SensorData[]>([]);
+    const [gaugeData, setGaugeData] = useState<GaugeDataType[]>([]);
     const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
 
     const LG_COLS = 4;
@@ -24,20 +33,26 @@ const OverviewPanel: React.FC = () => {
         try {
             const data = await Dashboard.getSensors("device");
             console.log('OverviewPanel.tsx - getSensors() - data:', data);
+            const sensorDataArray: SensorData[] = [];
             for (let i = 0; i < data.length; i++) {
                 let sensor = data[i].sensor_name;
                 let values = await Dashboard.getCachedHighLowHistorical("device", sensor, "12h");
                 let min = values.min;
                 let max = values.max;
+                let sensorValue: SensorData = {
+                    sensorName: sensor,
+                    min: min,
+                    max: max
+                }
+                sensorDataArray.push(sensorValue);
                 console.log("sensor: ", sensor);
                 console.log("min: ", min);
                 console.log("max: ", max);
             }
+            setSensorData(sensorDataArray);
+            createOverviewGridItems();
 
-
-
-            console.log(data[0].sensor_name)
-
+            // console.log(data[0].sensor_name)
 
         } catch (error) {
             console.error('OverviewPanel.tsx - getSensors() - error:', error);
@@ -46,17 +61,27 @@ const OverviewPanel: React.FC = () => {
     }
 
     const getData = async () => {
-        try{
+        try {
             const data = await Dashboard.getData("device", "12h");
             console.log('OverviewPanel.tsx - getData() - data:', data);
+            const deviceSensorValueArray: DeviceSensorDataType[] = [];
+            if (data) {
+                const value: DeviceSensorDataType = {
+                    deviceName: data.device_name,
+                    sensorUnit: data.sensor_unit,
+                    sensorName: data.sensor_name,
+                    measureValue: data.measure_value,
+                    time: data.time
+                }
+                deviceSensorValueArray.push(value);
+            }
+            setDeviceSensorValue(deviceSensorValueArray);
+
         } catch (error) {
             console.error('OverviewPanel.tsx - getData() - error:', error);
             toast.error('There was an error fetching overview data - please refresh and try again.');
         }
     }
-
-
-
 
     const getHistoricalHighLow = async () => {
 
@@ -79,15 +104,102 @@ const OverviewPanel: React.FC = () => {
 
     };
 
+    const createOverviewGridItems = async () => {
+        if (deviceSensorValue && sensorData) {
+            const gaugeDataArray: GaugeDataType[] = [];
+            deviceSensorValue.forEach((measure) => {
+                const sensor = sensorData.find((sensor) => sensor.sensorName === measure.sensorName);
+                if (sensor) {
+                    const item: GaugeDataType = {
+                        metric: sensor.sensorName,
+                        low: sensor.min,
+                        high: sensor.max,
+                        current: Number(measure.measureValue),
+                        unit: measure.sensorUnit
+                    };
+                    gaugeDataArray.push(item);
+                    // return (
+                    //     <OverviewGridItem
+                    //         key={uuid()}
+                    //         item={item}
+                    //     />
+                    // );
+                }
+
+            });
+            console.log("!!!!!!!!!!!!!! " + JSON.stringify(gaugeDataArray));
+            setGaugeData(gaugeDataArray);
+        }
+    };
+
     useEffect(() => {
         getHistoricalHighLow();
         getSensors();
         getData();
+        // createOverviewGridItems();
     }, []);
 
     return (
         <>
-         {/* <Box>
+            {
+                gaugeData ?
+                    <>
+                        {
+                            gaugeData.map((item) => {
+                                return (
+
+                                    <OverviewGridItem
+                                        key={uuid()}
+                                        item={item}
+                                    />
+                                );
+                            })
+                            // <Accordion
+                            //     key={uuid()}
+                            //     allowMultiple
+                            // >
+                            //     <AccordionItem>
+                            //         <AccordionButton>
+                            //             <Box
+                            //                 as='span'
+                            //                 flex='1'
+                            //                 textAlign='left'
+                            //             >
+                            //                 <Text
+                            //                     fontSize='xl'
+                            //                     fontWeight='bold'
+                            //                 >
+                            //                     Device Overview
+                            //                 </Text>
+                            //             </Box>
+                            //             <AccordionIcon />
+                            //         </AccordionButton>
+                            //         <AccordionPanel pb={4}>
+                            //             <Grid templateColumns={`repeat(${isLargeScreen ?
+                            //                 LG_COLS : SM_COLS}, 1fr)`} gap={3}>
+                            //                 {
+                            //                     gaugeData.map((item) => {
+                            //                         return (
+
+                            //                             <OverviewGridItem
+                            //                                 key={uuid()}
+                            //                                 item={item}
+                            //                             />
+                            //                         );
+                            //                     })
+                            //                 }
+
+                            //             </Grid>
+                            //         </AccordionPanel>
+                            //     </AccordionItem>
+                            // </Accordion>
+
+                        }
+                    </>
+                    :
+                    <LoadingGraphic />
+            }
+            {/* <Box>
                 <Text fontSize="xl" fontWeight="bold">Sensors:</Text>
                 <ul>
                     {sensors.map(sensor => (
