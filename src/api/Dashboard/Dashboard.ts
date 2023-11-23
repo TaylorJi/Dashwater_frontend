@@ -134,11 +134,11 @@ const getCustomRangeLogData = async (start: string, end: string) => {
 
 
 
-const getCachedHighLowHistorical = async (device_name: string, sensor_name:string) => {
+const getCachedHighLowHistorical = async (device_name: string, sensor_name:string, time:string) => {
     try {
         console.log(sensor_name);
         const response = await axios.post(`${API_URL}/ts/getHistoricalHighLow`, 
-        {device_name, sensor_name},
+        {device_name, sensor_name, time},
         {
             
             headers: {
@@ -225,6 +225,28 @@ const test = async () => {
     }
 }
 
+const getData = async (device_name: string, time: string) => {
+    try{
+    const response = await axios.post(`${API_URL}/ts/getData`,
+    {device_name, time},
+    {headers: {
+        "Authorization": `Bearer ${sessionId}`
+    },
+    withCredentials: true
+});
+
+    if (response.status === 200) {
+        console.log(response.data);
+        return response.data.data;
+    }
+} catch (_err) {
+    console.log(_err);
+    return null;
+
+
+}
+}
+
 const Dashboard = {
     getWeather,
     getTide,
@@ -235,7 +257,8 @@ const Dashboard = {
     getCachedHighLowHistorical,
     getAllBuoyIds,
     test,
-    getSensors
+    getSensors,
+    getData
 
 };
 

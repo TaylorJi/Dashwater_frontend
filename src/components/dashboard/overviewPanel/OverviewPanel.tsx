@@ -8,6 +8,7 @@ import OverviewGridItem from './OverviewGridItem';
 import Dashboard from '../../../api/Dashboard/Dashboard';
 import { toast } from 'react-hot-toast';
 import LoadingGraphic from '../../layout/LoadingGraphic';
+import { get } from 'http';
 
 
 const OverviewPanel: React.FC = () => {
@@ -25,7 +26,7 @@ const OverviewPanel: React.FC = () => {
             console.log('OverviewPanel.tsx - getSensors() - data:', data);
             for (let i = 0; i < data.length; i++) {
                 let sensor = data[i].sensor_name;
-                let values = await Dashboard.getCachedHighLowHistorical("device", sensor);
+                let values = await Dashboard.getCachedHighLowHistorical("device", sensor, "12h");
                 let min = values.min;
                 let max = values.max;
                 console.log("sensor: ", sensor);
@@ -44,13 +45,23 @@ const OverviewPanel: React.FC = () => {
         }
     }
 
+    const getData = async () => {
+        try{
+            const data = await Dashboard.getData("device", "12h");
+            console.log('OverviewPanel.tsx - getData() - data:', data);
+        } catch (error) {
+            console.error('OverviewPanel.tsx - getData() - error:', error);
+            toast.error('There was an error fetching overview data - please refresh and try again.');
+        }
+    }
+
 
 
 
     const getHistoricalHighLow = async () => {
 
         try {
-            const data = await Dashboard.getCachedHighLowHistorical("device", "co2");
+            const data = await Dashboard.getCachedHighLowHistorical("device", "co2", "12h");
             console.log('OverviewPanel.tsx - getHistoricalHighLow() - data:', data);
 
 
@@ -71,6 +82,7 @@ const OverviewPanel: React.FC = () => {
     useEffect(() => {
         getHistoricalHighLow();
         getSensors();
+        getData();
     }, []);
 
     return (
