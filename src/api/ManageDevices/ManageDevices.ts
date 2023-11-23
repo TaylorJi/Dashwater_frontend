@@ -51,12 +51,32 @@ const getUserThresholdsByDevice = async (userId: string | undefined, deviceId: n
     }
 }
 
-const saveCalibrationPoints = async (calibrationPoints: calibrationPointType[]) => {
-    // calibrationPoints.forEach((point: calibrationPointType) => {
-    //     // PUT to AWS DB
-    // }
-    // do DB stuff for the metric type
-    return true;
+const saveCalibrationPoints = async (calibrationPoints: calibrationPointType[], sensors: sensorType[], buoy: deviceSettingsType) => {
+    const physicalValue = [calibrationPoints[0].physicalValue, calibrationPoints[1].physicalValue];
+    const digitalValue = [calibrationPoints[0].digitalValue, calibrationPoints[1].digitalValue];
+    const updatedSensors = sensors.map((sensor: sensorType) => {
+        if (sensor.id === calibrationPoints[0].sensorId) {
+            return {
+                ...sensor,
+                physicalValues: physicalValue,
+                calibratedValues: digitalValue,
+            };
+        } else {
+            return sensor;
+        }
+    });
+
+    const updatedBuoy = {
+        ...buoy,
+        sensors: updatedSensors,
+    };
+
+    const response = await saveDeviceSettings(updatedBuoy);
+    if (response) {
+        return true;
+    } else {
+        return false;
+    }
 };
 
 // const getDevicesSettings = async () => {

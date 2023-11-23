@@ -25,11 +25,13 @@ import { calibrationPoints } from '../../../wrappers/DeviceDetailsWrapper/device
 
 type calibrationTableProp = {
     sensor: sensorType;
+    sensors: sensorType[];
+    buoy: deviceSettingsType;
     setUnsavedChanges: React.Dispatch<React.SetStateAction<boolean>>;
     unsavedChanges: React.SetStateAction<boolean>;
 }
 
-const CalibrationTable: React.FC<calibrationTableProp> = ({ sensor, unsavedChanges, setUnsavedChanges }) => {
+const CalibrationTable: React.FC<calibrationTableProp> = ({ sensor, sensors, buoy, unsavedChanges, setUnsavedChanges }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef(null);
 
@@ -44,9 +46,11 @@ const CalibrationTable: React.FC<calibrationTableProp> = ({ sensor, unsavedChang
 
     const saveSelectedSensorCalibrationPoints = async () => {
         setIsLoading(true);
-        const res = await ManageDevices.saveCalibrationPoints(sensorCalibrationPoints);
+        console.log("sensorCalibrationPoints", sensorCalibrationPoints);
+        const res = await ManageDevices.saveCalibrationPoints(sensorCalibrationPoints, sensors, buoy);
         if (res) {
             toast.success('Calibration point saved!');
+            window.location.reload();
         } else {
             toast.error('There was a problem saving the calibration points. Please try again.')
         }
@@ -67,7 +71,7 @@ const CalibrationTable: React.FC<calibrationTableProp> = ({ sensor, unsavedChang
                     <Tr>
                         <Th color={colors.main.usafaBlue}>Calibration Point</Th>
                         <Th color={colors.main.usafaBlue}>Physical Value</Th>
-                        <Th color={colors.main.usafaBlue}>Digital Value</Th>
+                        <Th color={colors.main.usafaBlue}>Calibrated Value</Th>
                         <Th color={colors.main.usafaBlue}>Unit</Th>
                     </Tr>
                 </Thead>
