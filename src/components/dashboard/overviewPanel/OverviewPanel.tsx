@@ -145,54 +145,54 @@ const OverviewPanel: React.FC = () => {
                 gaugeData ?
                     <>
                         {
-                            gaugeData.map((item) => {
-                                return (
+                            // gaugeData.map((item) => {
+                            //     return (
 
-                                    <OverviewGridItem
-                                        key={uuid()}
-                                        item={item}
-                                    />
-                                );
-                            })
-                            // <Accordion
-                            //     key={uuid()}
-                            //     allowMultiple
-                            // >
-                            //     <AccordionItem>
-                            //         <AccordionButton>
-                            //             <Box
-                            //                 as='span'
-                            //                 flex='1'
-                            //                 textAlign='left'
-                            //             >
-                            //                 <Text
-                            //                     fontSize='xl'
-                            //                     fontWeight='bold'
-                            //                 >
-                            //                     Device Overview
-                            //                 </Text>
-                            //             </Box>
-                            //             <AccordionIcon />
-                            //         </AccordionButton>
-                            //         <AccordionPanel pb={4}>
-                            //             <Grid templateColumns={`repeat(${isLargeScreen ?
-                            //                 LG_COLS : SM_COLS}, 1fr)`} gap={3}>
-                            //                 {
-                            //                     gaugeData.map((item) => {
-                            //                         return (
+                            //         <OverviewGridItem
+                            //             key={uuid()}
+                            //             item={item}
+                            //         />
+                            //     );
+                            // })
+                            <Accordion
+                                key={uuid()}
+                                allowMultiple
+                            >
+                                <AccordionItem>
+                                    <AccordionButton>
+                                        <Box
+                                            as='span'
+                                            flex='1'
+                                            textAlign='left'
+                                        >
+                                            <Text
+                                                fontSize='xl'
+                                                fontWeight='bold'
+                                            >
+                                                Device Overview
+                                            </Text>
+                                        </Box>
+                                        <AccordionIcon />
+                                    </AccordionButton>
+                                    <AccordionPanel pb={4}>
+                                        <Grid templateColumns={`repeat(${isLargeScreen ?
+                                            LG_COLS : SM_COLS}, 1fr)`} gap={3}>
+                                            {
+                                                gaugeData.map((item) => {
+                                                    return (
 
-                            //                             <OverviewGridItem
-                            //                                 key={uuid()}
-                            //                                 item={item}
-                            //                             />
-                            //                         );
-                            //                     })
-                            //                 }
+                                                        <OverviewGridItem
+                                                            key={uuid()}
+                                                            item={item}
+                                                        />
+                                                    );
+                                                })
+                                            }
 
-                            //             </Grid>
-                            //         </AccordionPanel>
-                            //     </AccordionItem>
-                            // </Accordion>
+                                        </Grid>
+                                    </AccordionPanel>
+                                </AccordionItem>
+                            </Accordion>
 
                         }
                     </>
