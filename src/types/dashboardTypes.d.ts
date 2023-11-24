@@ -86,11 +86,11 @@ type userDataType = {
 };
 
 type DeviceSensorDataType = {
-    deviceName: string;
+    // deviceName: string;
     sensorUnit: string;
     sensorName: string;
     measureValue: string;
-    time: number;
+    // time: number;
 };
 
 type sensorDataType = {

@@ -236,7 +236,6 @@ const getData = async (device_name: string, time: string) => {
 });
 
     if (response.status === 200) {
-        console.log(response.data);
         return response.data.data;
     }
 } catch (_err) {

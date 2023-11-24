@@ -36,7 +36,7 @@ const OverviewPanel: React.FC = () => {
             const sensorDataArray: SensorData[] = [];
             for (let i = 0; i < data.length; i++) {
                 let sensor = data[i].sensor_name;
-                let values = await Dashboard.getCachedHighLowHistorical("device", sensor, "12h");
+                let values = await Dashboard.getCachedHighLowHistorical("device", sensor, "30h");
                 let min = values.min;
                 let max = values.max;
                 let sensorValue: SensorData = {
@@ -62,19 +62,28 @@ const OverviewPanel: React.FC = () => {
 
     const getData = async () => {
         try {
-            const data = await Dashboard.getData("device", "12h");
+            const data = await Dashboard.getData("device", "30h");
             console.log('OverviewPanel.tsx - getData() - data:', data);
             const deviceSensorValueArray: DeviceSensorDataType[] = [];
-            if (data) {
-                const value: DeviceSensorDataType = {
-                    deviceName: data.device_name,
-                    sensorUnit: data.sensor_unit,
-                    sensorName: data.sensor_name,
-                    measureValue: data.measure_value,
-                    time: data.time
+            let keys = Object.keys(data);
+            for (let i = 0; i < keys.length; i++) {
+                let deviceSensorValue: DeviceSensorDataType = {
+                    sensorUnit: data[keys[i]].sensorUnit,
+                    sensorName: keys[i],
+                    measureValue: data[keys[i]].measureValue
                 }
-                deviceSensorValueArray.push(value);
+                deviceSensorValueArray.push(deviceSensorValue);
             }
+            // if (data) {
+            //     const value: DeviceSensorDataType = {
+            //         deviceName: data.device_name,
+            //         sensorUnit: data.sensor_unit,
+            //         sensorName: data.sensor_name,
+            //         measureValue: data.measure_value,
+            //         time: data.time
+            //     }
+            //     deviceSensorValueArray.push(value);
+            // }
             setDeviceSensorValue(deviceSensorValueArray);
 
         } catch (error) {
@@ -144,14 +153,14 @@ const OverviewPanel: React.FC = () => {
             await getSensors();
             await createOverviewGridItems();
         }
-    
+
         fetchAndSetupData();
 
         // const fetchAndSetupData = async () => {
         //     await Promise.all([getHistoricalHighLow(), getData(), getSensors()]);
         //     await createOverviewGridItems();
         // }
-    
+
         // fetchAndSetupData();
     }, []);
 
