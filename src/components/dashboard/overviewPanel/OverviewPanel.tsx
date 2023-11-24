@@ -86,7 +86,7 @@ const OverviewPanel: React.FC = () => {
     const getHistoricalHighLow = async () => {
 
         try {
-            const data = await Dashboard.getCachedHighLowHistorical("device", "co2", "12h");
+            const data = await Dashboard.getCachedHighLowHistorical("device", "co2", "1d");
             console.log('OverviewPanel.tsx - getHistoricalHighLow() - data:', data);
 
 
@@ -110,6 +110,7 @@ const OverviewPanel: React.FC = () => {
             deviceSensorValue.forEach((measure) => {
                 const sensor = sensorData.find((sensor) => sensor.sensorName === measure.sensorName);
                 if (sensor) {
+                    console.log("~~~~~~~~~~~~~~~~~");
                     const item: GaugeDataType = {
                         metric: sensor.sensorName,
                         low: sensor.min,
@@ -133,10 +134,25 @@ const OverviewPanel: React.FC = () => {
     };
 
     useEffect(() => {
-        getHistoricalHighLow();
-        getSensors();
-        getData();
+        // getHistoricalHighLow();
+        // getData();
+        // getSensors();
         // createOverviewGridItems();
+        const fetchAndSetupData = async () => {
+            getHistoricalHighLow();
+            await getData();
+            await getSensors();
+            await createOverviewGridItems();
+        }
+    
+        fetchAndSetupData();
+
+        // const fetchAndSetupData = async () => {
+        //     await Promise.all([getHistoricalHighLow(), getData(), getSensors()]);
+        //     await createOverviewGridItems();
+        // }
+    
+        // fetchAndSetupData();
     }, []);
 
     return (
