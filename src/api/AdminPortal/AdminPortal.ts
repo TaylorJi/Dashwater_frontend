@@ -85,11 +85,7 @@ const createUser = async (user: any) => {
 
         if (response.status === 200) {
             window.location.reload();
-        } else {
-            console.log("Response Status:", response.status);
-            console.log("Response Data:", response.data);
         }
-
     } catch (error) {
         console.error("Error in createUser:", error);
     }
@@ -152,11 +148,7 @@ const updateUser = async (user: any) => {
 
         if (response.status === 200) {
             window.location.reload();
-        } else {
-            console.log("Response Status:", response.status);
-            console.log("Response Data:", response.data);
         }
-
     } catch (error) {
         console.error("Error in createUser:", error);
     }

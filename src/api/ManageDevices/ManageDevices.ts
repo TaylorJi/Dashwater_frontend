@@ -112,34 +112,13 @@ const getDevicesSettings = async () => {
     }
 };
 
-// Test function to get all buoy ids from TimeStreamController (TS)
-// The endpoint is working
-// const test = async () => {
-//     console.log('test');
-//     try {
-//         const response = await axios.get(`${API_URL}/ts/getAllBuoyIds`, 
-//         {
-//             headers: {
-//                 "Authorization": `Bearer ${sessionId}`
-//             },
-//             withCredentials: true
-//         });
-//         console.log(response.data.data);
-     
-//     } catch (_err) {
-//         return null;
-//     }
-// }
-
 const ManageDevices = {
     getDefaultThresholds,
     getUserThresholdsByDevice,
     saveDeviceSettings,
     // saveThresholdSettings,
     saveCalibrationPoints,
-    getDevicesSettings,
-    // test
-
+    getDevicesSettings
 };
 
 export default ManageDevices;

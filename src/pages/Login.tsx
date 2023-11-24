@@ -195,18 +195,10 @@ const Login: React.FC = () => {
               );
               localStorage.setItem("sessionId", isSessionCreated.sessionId);
               console.log("sessionId: ", localStorage.getItem("sessionId"));
-              console.log("userToken: ", localStorage.getItem("userToken"));
               localStorage.setItem("userEmail", userEmail);
               localStorage.setItem("userRole", userRole); //CHANGED: updated this with the userRole retrieved from cognito
               global.userRole = userRole; //CHANGED: updated this with the userRole retrieved from cognito
-              localStorage.setItem("authenticated", "true");
-              console.log("userRole: ", localStorage.getItem("userRole"));
-              console.log(
-                "authenticated: ",
-                localStorage.getItem("authenticated")
-               
-              );
-            
+              localStorage.setItem("authenticated", "true");            
               navigate("/dashboard");
             } else {
               setIsLoading(false);

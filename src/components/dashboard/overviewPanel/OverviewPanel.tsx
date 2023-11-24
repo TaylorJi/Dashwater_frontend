@@ -29,14 +29,13 @@ const OverviewPanel: React.FC = () => {
     const SM_COLS = 3;
 
     const getSensors = async () => {
-        let sensorMinMax = [];
         try {
             const data = await Dashboard.getSensors("device");
             console.log('OverviewPanel.tsx - getSensors() - data:', data);
             const sensorDataArray: SensorData[] = [];
             for (let i = 0; i < data.length; i++) {
                 let sensor = data[i].sensor_name;
-                let values = await Dashboard.getCachedHighLowHistorical("device", sensor, "30h");
+                let values = await Dashboard.getCachedHighLowHistorical("device", sensor, "48h");
                 let min = values.min;
                 let max = values.max;
                 let sensorValue: SensorData = {
@@ -62,7 +61,7 @@ const OverviewPanel: React.FC = () => {
 
     const getData = async () => {
         try {
-            const data = await Dashboard.getData("device", "30h");
+            const data = await Dashboard.getData("device", "48h");
             console.log('OverviewPanel.tsx - getData() - data:', data);
             const deviceSensorValueArray: DeviceSensorDataType[] = [];
             let keys = Object.keys(data);
@@ -119,7 +118,7 @@ const OverviewPanel: React.FC = () => {
             deviceSensorValue.forEach((measure) => {
                 const sensor = sensorData.find((sensor) => sensor.sensorName === measure.sensorName);
                 if (sensor) {
-                    console.log("~~~~~~~~~~~~~~~~~");
+                    // console.log("~~~~~~~~~~~~~~~~~");
                     const item: GaugeDataType = {
                         metric: sensor.sensorName,
                         low: sensor.min,
@@ -137,7 +136,7 @@ const OverviewPanel: React.FC = () => {
                 }
 
             });
-            console.log("!!!!!!!!!!!!!! " + JSON.stringify(gaugeDataArray));
+            // console.log("!!!!!!!!!!!!!! " + JSON.stringify(gaugeDataArray));
             setGaugeData(gaugeDataArray);
         }
     };
