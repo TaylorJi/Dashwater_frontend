@@ -4,6 +4,7 @@ import colors from '../../theme/foundations/colours';
 import IntervalPanel from './intervalPanel/IntervalPanel';
 import LogPanel from './logPanel/LogPanel';
 import OverviewPanel from './overviewPanel/OverviewPanel';
+import TestPanel from './testPanel/TestPanel';
 
 const DashboardTabs: React.FC = () => {
 
@@ -43,6 +44,16 @@ const DashboardTabs: React.FC = () => {
                 >
                     Logs
                 </Tab>
+                <Tab
+                    mr='1rem'
+                    borderBottomWidth='0.2rem'
+                    _selected={{
+                        borderColor: colors.main.acidGreen,
+                        fontWeight: 'bold'
+                    }}
+                >
+                    Test
+                </Tab>
             </TabList>
 
             <TabPanels>
@@ -56,6 +67,9 @@ const DashboardTabs: React.FC = () => {
 
                 <TabPanel>
                     <LogPanel />
+                </TabPanel>
+                <TabPanel>
+                    <TestPanel />
                 </TabPanel>
             </TabPanels>
         </Tabs>

@@ -18,10 +18,33 @@ const IntervalPanel: React.FC = () => {
     const LG_COLS = 3;
     const SM_COLS = 2;
 
-    const getDeviceData = async (end: string) => {
+    // const getDeviceData = async (end: string) => {
+
+    //     try {
+    //         // console.log(await Dashboard.getAllBuoyIds());
+    //         // const data = await Dashboard.getAllBuoyIds();
+    //         const data = await Dashboard.getCachedData(end);
+
+    //         if (data) {
+    //             setGlobalDeviceData(data);
+
+    //         } else {
+    //             toast.error('There was an error fetching device data - please refresh and try again.');
+    //         }
+
+    //     } catch {
+    //         toast.error('There was an error fetching device data - please refresh and try again.');
+    //     }
+
+    // };
+
+
+    const getDeviceData = async (device: string, end: string) => {
 
         try {
-            const data = await Dashboard.getCachedData(end);
+            // console.log(await Dashboard.getAllBuoyIds());
+            // const data = await Dashboard.getAllBuoyIds();
+            const data = await Dashboard.getData(device, end);
 
             if (data) {
                 setGlobalDeviceData(data);
@@ -38,8 +61,8 @@ const IntervalPanel: React.FC = () => {
 
     useEffect(() => {
         if (!globalDeviceData) {
-            const end = new Date(new Date().setHours(new Date().getHours() - 12)).toISOString();
-            getDeviceData(end);
+            const end = '12h'
+            getDeviceData('device',end);
         }
     }, []);
 

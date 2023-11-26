@@ -40,26 +40,13 @@ type deviceSensorTagsType = {
 }
 
 type sensorType = {
-    // id: number;
-    // deviceId: number;
-    // metric: string;
-    // defaultUnit: string;
-    // calibrated: boolean;
-    // enabled: boolean;
-    // maxVal: number;
-    // minVal: number;
-    // lastCalibrationDate: string;
-    // minCalibrationPts: number;
     id: number,
     deviceId: number,
     lastCalibrationDate: string,
-    // minCalibrationPts: number,
     metric: string,
     defaultUnit: string,
     alerts: boolean,
     power: boolean,
-    // calibrated: boolean,
-    // enabled: boolean,
     minVal: number,
     maxVal: number,
     physicalValues: number[],
@@ -84,7 +71,7 @@ type userThresholdType = {
     deviceId: number;
     minVal: number;
     maxVal: number;
-    alert: boolean;
+    alerts: boolean;
     power: boolean;
 }
 
@@ -92,8 +79,8 @@ type updatedThresholdType = {
     userId: string | undefined;
     sensorId: number;
     deviceId: number;
-    minVal: string | number;
-    maxVal: string | number;
-    alert: boolean;
+    minVal:  number;
+    maxVal: number;
+    alerts: boolean;
     power: boolean;
 }

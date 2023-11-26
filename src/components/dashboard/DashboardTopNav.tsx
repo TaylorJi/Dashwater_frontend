@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import Dashboard from '../../api/Dashboard/Dashboard';
 import { logDataAtom, paginationMultipleAtom } from './logPanel/atoms/logPanelAtoms';
 import CustomRangeModal from './customRange/CustomRangeModal';
+import { timeRangeAtom } from '../../../src/components/dashboard/logPanel/atoms/timeRangeAtom';
 
 const DashboardTopNav: React.FC = () => {
 
@@ -21,10 +22,29 @@ const DashboardTopNav: React.FC = () => {
 
     const resetPagination = useResetRecoilState(paginationMultipleAtom);
 
+    const setTimeRange = useSetRecoilState(timeRangeAtom);
+
+    const getDevice = async () => {
+        try {
+            console.log("Interval panel call getDevice")
+            const data = await Dashboard.getAllDevice();
+            if (data) {
+                setGlobalDeviceData(data);
+            } else {
+                toast.error('There was an error fetching device data - please refresh and try again.');
+            }
+        } catch {
+            toast.error('There was an error fetching device data - please refresh and try again.');
+        }   
+    }
+
     const getDeviceData = async (end: string) => {
 
         try {
-            const data = await Dashboard.getCachedData(end);
+            // const data = await Dashboard.getCachedData(end);
+            const devices = getDevice();
+            console.log(devices);
+            const data = await Dashboard.getData('device', end);
 
             if (data) {
                 setGlobalDeviceData(data);
@@ -56,7 +76,7 @@ const DashboardTopNav: React.FC = () => {
     };
 
     useEffect(() => {
-        const end = new Date(new Date().setHours(new Date().getHours() - 12)).toISOString();
+        const end = '12h'
         getLogData(end);
 
     }, []);
@@ -77,16 +97,21 @@ const DashboardTopNav: React.FC = () => {
                             bgColor={index === active ? colors.main.activeTopNav : ''}
                             color={index === active ? colors.main.usafaBlue : colors.main.ceruBlue}
                             onClick={async () => {
+                                console.log(topNavItems[item])
+                                setTimeRange(topNavItems[item])
+                               
+
                                 resetPagination();
                                 setActive(index);
                                 if (item !== 'Custom') {
                                     toast.success('Now displaying data for new date range.');
+                                    // this is where we create corresdoning page 
                                     await getDeviceData(topNavItems[item]);
-                                    await getLogData(topNavItems[item]);
+                                    // await getLogData(topNavItems[item]);
                                 } else {
                                     onOpen();
                                 }
-                            }}
+                            }} 
                             _hover={{
                                 transform: 'scale(1.05)',
                                 cursor: 'pointer',
