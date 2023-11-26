@@ -98,6 +98,7 @@ const DashboardTopNav: React.FC = () => {
                             color={index === active ? colors.main.usafaBlue : colors.main.ceruBlue}
                             onClick={async () => {
                                 console.log(topNavItems[item])
+                                localStorage.setItem("timeRange", topNavItems[item]);
                                 setTimeRange(topNavItems[item])
                                
 

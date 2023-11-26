@@ -1,8 +1,87 @@
+//     const getSensors = async () => {
+//         try {
+//             const data = await Dashboard.getSensors("device");
+//             console.log('OverviewPanel.tsx - getSensors() - data:', data);
+//             const sensorDataArray: SensorData[] = [];
+//             for (let i = 0; i < data.length; i++) {
+//                 let sensor = data[i].sensor_name;
+//                 let values = await Dashboard.getCachedHighLowHistorical("device", sensor, "72h");
+//                 let min = values.min;
+//                 let max = values.max;
+//                 let sensorValue: SensorData = {
+//                     sensorName: sensor,
+//                     min: min,
+//                     max: max
+//                 }
+//                 sensorDataArray.push(sensorValue);
+//             }
+//             setSensorData(sensorDataArray);
+//             // setTimeout(createOverviewGridItems, 1000);
+//         } catch (error) {
+//             console.error('OverviewPanel.tsx - getSensors() - error:', error);
+//             toast.error('There was an error fetching overview data - please refresh and try again.');
+//         }
+//     }
+
+//     const getData = async () => {
+//         try {
+//             const data = await Dashboard.getData("device", "72h");
+//             console.log('OverviewPanel.tsx - getData() - data:', data);
+//             const deviceSensorValueArray: DeviceSensorDataType[] = [];
+//             let keys = Object.keys(data);
+//             for (let i = 0; i < keys.length; i++) {
+//                 let deviceSensorValue: DeviceSensorDataType = {
+//                     sensorUnit: data[keys[i]].sensorUnit,
+//                     sensorName: keys[i],
+//                     measureValue: data[keys[i]].measureValue
+//                 }
+//                 deviceSensorValueArray.push(deviceSensorValue);
+//             }
+//             setDeviceSensorValue(deviceSensorValueArray);
+//             // setTimeout(getSensors, 1000);
+//         } catch (error) {
+//             console.error('OverviewPanel.tsx - getData() - error:', error);
+//             toast.error('There was an error fetching overview data - please refresh and try again.');
+//         }
+//     }
+
+//     const createOverviewGridItems = async () => {
+//         console.log("createOverviewGridItems() called. getData() length: " + deviceSensorValue.length + " sensorData length: " + sensorData.length );
+//         if (deviceSensorValue.length > 0 && sensorData.length > 0) {
+//             const gaugeDataArray: GaugeDataType[] = [];
+//             deviceSensorValue.forEach((measure) => {
+//                 const sensor = sensorData.find((sensor) => sensor.sensorName === measure.sensorName);
+//                 if (sensor) {
+//                     const item: GaugeDataType = {
+//                         metric: sensor.sensorName,
+//                         low: sensor.min,
+//                         high: sensor.max,
+//                         current: Number(measure.measureValue),
+//                         unit: measure.sensorUnit
+//                     };
+//                     gaugeDataArray.push(item);
+//                 }
+
+//             });
+//             console.log("!!!!!!!!!!!!!! " + JSON.stringify(gaugeDataArray));
+//             setGaugeData(gaugeDataArray);
+//         }
+//     };
+
+//     useEffect(() => {
+//         getData();
+//         getSensors();
+//     }, []);
+
+//     useEffect(() => {
+//         createOverviewGridItems();
+//     }, [deviceSensorValue, sensorData]);
+
 import {
     Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel,
     Grid, Box, Text, useMediaQuery
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import uuid from 'react-uuid';
 import OverviewGridItem from './OverviewGridItem';
 import Dashboard from '../../../api/Dashboard/Dashboard';
@@ -11,13 +90,13 @@ import LoadingGraphic from '../../layout/LoadingGraphic';
 import { get } from 'http';
 import { timeRangeAtom } from '../../../components/dashboard/logPanel/atoms/timeRangeAtom';
 import { useRecoilValue } from 'recoil';
+import { timer } from 'd3-timer';
 
 interface SensorData {
     sensorName: string;
     min: number;
     max: number;
 }
-
 
 const OverviewPanel: React.FC = () => {
 
@@ -31,15 +110,14 @@ const OverviewPanel: React.FC = () => {
     const LG_COLS = 4;
     const SM_COLS = 3;
 
-    const getSensors = async () => {
+    const getSensors = useCallback(async () => {
         try {
-            console.log("Time is " + timeRange)
+            console.log("Time is " + localStorage.getItem("timeRange"));
             const data = await Dashboard.getSensors("device");
-            console.log('OverviewPanel.tsx - getSensors() - data:', data);
             const sensorDataArray: SensorData[] = [];
             for (let i = 0; i < data.length; i++) {
                 let sensor = data[i].sensor_name;
-                let values = await Dashboard.getCachedHighLowHistorical("device", sensor, timeRange);
+                let values = await Dashboard.getCachedHighLowHistorical("device", sensor, localStorage.getItem("timeRange") || "12h");
                 let min = values.min;
                 let max = values.max;
                 let sensorValue: SensorData = {
@@ -48,27 +126,29 @@ const OverviewPanel: React.FC = () => {
                     max: max
                 }
                 sensorDataArray.push(sensorValue);
-                console.log("sensor: ", sensor);
-                console.log("min: ", min);
-                console.log("max: ", max);
             }
             setSensorData(sensorDataArray);
-            createOverviewGridItems();
-
-            // console.log(data[0].sensor_name)
-
         } catch (error) {
             console.error('OverviewPanel.tsx - getSensors() - error:', error);
             toast.error('There was an error fetching overview data - please refresh and try again.');
         }
-    }
+    }, []);
 
-    const getData = async () => {
+    const getData = useCallback(async () => {
         try {
-            const data = await Dashboard.getData("device", timeRange);
+
+            const data = await Dashboard.getData("device", localStorage.getItem("timeRange") || "12h");
+            let keys = Object.keys(data);
+            console.log("!!!!!!!!!!!!!! data length:  " + data.length + ", type: " + typeof data);
+            if (keys.length === 0) {
+                console.log("Data is null " + JSON.stringify(data));
+                const emptyArray: DeviceSensorDataType[] = [];
+                setDeviceSensorValue(emptyArray);
+                return;
+            }
             console.log('OverviewPanel.tsx - getData() - data:', data);
             const deviceSensorValueArray: DeviceSensorDataType[] = [];
-            let keys = Object.keys(data);
+            
             for (let i = 0; i < keys.length; i++) {
                 let deviceSensorValue: DeviceSensorDataType = {
                     sensorUnit: data[keys[i]].sensorUnit,
@@ -77,52 +157,20 @@ const OverviewPanel: React.FC = () => {
                 }
                 deviceSensorValueArray.push(deviceSensorValue);
             }
-            // if (data) {
-            //     const value: DeviceSensorDataType = {
-            //         deviceName: data.device_name,
-            //         sensorUnit: data.sensor_unit,
-            //         sensorName: data.sensor_name,
-            //         measureValue: data.measure_value,
-            //         time: data.time
-            //     }
-            //     deviceSensorValueArray.push(value);
-            // }
             setDeviceSensorValue(deviceSensorValueArray);
-
         } catch (error) {
             console.error('OverviewPanel.tsx - getData() - error:', error);
             toast.error('There was an error fetching overview data - please refresh and try again.');
         }
-    }
+    }, []);
 
-    const getHistoricalHighLow = async () => {
-
-        try {
-            const data = await Dashboard.getCachedHighLowHistorical("device", "co2", "1d");
-            console.log('OverviewPanel.tsx - getHistoricalHighLow() - data:', data);
-
-
-
-            if (data) {
-                setDeviceData(data);
-
-            } else {
-                toast.error('There was an error fetching overview data - please refresh and try again.');
-            }
-
-        } catch {
-            toast.error('There was an error fetching overview data - please refresh and try again.');
-        }
-
-    };
-
-    const createOverviewGridItems = async () => {
-        if (deviceSensorValue && sensorData) {
+    const createOverviewGridItems = useCallback(() => {
+        if (deviceSensorValue.length > 0 && sensorData.length > 0) {
+            console.log("?????????????????");
             const gaugeDataArray: GaugeDataType[] = [];
             deviceSensorValue.forEach((measure) => {
                 const sensor = sensorData.find((sensor) => sensor.sensorName === measure.sensorName);
                 if (sensor) {
-                    // console.log("~~~~~~~~~~~~~~~~~");
                     const item: GaugeDataType = {
                         metric: sensor.sensorName,
                         low: sensor.min,
@@ -131,41 +179,33 @@ const OverviewPanel: React.FC = () => {
                         unit: measure.sensorUnit
                     };
                     gaugeDataArray.push(item);
-                    // return (
-                    //     <OverviewGridItem
-                    //         key={uuid()}
-                    //         item={item}
-                    //     />
-                    // );
                 }
-
             });
-            // console.log("!!!!!!!!!!!!!! " + JSON.stringify(gaugeDataArray));
             setGaugeData(gaugeDataArray);
         }
-    };
+    }, [deviceSensorValue, sensorData]);
+
+
+
+    // useEffect(() => {
+    //     const fetchAndSetupData = async () => {
+    //         getHistoricalHighLow();
+    //         await getData();
+    //         await getSensors();
+    //         await createOverviewGridItems();
+    //     }
+    //     fetchAndSetupData();
+    // }, [timeRange]);
+
 
     useEffect(() => {
-        // getHistoricalHighLow();
-        // getData();
-        // getSensors();
-        // createOverviewGridItems();
-        const fetchAndSetupData = async () => {
-            getHistoricalHighLow();
-            await getData();
-            await getSensors();
-            await createOverviewGridItems();
-        }
+        getData();
+        getSensors();
+    }, [getData, getSensors, localStorage.getItem("timeRange")]);
 
-        fetchAndSetupData();
-
-        // const fetchAndSetupData = async () => {
-        //     await Promise.all([getHistoricalHighLow(), getData(), getSensors()]);
-        //     await createOverviewGridItems();
-        // }
-
-        // fetchAndSetupData();
-    }, [timeRange]);
+    useEffect(() => {
+        createOverviewGridItems();
+    }, [createOverviewGridItems, localStorage.getItem("timeRange")]);
 
     return (
         <>
@@ -227,77 +267,8 @@ const OverviewPanel: React.FC = () => {
                     :
                     <LoadingGraphic />
             }
-            {/* <Box>
-                <Text fontSize="xl" fontWeight="bold">Sensors:</Text>
-                <ul>
-                    {sensors.map(sensor => (
-                        <li key={sensor}>{sensor}</li>
-                    ))}
-                </ul>
-            </Box> */}
-
-
-
-
-            {/* {
-                deviceData ?
-                    <>
-                        {
-                            Object.keys(deviceData).map((key) => {
-
-                                return (
-                                    <Accordion
-                                        key={uuid()}
-                                        allowMultiple
-                                    >
-                                        <AccordionItem>
-                                            <AccordionButton>
-                                                <Box
-                                                    as='span'
-                                                    flex='1'
-                                                    textAlign='left'
-                                                >
-                                                    <Text
-                                                        fontSize='xl'
-                                                        fontWeight='bold'
-                                                    >
-                                                        {`Device ${key} Overview`}
-                                                    </Text>
-                                                </Box>
-                                                <AccordionIcon />
-                                            </AccordionButton>
-                                            <AccordionPanel pb={4}>
-                                                <Grid templateColumns={`repeat(${isLargeScreen ?
-                                                    LG_COLS : SM_COLS}, 1fr)`} gap={3}>
-                                                    {
-                                                        deviceData[key].map((item) => {
-                                                            console.log(`Key: ${key}, Item:`, item)
-                                                            return (
-                                                                <OverviewGridItem
-                                                                    key={uuid()}
-                                                                    item={item}
-                                                                />
-                                                            );
-                                                        })
-                                                    }
-
-                                                </Grid>
-                                            </AccordionPanel>
-                                        </AccordionItem>
-                                    </Accordion>
-
-
-                                )
-
-                            })
-
-                        }
-                    </>
-                    :
-                    <LoadingGraphic />
-            } */}
         </>
     );
-};
+ };
 
-export default OverviewPanel;
+ export default OverviewPanel;

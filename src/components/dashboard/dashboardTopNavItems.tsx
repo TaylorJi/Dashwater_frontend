@@ -12,7 +12,6 @@ type topNavMenuType = {
 //     '3m': new Date(new Date().setMonth(new Date().getMonth() - 3)).toISOString(),
 //     'Custom': ''
 // };
-
 export const topNavItems: topNavMenuType = {
     '12h': '12h',
     '1d': '1d',
