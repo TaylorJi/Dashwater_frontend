@@ -246,6 +246,25 @@ const getData = async (device_name: string, time: string) => {
 }
 }
 
+const getAllDevice = async () => {
+    try{
+        const response = await axios.get(`${API_URL}/ts/getAllDevice`,
+        {headers: {
+            "Authorization": `Bearer ${sessionId}`
+        },
+        withCredentials: true
+    });
+        if (response.status === 200) {
+            return response.data.data;
+        }
+    } catch (_err) {
+        console.log(_err);
+        return null;
+    
+    }
+
+}
+
 const Dashboard = {
     getWeather,
     getTide,
@@ -257,7 +276,8 @@ const Dashboard = {
     getAllBuoyIds,
     test,
     getSensors,
-    getData
+    getData,
+    getAllDevice
 
 };
 

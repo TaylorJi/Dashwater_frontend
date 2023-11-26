@@ -9,6 +9,8 @@ import Dashboard from '../../../api/Dashboard/Dashboard';
 import { toast } from 'react-hot-toast';
 import LoadingGraphic from '../../layout/LoadingGraphic';
 import { get } from 'http';
+import { timeRangeAtom } from '../../../components/dashboard/logPanel/atoms/timeRangeAtom';
+import { useRecoilValue } from 'recoil';
 
 interface SensorData {
     sensorName: string;
@@ -24,18 +26,20 @@ const OverviewPanel: React.FC = () => {
     const [sensorData, setSensorData] = useState<SensorData[]>([]);
     const [gaugeData, setGaugeData] = useState<GaugeDataType[]>([]);
     const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
+    const timeRange = useRecoilValue(timeRangeAtom);
 
     const LG_COLS = 4;
     const SM_COLS = 3;
 
     const getSensors = async () => {
         try {
+            console.log("Time is " + timeRange)
             const data = await Dashboard.getSensors("device");
             console.log('OverviewPanel.tsx - getSensors() - data:', data);
             const sensorDataArray: SensorData[] = [];
             for (let i = 0; i < data.length; i++) {
                 let sensor = data[i].sensor_name;
-                let values = await Dashboard.getCachedHighLowHistorical("device", sensor, "48h");
+                let values = await Dashboard.getCachedHighLowHistorical("device", sensor, timeRange);
                 let min = values.min;
                 let max = values.max;
                 let sensorValue: SensorData = {
@@ -61,7 +65,7 @@ const OverviewPanel: React.FC = () => {
 
     const getData = async () => {
         try {
-            const data = await Dashboard.getData("device", "48h");
+            const data = await Dashboard.getData("device", timeRange);
             console.log('OverviewPanel.tsx - getData() - data:', data);
             const deviceSensorValueArray: DeviceSensorDataType[] = [];
             let keys = Object.keys(data);
@@ -161,7 +165,7 @@ const OverviewPanel: React.FC = () => {
         // }
 
         // fetchAndSetupData();
-    }, []);
+    }, [timeRange]);
 
     return (
         <>
