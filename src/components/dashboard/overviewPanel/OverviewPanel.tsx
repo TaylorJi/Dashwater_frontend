@@ -1,82 +1,3 @@
-//     const getSensors = async () => {
-//         try {
-//             const data = await Dashboard.getSensors("device");
-//             console.log('OverviewPanel.tsx - getSensors() - data:', data);
-//             const sensorDataArray: SensorData[] = [];
-//             for (let i = 0; i < data.length; i++) {
-//                 let sensor = data[i].sensor_name;
-//                 let values = await Dashboard.getCachedHighLowHistorical("device", sensor, "72h");
-//                 let min = values.min;
-//                 let max = values.max;
-//                 let sensorValue: SensorData = {
-//                     sensorName: sensor,
-//                     min: min,
-//                     max: max
-//                 }
-//                 sensorDataArray.push(sensorValue);
-//             }
-//             setSensorData(sensorDataArray);
-//             // setTimeout(createOverviewGridItems, 1000);
-//         } catch (error) {
-//             console.error('OverviewPanel.tsx - getSensors() - error:', error);
-//             toast.error('There was an error fetching overview data - please refresh and try again.');
-//         }
-//     }
-
-//     const getData = async () => {
-//         try {
-//             const data = await Dashboard.getData("device", "72h");
-//             console.log('OverviewPanel.tsx - getData() - data:', data);
-//             const deviceSensorValueArray: DeviceSensorDataType[] = [];
-//             let keys = Object.keys(data);
-//             for (let i = 0; i < keys.length; i++) {
-//                 let deviceSensorValue: DeviceSensorDataType = {
-//                     sensorUnit: data[keys[i]].sensorUnit,
-//                     sensorName: keys[i],
-//                     measureValue: data[keys[i]].measureValue
-//                 }
-//                 deviceSensorValueArray.push(deviceSensorValue);
-//             }
-//             setDeviceSensorValue(deviceSensorValueArray);
-//             // setTimeout(getSensors, 1000);
-//         } catch (error) {
-//             console.error('OverviewPanel.tsx - getData() - error:', error);
-//             toast.error('There was an error fetching overview data - please refresh and try again.');
-//         }
-//     }
-
-//     const createOverviewGridItems = async () => {
-//         console.log("createOverviewGridItems() called. getData() length: " + deviceSensorValue.length + " sensorData length: " + sensorData.length );
-//         if (deviceSensorValue.length > 0 && sensorData.length > 0) {
-//             const gaugeDataArray: GaugeDataType[] = [];
-//             deviceSensorValue.forEach((measure) => {
-//                 const sensor = sensorData.find((sensor) => sensor.sensorName === measure.sensorName);
-//                 if (sensor) {
-//                     const item: GaugeDataType = {
-//                         metric: sensor.sensorName,
-//                         low: sensor.min,
-//                         high: sensor.max,
-//                         current: Number(measure.measureValue),
-//                         unit: measure.sensorUnit
-//                     };
-//                     gaugeDataArray.push(item);
-//                 }
-
-//             });
-//             console.log("!!!!!!!!!!!!!! " + JSON.stringify(gaugeDataArray));
-//             setGaugeData(gaugeDataArray);
-//         }
-//     };
-
-//     useEffect(() => {
-//         getData();
-//         getSensors();
-//     }, []);
-
-//     useEffect(() => {
-//         createOverviewGridItems();
-//     }, [deviceSensorValue, sensorData]);
-
 import {
     Accordion, AccordionItem, AccordionButton, AccordionIcon, AccordionPanel,
     Grid, Box, Text, useMediaQuery
@@ -91,6 +12,7 @@ import { get } from 'http';
 import { timeRangeAtom } from '../../../components/dashboard/logPanel/atoms/timeRangeAtom';
 import { useRecoilValue } from 'recoil';
 import { timer } from 'd3-timer';
+import { MISSING_VALUE } from '../dashboardHelpers';
 
 interface SensorData {
     sensorName: string;
@@ -139,11 +61,9 @@ const OverviewPanel: React.FC = () => {
 
             const data = await Dashboard.getData("device", localStorage.getItem("timeRange") || "12h");
             let keys = Object.keys(data);
-            console.log("!!!!!!!!!!!!!! data length:  " + data.length + ", type: " + typeof data);
             if (keys.length === 0) {
-                console.log("Data is null " + JSON.stringify(data));
-                const emptyArray: DeviceSensorDataType[] = [];
-                setDeviceSensorValue(emptyArray);
+                const emptyArray: GaugeDataType[] = [];
+                setGaugeData(emptyArray);
                 return;
             }
             console.log('OverviewPanel.tsx - getData() - data:', data);
@@ -166,7 +86,6 @@ const OverviewPanel: React.FC = () => {
 
     const createOverviewGridItems = useCallback(() => {
         if (deviceSensorValue.length > 0 && sensorData.length > 0) {
-            console.log("?????????????????");
             const gaugeDataArray: GaugeDataType[] = [];
             deviceSensorValue.forEach((measure) => {
                 const sensor = sensorData.find((sensor) => sensor.sensorName === measure.sensorName);
@@ -247,6 +166,9 @@ const OverviewPanel: React.FC = () => {
                                             LG_COLS : SM_COLS}, 1fr)`} gap={3}>
                                             {
                                                 gaugeData.map((item) => {
+                                                    if (item.high === undefined && item.low === undefined) {
+                                                        item.current = MISSING_VALUE;
+                                                    } 
                                                     return (
 
                                                         <OverviewGridItem
@@ -254,6 +176,7 @@ const OverviewPanel: React.FC = () => {
                                                             item={item}
                                                         />
                                                     );
+
                                                 })
                                             }
 
