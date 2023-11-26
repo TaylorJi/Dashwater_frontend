@@ -111,7 +111,7 @@ const DashboardTopNav: React.FC = () => {
                                 } else {
                                     onOpen();
                                 }
-                            }}
+                            }} 
                             _hover={{
                                 transform: 'scale(1.05)',
                                 cursor: 'pointer',
