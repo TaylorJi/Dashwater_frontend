@@ -8,6 +8,7 @@ import Dashboard from '../../../api/Dashboard/Dashboard';
 import colors from '../../../theme/foundations/colours';
 import { deviceDataAtom } from '../atoms/intervalPanelAtoms';
 import { logDataAtom } from '../logPanel/atoms/logPanelAtoms';
+import { timeRangeAtom } from '../logPanel/atoms/timeRangeAtom';
 
 type CustomRangeModalProps = {
     isOpen: boolean;
@@ -25,6 +26,19 @@ const CustomRangeModal: React.FC<CustomRangeModalProps> = ({ isOpen, onClose }) 
     const resetGlobalDeviceData = useResetRecoilState(deviceDataAtom);
     const resetLogData = useResetRecoilState(logDataAtom);
 
+    const setTimeRange = useSetRecoilState(timeRangeAtom);
+
+    const calculateDurationInDays = (startDate:string, endDate:string) => {
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        const differenceInTime = end.getTime() - start.getTime();
+        const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+        return Math.round(Math.abs(differenceInDays)); // Using Math.abs to get the absolute value in case of negative difference
+    };
+
+    const [durationInDays, setDurationInDays] = useState(0);
+
+
     const getCustomRangeData = async () => {
 
         try {
@@ -33,6 +47,7 @@ const CustomRangeModal: React.FC<CustomRangeModalProps> = ({ isOpen, onClose }) 
             resetGlobalDeviceData();
 
             toast.success('Sit tight! This data is not cached and might take a while to load.', { icon: '❗' });
+
 
             const deviceData = await Dashboard.getCustomRangeData(startDate, endDate);
             const logData = await Dashboard.getCustomRangeLogData(startDate, endDate);
@@ -72,6 +87,8 @@ const CustomRangeModal: React.FC<CustomRangeModalProps> = ({ isOpen, onClose }) 
                         onChange={(e) => {
                             if (e) {
                                 setStartDate(e.toISOString());
+                                setDurationInDays(calculateDurationInDays(e.toISOString(), endDate));
+
                             }
                         }}
                     />
@@ -90,9 +107,14 @@ const CustomRangeModal: React.FC<CustomRangeModalProps> = ({ isOpen, onClose }) 
                         onChange={(e) => {
                             if (e) {
                                 setEndDate(e.toISOString());
+                                setDurationInDays(calculateDurationInDays(startDate, e.toISOString()));
+
                             }
                         }}
                     />
+                      <Text mt="1rem">
+                        Duration: {durationInDays} day(s)
+                    </Text>
                 </ModalBody>
 
                 <ModalFooter>
@@ -106,7 +128,8 @@ const CustomRangeModal: React.FC<CustomRangeModalProps> = ({ isOpen, onClose }) 
                         isDisabled={startDate === '' || endDate === '' || (new Date(startDate) > new Date(endDate))}
                         onClick={async () => {
                             onClose();
-                            await getCustomRangeData();
+                            // await getCustomRangeData();
+                            setTimeRange(`${durationInDays}d`);
                         }}
                     >
                         Save Range

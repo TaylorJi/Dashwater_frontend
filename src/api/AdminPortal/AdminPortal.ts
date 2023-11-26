@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { API_URL, USER_URL } from "../Environments";
+import { API_URL } from "../Environments";
 import { Navigate } from 'react-router';
 
 type createUserResponse = {
@@ -19,6 +19,8 @@ type deleteUserResponse = {
     userId: string
 };
 
+
+const sessionId = localStorage.getItem('sessionId');
 
 // const getUser = async () => {
 //     try {
@@ -40,12 +42,16 @@ type deleteUserResponse = {
 
 const getUser = async () => {
     try {
-        const response = await axios.post(USER_URL, {
-            operation: "scan"
-        });
+        const sessionId = localStorage.getItem('sessionId');
+        const requestBody = {
+            sessionId: sessionId,
+        };
+        const response = await axios.post(`${API_URL}/user/getUser`,
+        requestBody,
+        { withCredentials: true }
+        );
 
         if (response.status === 200) {
-            // const users = response.data.items.map((item: { email: { S: string }, password: { S: string }, role: { S: string } }, index: number) => ({
             const users = response.data.items.map((item: { email: string, role: string }, index: number) => ({
                 _id: index, // Temporarily use index as an ID
                 email: item.email,
@@ -65,22 +71,21 @@ const getUser = async () => {
 
 const createUser = async (user: any) => {
     try {
-        const response: any = await axios.post(USER_URL,
-            {
-                operation: "add",
-                email: user.email,
-                password: user.password,
-                role: user.role
-            }
+        const sessionId = localStorage.getItem('sessionId');
+        const requestBody = {
+            sessionId: sessionId,
+            email: user.email,
+            password: user.password,
+            role: user.role
+        };
+        const response = await axios.post(`${API_URL}/user/createUser`,
+        requestBody,
+        { withCredentials: true }
         );
 
         if (response.status === 200) {
             window.location.reload();
-        } else {
-            console.log("Response Status:", response.status);
-            console.log("Response Data:", response.data);
         }
-
     } catch (error) {
         console.error("Error in createUser:", error);
     }
@@ -88,32 +93,38 @@ const createUser = async (user: any) => {
 
 const deleteUser = async (idArray: string[]) => {
     try {
-        const request: any = await axios.post(USER_URL,
-            {
-                operation: "delete",
-                emails: idArray
-            });
-        if (request.status === 200) {
+        const sessionId = localStorage.getItem('sessionId');
+        const requestBody = {
+            sessionId: sessionId,
+            email: idArray[0]
+        };
+        const response = await axios.post(`${API_URL}/user/deleteUser`,
+        requestBody,
+        { withCredentials: true }
+        );
+        if (response.status === 200) {
             window.location.reload();
         }
     } catch (_err) {
         console.error("Error in deleteUser:", _err);
     }
-    // for (let i = 0; i < idArray.length; i++) {
-    //     const request: any = await axios.delete<deleteUserResponse>(`${API_URL}/user/deleteUser/${idArray[i]}`)
-    // }
-    // window.location.reload();
 };
 
 const getSingleUser = async (idArray: string[]) => {
     try {
-        const response: any = await axios.get<any, AxiosResponse<string>>(`https://ma93xudga3.execute-api.us-east-1.amazonaws.com/prod/data/?email=${idArray[0]}`)
+        const sessionId = localStorage.getItem('sessionId');
+        const requestBody = {
+            sessionId: sessionId,
+            email: idArray[0]
+        };
+        const response: any = await axios.post(`${API_URL}/user/getSingleUser`,
+        requestBody,
+        { withCredentials: true }
+        );
         if (response.status === 200) {
-            console.log(response.data);
-            global.email = response.data["email"];
-            global.password = response.data["password"];
-            global.role = response.data["role"];
-            return response.data;
+            global.email = response.data.email;
+            global.role = response.data.role;
+            return response;
         }
         return null;
 
@@ -123,35 +134,21 @@ const getSingleUser = async (idArray: string[]) => {
 };
 
 const updateUser = async (user: any) => {
-    // const response: any = await axios.put<updateUserResponse>(`${API_URL}/user/updateUser/${user._id}`,
-    //     { email: user.email, password: user.password, role: user.role },
-    //     {
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             Accept: 'application/json',
-    //         },
-    //     },);
-    // if (response.status === 200) {
-    //     window.location.reload();
-    // }
     try {
-        const response: any = await axios.post(USER_URL,
-            {
-                operation: "update",
-                "old email": user.oldEmail,
-                "new email": user.email,
-                password: user.password,
-                role: user.role
-            }
+        const sessionId = localStorage.getItem('sessionId');
+        const requestBody = {
+            sessionId: sessionId,
+            user: user
+        };
+
+        const response: any = await axios.post(`${API_URL}/user/updateUser`,
+        requestBody,
+        { withCredentials: true }
         );
 
         if (response.status === 200) {
             window.location.reload();
-        } else {
-            console.log("Response Status:", response.status);
-            console.log("Response Data:", response.data);
         }
-
     } catch (error) {
         console.error("Error in createUser:", error);
     }

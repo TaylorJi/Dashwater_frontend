@@ -14,9 +14,10 @@ import { calibrationPoints } from '../../../wrappers/DeviceDetailsWrapper/device
 
 type calibrationSettingsPanelProps = {
     sensors: sensorType[];
+    buoy: deviceSettingsType;
 }
 
-const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sensors }) => {
+const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sensors, buoy }) => {
     const [currentMetric, setCurrentMetric] = useState<string>("");
     const [currentSensor, setCurrentSensor] = useState<sensorType>({} as sensorType);
     const [unsavedChanges, setUnsavedChanges] = useState<boolean>(false);
@@ -24,10 +25,25 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
 
     const fetchCalibrationPoints = async () => {
         const calibrationPoints: {
-            [key: string]: calibrationPointType[];
+            [key: number]: calibrationPointType[];
         } = {};
+        let calibrationPointId = 0;
         sensors.forEach((sensor: sensorType) => {
-            calibrationPoints[sensor.id] = mockCalibrationData[sensor.id]
+            // calibrationPoints[sensor.id] = mockCalibrationData[sensor.id]
+            const newSensorType1: calibrationPointType = {
+                id: calibrationPointId++,
+                physicalValue: sensor.physicalValues[0],
+                digitalValue: sensor.calibratedValues[0],
+                sensorId: sensor.id
+            }
+            const newSensorType2: calibrationPointType = {
+                id: calibrationPointId++,
+                physicalValue: sensor.physicalValues[1],
+                digitalValue: sensor.calibratedValues[1],
+                sensorId: sensor.id
+            }
+            calibrationPoints[sensor.id] = [newSensorType1, newSensorType2];
+
         });
         setAllCalibrationPoints(calibrationPoints);
     };
@@ -96,6 +112,8 @@ const CalibrationSettingsPanel: React.FC<calibrationSettingsPanelProps> = ({ sen
                 currentMetric !== "" &&
                 <CalibrationTable
                     sensor={currentSensor}
+                    sensors={sensors}
+                    buoy={buoy}
                     setUnsavedChanges={setUnsavedChanges}
                     unsavedChanges={unsavedChanges}
                 />

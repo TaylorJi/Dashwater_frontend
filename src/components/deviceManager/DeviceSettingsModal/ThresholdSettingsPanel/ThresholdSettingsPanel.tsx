@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
     Table,
     Thead,
@@ -15,8 +15,8 @@ import colors from '../../../../theme/foundations/colours';
 import { buoySensorTags } from '../../../../theme/metrics/buoySensorTags';
 import ThresholdSettingsRow from './ThresholdSettingsRow';
 import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
-import { defaultThresholds } from '../../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
 import { userDataAtom } from '../../../dashboard/atoms/globalDashboardAtoms';
+import { allDevicesDetails } from "../../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms";
 import uuid from 'react-uuid';
 
 type thresholdSettingsPanelProps = {
@@ -27,8 +27,10 @@ type thresholdSettingsPanelProps = {
 const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy }) => {
     const userData = useRecoilValue(userDataAtom);
 
+    const [deviceSettings, setDevicesSettings] = useState<deviceSettingsType>({} as deviceSettingsType);
+    const [allDevicesAtomContent, setAllDevicsAtomContent] = useRecoilState<deviceSettingsType[]>(allDevicesDetails);
+
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const defaultMetricThresholds = useRecoilValue<defaultThresholdType[]>(defaultThresholds);
     const [updatedThresholds, setUpdatedThresholds] = useState<updatedThresholdType[]>([]);
     const [userThresholds, setUserThresholds] = useState<userThresholdType[] | null>(null);
 
@@ -38,7 +40,7 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
             if (!userThreshold) {
                 return false;
             }
-            return userThreshold.alert;
+            return userThreshold.alerts;
         }
         return false;
     }
@@ -54,47 +56,42 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
         return false;
     }
 
+    useEffect(() => {
+        setDevicesSettings(buoy)
+    }, [buoy]);
+
+
     const saveThresholdSettings = async () => {
-        if (!updatedThresholds.length) {
-            return toast("There are no new changes to save.", { icon: '🤔' })
-        }
-        try {
-            setIsLoading(true);
-            const deviceSettings: deviceSettingsType = {
-                id: buoy.id,
-                name: buoy.name,
-                description: buoy.description,
-                locationX: buoy.locationX,
-                locationY: buoy.locationY,
-                active: buoy.active,
-                sensors: buoy.sensors.map(sensor => ({
-                    id: sensor.id,
-                    deviceId: sensor.deviceId,
-                    lastCalibrationDate: sensor.lastCalibrationDate,
-                    metric: sensor.metric,
-                    defaultUnit: sensor.defaultUnit,
-                    alerts: getAlertStatus(sensor.id),
-                    power: getPowerStatus(sensor.id),
-                    minVal: sensor.minVal,
-                    maxVal: sensor.maxVal,
-                    physicalValues: sensor.physicalValues,
-                    calibratedValues: sensor.calibratedValues
-                })),
-                sensor_ids: buoy.sensors.map(sensor => sensor.id) // Assuming buoy.sensors contains all sensors
-            };
-            const response = await ManageDevices.saveDeviceSettings(deviceSettings);
-            if (response) {
-                toast.success('Threshold settings saved!');
-                setUpdatedThresholds([]);
-                fetchUserThresholds();
-            } else {
-                toast.error('There was a problem saving your device threshold settings. Please try again.');
+        setIsLoading(true);
+    
+        // Create an array of updated sensors
+        const updatedSensors = deviceSettings.sensors.map(sensor => {
+            const updatedSensor = updatedThresholds.find(updated => updated.sensorId === sensor.id);
+            if (updatedSensor) {
+                // If an updated threshold exists for this sensor, merge its properties into the sensor object
+                return { ...sensor, ...updatedSensor };
             }
-        } catch (_err) {
-            toast.error('There was a problem saving your device threshold settings. Please try again.');
-        } finally {
-            setIsLoading(false);
+            // If no updated threshold exists for this sensor, use the sensor object as is
+            return sensor;
+        });
+    
+        const deviceSettingsWithSensorIds = {
+            ...deviceSettings,
+            sensors: updatedSensors, // Use the array of updated sensors
+            sensor_ids: updatedSensors.map(sensor => sensor.id) // Take the ids from the updated sensors
+        };
+    
+        const response = await ManageDevices.saveDeviceSettings(deviceSettingsWithSensorIds);
+        if (response) {
+            toast.success("Device settings saved!");
+            const i = allDevicesAtomContent.findIndex(element => element.id === buoy.id);
+            const devicesArray = [...allDevicesAtomContent];
+            devicesArray[i] = { ...allDevicesAtomContent[i], ...deviceSettingsWithSensorIds };
+            setAllDevicsAtomContent(devicesArray);
+        } else {
+            toast.error("There was a problem saving your device settings. Please try again.");
         }
+        setIsLoading(false);
     };
 
     const fetchUserThresholds = async () => {
@@ -135,12 +132,10 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
                                             sensorId={sensor.id}
                                             deviceId={buoy.id}
                                             metric={buoySensorTags[sensor.metric].label}
-                                            // minVal={getThresholdMin(sensor.id, sensor.metric)}
-                                            // maxVal={getThresholdMax(sensor.id, sensor.metric)}
                                             minVal={sensor.minVal}
                                             maxVal={sensor.maxVal}
-                                            alert={getAlertStatus(sensor.id)}
-                                            power={getPowerStatus(sensor.id)}
+                                            alerts={sensor.alerts}
+                                            power={sensor.power}
                                             defaultUnit={sensor.defaultUnit}
                                             setUpdatedThresholds={setUpdatedThresholds}
                                             updatedThresholds={updatedThresholds}
@@ -164,7 +159,7 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
                                 bg: colors.main.ceruBlue
                             }}
                         >
-                            Save Thresholds
+                            Save Threshsolds
                         </Button>
                     </Flex>
                 </>

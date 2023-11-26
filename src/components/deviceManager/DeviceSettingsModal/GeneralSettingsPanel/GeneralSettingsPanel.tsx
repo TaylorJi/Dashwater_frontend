@@ -50,7 +50,7 @@ const GeneralSettingsPanel: React.FC<generalSettingsPanelProps> = ({ device }) =
       toast.success("Device settings saved!");
       const i = allDevicesAtomContent.findIndex(element => element.id === device.id);
       const devicesArray = [...allDevicesAtomContent]
-      devicesArray[i] = {... allDevicesAtomContent[i], ...deviceSettings};
+      devicesArray[i] = { ...allDevicesAtomContent[i], ...deviceSettings };
       setAllDevicsAtomContent(devicesArray);
     } else {
       toast.error("There was a problem saving your device settings. Please try again."
