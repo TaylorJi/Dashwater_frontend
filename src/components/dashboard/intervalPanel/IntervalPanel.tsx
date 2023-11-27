@@ -5,8 +5,9 @@ import uuid from 'react-uuid';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Dashboard from '../../../api/Dashboard/Dashboard';
 import LoadingGraphic from '../../layout/LoadingGraphic';
-import { deviceDataAtom, displayedDashboardDataSelector } from '../atoms/intervalPanelAtoms';
+// import { deviceDataAtom, displayedDashboardDataSelector } from '../atoms/intervalPanelAtoms';
 import IntervalGridItem from './IntervalGridItem';
+import { timeRangeAtom } from '../logPanel/atoms/timeRangeAtom';
 
 const IntervalPanel: React.FC = () => {
 
@@ -14,7 +15,7 @@ const IntervalPanel: React.FC = () => {
     // const deviceData = useRecoilValue(displayedDashboardDataSelector);
 
     const [allDeviceData, setAllDeviceData] = useState<any[]>([]);
-    // const [timeRange, setTimeRange] = useState(localStorage.getItem("timeRange"));
+    const timeRange = useRecoilValue(timeRangeAtom);
 
     const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
 
@@ -26,14 +27,18 @@ const IntervalPanel: React.FC = () => {
         try {
             // console.log(await Dashboard.getAllBuoyIds());
             // const data = await Dashboard.getAllBuoyIds();
-            console.log("getDeviceData in IntervalPanel is called");
             const end = localStorage.getItem("timeRange");
-            const data = await Dashboard.getCachedData(end!);
+            let data: any;
+            console.log("getDeviceData in IntervalPanel is called. end = " + end + ", timeRange = " + timeRange);
+            if (end !== timeRange) {
+                data = await Dashboard.getCachedData(end!);
+            }
+            data = await Dashboard.getCachedData(timeRange);
 
+            console.log("data is " + JSON.stringify(data));
             if (data) {
                 setAllDeviceData(data);
                 // setGlobalDeviceData(data);
-
             } else {
                 toast.error('There was an error fetching device data - please refresh and try again.');
             }
@@ -42,7 +47,7 @@ const IntervalPanel: React.FC = () => {
             toast.error('There was an error fetching device data - please refresh and try again.');
         }
 
-    }, []);
+    }, [timeRange]);
 
 
     // const getDeviceData = async (device: string, end: string) => {
@@ -66,7 +71,7 @@ const IntervalPanel: React.FC = () => {
         // if (!globalDeviceData) {
             getDeviceData();
         // }
-    }, [getDeviceData, localStorage.getItem("timeRange")]);
+    }, [getDeviceData]);
 
     return (
         <>
