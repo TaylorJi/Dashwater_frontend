@@ -78,7 +78,7 @@ const Map: React.FC<mapProps> = (props: mapProps) => {
   useEffect(() => {
     setBounds(null);
   }, [bounds])
-
+  
   return (
     <MapContainer
       id={mapId}

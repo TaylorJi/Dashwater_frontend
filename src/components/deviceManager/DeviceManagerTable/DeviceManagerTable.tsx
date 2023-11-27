@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import {
     Table,
@@ -12,12 +12,12 @@ import uuid from 'react-uuid';
 import colors from '../../../theme/foundations/colours';
 import BuoySettingsRow from './BuoySettingsRow';
 import { allDevicesDetails } from '../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
+import DeviceManagerPagination from './DeviceManagerPagination';
 
 
 const DeviceManagerTable: React.FC = () => {
     const allDevices = useRecoilValue(allDevicesDetails);
-
-    // const [displayedDevices, setDisplayedDevices] = useState([]);
+    const [displayedDevices, setDisplayedDevices] = useState([]);
 
     return (
         <Flex
@@ -46,9 +46,9 @@ const DeviceManagerTable: React.FC = () => {
                     }
                 </Tbody>
             </Table>
-            {/* <DeviceManagerPagination
+            <DeviceManagerPagination
                 setDisplayedDevices={setDisplayedDevices}
-            /> */}
+            />
         </Flex>
     );
 };
