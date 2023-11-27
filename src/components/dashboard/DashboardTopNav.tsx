@@ -107,7 +107,7 @@ const DashboardTopNav: React.FC = () => {
                                 if (item !== 'Custom') {
                                     toast.success('Now displaying data for new date range.');
                                     // this is where we create corresdoning page 
-                                    await getDeviceData(topNavItems[item]);
+                                    // await getDeviceData(topNavItems[item]);
                                     // await getLogData(topNavItems[item]);
                                 } else {
                                     onOpen();

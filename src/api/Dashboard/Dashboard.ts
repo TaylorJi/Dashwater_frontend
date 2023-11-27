@@ -48,6 +48,7 @@ const getCachedData = async (end: string) => {
         }, { withCredentials: true });
 
         if (response.status === 200) {
+            console.log(response.data.data);
             return response.data.data;
         }
         return null;
