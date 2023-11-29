@@ -42,11 +42,21 @@ const getTide = async () => {
 const getCachedData = async (end: string) => {
 
     try {
-
-        const response: any = await axios.post<any, AxiosResponse<string[]>>(`${API_URL}/ts/getCachedData`, {
-            end: end
-        }, { withCredentials: true });
-
+        // let response: any;
+        console.log("!!!!!!!!!!!!!!!! end" + end);
+        let requestBody;
+        if (end === 'Custom') {
+            requestBody = {
+                startDate: localStorage.getItem("customStartDate"),
+                endDate: localStorage.getItem("customEndDate"),
+                time: end,
+            };
+        } else {
+            requestBody = {
+                time: end
+            }
+        }
+        const response = await axios.post(`${API_URL}/ts/getCachedData`, requestBody, { withCredentials: true });
         if (response.status === 200) {
             console.log(response.data.data);
             return response.data.data;
@@ -137,19 +147,31 @@ const getCustomRangeLogData = async (start: string, end: string) => {
 
 const getCachedHighLowHistorical = async (device_name: string, sensor_name:string, time:string) => {
     try {
-        console.log(sensor_name);
+        // console.log(sensor_name);
+        let requestBody;
+        if (time === 'Custom') {
+            requestBody = {
+                device_name: device_name,
+                sensor_name: sensor_name,
+                startDate: localStorage.getItem("customStartDate"),
+                endDate: localStorage.getItem("customEndDate"),
+                time: time,
+            };
+        } else {
+            requestBody = {
+                device_name: device_name,
+                sensor_name: sensor_name,
+                time: time,
+            };
+        }
         const response = await axios.post(`${API_URL}/ts/getHistoricalHighLow`, 
-        {device_name, sensor_name, time},
-        {
-            
+        requestBody,
+        { 
             headers: {
                 "Authorization": `Bearer ${sessionId}`
             },
-         
             withCredentials: true
         });
-
-
         // const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/ts/getCachedHistorical`, { withCredentials: true });
 
         if (response.status === 200) {
@@ -227,9 +249,23 @@ const test = async () => {
 }
 
 const getData = async (device_name: string, time: string) => {
+    let requestBody;
+    if (time === 'Custom') {
+        requestBody = {
+            device_name: device_name,
+            startDate: localStorage.getItem("customStartDate"),
+            endDate: localStorage.getItem("customEndDate"),
+            time: time,
+        };
+    } else {
+        requestBody = {
+            device_name: device_name,
+            time: time,
+        };
+    }
     try{
     const response = await axios.post(`${API_URL}/ts/getData`,
-    {device_name, time},
+    requestBody,
     {headers: {
         "Authorization": `Bearer ${sessionId}`
     },

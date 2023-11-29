@@ -195,7 +195,7 @@ const Login: React.FC = () => {
               );
               localStorage.setItem("sessionId", isSessionCreated.sessionId);
               console.log("sessionId: ", localStorage.getItem("sessionId"));
-              localStorage.removeItem("timeRange");
+              localStorage.setItem("timeRange", "12h");
               localStorage.setItem("userEmail", userEmail);
               localStorage.setItem("userRole", userRole); //CHANGED: updated this with the userRole retrieved from cognito
               global.userRole = userRole; //CHANGED: updated this with the userRole retrieved from cognito

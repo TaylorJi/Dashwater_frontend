@@ -67,7 +67,6 @@ const OverviewPanel: React.FC = () => {
                     };
                 }
                 deviceDataType[device.device_name]["sensors"] = sensorDataArray;
-                console.log("deviceDataType after getSensors is " + JSON.stringify(deviceDataType));
                 setSensorData(sensorDataArray);
             }));
         } catch (error) {
@@ -96,8 +95,14 @@ const OverviewPanel: React.FC = () => {
                     }
                     deviceSensorValueArray.push(deviceSensorValue);
                 }
+                if (!deviceDataType[device.device_name]) {
+                    deviceDataType[device.device_name] = {
+                        sensors: [],
+                        deviceData: [],
+                        gaugeData: []
+                    };
+                }
                 deviceDataType[device.device_name]["deviceData"] = deviceSensorValueArray;
-                console.log("deviceDataType after getData is " + JSON.stringify(deviceDataType));
                 setDeviceSensorValue(deviceSensorValueArray);
                 
             }));
@@ -127,7 +132,6 @@ const OverviewPanel: React.FC = () => {
                     }
                 });
                 deviceDataType[device]["gaugeData"] = gaugeDataArray;
-                console.log("deviceDataType after createOverviewGridItems is " + JSON.stringify(deviceDataType));
                 setGaugeData(gaugeDataArray);
             })
         }

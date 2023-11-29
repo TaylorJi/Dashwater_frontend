@@ -20,5 +20,5 @@ export const topNavItems: topNavMenuType = {
     '3w': '21d',
     '1m': '30d',
     '3m': '90d',
-    'Custom': ''
+    'Custom': 'Custom'
 };
