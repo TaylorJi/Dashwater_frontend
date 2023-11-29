@@ -34,7 +34,7 @@ const DashboardTabs: React.FC = () => {
                 >
                     Overview
                 </Tab>
-                <Tab
+                {/* <Tab
                     mr='1rem'
                     borderBottomWidth='0.2rem'
                     _selected={{
@@ -43,8 +43,8 @@ const DashboardTabs: React.FC = () => {
                     }}
                 >
                     Logs
-                </Tab>
-                <Tab
+                </Tab> */}
+                {/* <Tab
                     mr='1rem'
                     borderBottomWidth='0.2rem'
                     _selected={{
@@ -53,7 +53,7 @@ const DashboardTabs: React.FC = () => {
                     }}
                 >
                     Test
-                </Tab>
+                </Tab> */}
             </TabList>
 
             <TabPanels>

@@ -141,7 +141,7 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
             >
               Clear
             </Button>
-            <Button
+            {/* <Button
               minW={isLargeScreen ? "7rem" : "3rem"}
               color={"white"}
               bg={colors.main.usafaBlue}
@@ -156,7 +156,7 @@ const MapModal: React.FC<MapModalProps> = ({ isOpen, onClose }) => {
               }}
             >
               Confirm
-            </Button>
+            </Button> */}
           </HStack>
         </ModalFooter>
       </ModalContent>

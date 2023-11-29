@@ -33,6 +33,7 @@ const OverviewGridItem: React.FC<intervalGridItemProps> = ({ item }) => {
                             <>
                                 <Text fontSize='xs'>{`Low: ${item['low']} ${item['unit']}`}</Text>
                                 <Text fontSize='xs'>{`High: ${item['high']} ${item['unit']}`}</Text>
+                                
                             </>}
                         bg='white'
                         color='black'
