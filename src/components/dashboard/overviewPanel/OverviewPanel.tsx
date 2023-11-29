@@ -20,12 +20,22 @@ interface SensorData {
     max: number;
 }
 
+
+interface DeviceDataType {
+    [key: string]: {
+      sensors: {
+        [key: string]: any; // replace `any` with the type of the sensor data if known
+      };
+    };
+  }
+
 const OverviewPanel: React.FC = () => {
 
     const [deviceData, setDeviceData] = useState<RawGaugeDataType | null>(null);
     const [deviceSensorValue, setDeviceSensorValue] = useState<DeviceSensorDataType[]>([]);
     const [sensorData, setSensorData] = useState<SensorData[]>([]);
     const [gaugeData, setGaugeData] = useState<GaugeDataType[]>([]);
+    const [deviceDataType, setDeviceDataType] = useState<DeviceDataType>({});
     const [isLargeScreen] = useMediaQuery('(min-width: 1600px)');
     const timeRange = useRecoilValue(timeRangeAtom);
 
@@ -35,6 +45,26 @@ const OverviewPanel: React.FC = () => {
     const getSensors = useCallback(async () => {
         try {
             console.log("Time is " + localStorage.getItem("timeRange"));
+            const devices = await Dashboard.getAllDevice();
+            await Promise.all(devices.map(async (device: any) => {
+                deviceDataType[device]["sensors"] = {};
+                const data = await Dashboard.getSensors(device);
+                const sensorDataArray: SensorData[] = [];
+                for (let i = 0; i < data.length; i++) {
+                    let sensor = data[i].sensor_name;
+                    let values = await Dashboard.getCachedHighLowHistorical(device, sensor, localStorage.getItem("timeRange") || "12h");
+                    let min = values.min;
+                    let max = values.max;
+                    let sensorValue: SensorData = {
+                        sensorName: sensor,
+                        min: min,
+                        max: max
+                    }
+                    sensorDataArray.push(sensorValue);
+                }
+
+                setSensorData(sensorDataArray);
+            }));
             const data = await Dashboard.getSensors("device");
             const sensorDataArray: SensorData[] = [];
             for (let i = 0; i < data.length; i++) {
