@@ -5,14 +5,10 @@ import uuid from 'react-uuid';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Dashboard from '../../../api/Dashboard/Dashboard';
 import LoadingGraphic from '../../layout/LoadingGraphic';
-// import { deviceDataAtom, displayedDashboardDataSelector } from '../atoms/intervalPanelAtoms';
 import IntervalGridItem from './IntervalGridItem';
 import { timeRangeAtom } from '../logPanel/atoms/timeRangeAtom';
 
 const IntervalPanel: React.FC = () => {
-
-    // const [globalDeviceData, setGlobalDeviceData] = useRecoilState(deviceDataAtom);
-    // const deviceData = useRecoilValue(displayedDashboardDataSelector);
 
     const [allDeviceData, setAllDeviceData] = useState<any[]>([]);
     const timeRange = useRecoilValue(timeRangeAtom);
@@ -25,8 +21,6 @@ const IntervalPanel: React.FC = () => {
     const getDeviceData = useCallback(async () => {
 
         try {
-            // console.log(await Dashboard.getAllBuoyIds());
-            // const data = await Dashboard.getAllBuoyIds();
             const end = localStorage.getItem("timeRange");
             let data: any;
             console.log("getDeviceData in IntervalPanel is called. end = " + end + ", timeRange = " + timeRange);
@@ -38,7 +32,6 @@ const IntervalPanel: React.FC = () => {
             console.log("data is " + JSON.stringify(data));
             if (data) {
                 setAllDeviceData(data);
-                // setGlobalDeviceData(data);
             } else {
                 toast.error('There was an error fetching device data - please refresh and try again.');
             }
@@ -49,28 +42,8 @@ const IntervalPanel: React.FC = () => {
 
     }, [timeRange]);
 
-
-    // const getDeviceData = async (device: string, end: string) => {
-    //     try {
-    //         // console.log(await Dashboard.getAllBuoyIds());
-    //         // const data = await Dashboard.getAllBuoyIds();
-    //         const data = await Dashboard.getData(device, end);
-
-    //         if (data) {
-    //             setGlobalDeviceData(data);
-    //         } else {
-    //             toast.error('There was an error fetching device data - please refresh and try again.');
-    //         }
-
-    //     } catch {
-    //         toast.error('There was an error fetching device data - please refresh and try again.');
-    //     }
-    // };
-
     useEffect(() => {
-        // if (!globalDeviceData) {
             getDeviceData();
-        // }
     }, [getDeviceData]);
 
     return (
