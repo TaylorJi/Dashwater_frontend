@@ -2,11 +2,13 @@ import axios, { AxiosResponse } from 'axios';
 import { API_URL } from '../Environments';
 
 
-const sessionId = localStorage.getItem('sessionId');
-console.log(sessionId);
+// const sessionId = localStorage.getItem('sessionId');
+// console.log("!!!!!!!!!!!!!!!!!!!!" + sessionId);
 
 const validateSession = async () => {
     try {
+        const sessionId = localStorage.getItem('sessionId');
+        console.log("!!!!!!!!!!!!!!!!!!!!" + sessionId);
         console.log("entering validate session")
         const response = await axios.post(`${API_URL}/session/validateSession`, {
             headers: {
@@ -54,6 +56,8 @@ const createSession = async (userId: string, idToken: string, userRole: string) 
 
 const deleteSession = async () => {
     try {
+        const sessionId = localStorage.getItem('sessionId');
+        console.log("!!!!!!!!!!!!!!!!!!!!" + sessionId);
         const response: any = await axios.delete<any, AxiosResponse<string[]>>(`${API_URL}/session/deleteSession`, {
             headers: {
                 "Authorization": `Bearer ${sessionId}`

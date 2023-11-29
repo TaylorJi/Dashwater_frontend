@@ -94,14 +94,35 @@ const saveCalibrationPoints = async (calibrationPoints: calibrationPointType[], 
 //     }
 // };
 
+// const getDevicesSettings = async () => {
+//     console.log('getDevicesSettings');
+//     try {
+//         const sessionId = localStorage.getItem("sessionId");
+//         const response = await axios.post(
+//             `${API_URL}/device/getAllDevicesSettings`,
+//             { Cookie: sessionId },
+//             { withCredentials: true }
+//         );
+//         if (response.status === 200) {
+//             return response.data.data;
+//         }
+//     } catch (_err) {
+//         console.log("Error in getDevicesSettings:", _err);
+//         return null;
+//     }
+// };
+
 const getDevicesSettings = async () => {
     console.log('getDevicesSettings');
     try {
         const sessionId = localStorage.getItem("sessionId");
         const response = await axios.post(
             `${API_URL}/device/getAllDevicesSettings`,
-            { token: sessionId },
-            { withCredentials: true }
+            { sessionCookie: sessionId},
+            { 
+                headers: { 'Cookie': `sessionCookie=${sessionId}` },
+                withCredentials: true 
+            }
         );
         if (response.status === 200) {
             return response.data.data;
