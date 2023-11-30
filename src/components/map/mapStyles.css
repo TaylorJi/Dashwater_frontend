@@ -1,0 +1,26 @@
+/* Important for react-leaflet map to load visually 
+      and connect css loaders to node modules.
+    Also replaces the need to have the CDN link in index.html 
+*/
+@import '~leaflet/dist/leaflet.css';
+
+#mapId {
+  /* setting the height to % or rem will not render the map at all */
+    height: 400px; 
+    width: 80%;
+    position: relative;
+    border-radius: 0.5rem !important;
+  }
+
+  #mapModal {
+    margin-top: 10%;
+  }
+
+  #mapCardId {
+    height: 225px;
+    width: 100%;
+    position: relative;
+    border-radius: 0.5rem !important;
+    border-width: 0.1rem;
+    border-color: var(--chakra-colors-gray-300);
+  }

@@ -1,0 +1,612 @@
+{
+    "buoys": [
+        {
+            "name": "Appa",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt tellus sed nulla laoreet dignissim. Donec sollicitudin vehicula tellus. Etiam.",
+            "id": "1234",
+
+            "location": {
+
+                "x": -123.149528,
+                
+                "y": 49.203132
+
+            },
+
+            "sensors": [
+                {
+                    "metric_type": "dissolved_solids",
+                    "default_metric_unit": "ppm",
+                    "min": 2,
+                    "max": 5,
+                    "alert": true,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+
+                        {
+                            "id": 1,
+                            "digital_value": 1,
+                            "physical_value": 21.3
+                        },
+
+                        {
+                            "id": 2,
+                            "digital_value": 110.23,
+                            "physical_value": 115.3
+                        },
+
+                        {
+                            "id": 3,
+                            "digital_value": 5,
+                            "physical_value": 213.3
+                        }
+
+                    ]
+                },
+                {
+                    "metric_type": "turbidity",
+                    "default_metric_unit": "NTU",
+                    "min": 45,
+                    "max": 200,
+                    "alert": false,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 43,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 42,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "temp",
+                    "default_metric_unit": "°C",
+                    "min": -1,
+                    "max": 30,
+                    "alert": true,
+                    "min_calibration_points": 1,
+                    "calibration_points": [
+                        {
+                            "id": 89,
+                            "digital_value": 333,
+                            "physical_value": 44.3
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "water_flow",
+                    "default_metric_unit": "L/s",
+                    "min": 2,
+                    "max": 44,
+                    "alert": true,
+                    "min_calibration_points": 3,
+                    "calibration_points": [
+                        {
+                            "id": 71,
+                            "digital_value": 1002,
+                            "physical_value": 100002.3
+                        },
+                        {
+                            "id": 73,
+                            "digital_value": 9999.23,
+                            "physical_value": 1111.3
+                        },
+                        {
+                            "id": 72,
+                            "digital_value": 998,
+                            "physical_value": 1000.3
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "water_lvl",
+                    "default_metric_unit": "m",
+                    "min": 2,
+                    "max": 5,
+                    "alert": true,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 66,
+                            "digital_value": 1,
+                            "physical_value": 21.3
+                        },
+                        {
+                            "id": 65,
+                            "digital_value": 110.23,
+                            "physical_value": 115.3
+                        },
+                        {
+                            "id": 67,
+                            "digital_value": 5,
+                            "physical_value": 213.3
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "water_pressure",
+                    "default_metric_unit": "kPa",
+                    "min": 55,
+                    "max": 44,
+                    "alert": true,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 6,
+                            "digital_value": 1,
+                            "physical_value": 21.3
+                        },
+                        {
+                            "id": 7,
+                            "digital_value": 110.23,
+                            "physical_value": 115.3
+                        },
+                        {
+                            "id": 8,
+                            "digital_value": 5,
+                            "physical_value": 213.3
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Snoopy",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt tellus sed nulla laoreet dignissim. Donec sollicitudin vehicula tellus. Etiam.",
+            "id": "0124",
+            "location": {
+                "x": -123.159354,
+                "y": 49.176563
+            },
+            "sensors": [
+                {
+                    "metric_type": "pH",
+                    "default_metric_unit": "pH",
+                    "min": 0,
+                    "max": 0,
+                    "alert": false,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 76,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 77,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "turbidity",
+                    "default_metric_unit": "NTU",
+                    "min": 45,
+                    "max": 200,
+                    "alert": false,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 48,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 47,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "dissolved_o2",
+                    "default_metric_unit": "mg/L",
+                    "min": 0,
+                    "max": 0,
+                    "alert": false,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 38,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 39,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "temp",
+                    "default_metric_unit": "°C",
+                    "min": -1,
+                    "max": 30,
+                    "alert": true,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 89,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 90,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "water_flow",
+                    "default_metric_unit": "L/s",
+                    "min": 2,
+                    "max": 44,
+                    "alert": true,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 71,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 72,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Roobs",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt tellus sed nulla laoreet dignissim. Donec sollicitudin vehicula tellus. Etiam.",
+            "id": "520",
+            "location": {
+                "x": -123.196476,
+                "y": 49.212147
+            },
+            "sensors": [
+                {
+                    "metric_type": "dissolved_solids",
+                    "default_metric_unit": "mg/L",
+                    "min": 2,
+                    "max": 5,
+                    "alert": true,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 66,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 65,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "pH",
+                    "default_metric_unit": "pH",
+                    "min": 0,
+                    "max": 0,
+                    "alert": false,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 56,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 57,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "turbidity",
+                    "default_metric_unit": "NTU",
+                    "min": 45,
+                    "max": 200,
+                    "alert": false,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 46,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 45,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "temp",
+                    "default_metric_unit": "°C",
+                    "min": -1,
+                    "max": 30,
+                    "alert": true,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 86,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 87,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "water_flow",
+                    "default_metric_unit": "L/s",
+                    "min": 2,
+                    "max": 44,
+                    "alert": true,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 68,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 69,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "water_lvl",
+                    "default_metric_unit": "m",
+                    "min": 2,
+                    "max": 5,
+                    "alert": true,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 76,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 77,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "water_pressure",
+                    "default_metric_unit": "kPa",
+                    "min": 55,
+                    "max": 44,
+                    "alert": true,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 78,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 79,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "I have everything!",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam tincidunt tellus sed nulla laoreet dignissim. Donec sollicitudin vehicula tellus. Etiam.",
+            "id": "9999",
+            "location": {
+                "x": -123.206149,
+                "y": 49.184667
+            },
+            "sensors": [
+                {
+                    "metric_type": "dissolved_solids",
+                    "default_metric_unit": "mg/L",
+                    "min": 2,
+                    "max": 5,
+                    "alert": true,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 66,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 65,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "pH",
+                    "default_metric_unit": "pH",
+                    "min": 0,
+                    "max": 0,
+                    "alert": false,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 56,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 57,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "turbidity",
+                    "default_metric_unit": "NTU",
+                    "min": 45,
+                    "max": 200,
+                    "alert": false,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 46,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 45,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "dissolved_o2",
+                    "default_metric_unit": "mg/L",
+                    "min": 0,
+                    "max": 0,
+                    "alert": false,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 114,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 115,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "temp",
+                    "default_metric_unit": "°C",
+                    "min": -1,
+                    "max": 30,
+                    "alert": true,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 106,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 107,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "electrical_conductivity",
+                    "default_metric_unit": "mS/cm",
+                    "min": 0,
+                    "max": 0,
+                    "alert": false,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 96,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 97,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "water_flow",
+                    "default_metric_unit": "L/s",
+                    "min": 2,
+                    "max": 44,
+                    "alert": true,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 213,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 214,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "water_lvl",
+                    "default_metric_unit": "m",
+                    "min": 2,
+                    "max": 5,
+                    "alert": true,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 204,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 205,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                },
+                {
+                    "metric_type": "water_pressure",
+                    "default_metric_unit": "kPa",
+                    "min": 55,
+                    "max": 44,
+                    "alert": true,
+                    "min_calibration_points": 2,
+                    "calibration_points": [
+                        {
+                            "id": 195,
+                            "digital_value": 12.1,
+                            "physical_value": 13.3
+                        },
+                        {
+                            "id": 196,
+                            "digital_value": 4.5,
+                            "physical_value": 5.5
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
