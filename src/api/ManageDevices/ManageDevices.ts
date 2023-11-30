@@ -117,12 +117,17 @@ const getDevicesSettings = async () => {
     try {
         const sessionId = localStorage.getItem("sessionId");
         const response = await axios.post(
-            `${API_URL}/device/getAllDevicesSettings`,
-            { sessionCookie: sessionId},
-            { 
-                headers: { 'Cookie': `sessionCookie=${sessionId}` },
+            `${API_URL}/device/getAllDevicesSettings`, {
+                headers: {
+                    "Authorization": `Bearer ${sessionId}`
+                },
+                sessionId: sessionId,
                 withCredentials: true 
             }
+            // { sessionCookie: sessionId},
+            // { 
+                // headers: { 'Cookie': `sessionCookie=${sessionId}` },
+            // }
         );
         if (response.status === 200) {
             return response.data.data;
