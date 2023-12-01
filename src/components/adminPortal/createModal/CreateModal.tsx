@@ -22,6 +22,7 @@ import colors from "../../../theme/foundations/colours";
 import typography from "../../../theme/foundations/typography";
 import AdminPortal from "../../../api/AdminPortal/AdminPortal";
 import { toast } from 'react-hot-toast';
+import { useNavigate } from "react-router-dom";
 
 
 type CreateModalProps = {
@@ -32,6 +33,7 @@ type CreateModalProps = {
 
 const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
     const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
+    const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -59,7 +61,10 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
             validation = false;
         }
         if (validation) {
-            AdminPortal.createUser(data);
+            let success = await AdminPortal.createUser(data);
+            if (success) {
+                navigate("/adminPortal");
+            }
         }
     }
 

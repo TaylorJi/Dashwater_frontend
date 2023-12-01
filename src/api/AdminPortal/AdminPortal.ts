@@ -84,10 +84,12 @@ const createUser = async (user: any) => {
         );
 
         if (response.status === 200) {
-            window.location.reload();
+            return true;
+            // window.location.reload();
         }
     } catch (error) {
         console.error("Error in createUser:", error);
+        return false;
     }
 };
 
