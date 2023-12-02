@@ -62,8 +62,8 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
         if (validation) {
             let success = await AdminPortal.createUser(data);
             if (success) {
+                // navigate('/adminPortal');
                 navigate("/dashboard");
-                navigate('/adminPortal');
             }
         }
     }
