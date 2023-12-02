@@ -104,10 +104,12 @@ const deleteUser = async (idArray: string[]) => {
         { withCredentials: true }
         );
         if (response.status === 200) {
-            window.location.reload();
+            return true;
+            // window.location.reload();
         }
     } catch (_err) {
         console.error("Error in deleteUser:", _err);
+        return false;
     }
 };
 
