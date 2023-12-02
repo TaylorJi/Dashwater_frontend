@@ -22,6 +22,7 @@ import {
 import colors from "../../../theme/foundations/colours";
 import typography from "../../../theme/foundations/typography";
 import AdminPortal from "../../../api/AdminPortal/AdminPortal";
+import { useNavigate } from "react-router-dom";
 
 type EditModalProps = {
     isOpen: boolean;
@@ -32,6 +33,7 @@ type EditModalProps = {
 
 const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
     const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
+    const navigate = useNavigate();
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -63,7 +65,10 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
         data.oldEmail = global.email;
 
         if (validation) {
-            AdminPortal.updateUser(data);
+            let success = await AdminPortal.updateUser(data);
+            if (success) {
+                navigate('/dashboard');
+            }
         }
     }
 
