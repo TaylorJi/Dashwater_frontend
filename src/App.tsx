@@ -25,14 +25,14 @@ function App() {
         }
       />
 
-      <Route
+      {/* <Route
         path="/alerts"
         element={
           <DeviceDetailsWrapper>
             <Alerts />
           </DeviceDetailsWrapper>
         }
-      />
+      /> */}
 
       <Route
         path="/manageDevices"

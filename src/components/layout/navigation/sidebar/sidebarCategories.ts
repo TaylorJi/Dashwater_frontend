@@ -6,11 +6,11 @@ export const sidebarCategories = [
         'description': 'Dashboard',
         'link': '/dashboard'
     },
-    {
-        'icon': faBell,
-        'description': 'Alerts',
-        'link': '/alerts'
-    },
+    // {
+    //     'icon': faBell,
+    //     'description': 'Alerts',
+    //     'link': '/alerts'
+    // },
     {
         'icon': faSdCard,
         'description': 'Manage Devices',
