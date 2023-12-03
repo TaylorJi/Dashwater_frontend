@@ -16,28 +16,28 @@ const TideCard: React.FC = () => {
 
     const getTideData = async () => {
 
-        try {
-            const data = await Dashboard.getTide();
-            if (data) {
+        // try {
+        //     const data = await Dashboard.getTide();
+        //     if (data) {
 
-                Object.keys(data).map((key) => {
-                    return data[key].map((pred: any) => {
-                        pred['time'] = timeHelper(pred['time']);
-                        return pred;
-                    });
-                });
+        //         Object.keys(data).map((key) => {
+        //             return data[key].map((pred: any) => {
+        //                 pred['time'] = timeHelper(pred['time']);
+        //                 return pred;
+        //             });
+        //         });
 
-                setTideData(data['allData']);
-                setHigh(data['high']);
-                setLow(data['low']);
+        //         setTideData(data['allData']);
+        //         setHigh(data['high']);
+        //         setLow(data['low']);
 
-            } else {
-                toast.error('Oh no! There was a problem fetching tide data. Please refresh the page.');
-            }
+        //     } else {
+        //         toast.error('Oh no! There was a problem fetching tide data. Please refresh the page.');
+        //     }
 
-        } catch (_err) {
-            toast.error('Oh no! There was a problem fetching tide data. Please refresh the page.');
-        }
+        // } catch (_err) {
+        //     toast.error('Oh no! There was a problem fetching tide data. Please refresh the page.');
+        // }
     };
 
     useEffect(() => {
