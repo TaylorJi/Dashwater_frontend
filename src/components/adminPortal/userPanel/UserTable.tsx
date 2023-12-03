@@ -8,7 +8,7 @@ import { allUsersDetails } from '../UserDetailsWrapper/userManagerAtoms';
 
 const UserTable: React.FC = () => {
 
-    const [userData, setUserData] = useRecoilState<userDataType[]>(allUsersDetails);
+    const [userData, setUserData] = useRecoilState<usersDataType[]>(allUsersDetails);
     let idArray: string[] = [];
 
     const getUserData = async () => {

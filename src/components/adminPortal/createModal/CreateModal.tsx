@@ -38,7 +38,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     // const [userData, setUserData] = useState([]);
-    const [userData, setUserData] = useRecoilState<userDataType[]>(allUsersDetails);
+    const [userData, setUserData] = useRecoilState<usersDataType[]>(allUsersDetails);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
 
