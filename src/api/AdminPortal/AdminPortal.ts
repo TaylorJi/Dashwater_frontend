@@ -57,6 +57,7 @@ const getUser = async () => {
                 email: item.email,
                 role: item.role,
             }));
+            console.log("!!!!!!!!!!!!!!!!!!!!! \n" + users);
 
             return users;
         }

@@ -36,6 +36,8 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [userData, setUserData] = useState([]);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
 
     const togglePasswordVisibility = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -50,6 +52,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
     } = useForm();
 
     const onSubmit = async (data: any) => {
+        setIsLoading(true);
         data.role = role;
         let validation: boolean = true;
         if (!checkEmail(data.email)) {
@@ -71,6 +74,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
                 // navigate("/adminPortal");
             }
         }
+        setIsLoading(false);
     }
 
     const checkEmail = (email: string): boolean => {
