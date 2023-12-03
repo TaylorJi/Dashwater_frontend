@@ -35,6 +35,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
     const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
+    const [userData, setUserData] = useState([]);
 
     const togglePasswordVisibility = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -62,7 +63,11 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
         if (validation) {
             let success = await AdminPortal.createUser(data);
             if (success) {
-                navigate('/dashboard');
+                const newData = await AdminPortal.getUser();
+                if (newData) {
+                    setUserData(newData);
+                }
+                // navigate('/dashboard');
                 // navigate("/adminPortal");
             }
         }
