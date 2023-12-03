@@ -173,11 +173,6 @@ const Login: React.FC = () => {
           let userRole = idTokenPayload["cognito:groups"][0];
           let userEmail = idTokenPayload["email"];
 
-          console.log("Cognito Response: ", cognitoData);
-          console.log("IdToken - JWT token: ", jwtToken);
-          console.log("userRole: ", userRole);
-          console.log("userEmail: ", userEmail);
-
           // calling the endpoint
           if (jwtToken) {
             const isSessionCreated = await Sessions.createSession(
@@ -185,14 +180,12 @@ const Login: React.FC = () => {
               jwtToken,
               userRole
             );
-            console.log("isSessionCreated: ", isSessionCreated);
             if (isSessionCreated) {
               localStorage.setItem(
                 "failedLoginAttempts",
                 JSON.stringify({ count: 0, lastFailedLoginAttemptDate: null })
               );
               localStorage.setItem("sessionId", isSessionCreated.sessionId);
-              console.log("sessionId: ", localStorage.getItem("sessionId"));
               localStorage.setItem("timeRange", "12h");
               localStorage.setItem("userEmail", userEmail);
               localStorage.setItem("userRole", userRole); //CHANGED: updated this with the userRole retrieved from cognito

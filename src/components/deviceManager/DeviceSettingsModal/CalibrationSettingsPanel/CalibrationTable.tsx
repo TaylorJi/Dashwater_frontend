@@ -47,12 +47,10 @@ const CalibrationTable: React.FC<calibrationTableProp> = ({ sensor, sensors, buo
 
     const saveSelectedSensorCalibrationPoints = async () => {
         setIsLoading(true);
-        console.log("sensorCalibrationPoints", sensorCalibrationPoints);
         const res = await ManageDevices.saveCalibrationPoints(sensorCalibrationPoints, sensors, buoy);
         if (res) {
             toast.success('Calibration point saved!');
             window.location.reload();
-            // navigate('/dashboard');
         } else {
             toast.error('There was a problem saving the calibration points. Please try again.')
         }

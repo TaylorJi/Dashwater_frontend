@@ -24,12 +24,12 @@ const getTide = async () => {
 
     try {
 
-        // const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/weather/getTide`, { withCredentials: true });
+        const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/weather/getTide`, { withCredentials: true });
 
-        // if (response.status === 200) {
-        //     return response.data.data;
+        if (response.status === 200) {
+            return response.data.data;
 
-        // }
+        }
 
         return null;
 
@@ -43,7 +43,6 @@ const getCachedData = async (end: string) => {
 
     try {
         // let response: any;
-        console.log("!!!!!!!!!!!!!!!! end" + end);
         let requestBody;
         if (end === 'Custom') {
             requestBody = {
@@ -58,7 +57,6 @@ const getCachedData = async (end: string) => {
         }
         const response = await axios.post(`${API_URL}/ts/getCachedData`, requestBody, { withCredentials: true });
         if (response.status === 200) {
-            console.log(response.data.data);
             return response.data.data;
         }
         return null;
@@ -128,26 +126,8 @@ const getCustomRangeLogData = async (start: string, end: string) => {
 
 };
 
-
-// const getCachedHighLowHistorical = async () => {
-//     try {
-//         const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/ts/getCachedHistorical`, { withCredentials: true });
-
-//         if (response.status === 200) {
-//             return response.data.data;
-//         }
-//         return null;
-
-//     } catch (_err) {
-//         return null;
-//     }
-// }
-
-
-
 const getCachedHighLowHistorical = async (device_name: string, sensor_name:string, time:string) => {
     try {
-        // console.log(sensor_name);
         let requestBody;
         if (time === 'Custom') {
             requestBody = {
@@ -175,7 +155,6 @@ const getCachedHighLowHistorical = async (device_name: string, sensor_name:strin
         // const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/ts/getCachedHistorical`, { withCredentials: true });
 
         if (response.status === 200) {
-            console.log(response.data.data);
             return response.data.data;
         }
         return null;
@@ -216,12 +195,10 @@ const getSensors = async (device_name: string) => {
             withCredentials: true
         });
         if (response.status === 200) {
-            console.log(response.data.data);
             return response.data.data;
         }
 
     } catch (_err) {
-        console.log(_err);
         return null;
 
     }
@@ -237,12 +214,10 @@ const test = async () => {
             withCredentials: true
         });
         if (response.status === 200) {
-            console.log(response.data.data);
             return response.data.data;
         }
 
     } catch (_err) {
-        console.log(_err);
         return null;
 
     }
@@ -276,7 +251,6 @@ const getData = async (device_name: string, time: string) => {
         return response.data.data;
     }
 } catch (_err) {
-    console.log(_err);
     return null;
 
 
@@ -295,7 +269,6 @@ const getAllDevice = async () => {
             return response.data.data;
         }
     } catch (_err) {
-        console.log(_err);
         return null;
     
     }

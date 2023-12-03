@@ -57,7 +57,6 @@ const getUser = async () => {
                 email: item.email,
                 role: item.role,
             }));
-            console.log("!!!!!!!!!!!!!!!!!!!!! \n" + JSON.stringify(users));
 
             return users;
         }

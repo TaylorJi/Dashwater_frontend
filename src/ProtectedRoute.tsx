@@ -7,7 +7,6 @@ interface IProtectedElementProps {
 
 const ProtectedRoute: React.FC<IProtectedElementProps> = ({ children }) => {
   const userRole = localStorage.getItem("userRole");
-  console.log(userRole);
 
   // If the user's role matches the required role, render the element
   if (userRole === 'admin') {

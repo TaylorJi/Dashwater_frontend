@@ -125,7 +125,6 @@ const ThresholdSettingsPanel: React.FC<thresholdSettingsPanelProps> = ({ buoy })
                         <Tbody>
                             {
                                 buoy.sensors.map((sensor => {
-                                    console.log(sensor);
                                     return (
                                         <ThresholdSettingsRow
                                             key={uuid()}
