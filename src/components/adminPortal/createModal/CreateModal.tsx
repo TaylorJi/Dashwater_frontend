@@ -78,6 +78,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
             }
         }
         setIsLoading(false);
+        onClose();
     }
 
     const checkEmail = (email: string): boolean => {
