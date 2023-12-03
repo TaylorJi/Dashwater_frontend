@@ -22,7 +22,10 @@ import {
 import colors from "../../../theme/foundations/colours";
 import typography from "../../../theme/foundations/typography";
 import AdminPortal from "../../../api/AdminPortal/AdminPortal";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+
+import { allUsersDetails } from "../UserDetailsWrapper/userManagerAtoms";
 
 type EditModalProps = {
     isOpen: boolean;
@@ -33,8 +36,8 @@ type EditModalProps = {
 
 const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
     const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
-    const navigate = useNavigate();
-
+    // const navigate = useNavigate();
+    const [userData, setUserData] = useRecoilState<usersDataType[]>(allUsersDetails);
     const [showPassword, setShowPassword] = useState(false);
 
         const togglePasswordVisibility = () => {
@@ -67,9 +70,14 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
         if (validation) {
             let success = await AdminPortal.updateUser(data);
             if (success) {
-                navigate('/dashboard');
+                const newData = await AdminPortal.getUser();
+                if (newData) {
+                    setUserData(newData);
+                }
+                // navigate('/dashboard');
             }
         }
+        onClose();
     }
 
     const checkEmail = (email: string): boolean => {

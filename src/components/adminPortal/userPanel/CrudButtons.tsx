@@ -5,7 +5,9 @@ import colors from '../../../theme/foundations/colours';
 import AdminPortal from '../../../api/AdminPortal/AdminPortal';
 import EditModal from '../editModal/EditModal';
 import CreateModal from '../createModal/CreateModal';
-import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+// import { useNavigate } from "react-router-dom";
+import { allUsersDetails } from '../UserDetailsWrapper/userManagerAtoms';
 
 export const editUser = async (idArray: string[], editModal: UseDisclosureReturn) => {
     if (idArray === undefined) {
@@ -21,8 +23,8 @@ export const editUser = async (idArray: string[], editModal: UseDisclosureReturn
 
 
 const CrudButtons: React.FC = () => {
-    const navigate = useNavigate();
-
+    // const navigate = useNavigate();
+    const [userData, setUserData] = useRecoilState<usersDataType[]>(allUsersDetails);
     const editModal = useDisclosure();
     const createModal = useDisclosure();
 
@@ -37,7 +39,11 @@ const CrudButtons: React.FC = () => {
         } else {
             let success = await AdminPortal.deleteUser(idArray);
             if (success) {
-                navigate('/dashboard');
+                const newData = await AdminPortal.getUser();
+                if (newData) {
+                    setUserData(newData);
+                }
+                // navigate('/dashboard');
                 // navigate("/adminPortal");
             }
             // AdminPortal.deleteUser(idArray);
