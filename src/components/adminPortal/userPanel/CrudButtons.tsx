@@ -42,7 +42,7 @@ const CrudButtons: React.FC = () => {
                 const newData = await AdminPortal.getUser();
                 if (newData) {
                     setUserData(newData);
-                    global.defaultChecked = false;
+                    window.location.reload();
                 }
                 // navigate('/dashboard');
                 // navigate("/adminPortal");

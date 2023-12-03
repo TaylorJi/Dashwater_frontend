@@ -65,7 +65,6 @@ const UserTable: React.FC = () => {
                                     <Tr key={user['_id']}>
                                         <Td>
                                             <Checkbox
-                                                checked={global.defaultChecked}
                                                 onChange={() => onSelectedChange(user['email'])}
                                             ></Checkbox>
                                         </Td>
