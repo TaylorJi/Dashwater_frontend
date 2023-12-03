@@ -24,12 +24,12 @@ const getTide = async () => {
 
     try {
 
-        const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/weather/getTide`, { withCredentials: true });
+        // const response: any = await axios.get<any, AxiosResponse<string[]>>(`${API_URL}/weather/getTide`, { withCredentials: true });
 
-        if (response.status === 200) {
-            return response.data.data;
+        // if (response.status === 200) {
+        //     return response.data.data;
 
-        }
+        // }
 
         return null;
 

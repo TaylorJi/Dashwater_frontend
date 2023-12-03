@@ -11,6 +11,7 @@ const UserTable: React.FC = () => {
 
     const getUserData = async () => {
         try {
+            globalThis.idArray = [];
             const data = await AdminPortal.getUser();
             if (data) {
                 setUserData(data);
