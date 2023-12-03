@@ -72,6 +72,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
                 const newData = await AdminPortal.getUser();
                 if (newData) {
                     setUserData(newData);
+                    history.go(0);
                 }
                 // navigate('/dashboard');
                 // navigate("/adminPortal");
