@@ -73,6 +73,7 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose }) => {
                 const newData = await AdminPortal.getUser();
                 if (newData) {
                     setUserData(newData);
+                    global.defaultChecked = false;
                 }
                 // navigate('/dashboard');
             }
