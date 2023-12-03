@@ -98,3 +98,9 @@ type sensorDataType = {
     min: number;
     max: number;
 };
+
+type usersDataType = {
+    _id: number,
+    email: string,
+    role: string,
+};

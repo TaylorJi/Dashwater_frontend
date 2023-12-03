@@ -22,6 +22,7 @@ import CalibrationPointRow from './CalibrationPointRow';
 import ManageDevices from '../../../../api/ManageDevices/ManageDevices';
 import { useRecoilValue } from 'recoil';
 import { calibrationPoints } from '../../../wrappers/DeviceDetailsWrapper/deviceManagerAtoms';
+import { useNavigate } from "react-router-dom";
 
 type calibrationTableProp = {
     sensor: sensorType;
@@ -34,7 +35,7 @@ type calibrationTableProp = {
 const CalibrationTable: React.FC<calibrationTableProp> = ({ sensor, sensors, buoy, unsavedChanges, setUnsavedChanges }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const cancelRef = useRef(null);
-
+    const navigate = useNavigate();
     const allCalibrationPoints = useRecoilValue(calibrationPoints);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isReset, setIsReset] = useState<boolean>(false);
@@ -50,7 +51,8 @@ const CalibrationTable: React.FC<calibrationTableProp> = ({ sensor, sensors, buo
         const res = await ManageDevices.saveCalibrationPoints(sensorCalibrationPoints, sensors, buoy);
         if (res) {
             toast.success('Calibration point saved!');
-            window.location.reload();
+            // window.location.reload();
+            navigate('/dashboard');
         } else {
             toast.error('There was a problem saving the calibration points. Please try again.')
         }

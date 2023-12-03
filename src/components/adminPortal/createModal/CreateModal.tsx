@@ -23,6 +23,8 @@ import typography from "../../../theme/foundations/typography";
 import AdminPortal from "../../../api/AdminPortal/AdminPortal";
 import { toast } from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { allUsersDetails } from "../UserDetailsWrapper/userManagerAtoms";
 
 
 type CreateModalProps = {
@@ -35,6 +37,10 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
     const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
+    // const [userData, setUserData] = useState([]);
+    const [userData, setUserData] = useRecoilState<usersDataType[]>(allUsersDetails);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
 
     const togglePasswordVisibility = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -49,6 +55,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
     } = useForm();
 
     const onSubmit = async (data: any) => {
+        setIsLoading(true);
         data.role = role;
         let validation: boolean = true;
         if (!checkEmail(data.email)) {
@@ -62,10 +69,16 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
         if (validation) {
             let success = await AdminPortal.createUser(data);
             if (success) {
-                navigate('/dashboard');
+                const newData = await AdminPortal.getUser();
+                if (newData) {
+                    setUserData(newData);
+                }
+                // navigate('/dashboard');
                 // navigate("/adminPortal");
             }
         }
+        setIsLoading(false);
+        onClose();
     }
 
     const checkEmail = (email: string): boolean => {

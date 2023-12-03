@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useRecoilState } from "recoil";
 import { Table, Thead, Tbody, Tr, Th, Td, Checkbox } from '@chakra-ui/react';
 import { toast } from 'react-hot-toast';
 import colors from '../../../theme/foundations/colours';
 import AdminPortal from '../../../api/AdminPortal/AdminPortal';
+import { allUsersDetails } from '../UserDetailsWrapper/userManagerAtoms';
 
 const UserTable: React.FC = () => {
 
-    const [userData, setUserData] = useState([]);
+    const [userData, setUserData] = useRecoilState<usersDataType[]>(allUsersDetails);
     let idArray: string[] = [];
 
     const getUserData = async () => {
@@ -63,6 +65,7 @@ const UserTable: React.FC = () => {
                                     <Tr key={user['_id']}>
                                         <Td>
                                             <Checkbox
+                                                checked={global.defaultChecked}
                                                 onChange={() => onSelectedChange(user['email'])}
                                             ></Checkbox>
                                         </Td>
