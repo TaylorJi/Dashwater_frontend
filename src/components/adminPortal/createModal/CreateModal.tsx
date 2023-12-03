@@ -23,6 +23,8 @@ import typography from "../../../theme/foundations/typography";
 import AdminPortal from "../../../api/AdminPortal/AdminPortal";
 import { toast } from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { allUsersDetails } from "../UserDetailsWrapper/userManagerAtoms";
 
 
 type CreateModalProps = {
@@ -35,7 +37,8 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose }) => {
     const [isLargeScreen] = useMediaQuery("(min-width: 800px)");
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
-    const [userData, setUserData] = useState([]);
+    // const [userData, setUserData] = useState([]);
+    const [userData, setUserData] = useRecoilState<userDataType[]>(allUsersDetails);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
 
