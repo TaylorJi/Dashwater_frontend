@@ -50,33 +50,6 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({ isOpen, onClose }
     }
     const editModal = useDisclosure();
 
-<<<<<<< HEAD
-    // const handleEditUserData = async() => {
-    //     console.log("Edit user");
-    //     // editUser(['yvruser@gmail.com'], editModal);
-        // const aaa = localStorage.getItem('userEmail');
-        // const bbb = [aaa];
-        // await AdminPortal.getSingleUser(bbb);
-        // await AdminPortal.getSingleUser(localStorage.getItem('userEmail'));
-    //     await AdminPortal.getSingleUser(['yvruser@gmail.com']);
-    //     editModal.onOpen();
-    // };
-
-    // const handleEditUserData = async (idArray: string[]) => {
-    //     if (idArray === undefined) {
-    //         idArray = [];
-    //     }
-    //     if (idArray.length !== 1) {
-    //         toast.error('You should select only one user');
-    //     } else {
-    //         await AdminPortal.getSingleUser(idArray);
-    //         console.log("idArray: ", idArray);
-    //         editModal.onOpen()
-    //     }
-    // };
-
-=======
->>>>>>> source-repo/main
     const handleEditUserData = async () => {
         const userEmail = localStorage.getItem('userEmail');
         let idArray: string[] = [];
