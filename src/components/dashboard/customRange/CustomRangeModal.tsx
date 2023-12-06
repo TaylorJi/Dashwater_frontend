@@ -128,8 +128,6 @@ const CustomRangeModal: React.FC<CustomRangeModalProps> = ({ isOpen, onClose }) 
                         isDisabled={startDate === '' || endDate === '' || (new Date(startDate) > new Date(endDate))}
                         onClick={async () => {
                             onClose();
-                            // await getCustomRangeData();
-                            // console.log("!!!!!!!!!!!! startDate: " + new Date(startDate).toISOString().split('T')[0] + " endDate: " + new Date(endDate).toISOString().split('T')[0]);
                             localStorage.setItem("customStartDate", new Date(startDate).toISOString().split('T')[0]);
                             localStorage.setItem("customEndDate", new Date(endDate).toISOString().split('T')[0]);
                             localStorage.setItem("timeRange", 'Custom');

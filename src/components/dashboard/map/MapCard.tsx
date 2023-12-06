@@ -12,7 +12,6 @@ const MapCard: React.FC = () => {
   const mapBuoyInfo = getDeviceDetailInfo(deviceDetails);
   const [buoyInfo, _setBuoyInfo] = useState<buoyInfo>(mapBuoyInfo);
 
-  console.log("buoy info:" + long)
   return (
     <Box my="0.5rem">
       <Map

@@ -26,7 +26,6 @@ const DashboardTopNav: React.FC = () => {
 
     const getDevice = async () => {
         try {
-            console.log("Interval panel call getDevice")
             const data = await Dashboard.getAllDevice();
             if (data) {
                 setGlobalDeviceData(data);
@@ -41,9 +40,7 @@ const DashboardTopNav: React.FC = () => {
     const getDeviceData = async (end: string) => {
 
         try {
-            // const data = await Dashboard.getCachedData(end);
             const devices = getDevice();
-            console.log(devices);
             const data = await Dashboard.getData('device', end);
 
             if (data) {
@@ -97,7 +94,6 @@ const DashboardTopNav: React.FC = () => {
                             bgColor={index === active ? colors.main.activeTopNav : ''}
                             color={index === active ? colors.main.usafaBlue : colors.main.ceruBlue}
                             onClick={async () => {
-                                console.log(topNavItems[item])
                                 if (item !== 'Custom') {
                                     localStorage.setItem("timeRange", topNavItems[item]);
                                 }

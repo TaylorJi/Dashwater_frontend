@@ -46,10 +46,8 @@ import ManageDevices from "../api/ManageDevices/ManageDevices";
 
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState("admin-testing@gmail.com");
-  const [password, setPassword] = useState("Testing123!");
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const navigate = useNavigate();
@@ -175,11 +173,14 @@ const Login: React.FC = () => {
           let userRole = idTokenPayload["cognito:groups"][0];
           let userEmail = idTokenPayload["email"];
 
+<<<<<<< HEAD
           console.log("Cognito Response: ", cognitoData);
           console.log("IdToken - JWT token: ", jwtToken);
           console.log("userRole: ", userRole);
           console.log("userEmail: ", userEmail);
 
+=======
+>>>>>>> source-repo/main
           // calling the endpoint
           if (jwtToken) {
             const isSessionCreated = await Sessions.createSession(
@@ -187,14 +188,20 @@ const Login: React.FC = () => {
               jwtToken,
               userRole
             );
+<<<<<<< HEAD
             console.log("isSessionCreated: ", isSessionCreated);
+=======
+>>>>>>> source-repo/main
             if (isSessionCreated) {
               localStorage.setItem(
                 "failedLoginAttempts",
                 JSON.stringify({ count: 0, lastFailedLoginAttemptDate: null })
               );
               localStorage.setItem("sessionId", isSessionCreated.sessionId);
+<<<<<<< HEAD
               console.log("sessionId: ", localStorage.getItem("sessionId"));
+=======
+>>>>>>> source-repo/main
               localStorage.setItem("timeRange", "12h");
               localStorage.setItem("userEmail", userEmail);
               localStorage.setItem("userRole", userRole); //CHANGED: updated this with the userRole retrieved from cognito

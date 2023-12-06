@@ -42,7 +42,6 @@ const OverviewPanel: React.FC = () => {
 
     const getSensors = useCallback(async () => {
         try {
-            console.log("Time is " + localStorage.getItem("timeRange"));
             const devices = await Dashboard.getAllDevice();
             await Promise.all(devices.map(async (device: any) => {
                 const data = await Dashboard.getSensors(device.device_name);

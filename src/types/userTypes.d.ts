@@ -14,6 +14,7 @@ declare global {
     var userRole: string,
     var userEmail: string,
     var userAuthenticated: boolean,
+    var defaultChecked: boolean,
 }
 
 export {};

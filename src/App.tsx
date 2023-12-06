@@ -19,33 +19,27 @@ function App() {
       <Route
         path="/dashboard"
         element={
-          <Authentication>
-            <DeviceDetailsWrapper>
-              <Dashboard />
-            </DeviceDetailsWrapper>
-           </Authentication>
+          <DeviceDetailsWrapper>
+            <Dashboard />
+          </DeviceDetailsWrapper>
         }
       />
 
-      <Route
+      {/* <Route
         path="/alerts"
         element={
-          // <Authentication>
-            <DeviceDetailsWrapper>
-              <Alerts />
-            </DeviceDetailsWrapper>
-          // </Authentication>
+          <DeviceDetailsWrapper>
+            <Alerts />
+          </DeviceDetailsWrapper>
         }
-      />
+      /> */}
 
       <Route
         path="/manageDevices"
         element={
-          <Authentication>
-            <DeviceDetailsWrapper>
-              <DeviceManager />
-            </DeviceDetailsWrapper>
-           </Authentication>
+          <DeviceDetailsWrapper>
+            <DeviceManager />
+          </DeviceDetailsWrapper>
         }
       />
 
@@ -61,9 +55,7 @@ function App() {
         path="/adminPortal"
         element={
           <ProtectedRoute>
-            <Authentication>
-              <Admin />
-            </Authentication>
+            <Admin />
           </ProtectedRoute>
         }
       />

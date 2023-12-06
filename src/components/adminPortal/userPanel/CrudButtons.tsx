@@ -5,6 +5,9 @@ import colors from '../../../theme/foundations/colours';
 import AdminPortal from '../../../api/AdminPortal/AdminPortal';
 import EditModal from '../editModal/EditModal';
 import CreateModal from '../createModal/CreateModal';
+import { useRecoilState } from "recoil";
+// import { useNavigate } from "react-router-dom";
+import { allUsersDetails } from '../UserDetailsWrapper/userManagerAtoms';
 
 export const editUser = async (idArray: string[], editModal: UseDisclosureReturn) => {
     if (idArray === undefined) {
@@ -20,11 +23,12 @@ export const editUser = async (idArray: string[], editModal: UseDisclosureReturn
 
 
 const CrudButtons: React.FC = () => {
-
+    // const navigate = useNavigate();
+    const [userData, setUserData] = useRecoilState<usersDataType[]>(allUsersDetails);
     const editModal = useDisclosure();
     const createModal = useDisclosure();
 
-    const checkIdArrayForDelete = (idArray: string[]) => {
+    const checkIdArrayForDelete = async (idArray: string[]) => {
         if (idArray === undefined) {
             idArray = [];
         }
@@ -33,7 +37,17 @@ const CrudButtons: React.FC = () => {
         if (idArray.length !== 1) { // changed it to 1 as AWS accepts only one user at a time
             toast.error('You should select only one user');
         } else {
-            AdminPortal.deleteUser(idArray);
+            let success = await AdminPortal.deleteUser(idArray);
+            if (success) {
+                const newData = await AdminPortal.getUser();
+                if (newData) {
+                    setUserData(newData);
+                    window.location.reload();
+                }
+                // navigate('/dashboard');
+                // navigate("/adminPortal");
+            }
+            // AdminPortal.deleteUser(idArray);
         }
     };
 

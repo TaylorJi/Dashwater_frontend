@@ -85,8 +85,8 @@ const createUser = async (user: any) => {
 
         if (response.status === 200) {
             return true;
-            // window.location.reload();
         }
+        return false;
     } catch (error) {
         console.error("Error in createUser:", error);
         return false;
@@ -105,10 +105,13 @@ const deleteUser = async (idArray: string[]) => {
         { withCredentials: true }
         );
         if (response.status === 200) {
-            window.location.reload();
+            return true;
+            // window.location.reload();
         }
+        return false;
     } catch (_err) {
         console.error("Error in deleteUser:", _err);
+        return false;
     }
 };
 
@@ -149,10 +152,13 @@ const updateUser = async (user: any) => {
         );
 
         if (response.status === 200) {
-            window.location.reload();
+            return true;
+            // window.location.reload();
         }
+        return false;
     } catch (error) {
         console.error("Error in createUser:", error);
+        return false;
     }
 };
 

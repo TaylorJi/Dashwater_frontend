@@ -23,13 +23,11 @@ const IntervalPanel: React.FC = () => {
         try {
             const end = localStorage.getItem("timeRange");
             let data: any;
-            // console.log("getDeviceData in IntervalPanel is called. end = " + end + ", timeRange = " + timeRange);
             if (end !== timeRange) {
                 data = await Dashboard.getCachedData(end!);
             }
             data = await Dashboard.getCachedData(timeRange);
 
-            console.log("data is " + JSON.stringify(data));
             if (data) {
                 setAllDeviceData(data);
             } else {
