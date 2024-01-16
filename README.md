@@ -10,7 +10,6 @@ Siwoon Lim
 
 Ellen Jung
 
-## Starting the Application
-Make sure the back-end is running first!
+## Visit the hosted dashboard website
+https://yvrdashboard.netlify.app/
 
-To start the React app locally, run the command `npm start` in the terminal.
