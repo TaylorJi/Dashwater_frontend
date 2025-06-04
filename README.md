@@ -26,6 +26,7 @@ Access the live dashboard here: [https://yvrdashboard.netlify.app](https://yvrda
 - **Netlify** for deployment
 
 ## 📁 Project Structure
+```
 dashwater_frontend/
 ├── public/                 # Static assets
 ├── src/
@@ -38,6 +39,7 @@ dashwater_frontend/
 ├── tsconfig.json           # TypeScript configuration
 ├── netlify.toml            # Netlify deployment settings
 └── README.md               # Project documentation
+```
 
 ## ⚠️ Service Status
 
